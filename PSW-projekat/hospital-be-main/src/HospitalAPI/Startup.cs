@@ -1,3 +1,4 @@
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
@@ -33,8 +34,8 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
 
-            services.AddScoped<IRoomService, RoomService>();
-            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IService<Room>, RoomService>();
+            services.AddScoped<IRepository<Room>, RoomRepository>();
 
         }
 

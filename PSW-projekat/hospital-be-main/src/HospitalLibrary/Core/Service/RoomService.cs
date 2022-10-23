@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
 {
-    public class RoomService : IRoomService
+    public class RoomService : IService<Room>
     {
-        private readonly IRoomRepository _roomRepository;
+        private readonly IRepository<Room> _roomRepository;
 
-        public RoomService(IRoomRepository roomRepository)
+        public RoomService(IRepository<Room> roomRepository)
         {
             _roomRepository = roomRepository;
         }

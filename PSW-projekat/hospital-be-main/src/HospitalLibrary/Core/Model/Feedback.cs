@@ -8,16 +8,16 @@ namespace HospitalLibrary.Core.Model
 {
     public class Feedback : BaseModel
     {
-        public string FeedbackId { get; set; }
+        public int FeedbackId { get; set; }
 
         public String Description { get; set; }
 
-        private Boolean IsAnonimous { get; set; }
+        public Boolean IsAnonimous { get; set; }
 
-        private Boolean IsPublic { get; set; }
+        public Boolean IsPublic { get; set; }
 
-        private DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
-        private String UserId { get; set; }
+        public String UserId { get; set; }
     }
 }
