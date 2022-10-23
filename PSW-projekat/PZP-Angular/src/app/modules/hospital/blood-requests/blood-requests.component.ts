@@ -18,11 +18,12 @@ export class BloodRequestsComponent implements OnInit {
 
   constructor(private bloodRequestService: BloodRequestService, private router: Router) { }
 
-  public createRequest() {
+  public sendRequest() {
     if (!this.isValidInput()) return;
-    this.bloodRequestService.sendRequest(this.bloodRequest).subscribe(res => {
-      this.router.navigate(['/feedbacks']);
-    });
+    console.log("ok")
+    // this.bloodRequestService.sendRequest(this.bloodRequest).subscribe(res => {
+    //   this.router.navigate(['/home']);
+    // });
   }
 
   private isValidInput(): boolean {
