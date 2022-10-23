@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class RoomRepository : IRoomRepository
+    public class RoomRepository : IRepository<Room>
     {
         private readonly HospitalDbContext _context;
 

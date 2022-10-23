@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class Room
+    public class Room : BaseModel
     {
         public int RoomId { get; set; }
         [Required]
