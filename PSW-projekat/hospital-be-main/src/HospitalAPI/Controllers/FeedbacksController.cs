@@ -8,11 +8,11 @@ namespace HospitalAPI.Controllers
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
-    public class FeedbackController : Controller
+    public class FeedbacksController : Controller
     {
         private readonly IService<Feedback> _feedbackService;
 
-        public FeedbackController(IService<Feedback> feedbackService)
+        public FeedbacksController(IService<Feedback> feedbackService)
         {
             _feedbackService = feedbackService;
         }

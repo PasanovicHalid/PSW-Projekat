@@ -1,0 +1,15 @@
+<div class="container">
+  <div>
+      <mat-form-field appearance="fill">
+          <mat-label>Number</mat-label>
+          <input matInput [(ngModel)]="feedback.description">
+      </mat-form-field><br>
+      <mat-form-field appearance="fill">
+          <mat-label>Floor</mat-label>
+          <input type="date" matInput [(ngModel)]="feedback.dateCreated">
+      </mat-form-field><br>
+      <button mat-stroked-button (click)="createFeedback()">
+          Submit
+      </button>
+  </div>
+</div>
