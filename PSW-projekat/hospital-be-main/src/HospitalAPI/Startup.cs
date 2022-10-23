@@ -25,8 +25,8 @@ namespace HospitalAPI
         {
             services.AddCors();
             services.AddDbContext<HospitalDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
-
+                options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -41,6 +41,7 @@ namespace HospitalAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HospitalDbContext hospitalDbContext)
         {
+            hospitalDbContext.Database.EnsureCreated();
             app.UseHttpsRedirection();
 
             if (env.IsDevelopment())
