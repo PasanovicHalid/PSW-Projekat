@@ -36,7 +36,7 @@ namespace IntegrationLibrary.Core.Model
 
         [Required]
         public string Email { get => _email; set => _email = value; }
-        [Required]
+        
         public string Password { get => _password; set => _password = value; }
 
         [Required]
