@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service.CRUD
 {
     public interface IBloodBankService : ICRUDService<BloodBank>
     {

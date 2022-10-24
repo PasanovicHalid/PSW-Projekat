@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service.CRUD
 {
     public class BloodBankService : IBloodBankService
     {
@@ -25,6 +25,7 @@ namespace IntegrationLibrary.Core.Service
 
         public void Create(BloodBank entity)
         {
+            CheckIfBankCanBeCreated(entity);
             SetupAPIKey(entity);
             entity.Password = _passwordService.GeneratePassword();
             _bloodBankRepository.Create(entity);
@@ -36,6 +37,14 @@ namespace IntegrationLibrary.Core.Service
             {
                 entity.ApiKey = _apiKeyService.GenerateKey();
             } while (_bloodBankRepository.CheckIfAPIKeyExists(entity.ApiKey));
+        }
+
+        private void CheckIfBankCanBeCreated(BloodBank entity)
+        {
+            if (_bloodBankRepository.CheckIfEmailExists(entity.Email))
+            {
+                throw new EmailAlreadyExistsException();
+            }
         }
 
         public void Delete(BloodBank entity)
@@ -64,6 +73,10 @@ namespace IntegrationLibrary.Core.Service
             if (_bloodBankRepository.CheckIfAPIKeyIsUpdatable(entity))
             {
                 throw new APIKeyExistsException();
+            }
+            if (_bloodBankRepository.CheckIfEmailIsUpdatable(entity))
+            {
+                throw new EmailAlreadyExistsException();
             }
         }
     }

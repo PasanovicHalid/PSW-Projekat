@@ -32,6 +32,20 @@ namespace IntegrationLibrary.Core.Repository
                     select banks).Any();
         }
 
+        public bool CheckIfEmailExists(string email)
+        {
+            return (from banks in _context.BloodBanks
+                    where banks.Email == email 
+                    select banks).Any();
+        }
+
+        public bool CheckIfEmailIsUpdatable(BloodBank bank)
+        {
+            return (from banks in _context.BloodBanks
+                    where banks.Email == bank.Email && banks.Id != bank.Id
+                    select banks).Any();
+        }
+
         public void Create(BloodBank entity)
         {
             _context.BloodBanks.Add(entity);

@@ -12,5 +12,9 @@ namespace IntegrationLibrary.Core.Repository
         bool CheckIfAPIKeyExists(string apiKey);
 
         bool CheckIfAPIKeyIsUpdatable(BloodBank bank);
+
+        bool CheckIfEmailExists(string email);
+
+        bool CheckIfEmailIsUpdatable(BloodBank bank);
     }
 }

@@ -35,12 +35,13 @@ namespace IntegrationLibrary.Core.Model
         public string Name { get => _name; set => _name = value; }
 
         [Required]
-        [EmailAddress]
         public string Email { get => _email; set => _email = value; }
+        [Required]
         public string Password { get => _password; set => _password = value; }
 
-        [Url]
+        [Required]
         public string ServerAddress { get => _serverAddress; set => _serverAddress = value; }
+        [Required]
         public string ApiKey { get => _apiKey; set => _apiKey = value; }
     }
 }
