@@ -25,6 +25,7 @@ namespace IntegrationAPI
             services.AddDbContext<IntegrationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
 
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
