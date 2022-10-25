@@ -1,23 +1,28 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Controllers.PublicApp
 {
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
-    public class FeedbacksController : Controller
-    {
-        private readonly IService<Feedback> _feedbackService;
+    public class FeedbacksController : ControllerBase
+    {    
+        private readonly FeedbackService _feedbackService;
 
-        public FeedbacksController(IService<Feedback> feedbackService)
+        public FeedbacksController(FeedbackService feedbackService)
         {
             _feedbackService = feedbackService;
         }
 
-        [HttpGet]
+        [HttpGet("/real")]
         public ActionResult GetAll()
         {
             return Ok(_feedbackService.GetAll());
