@@ -24,7 +24,7 @@ export class CreateFeedbackComponent{
   }
 
   private isValidInput(): boolean {
-    return true;
+    return this.feedback?.description != '';
   }
 
 }
