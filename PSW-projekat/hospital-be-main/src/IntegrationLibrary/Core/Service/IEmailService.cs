@@ -9,7 +9,7 @@ namespace IntegrationLibrary.Core.Service
 {
     public interface IEmailService
     {
-        void SendEmail(MailRequest mailRequest);
+        void SendEmailAsync(MailRequest mailRequest);
 
     }
 }
