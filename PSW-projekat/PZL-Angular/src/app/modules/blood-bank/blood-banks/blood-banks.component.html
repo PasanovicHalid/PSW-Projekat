@@ -1,0 +1,9 @@
+<div class="container">
+    <h5>{{errorMessage}}</h5>
+    <div class="table-header" *ngIf="!errorMessage">
+        <p class="table-title">Blood Banks</p>
+    </div>
+    <table mat-table [dataSource]="dataSource" *ngIf="!errorMessage">
+
+    </table>
+</div>
