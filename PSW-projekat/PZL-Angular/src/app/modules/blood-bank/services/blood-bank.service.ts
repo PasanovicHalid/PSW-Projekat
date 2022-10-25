@@ -14,6 +14,8 @@ export class BloodBankService {
   constructor(private http: HttpClient) { }
 
   getBloodBanks(): Observable<BloodBank[]> {
+
+    // console.log(this.http.get<BloodBank[]>(this.apiHost + 'api/BloodBanks', {headers: this.headers}).pipe(catchError(this.handleError)));
     return this.http.get<BloodBank[]>(this.apiHost + 'api/BloodBanks', {headers: this.headers}).pipe(catchError(this.handleError));
   }
 
