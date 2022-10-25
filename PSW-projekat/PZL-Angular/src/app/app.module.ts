@@ -3,10 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BloodBankRegistrationComponent } from './modules/blood-bank/blood-bank-registration/blood-bank-registration.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BloodBankRegistrationComponent
   ],
   imports: [
     BrowserModule,
