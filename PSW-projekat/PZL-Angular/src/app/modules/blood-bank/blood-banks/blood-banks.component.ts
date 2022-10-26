@@ -21,12 +21,15 @@ export class BloodBanksComponent implements OnInit {
   constructor(private bloodBankService: BloodBankService, private router: Router) { }
 
   ngOnInit(): void {
-    // this.bloodBankService.getBloodBanks().subscribe(res => {
-    //   this.bloodBanks = res;
-    //   this.dataSource.data = res;
-    // }, (error) => {
-    //   this.errorMessage = error;
-    // })
+    this.bloodBankService.getBloodBanks().subscribe(res => {
+      this.bloodBanks = res;
+      this.dataSource.data = res;
+    }, (error) => {
+      this.errorMessage = error;
+    })
+  }
+  public chooseBloodBank(id:number){
+    this.router.navigate(['blood-banks', id]);
   }
 
 }

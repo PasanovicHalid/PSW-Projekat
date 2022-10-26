@@ -41,31 +41,53 @@ namespace IntegrationAPI.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var bloodBank = _bloodBankService.GetById(id);
-            if (bloodBank == null)
+            try
             {
-                return NotFound();
+                var bloodBank = _bloodBankService.GetById(id);
+                if (bloodBank == null)
+                {
+                    return NotFound();
+                }
+                _bloodBankService.Delete(bloodBank);
+                return NoContent();
             }
-            _bloodBankService.Delete(bloodBank);
-            return NoContent();
+            catch
+            {
+                return BadRequest();
+            }
+            
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_bloodBankService.GetAll());
+            try
+            {
+                return Ok(_bloodBankService.GetAll());
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var bloodBank = _bloodBankService.GetById(id);
-            if(bloodBank == null)
+            try
             {
-                return NotFound();
-            }
+                var bloodBank = _bloodBankService.GetById(id);
+                if(bloodBank == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(bloodBank);
+                return Ok(bloodBank);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{id}")]
