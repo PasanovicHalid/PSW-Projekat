@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Model;
+﻿using IntegrationLibrary.Core.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;

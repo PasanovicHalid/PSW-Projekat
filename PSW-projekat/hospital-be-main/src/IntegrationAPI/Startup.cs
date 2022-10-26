@@ -1,3 +1,6 @@
+using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Core.Service.CRUD;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,18 +26,27 @@ namespace IntegrationAPI
         {
             services.AddCors();
             services.AddDbContext<IntegrationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
+                options.UseSqlServer(Configuration.GetConnectionString("IntegrationDb")));
 
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
+
+            services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+            services.AddScoped<IPasswordService, PasswordService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IAPIKeyService, APIKeyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IntegrationDbContext integrationDbContext)
         {
+            app.UseHttpsRedirection();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -43,6 +55,14 @@ namespace IntegrationAPI
             }
 
             app.UseRouting();
+
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
 
             app.UseAuthorization();
 

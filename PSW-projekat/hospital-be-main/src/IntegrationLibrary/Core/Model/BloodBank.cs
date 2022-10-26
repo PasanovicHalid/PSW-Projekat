@@ -6,12 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Model
+namespace IntegrationLibrary.Core.Model
 {
-    public class BloodBank
+    public class BloodBank : BaseModel
     {
-        private int _id;
-
         private string _name;
 
         private string _email;
@@ -34,18 +32,16 @@ namespace IntegrationLibrary.Model
             ServerAddress = serverAddress;
             ApiKey = apiKey;
         }
-
-        [Key]
-        public int Id { get => _id; set => _id = value; }
         public string Name { get => _name; set => _name = value; }
 
         [Required]
-        [EmailAddress]
         public string Email { get => _email; set => _email = value; }
+        
         public string Password { get => _password; set => _password = value; }
 
-        [Url]
+        [Required]
         public string ServerAddress { get => _serverAddress; set => _serverAddress = value; }
+        [Required]
         public string ApiKey { get => _apiKey; set => _apiKey = value; }
     }
 }
