@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="table-header">
+        <p class="table-title">Feedbacks review</p>
+    </div>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Description </th>
+            <td mat-cell *matCellDef="let feedbackDto" class="cell-center">{{feedbackDto.description}}</td>
+        </ng-container>
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> User's name </th>
+            <td mat-cell *matCellDef="let feedbackDto" class="cell-center">{{feedbackDto.username}}</td>
+        </ng-container>
+        <ng-container matColumnDef="public">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Public </th>
+            <td mat-cell *matCellDef="let feedbackDto" class="cell-center">{{feedbackDto.public}}</td>
+        </ng-container>
+        <ng-container matColumnDef="dateCreated">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Creation date </th>
+            <td mat-cell *matCellDef="let feedbackDto" class="cell-center">{{feedbackDto.dateCreated}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
