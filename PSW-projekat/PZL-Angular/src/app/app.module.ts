@@ -8,6 +8,11 @@ import { BloodBanksComponent } from './modules/blood-bank/blood-banks/blood-bank
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInput, MatInputModule} from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +25,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTableModule,
-    HttpClientModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

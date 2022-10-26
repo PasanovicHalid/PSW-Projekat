@@ -16,6 +16,10 @@ export class BloodBankService {
   getBloodBanks(): Observable<BloodBank[]> {
     return this.http.get<BloodBank[]>(this.apiHost + 'api/BloodBanks', {headers: this.headers}).pipe(catchError(this.handleError));
   }
+  
+  registerBloodBank(bloodBank: any): Observable<any>{
+    return this.http.post<any>(this.apiHost + 'api/BloodBanks', bloodBank, {headers: this.headers})
+  }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -31,4 +35,5 @@ export class BloodBankService {
     errorMessage += 'Something bad happened; please try again later.';
     return throwError(() => new Error(errorMessage))
   }
+
 }
