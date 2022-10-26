@@ -26,7 +26,7 @@ namespace HospitalAPI
         {
             services.AddCors();
             services.AddDbContext<HospitalDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+                options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
             
             services.AddControllers();
             services.AddSwaggerGen(c =>

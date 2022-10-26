@@ -45,7 +45,7 @@ namespace HospitalAPI.Controllers
             }
 
             _appointmentService.Create(feedback);
-            return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
+            return CreatedAtAction("GetById", new { id = feedback.AppointmentId }, feedback);
         }
 
         [HttpPut("{id}")]
@@ -56,7 +56,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != appointment.Id)
+            if (id != appointment.AppointmentId)
             {
                 return BadRequest();
             }
