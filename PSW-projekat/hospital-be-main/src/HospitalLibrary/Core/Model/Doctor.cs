@@ -9,7 +9,8 @@ namespace HospitalLibrary.Core.Model
     public class Doctor : User 
     {
         public int DoctorId { get; set; }
-        public Room Room { get; set; }
-        public List<WorkingDay> WorkingTime { get; set; }
+        public int RoomId { get; set; }
+        public virtual Room Room { get; set; }
+        public virtual List<WorkingDay> WorkingTime { get; set; }
     }
 }

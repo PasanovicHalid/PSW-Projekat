@@ -4,14 +4,16 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221026163939_ThAppointmentM")]
+    partial class ThAppointmentM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +31,10 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DoctorId")
+                    b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientId")
+                    b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Time")
@@ -51,8 +53,6 @@ namespace HospitalLibrary.Migrations
                         {
                             AppointmentId = 1,
                             Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 0,
-                            PatientId = 0,
                             Time = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -76,7 +76,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
@@ -89,7 +89,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -146,7 +146,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("PatientId");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -218,15 +218,11 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
                         .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DoctorId");
 
                     b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PatientId");
 
                     b.Navigation("Doctor");
 
@@ -237,9 +233,7 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoomId");
 
                     b.Navigation("Room");
                 });
