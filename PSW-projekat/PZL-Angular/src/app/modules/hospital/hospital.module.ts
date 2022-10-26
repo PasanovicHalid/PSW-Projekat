@@ -11,13 +11,16 @@ import { FeedbacksComponent } from './feedbacks/feedbacks.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { AppointmentsComponent } from './appointments/appointments.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
   { path: 'rooms/add', component: CreateRoomComponent },
   { path: 'rooms/:id', component: RoomDetailComponent },
   { path: 'rooms/:id/update', component: UpdateRoomComponent },
-  { path: 'feedbacks', component: FeedbacksComponent }
+  { path: 'feedbacks', component: FeedbacksComponent },
+  { path: 'appointments', component: AppointmentsComponent }
+
 ];
 
 @NgModule({
@@ -26,7 +29,8 @@ const routes: Routes = [
     RoomDetailComponent,
     CreateRoomComponent,
     UpdateRoomComponent,
-    FeedbacksComponent
+    FeedbacksComponent,
+    AppointmentsComponent
   ],
   imports: [
     CommonModule,
