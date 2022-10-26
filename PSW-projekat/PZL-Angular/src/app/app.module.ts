@@ -1,3 +1,5 @@
+import { MatTableModule } from '@angular/material/table';
+import { BloodBanksComponent } from './modules/blood-bank/blood-banks/blood-banks.component';
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
@@ -10,12 +12,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BloodBanksComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatTableModule,
     HttpClientModule,
     MaterialModule,
     PagesModule,
