@@ -7,9 +7,9 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Model
+namespace IntegrationLibrary.Core.Model.MailRequests
 {
-    public class MailRequest
+    public abstract class MailRequest
     {
         public string Subject { get; set; }
         public string Body { get; set; }
