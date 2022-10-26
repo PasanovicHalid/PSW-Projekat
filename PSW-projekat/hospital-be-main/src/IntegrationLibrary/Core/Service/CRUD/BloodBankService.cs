@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Exceptions;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.MailRequests;
 using IntegrationLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,14 @@ namespace IntegrationLibrary.Core.Service.CRUD
         private readonly IBloodBankRepository _bloodBankRepository;
         private readonly IAPIKeyService _apiKeyService;
         private readonly IPasswordService _passwordService;
+        private readonly IEmailService _emailService;
 
-        public BloodBankService(IBloodBankRepository bloodBankRepository, IAPIKeyService apiKeyService, IPasswordService passwordService)
+        public BloodBankService(IBloodBankRepository bloodBankRepository, IAPIKeyService apiKeyService, IPasswordService passwordService, IEmailService emailService)
         {
             _bloodBankRepository = bloodBankRepository;
             _apiKeyService = apiKeyService;
             _passwordService = passwordService;
+            _emailService = emailService;
         }
 
         public void Create(BloodBank entity)
@@ -29,6 +32,7 @@ namespace IntegrationLibrary.Core.Service.CRUD
             SetupAPIKey(entity);
             entity.Password = _passwordService.GeneratePassword();
             _bloodBankRepository.Create(entity);
+            _emailService.SendEmailAsync(new BloodBankCreationMailRequest(entity));
         }
 
         private void SetupAPIKey(BloodBank entity)

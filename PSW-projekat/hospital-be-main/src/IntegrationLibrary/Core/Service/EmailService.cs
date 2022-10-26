@@ -1,5 +1,5 @@
 ﻿using IntegrationLibrary.Core.Exceptions;
-using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.MailRequests;
 using IntegrationLibrary.Settings;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
