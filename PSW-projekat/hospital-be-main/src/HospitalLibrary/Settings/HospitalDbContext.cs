@@ -23,14 +23,6 @@ namespace HospitalLibrary.Settings
                 new Room() { RoomId = 3, Number = "305B", Floor = 3 }
             );
 
-            modelBuilder.Entity<Appointment>().HasData(
-               new Appointment() { AppointmentId =1,
-        Patient =null,
-        Doctor = null,
-        Date =  new DateTime(),
-        Time = new DateTime()
-               }
-            );
             base.OnModelCreating(modelBuilder);
 
         }
