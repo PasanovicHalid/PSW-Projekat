@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BloodRequest } from 'src/app/modules/hospital/model/blood-request.model';
-import { BloodRequestService } from 'src/app/modules/hospital/services/blood-request.service';
-
-
+// import { BloodRequest } from 'src/app/modules/hospital/model/blood-request.model';
+import { BloodBankService } from 'src/app/modules/blood-bank/services/blood-bank.service';
 
 @Component({
   selector: 'app-blood-requests',
@@ -12,11 +10,14 @@ import { BloodRequestService } from 'src/app/modules/hospital/services/blood-req
 })
 export class BloodRequestsComponent implements OnInit {
 
+  private bloodBankID : string = '';
+  private bloodType: string = '';
+  private quantity: number = 0.0;
+
+  constructor(private bloodBankService: BloodBankService, private router: Router) { }
+
   ngOnInit(): void {
   }
-  public bloodRequest: BloodRequest = new BloodRequest();
-
-  constructor(private bloodRequestService: BloodRequestService, private router: Router) { }
 
   public sendRequest() {
     if (!this.isValidInput()) return;
@@ -29,6 +30,5 @@ export class BloodRequestsComponent implements OnInit {
   private isValidInput(): boolean {
     return true;
   }
-
 
 }

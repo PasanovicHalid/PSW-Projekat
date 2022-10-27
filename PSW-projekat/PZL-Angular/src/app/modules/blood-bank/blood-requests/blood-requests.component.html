@@ -2,7 +2,7 @@
     <div>
         <mat-form-field appearance="fill">
             <mat-label>*Select a blood bank</mat-label>
-            <mat-select name="banks" id="banks" matInput [(ngModel)]="bloodRequest.bloodBankId">
+            <mat-select name="banks" id="banks" matInput>
                 <mat-option value="1">1</mat-option>
                 <mat-option value="2">2</mat-option>
                 <mat-option value="3">3</mat-option>
@@ -11,7 +11,7 @@
         </mat-form-field ><br>
         <mat-form-field appearance="fill">
             <mat-label>*Select blood type</mat-label>
-            <mat-select name="bloodTypes" id="bloodTypes" matInput [(ngModel)]="bloodRequest.bloodType">
+            <mat-select name="bloodTypes" id="bloodTypes" matInput>
                 <mat-option value="A+">A+</mat-option>
                 <mat-option value="A-">A-</mat-option>
                 <mat-option value="B+">B+</mat-option>
@@ -24,7 +24,7 @@
             </mat-form-field ><br>         
         <mat-form-field appearance="fill">
             <mat-label>Quantity(liters)</mat-label>
-            <input type="number" min="0" max="10" matInput [(ngModel)]="bloodRequest.quantity">
+            <input type="number" min="0" max="10" matInput>
         </mat-form-field><br>
         <button mat-stroked-button (click)="sendRequest()">
             Submit
