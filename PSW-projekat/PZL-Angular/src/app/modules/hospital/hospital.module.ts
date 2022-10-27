@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { AppointmentsComponent } from './appointments/appointments.component';
+import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -19,7 +20,9 @@ const routes: Routes = [
   { path: 'rooms/:id', component: RoomDetailComponent },
   { path: 'rooms/:id/update', component: UpdateRoomComponent },
   { path: 'feedbacks', component: FeedbacksComponent },
-  { path: 'appointments', component: AppointmentsComponent }
+  { path: 'appointments', component: AppointmentsComponent },
+  { path: 'appointments/addA', component: CreateAppointmentComponent },
+
 
 ];
 
@@ -30,7 +33,8 @@ const routes: Routes = [
     CreateRoomComponent,
     UpdateRoomComponent,
     FeedbacksComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    CreateAppointmentComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,20 @@
+
+<div class="container">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Patient Id</mat-label>
+            <input matInput [(ngModel)]="appointment.patientId">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input type="date" matInput [(ngModel)]="appointment.date">
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>Time</mat-label>
+            <input type="time" matInput [(ngModel)]="appointment.time">
+        </mat-form-field><br>
+        <button mat-stroked-button (click)="createAppointment()">
+            Submit
+        </button>
+    </div>
+</div>
