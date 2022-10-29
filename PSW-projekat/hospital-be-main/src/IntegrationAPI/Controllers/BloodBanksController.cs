@@ -96,12 +96,13 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                Boolean isSuccessful = _bloodBankService.SendBloodRequest(id, bloodType, quantity);
+                Boolean isSuccessful = _bloodBankService.CheckBloodRequest(id, bloodType, quantity);
                 if (isSuccessful == false)
                     return BadRequest();
 
+                Boolean hasBlood = _bloodBankService.SendBloodRequest(id, bloodType, quantity);
 
-                return Ok();
+                return Ok(hasBlood);
             }
             catch
             {

@@ -2,6 +2,7 @@ using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.CRUD;
 using IntegrationLibrary.Settings;
+using IntegrationLibrary.Core.BloodBankConnection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,7 @@ namespace IntegrationAPI
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IAPIKeyService, APIKeyService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<IBloodBankConnection, BloodBankHTTPConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

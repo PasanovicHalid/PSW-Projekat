@@ -2,6 +2,7 @@
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.MailRequests;
 using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.BloodBankConnection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,15 @@ namespace IntegrationLibrary.Core.Service.CRUD
         private readonly IAPIKeyService _apiKeyService;
         private readonly IPasswordService _passwordService;
         private readonly IEmailService _emailService;
+        private readonly IBloodBankConnection _bloodBankConnection;
 
-        public BloodBankService(IBloodBankRepository bloodBankRepository, IAPIKeyService apiKeyService, IPasswordService passwordService, IEmailService emailService)
+        public BloodBankService(IBloodBankRepository bloodBankRepository, IAPIKeyService apiKeyService, IPasswordService passwordService, IEmailService emailService, IBloodBankConnection bloodBankConnection)
         {
             _bloodBankRepository = bloodBankRepository;
             _apiKeyService = apiKeyService;
             _passwordService = passwordService;
             _emailService = emailService;
+            _bloodBankConnection = bloodBankConnection;
         }
 
         public void Create(BloodBank entity)
@@ -84,20 +87,29 @@ namespace IntegrationLibrary.Core.Service.CRUD
             }
         }
 
-        public bool SendBloodRequest(int bloodBankID, string BloodType, int quantity)
+        public bool CheckBloodRequest(int bloodBankID, string bloodType, int quantity)
         {
             BloodBank bloodBank = GetById(bloodBankID);
-            if (bloodBank == null || !ValidateRequest(quantity))
+            if (bloodBank == null || !ValidateRequest(quantity, bloodType))
                 return false;
-
-
             return true;
-        }
 
-        private bool ValidateRequest(int quantity)
+        }
+        public bool SendBloodRequest(int bloodBankID, string bloodType, int quantity)
         {
-            if(quantity <=0 || quantity > 10)
+            BloodBank bloodBank = GetById(bloodBankID);
+            return _bloodBankConnection.sendBloodRequest(bloodBank, bloodType, quantity);
+
+        }
+        
+        private bool ValidateRequest(int quantity, string bloodType)
+        {
+            if((quantity <0 || quantity > 10) && 
+                (!bloodType.Equals("Aplus") || !bloodType.Equals("Bplus") || !bloodType.Equals("ABplus") ||
+                !bloodType.Equals("Oplus") || !bloodType.Equals("Aminus") || !bloodType.Equals("Bminus") ||
+                !bloodType.Equals("ABminus") || !bloodType.Equals("Ominus")))
                 return false;
+
             return true;
         }
     }
