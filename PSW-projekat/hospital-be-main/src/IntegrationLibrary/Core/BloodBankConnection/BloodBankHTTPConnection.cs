@@ -21,7 +21,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             client = new()
             {
                 BaseAddress = new Uri(bank.ServerAddress)
-            };
+            };  
             bloodType = bType;
             quantity = quant;
             bankEmail = bank.Email;
