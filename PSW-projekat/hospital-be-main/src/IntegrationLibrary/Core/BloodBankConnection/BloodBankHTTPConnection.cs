@@ -33,7 +33,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         static async Task GetAsync(HttpClient httpClient)
         {
          
-            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/" + bloodType + "/" + quantity);
+            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/" + bankEmail + "/"  + bloodType + "/" + quantity);
             try
             {
                 response.EnsureSuccessStatusCode();

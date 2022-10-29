@@ -28,9 +28,11 @@ export class BloodRequestsComponent implements OnInit {
     if (!this.isValidInput()) return;
     this.bloodBankService.sendBloodRequest(this.bloodRequest).subscribe(res => {
       if(res == true)
-        console.log("ima krvi")
+        alert("ima krvi")
       else
-        console.log("nema krvi")
+        alert("nema krvi")
+      this.router.navigate(['/blood-requests']);
+    
     });
   }
 
