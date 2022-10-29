@@ -1,16 +1,19 @@
 ﻿using IntegrationAPI.Adapters;
 using IntegrationAPI.Controllers.Interfaces;
 using IntegrationAPI.DTO;
-using IntegrationLibrary.Core.Service.CRUD;
+using IntegrationLibrary.Core.Exceptions;
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service.BloodBanks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace IntegrationAPI.Controllers
 {
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
-    public class BloodBanksController : ControllerBase , ICRUDController<BloodBankDTO>
+    public class BloodBanksController : ControllerBase
     {
         private readonly IBloodBankService _bloodBankService;
 
@@ -20,13 +23,13 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(BloodBankDTO entity)
+        public ActionResult Create(BloodBankCreationDTO entity)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var bank = BloodBankAdapter.FromDTO(entity);
+            BloodBank bank = BloodBankAdapter.FromDTO(entity);
             try
             {
                 _bloodBankService.Create(bank);
@@ -43,7 +46,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                var bloodBank = _bloodBankService.GetById(id);
+                BloodBank bloodBank = _bloodBankService.GetById(id);
                 if (bloodBank == null)
                 {
                     return NotFound();
@@ -76,7 +79,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                var bloodBank = _bloodBankService.GetById(id);
+                BloodBank bloodBank = _bloodBankService.GetById(id);
                 if(bloodBank == null)
                 {
                     return NotFound();
@@ -89,6 +92,51 @@ namespace IntegrationAPI.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpGet("reset/{key}")]
+        public ActionResult CheckIfResetKeyExists(string key)
+        {
+            try
+            {
+                if (!_bloodBankService.CheckIfPasswordResetKeyExists(key))
+                {
+                    return BadRequest(new PasswordKeyDoesntExistException());
+                }
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPut("reset/{key}")]
+        public ActionResult ActivatePassword(string key, string password)
+        {
+            try
+            {
+                if (password == null || key == null)
+                {
+                    return BadRequest();
+                }
+                BloodBank bloodBank = _bloodBankService.GetBloodBankFromPasswordResetKey(key);
+
+                if (bloodBank == null)
+                {
+                    return BadRequest(new PasswordKeyDoesntExistException());
+                }
+
+                bloodBank.ActivatePassword(password);
+                _bloodBankService.Update(bloodBank);
+                return Ok();
+            } 
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+            
+        }
+
 
         [HttpPut("{id}")]
         public ActionResult Update(int id ,BloodBankDTO entity)

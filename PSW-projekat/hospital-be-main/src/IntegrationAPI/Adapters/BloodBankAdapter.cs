@@ -18,6 +18,11 @@ namespace IntegrationAPI.Adapters
             };
         }
 
+        public static BloodBank FromDTO(BloodBankCreationDTO entity)
+        {
+            return new BloodBank(entity.Name, entity.Email, entity.ServerAddress);
+        }
+
         public static BloodBankDTO ToDTO(BloodBank entity)
         {
             return new BloodBankDTO()

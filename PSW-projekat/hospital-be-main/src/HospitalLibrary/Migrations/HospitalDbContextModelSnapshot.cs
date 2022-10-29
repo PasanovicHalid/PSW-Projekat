@@ -45,16 +45,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
-
-                    b.HasData(
-                        new
-                        {
-                            AppointmentId = 1,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DoctorId = 0,
-                            PatientId = 0,
-                            Time = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>

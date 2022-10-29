@@ -1,47 +1,53 @@
 ﻿using IntegrationLibrary.Core.Exceptions;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.MailRequests;
-using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Repository.BloodBanks;
+using IntegrationLibrary.Core.Service.Generators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.CRUD
+namespace IntegrationLibrary.Core.Service.BloodBanks
 {
     public class BloodBankService : IBloodBankService
     {
 
         private readonly IBloodBankRepository _bloodBankRepository;
-        private readonly IAPIKeyService _apiKeyService;
-        private readonly IPasswordService _passwordService;
         private readonly IEmailService _emailService;
+        private readonly APIKeyGenerator _apiKeyGenerator = new APIKeyGenerator();
+        private readonly PasswordGenerator _passwordGenerator = new PasswordGenerator();
 
-        public BloodBankService(IBloodBankRepository bloodBankRepository, IAPIKeyService apiKeyService, IPasswordService passwordService, IEmailService emailService)
+        public BloodBankService(IBloodBankRepository bloodBankRepository, IEmailService emailService)
         {
             _bloodBankRepository = bloodBankRepository;
-            _apiKeyService = apiKeyService;
-            _passwordService = passwordService;
             _emailService = emailService;
         }
 
         public void Create(BloodBank entity)
         {
             CheckIfBankCanBeCreated(entity);
-            SetupAPIKey(entity);
-            entity.Password = _passwordService.GeneratePassword();
+            SetupBloodBank(entity);
             _bloodBankRepository.Create(entity);
             _emailService.SendEmailAsync(new BloodBankCreationMailRequest(entity));
         }
 
-        private void SetupAPIKey(BloodBank entity)
+        private void SetupBloodBank(BloodBank entity)
         {
             do
             {
-                entity.ApiKey = _apiKeyService.GenerateKey();
+                entity.ApiKey = _apiKeyGenerator.GenerateKey();
             } while (_bloodBankRepository.CheckIfAPIKeyExists(entity.ApiKey));
+
+            entity.Password = _passwordGenerator.GeneratePassword();
+
+            do
+            {
+                entity.PasswordResetKey = _passwordGenerator.GeneratePasswordResetKey();
+            } while (_bloodBankRepository.CheckIfPasswordResetKeyExists(entity.PasswordResetKey));
         }
+
 
         private void CheckIfBankCanBeCreated(BloodBank entity)
         {
@@ -82,6 +88,20 @@ namespace IntegrationLibrary.Core.Service.CRUD
             {
                 throw new EmailAlreadyExistsException();
             }
+            if (_bloodBankRepository.CheckIfPasswordResetKeyIsUpdatable(entity))
+            {
+                throw new PasswordKeyExistsException();
+            }
+        }
+
+        public bool CheckIfPasswordResetKeyExists(string passwordResetKey)
+        {
+            return _bloodBankRepository.CheckIfPasswordResetKeyExists(passwordResetKey);
+        }
+
+        public BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey)
+        {
+            return _bloodBankRepository.GetBloodBankFromPasswordResetKey(passwordResetKey);
         }
     }
 }

@@ -1,11 +1,12 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.CRUD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository.BloodBanks
 {
     public interface IBloodBankRepository : ICRUDRepository<BloodBank>
     {
@@ -16,5 +17,11 @@ namespace IntegrationLibrary.Core.Repository
         bool CheckIfEmailExists(string email);
 
         bool CheckIfEmailIsUpdatable(BloodBank bank);
+
+        bool CheckIfPasswordResetKeyExists(string passwordResetKey);
+
+        bool CheckIfPasswordResetKeyIsUpdatable(BloodBank bank);
+
+        BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey);
     }
 }

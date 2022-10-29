@@ -14,6 +14,7 @@ namespace HospitalLibrary.Core.Model
         public int DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
         public DateTime Date { get; set; }
+
         public DateTime Time { get; set; }
       }
 }

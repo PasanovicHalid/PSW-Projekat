@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Core.Exceptions
 {
-    public interface IPasswordService
+    internal class PasswordKeyExistsException : Exception
     {
-        string GeneratePassword();
     }
 }

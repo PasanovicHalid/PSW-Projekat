@@ -22,7 +22,7 @@ namespace IntegrationLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1 , Name = "asdsadsda", Email = "asdasd@gmail.com", Password = "asdsadsdadas" , ApiKey = "sadfasdads" , ServerAddress = "https://www.messenger.com/t/100001603572170" } 
+                new BloodBank() { Id = 1 , Name = "asdsadsda", Email = "asdasd@gmail.com", Password = "asdsadsdadas" , ApiKey = "sadfasdads" , ServerAddress = "https://www.messenger.com/t/100001603572170", AccountStatus = AccountStatus.ACTIVE } 
             ) ;
             base.OnModelCreating(modelBuilder);
         }

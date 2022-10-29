@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository.BloodBanks
 {
     public class BloodBankRepository : IBloodBankRepository
     {
@@ -35,7 +35,7 @@ namespace IntegrationLibrary.Core.Repository
         public bool CheckIfEmailExists(string email)
         {
             return (from banks in _context.BloodBanks
-                    where banks.Email == email 
+                    where banks.Email == email
                     select banks).Any();
         }
 
@@ -43,6 +43,20 @@ namespace IntegrationLibrary.Core.Repository
         {
             return (from banks in _context.BloodBanks
                     where banks.Email == bank.Email && banks.Id != bank.Id
+                    select banks).Any();
+        }
+
+        public bool CheckIfPasswordResetKeyExists(string passwordResetKey)
+        {
+            return (from banks in _context.BloodBanks
+                    where banks.PasswordResetKey == passwordResetKey
+                    select banks).Any();
+        }
+
+        public bool CheckIfPasswordResetKeyIsUpdatable(BloodBank bank)
+        {
+            return (from banks in _context.BloodBanks
+                    where banks.PasswordResetKey == bank.PasswordResetKey && banks.Id != bank.Id
                     select banks).Any();
         }
 
@@ -61,6 +75,13 @@ namespace IntegrationLibrary.Core.Repository
         public IEnumerable<BloodBank> GetAll()
         {
             return _context.BloodBanks.ToList();
+        }
+
+        public BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey)
+        {
+            return (from banks in _context.BloodBanks
+                    where banks.PasswordResetKey == passwordResetKey
+                    select banks).FirstOrDefault();
         }
 
         public BloodBank GetById(int id)

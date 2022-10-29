@@ -2,6 +2,7 @@ import { BloodBankRegistrationComponent } from './modules/blood-bank/blood-bank-
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule} from '@angular/material/input';
+import { MatSelectModule} from '@angular/material/select'; 
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { BloodBanksComponent } from './modules/blood-bank/blood-banks/blood-banks.component';
@@ -14,12 +15,14 @@ import { MaterialModule } from "./material/material.module";
 import { HospitalModule } from "./modules/hospital/hospital.module";
 import { PagesModule } from "./modules/pages/pages.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BloodRequestsComponent } from './modules/blood-bank/blood-requests/blood-requests.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BloodBankRegistrationComponent,
-    BloodBanksComponent
+    BloodBanksComponent,
+    BloodRequestsComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatInputModule,
     HttpClientModule,
     FormsModule,
