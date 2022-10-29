@@ -104,10 +104,10 @@ namespace IntegrationLibrary.Core.Service.CRUD
         
         private bool ValidateRequest(int quantity, string bloodType)
         {
-            if((quantity <0 || quantity > 10) && 
-                (!bloodType.Equals("Aplus") || !bloodType.Equals("Bplus") || !bloodType.Equals("ABplus") ||
-                !bloodType.Equals("Oplus") || !bloodType.Equals("Aminus") || !bloodType.Equals("Bminus") ||
-                !bloodType.Equals("ABminus") || !bloodType.Equals("Ominus")))
+            if((quantity <0 || quantity > 10) || 
+                !(bloodType.Equals("Aplus") || bloodType.Equals("Bplus") || bloodType.Equals("ABplus") ||
+                bloodType.Equals("Oplus") || bloodType.Equals("Aminus") || bloodType.Equals("Bminus") ||
+                bloodType.Equals("ABminus") || bloodType.Equals("Ominus")))
                 return false;
 
             return true;

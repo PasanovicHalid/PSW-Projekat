@@ -30,35 +30,17 @@ namespace IntegrationLibrary.Core.BloodBankConnection
 
             return bankResponse;
         }
-        static async Task GetAsync(HttpClient httpClient)
+        static async Task<bool> GetAsync(HttpClient httpClient)
         {
-         
+            client.Timeout = TimeSpan.FromSeconds(15);
             using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/" + bankEmail + "/"  + bloodType + "/" + quantity);
-            try
-            {
-                response.EnsureSuccessStatusCode();
-                
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+
+            response.EnsureSuccessStatusCode();
             
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-
-            Console.WriteLine(jsonResponse);
-            bankResponse = Boolean.Parse(jsonResponse);
-
-            // WriteLine($"{jsonResponse}\n");
-
-            // Expected output:
-            //   GET https://jsonplaceholder.typicode.com/todos/3 HTTP/ 1.1
-            //   {
-            //     "userId": 1,
-            //     "id": 3,
-            //     "title": "fugiat veniam minus",
-            //     "completed": false
-            //   }
+            string hasBlood = await response.Content.ReadAsStringAsync();
+            bankResponse = Boolean.Parse(hasBlood);
+            return bankResponse;            
+            
         }
     }
 }

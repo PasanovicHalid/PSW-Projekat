@@ -27,19 +27,16 @@ export class BloodRequestsComponent implements OnInit {
   public sendBloodRequest() {
     if (!this.isValidInput()) return;
     this.bloodBankService.sendBloodRequest(this.bloodRequest).subscribe(res => {
+
       if(res == true)
         alert("ima krvi")
       else
         alert("nema krvi")
-      this.router.navigate(['/blood-requests']);
-    
+      window.location.reload();
     });
   }
 
   private isValidInput(): boolean {
-    console.log(this.bloodRequest.bloodBankID);
-    console.log(this.bloodRequest.quantity);
-    console.log(this.bloodRequest.bloodType);
     if(this.bloodRequest.quantity == null)
       this.bloodRequest.quantity = 0;
     if(this.bloodRequest.quantity <0 || this.bloodRequest.quantity > 10 || this.bloodRequest.bloodType == '' || this.bloodRequest.bloodBankID == '')

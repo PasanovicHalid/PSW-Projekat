@@ -98,7 +98,7 @@ namespace IntegrationAPI.Controllers
             {
                 Boolean isSuccessful = _bloodBankService.CheckBloodRequest(id, bloodType, quantity);
                 if (isSuccessful == false)
-                    return BadRequest();
+                    return NotFound();
 
                 Boolean hasBlood = _bloodBankService.SendBloodRequest(id, bloodType, quantity);
 
