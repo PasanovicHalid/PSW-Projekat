@@ -4,6 +4,7 @@ using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Service.CRUD;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace IntegrationAPI.Controllers
 {
@@ -83,6 +84,24 @@ namespace IntegrationAPI.Controllers
                 }
 
                 return Ok(bloodBank);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("{id}/{bloodType}/{quantity}")]
+        public ActionResult SendBloodRequest(int id, String bloodType, int quantity)
+        {
+            try
+            {
+                Boolean isSuccessful = _bloodBankService.SendBloodRequest(id, bloodType, quantity);
+                if (isSuccessful == false)
+                    return BadRequest();
+
+
+                return Ok();
             }
             catch
             {

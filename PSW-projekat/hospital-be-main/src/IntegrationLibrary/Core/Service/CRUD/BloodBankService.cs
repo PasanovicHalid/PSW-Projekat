@@ -83,5 +83,22 @@ namespace IntegrationLibrary.Core.Service.CRUD
                 throw new EmailAlreadyExistsException();
             }
         }
+
+        public bool SendBloodRequest(int bloodBankID, string BloodType, int quantity)
+        {
+            BloodBank bloodBank = GetById(bloodBankID);
+            if (bloodBank == null || !ValidateRequest(quantity))
+                return false;
+
+
+            return true;
+        }
+
+        private bool ValidateRequest(int quantity)
+        {
+            if(quantity <=0 || quantity > 10)
+                return false;
+            return true;
+        }
     }
 }

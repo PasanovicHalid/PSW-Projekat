@@ -9,5 +9,6 @@ namespace IntegrationLibrary.Core.Service.CRUD
 {
     public interface IBloodBankService : ICRUDService<BloodBank>
     {
+        Boolean SendBloodRequest(int bloodBankID, String BloodType, int quantity);
     }
 }
