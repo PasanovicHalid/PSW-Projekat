@@ -13,5 +13,7 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         bool CheckIfPasswordResetKeyExists(string passwordResetKey);
 
         BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey);
+        Boolean SendBloodRequest(int bloodBankID, String BloodType, int quantity);
+        Boolean CheckBloodRequest(int bloodBankID, String BloodType, int quantity);
     }
 }

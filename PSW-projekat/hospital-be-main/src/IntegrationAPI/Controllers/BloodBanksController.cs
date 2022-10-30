@@ -138,6 +138,24 @@ namespace IntegrationAPI.Controllers
             
         }
 
+        [HttpGet("{id}/{bloodType}/{quantity}")]
+        public ActionResult SendBloodRequest(int id, String bloodType, int quantity)
+        {
+            try
+            {
+                Boolean isSuccessful = _bloodBankService.CheckBloodRequest(id, bloodType, quantity);
+                if (isSuccessful == false)
+                    return NotFound();
+
+                Boolean hasBlood = _bloodBankService.SendBloodRequest(id, bloodType, quantity);
+
+                return Ok(hasBlood);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
 
         [HttpPut("{id}")]
         public ActionResult Update(int id ,BloodBankDTO entity)

@@ -1,7 +1,9 @@
+import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-// import { BloodRequest } from 'src/app/modules/hospital/model/blood-request.model';
+import { BloodRequest } from 'src/app/modules/blood-bank/model/blood-request.model';
 import { BloodBankService } from 'src/app/modules/blood-bank/services/blood-bank.service';
+import { BloodBank } from '../model/blood-bank.model';
 
 @Component({
   selector: 'app-blood-requests',
@@ -10,24 +12,36 @@ import { BloodBankService } from 'src/app/modules/blood-bank/services/blood-bank
 })
 export class BloodRequestsComponent implements OnInit {
 
-  private bloodBankID : string = '';
-  private bloodType: string = '';
-  private quantity: number = 0.0;
+  public bloodRequest: BloodRequest = new BloodRequest();
+  public bloodBanks : BloodBank[] = [];
 
   constructor(private bloodBankService: BloodBankService, private router: Router) { }
 
   ngOnInit(): void {
+    this.bloodBankService.getBloodBanks().subscribe(res =>{
+      this.bloodBanks = res;
+    });
+      
   }
 
-  public sendRequest() {
+  public sendBloodRequest() {
     if (!this.isValidInput()) return;
-    console.log("ok")
-    // this.bloodRequestService.sendRequest(this.bloodRequest).subscribe(res => {
-    //   this.router.navigate(['/home']);
-    // });
+    this.bloodBankService.sendBloodRequest(this.bloodRequest).subscribe(res => {
+
+      if(res == true)
+        alert("ima krvi")
+      else
+        alert("nema krvi")
+      window.location.reload();
+    });
   }
 
   private isValidInput(): boolean {
+    if(this.bloodRequest.quantity == null)
+      this.bloodRequest.quantity = 0;
+    if(this.bloodRequest.quantity <0 || this.bloodRequest.quantity > 10 || this.bloodRequest.bloodType == '' || this.bloodRequest.bloodBankID == '')
+      return false;
+  
     return true;
   }
 
