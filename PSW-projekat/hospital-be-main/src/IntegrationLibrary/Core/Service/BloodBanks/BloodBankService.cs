@@ -27,10 +27,16 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
 
         public void Create(BloodBank entity)
         {
-            CheckIfBankCanBeCreated(entity);
-            SetupBloodBank(entity);
-            _bloodBankRepository.Create(entity);
-            _emailService.SendEmailAsync(new BloodBankCreationMailRequest(entity));
+            try
+            {
+                CheckIfBankCanBeCreated(entity);
+                SetupBloodBank(entity);
+                _bloodBankRepository.Create(entity);
+                _emailService.SendEmailAsync(new BloodBankCreationMailRequest(entity));
+            } catch
+            {
+                throw;
+            }
         }
 
         private void SetupBloodBank(BloodBank entity)
