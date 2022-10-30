@@ -20,7 +20,7 @@ export class BloodBankService {
   }
   
   registerBloodBank(bloodBank: any): Observable<any>{
-    return this.http.post<any>(this.apiHost + 'api/BloodBanks', bloodBank, {headers: this.headers})
+    return this.http.post<any>(this.apiHost + 'api/BloodBanks', bloodBank, {headers: this.headers}).pipe(catchError(this.handleError));
   }
   
   changePassword(newPassword: any): Observable<any>{
@@ -31,15 +31,17 @@ export class BloodBankService {
     let errorMessage = '';
     if (error.status == 0) {
       // A client-side or network error ocured. Handle it acordingly.
-      console.error('An error occured: ', error.error);
+      // console.error('An error occured: ', error.error);
 
     } else {
-      console.error(`Backend returned code ${error.status}, body was: `, error.error);
-      errorMessage = `Backend returned code ${error.status}, body was: `, error.error;
+      // console.error(`Backend returned code ${error.status}, body was: `, error.error);
+      // errorMessage = `Backend returned code ${error.status}, body was: `, error.error;
+      // console.log(errorMessage);
+      // console.log(error.error)
     }
     //Return an observable with user-facing error message.
-    errorMessage += 'Something bad happened; please try again later.';
-    return throwError(() => new Error(errorMessage))
+    // errorMessage += 'Something bad happened; please try again later.';
+    return throwError(() => new Error(error.status +'\n'+ error.error))
   }
 
 }

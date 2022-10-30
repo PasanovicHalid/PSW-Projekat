@@ -1,6 +1,6 @@
-using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Repository.BloodBanks;
 using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Service.CRUD;
+using IntegrationLibrary.Core.Service.BloodBanks;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,9 +37,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
-            services.AddScoped<IPasswordService, PasswordService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IAPIKeyService, APIKeyService>();
             services.AddTransient<IEmailService, EmailService>();
         }
 

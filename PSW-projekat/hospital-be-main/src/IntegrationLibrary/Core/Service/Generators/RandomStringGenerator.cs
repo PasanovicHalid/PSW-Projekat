@@ -6,15 +6,22 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service.Generators
 {
-    public class PasswordService : IPasswordService
+    public class RandomStringGenerator
     {
-        private int _length = 12;
-        public string GeneratePassword()
+        public string GenerateBase64(int length)
         {
-            var key = new byte[_length];
-            using (var generator = RandomNumberGenerator.Create())
+            byte[] key = new byte[length];
+            using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
+                generator.GetBytes(key);
+            return Convert.ToBase64String(key);
+        }
+
+        public string GenerateBase62(int length)
+        {
+            byte[] key = new byte[length];
+            using (RandomNumberGenerator generator = RandomNumberGenerator.Create())
                 generator.GetBytes(key);
             return ToBase62String(key);
         }
@@ -27,7 +34,7 @@ namespace IntegrationLibrary.Core.Service
             while (dividend != 0)
             {
                 dividend = BigInteger.DivRem(dividend, alphabet.Length, out BigInteger remainder);
-                builder.Insert(0, alphabet[Math.Abs(((int)remainder))]);
+                builder.Insert(0, alphabet[Math.Abs((int)remainder)]);
             }
             return builder.ToString();
         }

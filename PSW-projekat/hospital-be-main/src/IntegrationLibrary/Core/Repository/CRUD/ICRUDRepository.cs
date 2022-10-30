@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository.CRUD
 {
     public interface ICRUDRepository<TEntity> where TEntity : BaseModel
     {

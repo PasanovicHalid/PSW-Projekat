@@ -4,7 +4,7 @@ export class Feedback {
   isAnonimous: boolean = false;
   isPublic: boolean = false;
   dateCreated: Date = new Date();
-  userId: string = '';
+  userId: string = '0';
 
   public constructor(obj?: any) {
       if (obj) {

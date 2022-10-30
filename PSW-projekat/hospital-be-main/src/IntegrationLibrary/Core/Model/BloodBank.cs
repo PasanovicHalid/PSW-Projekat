@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -20,17 +21,49 @@ namespace IntegrationLibrary.Core.Model
 
         private string _apiKey;
 
+        private string _passwordResetKey;
+
+        private AccountStatus _accountStatus;
+
         public BloodBank()
         {
         }
 
-        public BloodBank(string name, string email, string password, string serverAddress, string apiKey)
+        public BloodBank(string name, string email, string serverAddress)
+        {
+            _name = name;
+            _email = email;
+            _serverAddress = serverAddress;
+            _accountStatus = AccountStatus.PENDING;
+        }
+
+        public BloodBank(string name, string email, string password, string serverAddress, string apiKey, string passwordResetKey)
+        {
+            _name = name;
+            _email = email;
+            _password = password;
+            _serverAddress = serverAddress;
+            _apiKey = apiKey;
+            _passwordResetKey = passwordResetKey;
+            _accountStatus = AccountStatus.PENDING;
+        }
+
+        public BloodBank(string name, string email, string password, string serverAddress, string apiKey, string passwordResetKey, AccountStatus accountStatus)
         {
             Name = name;
             Email = email;
             Password = password;
             ServerAddress = serverAddress;
             ApiKey = apiKey;
+            PasswordResetKey = passwordResetKey;
+            AccountStatus = accountStatus;
+        }
+
+        public void ActivatePassword(string password)
+        {
+            Password = password;
+            AccountStatus = AccountStatus.ACTIVE;
+            PasswordResetKey = null;
         }
         public string Name { get => _name; set => _name = value; }
 
@@ -43,5 +76,10 @@ namespace IntegrationLibrary.Core.Model
         public string ServerAddress { get => _serverAddress; set => _serverAddress = value; }
         [Required]
         public string ApiKey { get => _apiKey; set => _apiKey = value; }
+
+        public string PasswordResetKey { get => _passwordResetKey; set => _passwordResetKey = value; }
+
+        [Required]
+        public AccountStatus AccountStatus { get => _accountStatus; set => _accountStatus = value; }
     }
 }

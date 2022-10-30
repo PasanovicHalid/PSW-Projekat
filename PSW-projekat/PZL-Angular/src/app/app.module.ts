@@ -17,6 +17,8 @@ import { PagesModule } from "./modules/pages/pages.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BloodRequestsComponent } from './modules/blood-bank/blood-requests/blood-requests.component';
 import { BloodBankChangePasswordComponent } from './modules/blood-bank/blood-bank-change-password/blood-bank-change-password.component';
+import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { BloodBankChangePasswordComponent } from './modules/blood-bank/blood-ban
     FormsModule,
     MaterialModule,
     PagesModule,
-    HospitalModule
+    HospitalModule,
+    CommonModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

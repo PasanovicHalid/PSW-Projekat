@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Core.Model
 {
-    public interface IAPIKeyService
+    public enum AccountStatus
     {
-        string GenerateKey();
-
+        PENDING,
+        ACTIVE,
+        DISABLED
     }
 }

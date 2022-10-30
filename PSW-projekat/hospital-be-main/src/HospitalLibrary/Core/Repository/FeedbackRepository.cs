@@ -20,6 +20,7 @@ namespace HospitalLibrary.Core.Repository
 
         public void Create(Feedback entity)
         {
+            entity.DateCreated = DateTime.Now;
             _context.Feedbacks.Add(entity);
             _context.SaveChanges();
         }
