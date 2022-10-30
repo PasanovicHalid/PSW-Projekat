@@ -16,6 +16,8 @@ import { HospitalModule } from "./modules/hospital/hospital.module";
 import { PagesModule } from "./modules/pages/pages.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BloodRequestsComponent } from './modules/blood-bank/blood-requests/blood-requests.component';
+import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { BloodRequestsComponent } from './modules/blood-bank/blood-requests/bloo
     FormsModule,
     MaterialModule,
     PagesModule,
-    HospitalModule
+    HospitalModule,
+    CommonModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -37,7 +37,7 @@ export class BloodBankService {
     }
     //Return an observable with user-facing error message.
     // errorMessage += 'Something bad happened; please try again later.';
-    return throwError(() => new Error(error.status + '\n' + error.message +'\n'+ error.error))
+    return throwError(() => new Error(error.status +'\n'+ error.error))
   }
 
 }
