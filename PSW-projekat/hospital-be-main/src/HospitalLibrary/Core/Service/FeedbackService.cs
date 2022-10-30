@@ -65,5 +65,32 @@ namespace HospitalLibrary.Core.Service
             }
             return feedbackDtos;
         }
+
+        public List<FeedbackDto> GetAllFeedbackPublicDtos()
+        {
+            IEnumerable<Feedback> allFeedbacks = _feedbackRepository.GetAll();
+            List<FeedbackDto> feedbackDtos = new();
+
+            foreach (Feedback feedback in allFeedbacks)
+            {
+                if (feedback.IsPublic)
+                {
+                    FeedbackDto feedbackDto = new();
+                    feedbackDto.FeedbackId = feedback.FeedbackId;
+                    feedbackDto.Description = feedback.Description;
+
+                    if (feedback.IsAnonimous)
+                        feedbackDto.Username = "Anonymous";
+                    else
+                        feedbackDto.Username = feedback.UserId;
+
+                    feedbackDto.Public = "Public";
+                    feedbackDto.DateCreated = feedback.DateCreated.ToString().Split(' ')[0];
+                    feedbackDtos.Add(feedbackDto);
+                }
+            }
+            return feedbackDtos;
+        }
+        
     }
 }

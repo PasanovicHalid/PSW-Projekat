@@ -1,0 +1,80 @@
+/**********W**********/
+.w-40{
+    position: inherit;
+	width: 40%;
+}
+
+.w-45{
+    position: inherit;
+	width: 45%;
+}
+
+.w-60{
+    position: inherit;
+	width: 60%;
+}
+
+.w-70{
+    position: inherit;
+	width: 70%;
+}
+
+.w-80{
+    position: inherit;
+	width: 80%;
+}
+
+.w-90{
+    position: inherit;
+	width: 90%;
+}
+
+/**********H**********/
+.h-80{
+    position: inherit;
+	height: 80%;
+}
+
+.h-90{
+    position: inherit;
+	height: 90%;
+}
+
+/**********START**********/
+.start-8{
+    position: absolute;
+    left: 8%;
+}
+
+.start-10{
+    position: absolute;
+    left: 10%;
+}
+
+.start-5{
+    position: absolute;
+    left: 5%;
+}
+
+/**********TOP**********/
+.top-40{
+    position: absolute;
+    top: 40%;
+}
+
+.top-55{
+    position: absolute;
+    top: 55%;
+}
+
+.top-60{
+    position: absolute;
+    top: 60%;
+}
+
+.top-65{
+    position: absolute;
+    top: 65%;
+}
+
+/**********SHAPES**********/

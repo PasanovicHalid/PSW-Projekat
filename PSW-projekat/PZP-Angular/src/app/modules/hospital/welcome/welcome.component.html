@@ -1,0 +1,105 @@
+<div>
+    <img class="w-100" src=".//src//assets//images//home-page-bg-blue-kek.jpg">
+    <nav class="d-flex fixed-top justify-content-center">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-70 px-5 shadow-lg" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px">
+            <a class="navbar-brand fs-1 m-3" href="#">Welcome</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mt-2">
+                    <li class="nav-item active">
+                        <a class="nav-link fs-5" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="#">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <div class="collapse navbar-collapse m-3">
+                    <ul class="navbar-nav mt-2">
+                        <li class="nav-item active">
+                            <a class="nav-link fs-3 text-white" href="#">Login</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </nav>
+    <div class="d-flex justify-content-end top-55 w-50 bg-dark">
+        <div class="display-1 fw-bold text-light px-5 p-3 text-right">NAZIV BOLNICE</div> 
+     </div>
+
+    <div class="w-100 bg-dark shadow-lg" style="height: 20px;">
+
+    </div> 
+    <div class="d-flex justify-content-center w-100 bg-light text-white" style="height: 400px; background: linear-gradient(to bottom, #FFFFFF, #268ad1);">
+        <div class="w-80 h-80 bg-dark m-auto p-5 rounded-3 shadow-lg">
+            <h2 class="mb-0">Ukoliko nekoga bas zanima sta bi ovde trebalo da pise neka se javi asistentu, na casu, hvala!</h2>
+            <h2 class="mb-0">123 cisto da nema samo jedan red :D</h2>
+        </div>
+    </div> 
+    <div class="w-100 bg-dark shadow-lg" style="height: 20px;">
+
+    </div> 
+    <div class="w-100 bg-light text-white">
+        <section style="background-color: #268ad1;">
+            <div class="container py-5"> 
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10">
+                        <div class="card text-dark shadow-lg">
+                            <div class="card-body p-4">
+                                <h4 class="mb-0">Recent comments</h4>
+                                <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+                            </div>
+
+                            <hr class="my-0" style="height: 1px;"/>
+
+                            <div *ngFor="let f of dataSourceFeedbacks">
+                                <div class="card-body p-4">
+                                    <div class="d-flex flex-start">
+                                        <img class="rounded-circle shadow-1-strong me-3"
+                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" 
+                                            width="60" height="60" 
+                                        />
+                                        <div>
+                                            <h4 class="fw-bold mb-1">{{f.username}}</h4>
+                                            <div class="d-flex align-items-center mb-3">
+                                                <div class="mb-0">
+                                                    <h5 class="fw-bold mb-1">{{f.dateCreated}}</h5>
+                                                    <!--
+                                                    <span class="badge bg-success">Approved</span>
+                                                    -->
+                                                </div>
+                                                <!--
+                                                <a href="#!" class="link-muted">link1<i class="fas fa-pencil-alt ms-2"></i></a>
+                                                <a href="#!" class="text-success">link2<i class="fas fa-redo-alt ms-2"></i></a>
+                                                <a href="#!" class="link-danger">link3<i class="fas fa-heart ms-2"></i></a>
+                                                -->
+                                            </div>
+                                        <p class="mb-0">
+                                            {{f.description}}
+                                        </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-0" style="height: 1px;" />
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-light w-100" (click)="showMore()">Show More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="w-100 bg-dark" style="height: 20px;">
+
+    </div> 
+</div>
