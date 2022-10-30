@@ -35,9 +35,9 @@ namespace IntegrationAPI.Controllers
                 _bloodBankService.Create(bank);
                 return CreatedAtAction("GetById", new { id = bank.Id }, bank);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -66,11 +66,12 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
+                //throw(new APIKeyExistsException());
                 return Ok(_bloodBankService.GetAll());
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
