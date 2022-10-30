@@ -32,7 +32,7 @@ export class BloodBankRegistrationComponent  {
     if(isValid){
       return true;
     }else{
-      console.log("Incorrect input");
+      console.log("Incorrect  ");
       return false;
     }
   }

@@ -8,7 +8,7 @@ import { BloodBank } from '../model/blood-bank.model';
 })
 export class BloodBankService {
 
-  apiHost: string = "http://localhost:45488/";
+  apiHost: string = "http://localhost:5000/";
   headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 
   constructor(private http: HttpClient) { }
@@ -21,6 +21,10 @@ export class BloodBankService {
   
   registerBloodBank(bloodBank: any): Observable<any>{
     return this.http.post<any>(this.apiHost + 'api/BloodBanks', bloodBank, {headers: this.headers})
+  }
+  
+  changePassword(newPassword: any): Observable<any>{
+    return this.http.post<any>(this.apiHost + 'api/BloodBanks', newPassword, {headers: this.headers})
   }
 
   private handleError(error: HttpErrorResponse) {
