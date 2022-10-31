@@ -76,7 +76,7 @@ namespace HospitalLibrary.Core.Service
                 if (feedback.IsPublic)
                 {
                     FeedbackDto feedbackDto = new();
-                    feedbackDto.FeedbackId = feedback.FeedbackId;
+                    feedbackDto.FeedbackId = feedback.Id;
                     feedbackDto.Description = feedback.Description;
 
                     if (feedback.IsAnonimous)
