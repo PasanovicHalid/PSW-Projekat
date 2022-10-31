@@ -3,6 +3,8 @@ using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.MailRequests;
 using IntegrationLibrary.Core.Repository.BloodBanks;
 using IntegrationLibrary.Core.Service.Generators;
+using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.BloodBankConnection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +20,13 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         private readonly IEmailService _emailService;
         private readonly APIKeyGenerator _apiKeyGenerator = new APIKeyGenerator();
         private readonly PasswordGenerator _passwordGenerator = new PasswordGenerator();
+        private readonly IBloodBankConnection _bloodBankConnection;
 
-        public BloodBankService(IBloodBankRepository bloodBankRepository, IEmailService emailService)
+        public BloodBankService(IBloodBankRepository bloodBankRepository, IEmailService emailService, IBloodBankConnection bloodBankConnection)
         {
             _bloodBankRepository = bloodBankRepository;
             _emailService = emailService;
+            _bloodBankConnection = bloodBankConnection;
         }
 
         public void Create(BloodBank entity)
@@ -108,6 +112,32 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         public BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey)
         {
             return _bloodBankRepository.GetBloodBankFromPasswordResetKey(passwordResetKey);
+        }
+
+        public bool CheckBloodRequest(int bloodBankID, string bloodType, int quantity)
+        {
+            BloodBank bloodBank = GetById(bloodBankID);
+            if (bloodBank == null || !ValidateRequest(quantity, bloodType))
+                return false;
+            return true;
+
+        }
+        public bool SendBloodRequest(int bloodBankID, string bloodType, int quantity)
+        {
+            BloodBank bloodBank = GetById(bloodBankID);
+            return _bloodBankConnection.sendBloodRequest(bloodBank, bloodType, quantity);
+
+        }
+        
+        private bool ValidateRequest(int quantity, string bloodType)
+        {
+            if((quantity <0 || quantity > 10) || 
+                !(bloodType.Equals("Aplus") || bloodType.Equals("Bplus") || bloodType.Equals("ABplus") ||
+                bloodType.Equals("Oplus") || bloodType.Equals("Aminus") || bloodType.Equals("Bminus") ||
+                bloodType.Equals("ABminus") || bloodType.Equals("Ominus")))
+                return false;
+
+            return true;
         }
     }
 }
