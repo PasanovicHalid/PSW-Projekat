@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,18 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
-    public class AppointmentService : IService<Appointment>
+    public class AppointmentService : IAppointmentService
     {
-        private readonly IRepository<Appointment> _appointmentRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
 
-        public AppointmentService(IRepository<Appointment> appointmentRepository)
+        public AppointmentService(IAppointmentRepository appointmentRepository)
         {
             _appointmentRepository = appointmentRepository;
         }
 
         public void Create(Appointment entity)
         {
+            entity.Deleted = false;
             _appointmentRepository.Create(entity);
         }
 
@@ -62,5 +64,38 @@ namespace HospitalLibrary.Core.Service
         {
             _appointmentRepository.Update(entity);
         }
+
+        public IEnumerable<AppointmentDto> GetAllByDoctor(int doctorId)
+        {
+            IEnumerable<Appointment> allAppointments = _appointmentRepository.GetAllByDoctor(doctorId);
+            List<AppointmentDto> appointmentsDtos = new();
+
+            foreach (Appointment appointment in allAppointments)
+            {
+                AppointmentDto appointmentDto = new AppointmentDto();
+                UserDto patientDto = new UserDto();
+                patientDto.Name = appointment.Patient.Name;
+                patientDto.Surname = appointment.Patient.Surname;
+
+                UserDto doctorDto = new UserDto();
+                doctorDto.Name = appointment.Doctor.Name;
+                doctorDto.Surname = appointment.Doctor.Surname;
+
+                doctorDto.Id = appointment.Doctor.Id;
+
+                appointmentDto.Patinet = patientDto;
+                appointmentDto.Doctor = doctorDto;
+                appointmentDto.DateTime = appointment.DateTime;
+
+                appointmentDto.AppointmentId = appointment.Id;
+
+                appointmentsDtos.Add(appointmentDto);
+
+            }
+            return appointmentsDtos;
+            
+        }
+
+
     }
 }

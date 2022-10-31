@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
 })
 export class CreateAppointmentComponent implements OnInit {
 
-  public appointment: Appointment = new Appointment();
+  // public appointment: Appointment = new Appointment();
 
   //constructor() { }
   constructor(private appointmentService: AppointmentService, private router: Router) { }
 
-  public createAppointment() {
+  /*public createAppointment() {
     if (!this.isValidInput()) return;
     this.appointmentService.createAppointment(this.appointment).subscribe(res => {
       this.router.navigate(['/appointments']);
@@ -24,7 +24,7 @@ export class CreateAppointmentComponent implements OnInit {
 
   private isValidInput(): boolean {
     return this.appointment?.patientId != 0 && this.appointment?.date.toString() != '' && this.appointment?.time.toString() != '';
-  }
+  }*/
 
   ngOnInit(): void {
   }

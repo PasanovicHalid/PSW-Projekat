@@ -23,7 +23,7 @@ namespace IntegrationLibrary.Core.Service.Generators
 
         public string GeneratePasswordResetKey()
         {
-            return _randomStringGenerator.GenerateBase64(_passwordResetKeyLength);
+            return _randomStringGenerator.GenerateBase62(_passwordResetKeyLength);
         }
     }
 }

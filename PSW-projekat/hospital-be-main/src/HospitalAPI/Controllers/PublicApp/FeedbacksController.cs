@@ -49,7 +49,7 @@ namespace HospitalAPI.Controllers.PublicApp
             }
 
             _feedbackService.Create(feedback);
-            return CreatedAtAction("GetById", new { id = feedback.FeedbackId }, feedback);
+            return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
         }
 
         [HttpPut("{id}")]
@@ -60,7 +60,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 return BadRequest(ModelState);
             }
 
-            if (id != feedback.FeedbackId)
+            if (id != feedback.Id)
             {
                 return BadRequest();
             }

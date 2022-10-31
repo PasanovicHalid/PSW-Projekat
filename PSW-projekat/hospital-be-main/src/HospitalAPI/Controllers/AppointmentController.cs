@@ -11,9 +11,9 @@ namespace HospitalAPI.Controllers
 
     public class AppointmentController : ControllerBase
     {
-        private readonly IService<Appointment> _appointmentService;
+        private readonly IAppointmentService _appointmentService;
 
-        public AppointmentController(IService<Appointment> appointmentService)
+        public AppointmentController(IAppointmentService appointmentService)
         {
             _appointmentService = appointmentService;
         }
@@ -27,25 +27,25 @@ namespace HospitalAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var feedback = _appointmentService.GetById(id);
-            if (feedback == null)
+            var appointment = _appointmentService.GetById(id);
+            if (appointment == null)
             {
                 return NotFound();
             }
 
-            return Ok(feedback);
+            return Ok(appointment);
         }
 
         [HttpPost]
-        public ActionResult Create(Appointment feedback)
+        public ActionResult Create(Appointment appointment)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _appointmentService.Create(feedback);
-            return CreatedAtAction("GetById", new { id = feedback.AppointmentId }, feedback);
+            _appointmentService.Create(appointment);
+            return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
         }
 
         [HttpPut("{id}")]
@@ -56,7 +56,7 @@ namespace HospitalAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != appointment.AppointmentId)
+            if (id != appointment.Id)
             {
                 return BadRequest();
             }
@@ -85,5 +85,11 @@ namespace HospitalAPI.Controllers
             _appointmentService.Delete(appointment);
             return NoContent();
         }
+
+        [HttpGet("doctor/{doctorId}")]
+        public ActionResult GetAllByDoctor(int doctorId)
+        {
+            return Ok(_appointmentService.GetAllByDoctor(doctorId));
+        }  
     }
 }

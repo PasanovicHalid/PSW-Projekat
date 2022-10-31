@@ -51,7 +51,7 @@ namespace HospitalLibrary.Core.Service
             foreach (Feedback feedback in allFeedbacks)
             {
                 FeedbackDto feedbackDto = new();
-                feedbackDto.FeedbackId = feedback.FeedbackId;
+                feedbackDto.FeedbackId = feedback.Id;
                 feedbackDto.Description = feedback.Description;
 
                 if (feedback.IsAnonimous)
