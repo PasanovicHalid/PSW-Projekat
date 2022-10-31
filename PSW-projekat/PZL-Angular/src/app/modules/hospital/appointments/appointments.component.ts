@@ -13,24 +13,25 @@ import { AppointmentService } from 'src/app/modules/hospital/services/appointmen
 export class AppointmentsComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<Appointment>();
-  displayedColumns: string[] = ['date', 'time', 'patientId'];
+  displayedColumns: string[] = ['dateTime', 'patientName', 'patientSurname'];
   public appointments: Appointment[] = [];
 
   //constructor() { }
 
   constructor(private appointmentService: AppointmentService, private router: Router) { }
 
-  /*
+  
   ngOnInit(): void {
-    this.appointmentService.getAppointments().subscribe(res => {
-      this.appointments = res;
+    this.appointmentService.GetAllByDoctor(3).subscribe(res => {
+      let result = Object.values(JSON.parse(JSON.stringify(res)));
+      result.forEach((element: any) => {
+        var app = new Appointment(element.appointmentId, element.dateTime, element.patinet.name, element.patinet.surname);
+        this.appointments.push(app);
+      });
       this.dataSource.data = this.appointments;
     })
   }
-  */
-  ngOnInit(): void{
-
-  }
+  
   public addAppointment() {
     this.router.navigate(['/appointments/addA']);
   }

@@ -21,4 +21,8 @@ export class AppointmentService {
     return this.http.post<any>(this.apiHost + 'api/appointments', appointment, {headers: this.headers});
   }
 
+  GetAllByDoctor(doctorId: number) : Observable<any> {
+    return this.http.get<Appointment[]>('http://localhost:16177/api/Appointment/doctor/' + doctorId, {headers: this.headers});
+  }
+
 }

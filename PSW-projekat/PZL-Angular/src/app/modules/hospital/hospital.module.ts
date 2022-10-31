@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'rooms/:id/update', component: UpdateRoomComponent },
   { path: 'feedbacks', component: FeedbacksComponent },
   { path: 'appointments', component: AppointmentsComponent },
+  { path: 'appointments/doctor/:id', component: AppointmentsComponent },
   { path: 'appointments/addA', component: CreateAppointmentComponent },
 
 

@@ -86,7 +86,7 @@ namespace HospitalAPI.Controllers
             return NoContent();
         }
 
-        [HttpGet("/doctor/{doctorId}")]
+        [HttpGet("doctor/{doctorId}")]
         public ActionResult GetAllByDoctor(int doctorId)
         {
             return Ok(_appointmentService.GetAllByDoctor(doctorId));

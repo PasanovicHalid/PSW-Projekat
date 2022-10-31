@@ -43,3 +43,33 @@ p {
     float: left;
     margin-right: auto;
 }
+
+.mat-cell{
+    font-size:12px;
+    display: table-cell;
+    height: 48px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-left: 2px solid rgba(0, 0, 0, 0.12);
+    border-right: 2px solid rgba(0, 0, 0, 0.12);
+    }
+
+.mat-column-dateTime {
+    flex: none;
+    width: 40px;
+}
+
+.mat-column-patientName {
+    flex: none;
+    width: 100px;
+}
+
+.mat-column-patientSurname {
+    flex: none;
+    width: 100px;
+}
+
+
+
+
