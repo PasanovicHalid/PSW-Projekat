@@ -9,7 +9,7 @@ namespace HospitalLibrary.Core.Model
 {
     public class Feedback : BaseModel
     {
-        public int FeedbackId { get; set; }
+        //public int FeedbackId { get; set; }
 
         [Required]
         public String Description { get; set; }

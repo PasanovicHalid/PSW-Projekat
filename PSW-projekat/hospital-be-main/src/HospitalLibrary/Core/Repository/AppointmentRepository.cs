@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class AppointmentRepository : IRepository<Appointment>
+    public class AppointmentRepository : IAppointmentRepository
     {
 
         private readonly HospitalDbContext _context;
@@ -21,6 +21,12 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<Appointment> GetAll()
         {
             return _context.Appointments.ToList();
+        }
+
+        public IEnumerable<Appointment> GetAllByDoctor(int doctorId)
+        {
+            return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
+                .Where(x => x.Doctor.Id == doctorId && !x.Deleted).ToList();
         }
 
         public Appointment GetById(int id)
