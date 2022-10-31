@@ -89,5 +89,11 @@ namespace HospitalAPI.Controllers.PublicApp
             _feedbackService.Delete(room);
             return NoContent();
         }
+
+        [HttpGet("public")]
+        public ActionResult GetAllFeedbackPublicDtos()
+        {
+            return Ok(_feedbackService.GetAllFeedbackPublicDtos());
+        }
     }
 }

@@ -9,6 +9,7 @@ import { RoomsComponent } from "./rooms/rooms.component";
 import { UpdateRoomComponent } from "./update-room/update-room.component";
 import { FeedbacksComponent } from './feedbacks/feedbacks.component';
 import { CreateFeedbackComponent } from './create-feedback/create-feedback.component';
+import { WelcomeComponent } from "./welcome/welcome.component";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
     CreateRoomComponent,
     UpdateRoomComponent,
     FeedbacksComponent,
-    CreateFeedbackComponent
+    CreateFeedbackComponent,
+    WelcomeComponent
   ],
   imports: [
     CommonModule,

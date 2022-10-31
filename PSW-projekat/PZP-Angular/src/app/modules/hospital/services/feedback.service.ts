@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Feedback } from '../model/feedback.model';
+import { FeedbackDto } from '../model/feedbackDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,9 @@ export class FeedbackService {
 
   updateFeedback(feedback: any): Observable<any> {
     return this.http.put<any>(this.apiHost + 'api/feedbacks/' + feedback.id, feedback, {headers: this.headers});
+  }
+
+  getAllFeedbackPublicDtos(): Observable<FeedbackDto[]> {
+    return this.http.get<FeedbackDto[]>(this.apiHost + 'api/feedbacks/public', {headers: this.headers});
   }
 }
