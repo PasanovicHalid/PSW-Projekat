@@ -16,22 +16,16 @@ export class BloodBankRegistrationComponent  {
   constructor(private bloodBankService: BloodBankService, private router: Router, private toastr: ToastrService){}
   
   public registerBloodBank(){
-    console.log(this.bloodBank);
     if (!this.isValidInput()) return;
     this.bloodBank.id=0;
     this.bloodBank.apiKey="apikey";
     this.bloodBank.password="pass";
-    console.log(this.bloodBank);
     this.bloodBankService.registerBloodBank(this.bloodBank).subscribe(res => {
       this.router.navigate(['/blood-banks']);
     }, (error) => {
       this.errorMessage = error;
       this.toastError();
     });
-      if (this.errorMessage !== '') {
-       // console.log("nasli error")
-        console.log(this.errorMessage)
-      }
   }
 
   private toastError() {
