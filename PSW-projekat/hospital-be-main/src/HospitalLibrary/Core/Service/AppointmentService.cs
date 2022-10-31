@@ -81,9 +81,13 @@ namespace HospitalLibrary.Core.Service
                 doctorDto.Name = appointment.Doctor.Name;
                 doctorDto.Surname = appointment.Doctor.Surname;
 
+                doctorDto.Id = appointment.Doctor.Id;
+
                 appointmentDto.Patinet = patientDto;
                 appointmentDto.Doctor = doctorDto;
                 appointmentDto.DateTime = appointment.DateTime;
+
+                appointmentDto.AppointmentId = appointment.Id;
 
                 appointmentsDtos.Add(appointmentDto);
 
