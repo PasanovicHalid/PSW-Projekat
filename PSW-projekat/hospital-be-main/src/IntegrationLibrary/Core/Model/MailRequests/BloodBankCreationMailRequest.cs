@@ -13,10 +13,10 @@ namespace IntegrationLibrary.Core.Model.MailRequests
         {
             ToEmail = new MailAddress(bank.Email);
             Subject = "Welcome " + bank.Name;
-            Body = "Welcome to our intranet system <br/>" +
-                "Your password is: " + bank.Password + "<br />" +
-                "Your API key is: " + bank.ApiKey + " <br />" +
-                "Password reset link: " + "http://localhost:5000/" + bank.PasswordResetKey;
+            Body = "Welcome to our intranet system <br>" +
+                "Your password is: " + bank.Password + "<br>" +
+                "Your API key is: " + bank.ApiKey + " <br>" +
+                "Password reset link: " + "http://localhost:5000/blood-bank-change-password?passKey=" + bank.PasswordResetKey;
 
         }
     }

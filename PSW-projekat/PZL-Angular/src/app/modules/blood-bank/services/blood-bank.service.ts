@@ -23,8 +23,16 @@ export class BloodBankService {
     return this.http.post<any>(this.apiHost + 'api/BloodBanks', bloodBank, {headers: this.headers}).pipe(catchError(this.handleError));
   }
   
-  changePassword(newPassword: any): Observable<any>{
-    return this.http.post<any>(this.apiHost + 'api/BloodBanks', newPassword, {headers: this.headers})
+  checkBankExist(passKey: String):Observable<any> {
+    console.log(this.apiHost + 'api/BloodBanks/reset/' + passKey);
+    return this.http.get<any>(this.apiHost + 'api/BloodBanks/reset/' + passKey, {headers: this.headers}).pipe(catchError(this.handleError));
+  }
+
+  changePassword(newPassword: any, passKey: any): Observable<any>{
+    console.log(this.apiHost + 'api/BloodBanks/reset/' + passKey);
+   return this.http.put<any>(this.apiHost + 'api/BloodBanks/reset/' + passKey, newPassword, {headers: this.headers}); 
+     //return this.http.post<any>(this.apiHost + 'api/BloodBanks', newPassword, {headers: this.headers})
+    // return this.http.post<any>(this.apiHost + 'api/BloodBanks', newPassword, {headers: this.headers})
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -41,6 +49,7 @@ export class BloodBankService {
     }
     //Return an observable with user-facing error message.
     // errorMessage += 'Something bad happened; please try again later.';
+    console.log(new Error(error.status +'\n'+ error.error).message)
     return throwError(() => new Error(error.status +'\n'+ error.error))
   }
 

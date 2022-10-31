@@ -1,7 +1,11 @@
 import { Component, importProvidersFrom, OnInit } from '@angular/core';
 import { BloodBank } from '../model/blood-bank.model';
 import { BloodBankService } from '../services/blood-bank.service';
-import { Router } from '@angular/router';
+import { Router, UrlSegment } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { PasswordReset } from '../model/passwordReset.model';
+
 
 @Component({
   selector: 'app-blood-bank-change-password',
@@ -10,27 +14,41 @@ import { Router } from '@angular/router';
 })
 export class BloodBankChangePasswordComponent implements OnInit {
 
+  public passKey : String = new String();
   public bloodBank : BloodBank = new BloodBank();
-  public newPassword: String = new String();
-  public repeatedPassword: String = new String();
+  public newPassword: PasswordReset = new PasswordReset();
+  public repeatedPassword: PasswordReset = new PasswordReset();
 
-  constructor(private bloodBankService: BloodBankService, private router: Router) { }
+  constructor(private toastr: ToastrService,private route: ActivatedRoute, private bloodBankService: BloodBankService, private router: Router) { }
 
   ngOnInit(): void {
+    this.route.queryParams
+    .subscribe(params => {
+      //  console.log(params); 
+      this.passKey = params['passKey'];
+      console.log(this.passKey);
+    }
+    );
+    //OVO TREBA DA SE JOS PROVERI ZASTO NE RADI TA PROVERA 
+    this.bloodBankService.checkBankExist(this.passKey).subscribe(res => {
+      this.toastr.success("Change password");
+      console.log(res);
+    }, (error) => {
+      this.toastr.error('Bank not found')
+    });
+    //console.log(bankExist);
   }
 
   public changePassword(){
     if(!this.isValidInput()) return;
     console.log(this.newPassword);
     console.log(this.repeatedPassword);
-    this.bloodBankService.changePassword(this.newPassword).subscribe(res =>
-      this.router.navigate(['/blood-banks']));
-      console.log("zavrsili smo registraciju");
-
-  }
+    this.bloodBankService.changePassword(this.newPassword, this.passKey).subscribe(res =>
+    this.router.navigate(['/home']));
+    }
 
   private isValidInput(): boolean {
-    var isValid = this.newPassword == this.repeatedPassword && this.newPassword.length > 7; 
+    var isValid = this.newPassword.password == this.repeatedPassword.password && this.newPassword.password.length > 7; 
     if(isValid){
       return true;
     }else{

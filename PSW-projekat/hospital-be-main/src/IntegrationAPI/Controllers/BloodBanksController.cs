@@ -112,7 +112,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPut("reset/{key}")]
-        public ActionResult ActivatePassword(string key, string password)
+        public ActionResult ActivatePassword(string key, PasswordResetDTO password)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace IntegrationAPI.Controllers
                     return BadRequest(new PasswordKeyDoesntExistException());
                 }
 
-                bloodBank.ActivatePassword(password);
+                bloodBank.ActivatePassword(password.Password);
                 _bloodBankService.Update(bloodBank);
                 return Ok();
             } 
