@@ -24,9 +24,7 @@ export class BloodBankChangePasswordComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams
     .subscribe(params => {
-      //  console.log(params); 
       this.passKey = params['passKey'];
-      console.log(this.passKey);
     }
     );
     //OVO TREBA DA SE JOS PROVERI ZASTO NE RADI TA PROVERA 
@@ -36,7 +34,6 @@ export class BloodBankChangePasswordComponent implements OnInit {
     }, (error) => {
       this.toastr.error('Bank not found')
     });
-    //console.log(bankExist);
   }
 
   public changePassword(){

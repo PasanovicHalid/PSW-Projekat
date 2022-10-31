@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { Observable, catchError, throwError } from 'rxjs';
 import { BloodBank } from '../model/blood-bank.model';
-import { BloodRequest } from '../model/blood-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,6 @@ export class BloodBankService {
   constructor(private http: HttpClient) { }
 
   getBloodBanks(): Observable<BloodBank[]> {
-    // console.log(this.http.get<BloodBank[]>(this.apiHost + 'api/BloodBanks', {headers: this.headers}).pipe(catchError(this.handleError)));
     return this.http.get<BloodBank[]>(this.apiHost + 'api/BloodBanks', {headers: this.headers}).pipe(catchError(this.handleError));
   }
   
@@ -31,8 +29,6 @@ export class BloodBankService {
   changePassword(newPassword: any, passKey: any): Observable<any>{
     console.log(this.apiHost + 'api/BloodBanks/reset/' + passKey);
    return this.http.put<any>(this.apiHost + 'api/BloodBanks/reset/' + passKey, newPassword, {headers: this.headers}); 
-     //return this.http.post<any>(this.apiHost + 'api/BloodBanks', newPassword, {headers: this.headers})
-    // return this.http.post<any>(this.apiHost + 'api/BloodBanks', newPassword, {headers: this.headers})
   }
 
   sendBloodRequest(bloodRequest: any): Observable<any>{
@@ -40,20 +36,7 @@ export class BloodBankService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.status == 0) {
-      // A client-side or network error ocured. Handle it acordingly.
-      // console.error('An error occured: ', error.error);
-
-    } else {
-      // console.error(`Backend returned code ${error.status}, body was: `, error.error);
-      // errorMessage = `Backend returned code ${error.status}, body was: `, error.error;
-      // console.log(errorMessage);
-      // console.log(error.error)
-    }
-    //Return an observable with user-facing error message.
-    // errorMessage += 'Something bad happened; please try again later.';
-    console.log(new Error(error.status +'\n'+ error.error).message)
+    // console.log(new Error(error.status +'\n'+ error.error).message)
     return throwError(() => new Error(error.status +'\n'+ error.error))
   }
   private handleBloodRequestErrors(error: HttpErrorResponse) {
