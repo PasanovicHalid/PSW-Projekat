@@ -2,9 +2,10 @@
     width: 80%;
     margin: auto;
     margin-top: 20px;
-    border-radius: 3px;
-    border: #DCD6CC 1px solid;
+    border-radius: 5px;
+    border: #DCD6CC 1.5px solid;
     background-color: white;
+    padding-bottom: 0.5rem;
 }
 
 table {
@@ -15,7 +16,8 @@ table {
     padding-bottom: 20px;
     padding-top: 20px;
     padding-left: 20px;
-    font-size: 20px;
+    font-size: 25px;
+    font-weight: 600;
 }
 
 .cell-center {
@@ -36,7 +38,11 @@ table {
 
 .table-header {
     display: flex;
-    font-size: 18px;
+}
+
+.header-row {
+    font-size: 16px;
+    font-weight: 600;
 }
 
 p {
