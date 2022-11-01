@@ -11,6 +11,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
+        public DbSet<User> User { get; set; }
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
