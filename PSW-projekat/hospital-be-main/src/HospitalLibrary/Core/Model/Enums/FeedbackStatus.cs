@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HospitalLibrary.Core.Model.Enums
+﻿namespace HospitalLibrary.Core.Model.Enums
 {
     public enum FeedbackStatus
     {
-        Pending,Approved,Rejected
+        Pending,
+        Approved,
+        Rejected
     }
 }
