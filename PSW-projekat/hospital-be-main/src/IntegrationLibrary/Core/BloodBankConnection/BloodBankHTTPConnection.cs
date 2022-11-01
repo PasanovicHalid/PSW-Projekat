@@ -36,7 +36,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         {
             client.Timeout = TimeSpan.FromSeconds(15);
             client.DefaultRequestHeaders.Add("Authorization","Bearer " + bankAPI);
-            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/" + "cdscs" + "/"  + bloodType + "/" + quantity);
+            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/" + bankEmail + "/"  + bloodType + "/" + quantity);
             
             response.EnsureSuccessStatusCode();
             

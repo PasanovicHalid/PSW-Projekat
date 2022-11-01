@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Exceptions
 {
-    internal class NonexistingBloodBankException : Exception
+    internal class FailedValidationException : Exception
     {
     }
 }

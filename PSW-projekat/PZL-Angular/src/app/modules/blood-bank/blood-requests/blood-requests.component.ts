@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BloodRequest } from 'src/app/modules/blood-bank/model/blood-request.model';
 import { BloodBankService } from 'src/app/modules/blood-bank/services/blood-bank.service';
 import { BloodBank } from '../model/blood-bank.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-blood-requests',
@@ -14,8 +15,9 @@ export class BloodRequestsComponent implements OnInit {
 
   public bloodRequest: BloodRequest = new BloodRequest();
   public bloodBanks : BloodBank[] = [];
+  public errorMessage: any;
 
-  constructor(private bloodBankService: BloodBankService, private router: Router) { }
+  constructor(private bloodBankService: BloodBankService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.bloodBankService.getBloodBanks().subscribe(res =>{
@@ -28,11 +30,16 @@ export class BloodRequestsComponent implements OnInit {
     if (!this.isValidInput()) return;
     this.bloodBankService.sendBloodRequest(this.bloodRequest).subscribe(res => {
 
-      if(res == true)
-        alert("ima krvi")
-      else
-        alert("nema krvi")
-      window.location.reload();
+      if(res == true){
+        this.toastr.info("Bank currently has wanted blood!")
+      }
+      else{
+        this.toastr.info("Bank currently has no wanted blood type!")
+      }
+      
+    }, (error) => {
+      this.errorMessage = error;
+      this.toastError();
     });
   }
 
@@ -43,6 +50,20 @@ export class BloodRequestsComponent implements OnInit {
       return false;
   
     return true;
+  }
+  private toastError() {
+    if (String(this.errorMessage).includes('FailedValidationException')){
+      this.toastr.error('Sent values can\'t be processed');
+    }
+    else if (String(this.errorMessage).includes('401')){
+      this.toastr.error('IPA key is invalid!');
+    }
+    else if (String(this.errorMessage).includes('404')){
+      this.toastr.error('Bank not found on server side!');
+    }
+    else {
+      this.toastr.error('Can\'t connect to blood bank server!');
+    }
   }
 
 }

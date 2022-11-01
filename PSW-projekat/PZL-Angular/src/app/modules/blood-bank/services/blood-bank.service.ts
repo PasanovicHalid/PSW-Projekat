@@ -24,23 +24,10 @@ export class BloodBankService {
   }
 
   sendBloodRequest(bloodRequest: any): Observable<any>{
-    return this.http.get<any>(this.apiHost + 'api/BloodBanks/' + bloodRequest.bloodBankID + '/' + bloodRequest.bloodType + '/' + bloodRequest.quantity, {headers: this.headers}).pipe(catchError(this.handleBloodRequestErrors));
+    return this.http.get<any>(this.apiHost + 'api/BloodBanks/' + bloodRequest.bloodBankID + '/' + bloodRequest.bloodType + '/' + bloodRequest.quantity, {headers: this.headers}).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.status == 0) {
-      // A client-side or network error ocured. Handle it acordingly.
-      // console.error('An error occured: ', error.error);
-
-    } else {
-      // console.error(`Backend returned code ${error.status}, body was: `, error.error);
-      // errorMessage = `Backend returned code ${error.status}, body was: `, error.error;
-      // console.log(errorMessage);
-      // console.log(error.error)
-    }
-    //Return an observable with user-facing error message.
-    // errorMessage += 'Something bad happened; please try again later.';
     return throwError(() => new Error(error.status +'\n'+ error.error))
   }
   private handleBloodRequestErrors(error: HttpErrorResponse) {

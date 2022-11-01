@@ -143,22 +143,20 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                Boolean isSuccessful = _bloodBankService.CheckBloodRequest(id, bloodType, quantity);
-                if (isSuccessful == false)
-                    return NotFound("Incorrect information");
-
                 Boolean hasBlood = _bloodBankService.SendBloodRequest(id, bloodType, quantity);
 
                 return Ok(hasBlood);
             }
             catch(Exception e)
             {
-                if(e.ToString().Contains("401"))
+                if(e.ToString().Contains("FailedValidationException"))
+                    return BadRequest(e.Message);
+                else if(e.ToString().Contains("401"))
                     return Unauthorized("IPA key is invalid!");
-                if (e.ToString().Contains("404"))
-                    return NotFound("Bank not found!");
+                else if (e.ToString().Contains("404"))
+                    return NotFound("Bank not found on server side!");
                 
-                return BadRequest();
+                return BadRequest("Can't connect to blood bank server!");
             }
         }
 
