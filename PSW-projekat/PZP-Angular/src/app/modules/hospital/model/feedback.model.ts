@@ -5,6 +5,7 @@ export class Feedback {
   isPublic: boolean = false;
   dateCreated: Date = new Date();
   userId: string = '0';
+  status: FeedbackStatus = FeedbackStatus.Pending;
 
   public constructor(obj?: any) {
       if (obj) {
@@ -14,6 +15,12 @@ export class Feedback {
           this.isPublic = obj.isPublic;
           this.dateCreated = obj.dateCreated;
           this.userId = obj.userId;
+          this.status = obj.status;
       }
   }
+}
+export enum FeedbackStatus {
+  Pending, 
+  Accepted, 
+  Rejected
 }
