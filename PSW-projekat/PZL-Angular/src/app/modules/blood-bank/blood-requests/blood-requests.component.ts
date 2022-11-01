@@ -31,16 +31,21 @@ export class BloodRequestsComponent implements OnInit {
     this.bloodBankService.sendBloodRequest(this.bloodRequest).subscribe(res => {
 
       if(res == true){
-        this.toastr.info("Bank currently has wanted blood!")
+        this.toastr.success("Bank currently has wanted blood type!").onHidden.pipe()
+        .subscribe(() => this.windowRefresh());
       }
       else{
-        this.toastr.info("Bank currently has no wanted blood type!")
+        this.toastr.info("Bank currently has no wanted blood type!").onHidden.pipe()
+        .subscribe(() => this.windowRefresh());
       }
       
     }, (error) => {
       this.errorMessage = error;
       this.toastError();
     });
+  }
+  private windowRefresh() {
+    window.location.reload();
   }
 
   private isValidInput(): boolean {
