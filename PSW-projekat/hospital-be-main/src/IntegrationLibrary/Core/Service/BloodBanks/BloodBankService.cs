@@ -113,22 +113,22 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         {
             return _bloodBankRepository.GetBloodBankFromPasswordResetKey(passwordResetKey);
         }
+        
+        public bool SendBloodRequest(int bloodBankID, string bloodType, int quantity)
+        {
+            CheckBloodRequest(bloodBankID, bloodType, quantity);
+            BloodBank bloodBank = GetById(bloodBankID);
+            return _bloodBankConnection.SendBloodRequest(bloodBank, bloodType, quantity);
 
-        public bool CheckBloodRequest(int bloodBankID, string bloodType, int quantity)
+        }
+        public void CheckBloodRequest(int bloodBankID, string bloodType, int quantity)
         {
             BloodBank bloodBank = GetById(bloodBankID);
             if (bloodBank == null || !ValidateRequest(quantity, bloodType))
-                return false;
-            return true;
+                throw new FailedValidationException();
 
         }
-        public bool SendBloodRequest(int bloodBankID, string bloodType, int quantity)
-        {
-            BloodBank bloodBank = GetById(bloodBankID);
-            return _bloodBankConnection.sendBloodRequest(bloodBank, bloodType, quantity);
 
-        }
-        
         private bool ValidateRequest(int quantity, string bloodType)
         {
             if((quantity <0 || quantity > 10) || 

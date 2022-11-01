@@ -9,6 +9,6 @@ namespace IntegrationLibrary.Core.BloodBankConnection
 {
     public interface IBloodBankConnection
     {
-        Boolean sendBloodRequest(BloodBank bank, String bloodType, int quantity);
+        Boolean SendBloodRequest(BloodBank bank, String bloodType, int quantity);
     }
 }
