@@ -15,8 +15,9 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         private static int quantity;
         private static String bankEmail;
         private static Boolean bankResponse;
+        private static String bankAPI; 
 
-        public bool sendBloodRequest(BloodBank bank, string bType, int quant)
+        public bool SendBloodRequest(BloodBank bank, string bType, int quant)
         {
             client = new()
             {
@@ -25,6 +26,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             bloodType = bType;
             quantity = quant;
             bankEmail = bank.Email;
+            bankAPI = bank.ApiKey;
 
             GetAsync(client).Wait();
 
@@ -33,8 +35,9 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         static async Task<bool> GetAsync(HttpClient httpClient)
         {
             client.Timeout = TimeSpan.FromSeconds(15);
-            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/" + bankEmail + "/"  + bloodType + "/" + quantity);
-
+            client.DefaultRequestHeaders.Add("Authorization","Bearer " + bankAPI);
+            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/" + "cdscs" + "/"  + bloodType + "/" + quantity);
+            
             response.EnsureSuccessStatusCode();
             
             string hasBlood = await response.Content.ReadAsStringAsync();

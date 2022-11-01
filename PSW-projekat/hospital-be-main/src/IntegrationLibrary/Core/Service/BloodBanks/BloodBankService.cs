@@ -125,7 +125,7 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         public bool SendBloodRequest(int bloodBankID, string bloodType, int quantity)
         {
             BloodBank bloodBank = GetById(bloodBankID);
-            return _bloodBankConnection.sendBloodRequest(bloodBank, bloodType, quantity);
+            return _bloodBankConnection.SendBloodRequest(bloodBank, bloodType, quantity);
 
         }
         
