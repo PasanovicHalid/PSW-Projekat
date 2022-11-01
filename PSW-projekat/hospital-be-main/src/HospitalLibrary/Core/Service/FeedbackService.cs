@@ -57,7 +57,7 @@ namespace HospitalLibrary.Core.Service
                 if (feedback.IsAnonimous)
                     feedbackDto.Username = "Anonymous";
                 else
-                    feedbackDto.Username = feedback.UserId;
+                    feedbackDto.Username = feedback.User.Name + " " + feedback.User.Surname;
 
                 feedbackDto.Public = feedback.IsPublic ? "Public" : "Private";
                 feedbackDto.DateCreated = feedback.DateCreated.ToString().Split(' ')[0];
@@ -83,7 +83,7 @@ namespace HospitalLibrary.Core.Service
                     if (feedback.IsAnonimous)
                         feedbackDto.Username = "Anonymous";
                     else
-                        feedbackDto.Username = feedback.UserId;
+                        feedbackDto.Username = feedback.User.Name + " " + feedback.User.Surname;
 
                     feedbackDto.Public = "Public";
                     feedbackDto.DateCreated = feedback.DateCreated.ToString().Split(' ')[0];
