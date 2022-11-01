@@ -43,3 +43,16 @@ p {
     float: left;
     margin-right: auto;
 }
+
+.button-updateStatus {
+    border: 2px solid gray;
+    margin-right: 1px;
+    min-width: 84px;
+}
+
+.mat-column-description {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    width: 38% !important;
+}
+

@@ -61,6 +61,7 @@ namespace HospitalLibrary.Core.Service
 
                 feedbackDto.Public = feedback.IsPublic ? "Public" : "Private";
                 feedbackDto.DateCreated = feedback.DateCreated.ToString().Split(' ')[0];
+                feedbackDto.Status = feedback.Status.ToString();
                 feedbackDtos.Add(feedbackDto);
             }
             return feedbackDtos;

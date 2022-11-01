@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace HospitalLibrary.Core.Model
         public DateTime DateCreated { get; set; }
 
         public String UserId { get; set; }
+
+        public FeedbackStatus Status { get; set; }
     }
 }

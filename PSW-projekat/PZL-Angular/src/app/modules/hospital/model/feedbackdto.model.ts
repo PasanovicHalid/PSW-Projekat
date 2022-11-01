@@ -4,6 +4,7 @@ export class FeedbackDto {
   username: string = '';
   public: string = '';
   dateCreated: string = '';
+  status: string = '';
 
   public constructor(obj?: any) {
       if (obj) {
@@ -12,6 +13,7 @@ export class FeedbackDto {
           this.username = obj.username;
           this.public = obj.public;
           this.dateCreated = obj.dateCreated;
+          this.status = obj.status;
       }
   }
 }

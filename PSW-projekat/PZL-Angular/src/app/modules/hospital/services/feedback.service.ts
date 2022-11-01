@@ -14,6 +14,14 @@ export class FeedbackService {
   constructor(private http: HttpClient) { }
 
   getFeedbacks(): Observable<FeedbackDto[]> {
-    return this.http.get<FeedbackDto[]>(this.apiHost + 'api/feedbacks', {headers: this.headers});
+    return this.http.get<FeedbackDto[]>(this.apiHost + 'api/privatefeedbacks', {headers: this.headers});
+  }
+
+  approve(feedbackDto: any): Observable<any> {
+    return this.http.put<any>(this.apiHost + 'api/privatefeedbacks/approve', feedbackDto, {headers: this.headers});
+  }
+  
+  reject(feedbackDto: any): Observable<any> {
+    return this.http.put<any>(this.apiHost + 'api/privatefeedbacks/reject', feedbackDto, {headers: this.headers});
   }
 }

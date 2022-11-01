@@ -12,7 +12,7 @@ import { FeedbackDto } from '../model/feedbackdto.model';
 export class FeedbacksComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<FeedbackDto>();
-  public displayedColumns = ['description', 'username', 'public', 'dateCreated'];
+  public displayedColumns = ['description', 'username', 'public', 'dateCreated','status','updateStatus'];
   public feedbacks: FeedbackDto[] = [];
 
   constructor(private feedbackService: FeedbackService, private router: Router) { }
@@ -22,6 +22,18 @@ export class FeedbacksComponent implements OnInit {
       this.feedbacks = res;
       this.dataSource.data = this.feedbacks;
     })
+  }
+
+  onApprove(feedbackDto:any){
+    this.feedbackService.approve(feedbackDto).subscribe(res => {
+      feedbackDto.status = "Approved";
+    });
+  }
+
+  onReject(feedbackDto:any){    
+    this.feedbackService.reject(feedbackDto).subscribe(res => {
+      feedbackDto.status = "Rejected";
+    });
   }
 
 }

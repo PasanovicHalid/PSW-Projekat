@@ -17,5 +17,7 @@ namespace HospitalLibrary.Core.DTOs
         public String Public { get; set; }
 
         public String DateCreated { get; set; }
+
+        public String Status { get; set; }
     }
 }
