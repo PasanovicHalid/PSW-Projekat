@@ -4,7 +4,7 @@ export class Feedback {
   isAnonimous: boolean = false;
   isPublic: boolean = false;
   dateCreated: Date = new Date();
-  userId: string = '0';
+  userId: string = '1';
   status: FeedbackStatus = FeedbackStatus.Pending;
 
   public constructor(obj?: any) {
@@ -20,8 +20,8 @@ export class Feedback {
   }
 }
 export enum FeedbackStatus {
-  Pending, 
-  Accepted, 
+  Pending,
+  Accepted,
   Rejected
 }
 

@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -16,10 +18,12 @@ namespace HospitalAPI.Controllers.PublicApp
     public class FeedbacksController : ControllerBase
     {    
         private readonly FeedbackService _feedbackService;
+        private readonly IUserService _userService;
 
-        public FeedbacksController(FeedbackService feedbackService)
+        public FeedbacksController(FeedbackService feedbackService, IUserService userService)
         {
             _feedbackService = feedbackService;
+            _userService = userService;
         }
 
         [HttpGet("/real")]
@@ -41,12 +45,23 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpPost]
-        public ActionResult Create(Feedback feedback)
+        public ActionResult Create(CreateFeedbackDto feedbackDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            User user = _userService.GetById(int.Parse(feedbackDto.UserId));
+
+            Feedback feedback = new Feedback {
+                Description = feedbackDto.Description,
+                IsAnonimous = feedbackDto.IsAnonimous,
+                IsPublic = feedbackDto.IsPublic,
+                DateCreated = DateTime.Now,
+                User = user,
+                Status = FeedbackStatus.Pending
+            };
 
             _feedbackService.Create(feedback);
             return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
