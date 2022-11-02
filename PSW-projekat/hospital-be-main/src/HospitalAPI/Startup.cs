@@ -26,7 +26,7 @@ namespace HospitalAPI
         {
             services.AddCors();
             services.AddDbContext<HospitalDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+                options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
             
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -36,6 +36,17 @@ namespace HospitalAPI
 
             services.AddScoped<IService<Room>, RoomService>();
             services.AddScoped<IRepository<Room>, RoomRepository>();
+
+            services.AddScoped<FeedbackService>();
+            services.AddScoped<FeedbackRepository>();
+
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<IWorkingDayRepository, WorkingDayRepository>();
 
         }
 

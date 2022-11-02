@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HospitalLibrary.Core.Model.Enums;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
 {
     public class Feedback : BaseModel
     {
-        public int FeedbackId { get; set; }
+        //public int FeedbackId { get; set; }
 
+        [Required]
         public String Description { get; set; }
 
         public Boolean IsAnonimous { get; set; }
@@ -18,6 +17,8 @@ namespace HospitalLibrary.Core.Model
 
         public DateTime DateCreated { get; set; }
 
-        public String UserId { get; set; }
+        public virtual User User { get; set; }
+
+        public FeedbackStatus Status { get; set; }
     }
 }

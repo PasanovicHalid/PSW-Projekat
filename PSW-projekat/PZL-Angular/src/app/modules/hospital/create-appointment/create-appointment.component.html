@@ -1,0 +1,26 @@
+
+<div class="container">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Patient</mat-label>
+            <mat-select [(ngModel)]="appointment.patient" >
+                <mat-option *ngFor="let patient of patients" [value]="patient">{{patient.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Doctor</mat-label>
+            <mat-select [(ngModel)]="appointment.doctor">
+                <mat-option *ngFor="let doctor of doctors" [value]="doctor">{{doctor.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Date and time</mat-label>
+            <input type="datetime-local" matInput [(ngModel)]="appointment.dateTime" name="dateTime">
+        </mat-form-field><br>
+        <button mat-stroked-button (click)="createAppointment()">
+            Submit
+        </button>
+    </div>
+</div>
+
+

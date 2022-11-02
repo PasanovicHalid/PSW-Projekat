@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="table-header">
+        <p class="table-title">All appointments</p>
+        <button class="add-button" mat-mini-fab matTooltip="New appointment" matTooltipPosition="right" (click)="addAppointment()">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="dateTime">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Date and Time </th>
+            <td mat-cell *matCellDef="let appointment" class="cell-center">{{appointment.dateTime | date:'short'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="patientName">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Name </th>
+            <td mat-cell *matCellDef="let appointment" class="cell-center">{{patient1.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="patientSurname">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Surname </th>
+            <td mat-cell *matCellDef="let appointment" class="cell-center">{{patient1.surname}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div> 

@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace HospitalLibrary.Core.Service
 {
     public class FeedbackService : IService<Feedback>
     {
-        private readonly IRepository<Feedback> _feedbackRepository;
+        private readonly FeedbackRepository _feedbackRepository;
 
-        public FeedbackService(IRepository<Feedback> feedbackRepository)
+        public FeedbackService(FeedbackRepository feedbackRepository)
         {
             _feedbackRepository = feedbackRepository;
         }
@@ -41,5 +42,56 @@ namespace HospitalLibrary.Core.Service
         {
             _feedbackRepository.Update(entity);
         }
+
+        public List<FeedbackDto> GetAllFeedbackDtos()
+        {
+            IEnumerable<Feedback> allFeedbacks = _feedbackRepository.GetAll();
+            List<FeedbackDto> feedbackDtos = new();
+
+            foreach (Feedback feedback in allFeedbacks)
+            {
+                FeedbackDto feedbackDto = new();
+                feedbackDto.FeedbackId = feedback.Id;
+                feedbackDto.Description = feedback.Description;
+
+                if (feedback.IsAnonimous)
+                    feedbackDto.Username = "Anonymous";
+                else
+                    feedbackDto.Username = feedback.User.Name + " " + feedback.User.Surname;
+
+                feedbackDto.Public = feedback.IsPublic ? "Public" : "Private";
+                feedbackDto.DateCreated = feedback.DateCreated.ToString().Split(' ')[0];
+                feedbackDto.Status = feedback.Status.ToString();
+                feedbackDtos.Add(feedbackDto);
+            }
+            return feedbackDtos;
+        }
+
+        public List<FeedbackDto> GetAllFeedbackPublicDtos()
+        {
+            IEnumerable<Feedback> allFeedbacks = _feedbackRepository.GetAll();
+            List<FeedbackDto> feedbackDtos = new();
+
+            foreach (Feedback feedback in allFeedbacks)
+            {
+                if (feedback.IsPublic)
+                {
+                    FeedbackDto feedbackDto = new();
+                    feedbackDto.FeedbackId = feedback.Id;
+                    feedbackDto.Description = feedback.Description;
+
+                    if (feedback.IsAnonimous)
+                        feedbackDto.Username = "Anonymous";
+                    else
+                        feedbackDto.Username = feedback.User.Name + " " + feedback.User.Surname;
+
+                    feedbackDto.Public = "Public";
+                    feedbackDto.DateCreated = feedback.DateCreated.ToString().Split(' ')[0];
+                    feedbackDtos.Add(feedbackDto);
+                }
+            }
+            return feedbackDtos;
+        }
+        
     }
 }

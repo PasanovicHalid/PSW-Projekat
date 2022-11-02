@@ -8,80 +8,85 @@ namespace HospitalAPI.Controllers
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
-    public class FeedbackController : Controller
+    public class RoomsController : ControllerBase
     {
-        private readonly IService<Feedback> _feedbackService;
+        private readonly IService<Room> _roomService;
 
-        public FeedbackController(IService<Feedback> feedbackService)
+        public RoomsController(IService<Room> roomService)
         {
-            _feedbackService = feedbackService;
+            _roomService = roomService;
         }
 
+        // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_feedbackService.GetAll());
+            return Ok(_roomService.GetAll());
         }
 
+        // GET api/rooms/2
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
-            var feedback = _feedbackService.GetById(id);
-            if (feedback == null)
+            var room = _roomService.GetById(id);
+            if (room == null)
             {
                 return NotFound();
             }
 
-            return Ok(feedback);
+            return Ok(room);
         }
 
+        // POST api/rooms
         [HttpPost]
-        public ActionResult Create(Feedback feedback)
+        public ActionResult Create(Room room)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _feedbackService.Create(feedback);
-            return CreatedAtAction("GetById", new { id = feedback.FeedbackId }, feedback);
+            _roomService.Create(room);
+            return CreatedAtAction("GetById", new { id = room.Id }, room);
         }
 
+        // PUT api/rooms/2
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Feedback feedback)
+        public ActionResult Update(int id, Room room)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != feedback.FeedbackId)
+            if (id != room.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                _feedbackService.Update(feedback);
+                _roomService.Update(room);
             }
             catch
             {
                 return BadRequest();
             }
 
-            return Ok(feedback);
+            return Ok(room);
         }
 
+        // DELETE api/rooms/2
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var room = _feedbackService.GetById(id);
+            var room = _roomService.GetById(id);
             if (room == null)
             {
                 return NotFound();
             }
 
-            _feedbackService.Delete(room);
+            _roomService.Delete(room);
             return NoContent();
         }
     }

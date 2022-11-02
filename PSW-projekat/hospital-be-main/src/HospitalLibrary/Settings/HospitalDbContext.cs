@@ -1,13 +1,17 @@
 ﻿using HospitalLibrary.Core.Model;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
         public DbSet<Room> Rooms { get; set; }
-
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<WorkingDay> WorkingDays { get; set; }
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -15,10 +19,11 @@ namespace HospitalLibrary.Settings
         {
 
             modelBuilder.Entity<Room>().HasData(
-                new Room() { RoomId = 1, Number = "101A", Floor = 1 },
-                new Room() { RoomId = 2, Number = "204", Floor = 2 },
-                new Room() { RoomId = 3, Number = "305B", Floor = 3 }
+                new Room() { Id = 1, Number = "101A", Floor = 1 },
+                new Room() { Id = 2, Number = "204", Floor = 2 },
+                new Room() { Id = 3, Number = "305B", Floor = 3 }
             );
+
             base.OnModelCreating(modelBuilder);
 
         }
