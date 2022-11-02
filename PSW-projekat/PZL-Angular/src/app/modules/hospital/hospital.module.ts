@@ -11,6 +11,7 @@ import { FeedbacksComponent } from './feedbacks/feedbacks.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 
@@ -22,8 +23,7 @@ const routes: Routes = [
   { path: 'feedbacks', component: FeedbacksComponent },
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'appointments/doctor/:id', component: AppointmentsComponent },
-  { path: 'appointments/addA', component: CreateAppointmentComponent },
-
+  { path: 'appointments/add', component: CreateAppointmentComponent },
 
 ];
 
@@ -45,7 +45,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatSelectModule
+
   ],
   exports: [ RouterModule ]
 })

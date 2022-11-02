@@ -12,10 +12,12 @@ namespace HospitalAPI.Controllers
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
+        private readonly IUserService _userService;
 
-        public AppointmentController(IAppointmentService appointmentService)
+        public AppointmentController(IAppointmentService appointmentService, IUserService userService)
         {
             _appointmentService = appointmentService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -39,6 +41,9 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         public ActionResult Create(Appointment appointment)
         {
+            appointment.Doctor = _userService.GetById(appointment.Doctor.Id);
+            appointment.Patient = _userService.GetById(appointment.Patient.Id);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
