@@ -48,7 +48,7 @@ export class AppointmentsComponent implements OnInit {
   public deleteAppointment(id: number) {
     if(window.confirm('Are sure you want to delete this item ?')){
       this.appointmentService.deleteAppointment(id).subscribe(res => {
-        this.appointmentService.GetAllByDoctor(1).subscribe(res => {
+        this.appointmentService.GetAllByDoctor(3).subscribe(res => {
           let result = Object.values(JSON.parse(JSON.stringify(res)));
           this.appointments = []
           result.forEach((element: any) => {
