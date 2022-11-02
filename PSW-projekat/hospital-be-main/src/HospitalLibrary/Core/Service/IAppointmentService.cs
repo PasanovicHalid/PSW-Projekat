@@ -12,5 +12,6 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<AppointmentDto> GetAllByDoctor(int doctorId);
         void Update(AppointmentDto appointmentDto);
+        void SentEmail(Appointment appointment);
     }
 }

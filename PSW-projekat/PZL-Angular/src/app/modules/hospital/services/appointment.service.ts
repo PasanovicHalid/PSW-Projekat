@@ -22,7 +22,7 @@ export class AppointmentService {
   }
 
   deleteAppointment(id: any): Observable<any> {
-    return this.http.delete<any>(this.apiHost + 'api/appointments/' + id, {headers: this.headers});
+    return this.http.delete<any>(this.apiHost + 'api/appointment/' + id, {headers: this.headers});
   }
 
   createAppointment(appointment: any): Observable<any> {

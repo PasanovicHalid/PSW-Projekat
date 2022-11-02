@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Controllers.PrivateApp
 {
     [EnableCors]
     [Route("api/[controller]")]
