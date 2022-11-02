@@ -11,5 +11,6 @@ namespace HospitalLibrary.Core.Service
     public interface IAppointmentService : IService<Appointment>
     {
         IEnumerable<AppointmentDto> GetAllByDoctor(int doctorId);
+        void Update(AppointmentDto appointmentDto);
     }
 }

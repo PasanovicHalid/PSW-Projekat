@@ -46,6 +46,7 @@ namespace HospitalLibrary.Core.Repository
 
             try
             {
+                _context.Update(room);
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)

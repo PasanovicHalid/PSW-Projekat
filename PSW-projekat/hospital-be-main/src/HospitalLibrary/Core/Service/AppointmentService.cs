@@ -87,7 +87,16 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(Appointment entity)
         {
+            /*
+            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(3)))
+            {
+                entity.Deleted = false;
+                _appointmentRepository.Update(entity);
+            }
+            */
+            entity.Deleted = false;
             _appointmentRepository.Update(entity);
+
         }
 
         public IEnumerable<AppointmentDto> GetAllByDoctor(int doctorId)
@@ -121,6 +130,9 @@ namespace HospitalLibrary.Core.Service
             
         }
 
-
+        public void Update(AppointmentDto appointmentDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
