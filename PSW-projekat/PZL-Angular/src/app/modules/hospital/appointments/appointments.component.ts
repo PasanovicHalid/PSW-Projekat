@@ -39,4 +39,8 @@ export class AppointmentsComponent implements OnInit {
     this.router.navigate(['/appointments/add']);
   }
 
+  public updateAppointment(id: number) {
+    this.router.navigate(['/appointments/' + id + '/update']);
+  }
+
 }
