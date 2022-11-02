@@ -14,6 +14,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
+import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -24,6 +25,8 @@ const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'appointments/doctor/:id', component: AppointmentsComponent },
   { path: 'appointments/add', component: CreateAppointmentComponent },
+  { path: 'appointments/:id/update', component: UpdateAppointmentComponent }
+
 
 ];
 
@@ -35,7 +38,8 @@ const routes: Routes = [
     UpdateRoomComponent,
     FeedbacksComponent,
     AppointmentsComponent,
-    CreateAppointmentComponent
+    CreateAppointmentComponent,
+    UpdateAppointmentComponent
   ],
   imports: [
     CommonModule,

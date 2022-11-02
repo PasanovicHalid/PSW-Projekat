@@ -53,14 +53,24 @@ namespace HospitalLibrary.Core.Service
 
         public void Delete(Appointment entity)
         {
-            string fromMail = "radisa.stojkic@gmail.com";
-            string fromPassword = "pblclisovitnnlfz";
+            try
+            {
+                SentEmail(entity);
+
+                _appointmentRepository.Delete(entity);
+            }
+            catch (Exception e) { }
+        }
+        public void SentEmail(Appointment appointment)
+        {
+            string fromMail = "hospitalpswisa@gmail.com";
+            string fromPassword = "uleoarfabsegnuxa";
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
-            message.Subject = "Test Subject";
-            message.To.Add(new MailAddress("radisa.stojkic@gmail.com"));
-            message.Body = "<html><body> Termin za pregled je odlozen. </body></html>";
+            message.Subject = "Termin za pregled";
+            message.To.Add(appointment.Patient.Email);
+            message.Body = "<html><body> Vas termin: " + appointment.DateTime.ToString() + " za pregled je obrisan.</body></html>";
             message.IsBodyHtml = true;
 
             var smtpClient = new SmtpClient("smtp.gmail.com")
@@ -71,8 +81,6 @@ namespace HospitalLibrary.Core.Service
             };
 
             smtpClient.Send(message);
-
-            _appointmentRepository.Delete(entity);
         }
 
         public IEnumerable<Appointment> GetAll()
@@ -87,7 +95,13 @@ namespace HospitalLibrary.Core.Service
 
         public void Update(Appointment entity)
         {
-            _appointmentRepository.Update(entity);
+            
+            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(3)))
+            {
+                entity.Deleted = false;
+                _appointmentRepository.Update(entity);
+            }
+
         }
 
         public IEnumerable<AppointmentDto> GetAllByDoctor(int doctorId)
@@ -121,6 +135,9 @@ namespace HospitalLibrary.Core.Service
             
         }
 
-
+        public void Update(AppointmentDto appointmentDto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

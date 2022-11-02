@@ -74,7 +74,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Feedback feedback in allFeedbacks)
             {
-                if (feedback.IsPublic)
+                if (feedback.IsPublic && feedback.Status == Model.Enums.FeedbackStatus.Approved)
                 {
                     FeedbackDto feedbackDto = new();
                     feedbackDto.FeedbackId = feedback.Id;
@@ -87,6 +87,7 @@ namespace HospitalLibrary.Core.Service
 
                     feedbackDto.Public = "Public";
                     feedbackDto.DateCreated = feedback.DateCreated.ToString().Split(' ')[0];
+                    feedbackDto.Status = "Approved";
                     feedbackDtos.Add(feedbackDto);
                 }
             }
