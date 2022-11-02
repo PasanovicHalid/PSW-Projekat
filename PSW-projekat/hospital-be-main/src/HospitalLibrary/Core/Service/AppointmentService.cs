@@ -14,16 +14,41 @@ namespace HospitalLibrary.Core.Service
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
+        public IWorkingDayRepository workingDayRepository;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository)
+        public AppointmentService(IAppointmentRepository appointmentRepository, IWorkingDayRepository workingDayRepository)
         {
             _appointmentRepository = appointmentRepository;
+            this.workingDayRepository = workingDayRepository;
         }
+
+        public bool InWorkingTime(Appointment entity, IEnumerable<WorkingDay> workingDays)
+        {
+
+            foreach (WorkingDay workingDay in workingDays)
+            {
+                DayOfWeek dayOfWeek = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), workingDay.Day.ToString());
+
+                DateTime wStart = new DateTime(1, 1, 1, workingDay.StartTime.Hour, workingDay.StartTime.Minute, workingDay.StartTime.Second);
+                DateTime wEnd = new DateTime(1, 1, 1, workingDay.EndTime.Hour, workingDay.EndTime.Minute, workingDay.EndTime.Second);
+                DateTime aTime = new DateTime(1, 1, 1, entity.DateTime.Hour, entity.DateTime.Minute, entity.DateTime.Second);
+
+                if ((dayOfWeek.Equals(entity.DateTime.DayOfWeek)) && wStart <= aTime && wEnd >= aTime)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         public void Create(Appointment entity)
         {
-            entity.Deleted = false;
-            _appointmentRepository.Create(entity);
+            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(3)))
+            {
+                entity.Deleted = false;
+                _appointmentRepository.Create(entity);
+            }
         }
 
         public void Delete(Appointment entity)

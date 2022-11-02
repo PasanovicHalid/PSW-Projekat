@@ -7,11 +7,11 @@ namespace HospitalLibrary.Settings
     public class HospitalDbContext : DbContext
     {
         public DbSet<Room> Rooms { get; set; }
-
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-
         public DbSet<User> User { get; set; }
+        public DbSet<WorkingDay> WorkingDays { get; set; }
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 

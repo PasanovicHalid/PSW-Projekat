@@ -17,8 +17,20 @@ export class AppointmentService {
     return this.http.get<Appointment[]>(this.apiHost + 'api/appointments', {headers: this.headers});
   }
 
+  getAppointment(id: number): Observable<Appointment> {
+    return this.http.get<Appointment>(this.apiHost + 'api/appointments/' + id, {headers: this.headers});
+  }
+
+  deleteAppointment(id: any): Observable<any> {
+    return this.http.delete<any>(this.apiHost + 'api/appointments/' + id, {headers: this.headers});
+  }
+
   createAppointment(appointment: any): Observable<any> {
-    return this.http.post<any>(this.apiHost + 'api/appointments', appointment, {headers: this.headers});
+    return this.http.post<any>(this.apiHost + 'api/appointment', appointment, {headers: this.headers});
+  }
+
+  updateAppointment(appointment: any): Observable<any> {
+    return this.http.put<any>(this.apiHost + 'api/appointments/' + appointment.id, appointment, {headers: this.headers});
   }
 
   GetAllByDoctor(doctorId: number) : Observable<any> {
