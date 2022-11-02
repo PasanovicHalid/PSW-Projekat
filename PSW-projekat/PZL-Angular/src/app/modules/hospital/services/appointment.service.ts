@@ -18,7 +18,7 @@ export class AppointmentService {
   }
 
   getAppointment(id: number): Observable<Appointment> {
-    return this.http.get<Appointment>(this.apiHost + 'api/appointments/' + id, {headers: this.headers});
+    return this.http.get<Appointment>(this.apiHost + 'api/appointment/' + id, {headers: this.headers});
   }
 
   deleteAppointment(id: any): Observable<any> {

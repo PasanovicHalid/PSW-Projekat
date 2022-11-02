@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -71,9 +72,11 @@ namespace HospitalAPI.Controllers
             {
                 _appointmentService.Update(appointment);
             }
-            catch
+            catch(Exception ex)
             {
-                return BadRequest();
+                //return BadRequest();
+                return BadRequest(ex.Message);
+
             }
 
             return Ok(appointment);
