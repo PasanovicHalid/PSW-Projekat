@@ -19,7 +19,7 @@ export class CreateFeedbackComponent{
   public createFeedback() {
     if (!this.isValidInput()) return;
     this.feedbackService.createFeedback(this.feedback).subscribe(res => {
-      this.router.navigate(['/feedbacks']);
+      this.router.navigate(['/welcome']);
     });
   }
 

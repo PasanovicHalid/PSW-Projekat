@@ -4,7 +4,7 @@ export class Feedback {
   isAnonimous: boolean = false;
   isPublic: boolean = false;
   dateCreated: Date = new Date();
-  userId: string = '1';
+  userId: string = '2';
   status: FeedbackStatus = FeedbackStatus.Pending;
 
   public constructor(obj?: any) {
