@@ -7,7 +7,7 @@ import { WelcomeComponent } from "./modules/hospital/welcome/welcome.component";
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'room', component: RoomsComponent },
-  { path: 'welcome', component: WelcomeComponent }
+  { path: '', component: WelcomeComponent }
 ];
 
 @NgModule({
