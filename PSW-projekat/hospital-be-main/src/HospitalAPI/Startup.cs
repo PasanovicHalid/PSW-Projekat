@@ -1,9 +1,11 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +29,23 @@ namespace HospitalAPI
             services.AddCors();
             services.AddDbContext<HospitalDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
-            
+
+            services.AddDbContext<AuthenticationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+
+            services.AddIdentity<SecUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+            })
+                .AddEntityFrameworkStores<AuthenticationDbContext>()
+                .AddDefaultTokenProviders();
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -54,6 +72,7 @@ namespace HospitalAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HospitalDbContext hospitalDbContext)
         {
             hospitalDbContext.Database.EnsureCreated();
+
             app.UseHttpsRedirection();
 
             if (env.IsDevelopment())
@@ -73,6 +92,7 @@ namespace HospitalAPI
                     .AllowAnyHeader();
             });
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
