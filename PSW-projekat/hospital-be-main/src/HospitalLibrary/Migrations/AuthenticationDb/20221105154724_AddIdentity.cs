@@ -167,6 +167,16 @@ namespace HospitalLibrary.Migrations.AuthenticationDb
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[] { "58f7fb5f-09dc-4bee-813f-4e47940650c4", "76feb459-393f-45d5-be10-46df582dd946", "Manager", "MANAGER" });
 
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "d4cea8da-b178-4b32-89dd-878a1965267a", 0, "501467da-3219-4e4e-b43e-1c18ff5ea149", "pera@gmail.com", false, false, null, "PERA@GMAIL.COM", "PERA", "AQAAAAEAACcQAAAAEGnacxIm8eJ8VS4usH4ZzdWcALihztVjMnitt7+Ae+oXlAhCiZvh1QYM4SR0NLWPXQ==", null, false, "983bbc0b-dffb-47f3-b87b-8ad2a3301116", false, "pera" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "UserId", "RoleId" },
+                values: new object[] { "d4cea8da-b178-4b32-89dd-878a1965267a", "58f7fb5f-09dc-4bee-813f-4e47940650c4" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
