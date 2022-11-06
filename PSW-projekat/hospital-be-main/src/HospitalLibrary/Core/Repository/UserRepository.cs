@@ -48,6 +48,14 @@ namespace HospitalLibrary.Core.Repository
             return _context.User.Find(id);
         }
 
+        public User RegisterUser(User user)
+        {
+            _context.User.Add(user);
+            _context.SaveChanges();
+
+            return user;
+        }
+
         public void Update(User entity)
         {
             throw new NotImplementedException();

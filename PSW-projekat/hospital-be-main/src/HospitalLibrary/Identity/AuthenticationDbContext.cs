@@ -22,19 +22,6 @@ namespace HospitalLibrary.Identity
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<IdentityRole>().HasData(
-                new IdentityRole()
-                {
-                    Name = "Doctor"
-                },
-                new IdentityRole()
-                {
-                    Name = "Patient"
-                },
-                new IdentityRole()
-                {
-                    Name = "Manager"
-                });
         }
     }
 }
