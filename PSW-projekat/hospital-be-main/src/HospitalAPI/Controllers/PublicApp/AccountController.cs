@@ -47,25 +47,48 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
-        [HttpPost("Register")]
-        public async Task<IActionResult> RegisterNewUser(RegisterUserDto regUser)
+        [HttpPost("CreateManager")]
+        public async Task<IActionResult> CreateManager(RegisterUserDto regUser)
+        {
+            bool patientRoleExists = await _roleManager.RoleExistsAsync("Manager");
+            if (!patientRoleExists)
+            {
+                IdentityRole identityRole = new IdentityRole("Manager");
+                var roleResult = await _roleManager.CreateAsync(identityRole);
+            }
+
+            User user = new User()
+            {
+                Id = 0,
+                Name = regUser.Name,
+                Surname = regUser.Surname,
+                Role = Role.manager,
+                Email = regUser.Email
+            };
+            user = _userRepository.RegisterUser(user);
+            SecUser secUser = new SecUser()
+            {
+                Id = user.Id,
+                Email = regUser.Email,
+                UserName = regUser.Username,
+            };
+            var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
+            if (registerUser != null)
+            {
+                await _userManager.AddToRoleAsync(secUser, "Manager");
+                await _userManager.AddClaimAsync(secUser, new Claim("UserId", user.Id.ToString()));
+            }
+
+            return Ok(user);
+        }
+
+            [HttpPost("RegisterPatient")]
+        public async Task<IActionResult> RegisterPatient(RegisterUserDto regUser)
         {
             bool patientRoleExists = await _roleManager.RoleExistsAsync("Patient");
             if (!patientRoleExists)
             {
                 IdentityRole identityRole = new IdentityRole("Patient");
-                var roleResult = await _roleManager.CreateAsync(identityRole);
-            }
-            patientRoleExists = await _roleManager.RoleExistsAsync("Admin");
-            if (!patientRoleExists)
-            {
-                IdentityRole identityRole = new IdentityRole("Admin");
-                var roleResult = await _roleManager.CreateAsync(identityRole);
-            }
-            patientRoleExists = await _roleManager.RoleExistsAsync("Manager");
-            if (!patientRoleExists)
-            {
-                IdentityRole identityRole = new IdentityRole("Manager");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
 
@@ -93,6 +116,41 @@ namespace HospitalAPI.Controllers.PublicApp
 
             //var code = await _userManager.GenerateEmailConfirmationTokenAsync(secUser);
             //await _userManager.ConfirmEmailAsync(secUser, code);
+
+            return Ok(user);
+        }
+
+        [HttpPost("CreateDoctor")]
+        public async Task<IActionResult> CreateDoctor(RegisterUserDto regUser)
+        {
+            bool patientRoleExists = await _roleManager.RoleExistsAsync("Doctor");
+            if (!patientRoleExists)
+            {
+                IdentityRole identityRole = new IdentityRole("Doctor");
+                var roleResult = await _roleManager.CreateAsync(identityRole);
+            }
+
+            User user = new User()
+            {
+                Id = 0,
+                Name = regUser.Name,
+                Surname = regUser.Surname,
+                Role = Role.manager,
+                Email = regUser.Email
+            };
+            user = _userRepository.RegisterUser(user);
+            SecUser secUser = new SecUser()
+            {
+                Id = user.Id,
+                Email = regUser.Email,
+                UserName = regUser.Username,
+            };
+            var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
+            if (registerUser != null)
+            {
+                await _userManager.AddToRoleAsync(secUser, "Doctor");
+                await _userManager.AddClaimAsync(secUser, new Claim("UserId", user.Id.ToString()));
+            }
 
             return Ok(user);
         }

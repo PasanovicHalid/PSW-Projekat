@@ -109,26 +109,6 @@ namespace HospitalLibrary.Migrations.AuthenticationDb
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "93000374-46d9-44ef-ac96-6db416a28770",
-                            ConcurrencyStamp = "9a23c8cc-acc0-4b5a-a247-3f5298277b76",
-                            Name = "Doctor"
-                        },
-                        new
-                        {
-                            Id = "d20bd231-b1fe-477b-be40-e4e38be41762",
-                            ConcurrencyStamp = "bb721e26-c59c-4ab5-be3e-63940807d492",
-                            Name = "Patient"
-                        },
-                        new
-                        {
-                            Id = "58f7fb5f-09dc-4bee-813f-4e47940650c4",
-                            ConcurrencyStamp = "76feb459-393f-45d5-be10-46df582dd946",
-                            Name = "Manager"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

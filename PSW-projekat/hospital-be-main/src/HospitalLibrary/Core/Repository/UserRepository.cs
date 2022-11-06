@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Settings;
+using Microsoft.AspNetCore.Identity;
 
 namespace HospitalLibrary.Core.Repository
 {
