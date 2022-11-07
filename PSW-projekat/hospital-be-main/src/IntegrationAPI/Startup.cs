@@ -41,6 +41,7 @@ namespace IntegrationAPI
             services.AddScoped<IEmailService, EmailService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IBloodBankConnection, BloodBankHTTPConnection>();
+            services.AddHostedService<BloodReportHostedService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
