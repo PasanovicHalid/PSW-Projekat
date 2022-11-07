@@ -35,7 +35,7 @@ namespace HospitalAPI.Controllers.PublicApp
             var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
             if (result.Succeeded)
             {
-                //if (User.IsInRole("Patient"))
+                //User.IsInRole("Manager");
                 return Ok();
             }
             return BadRequest();
@@ -136,7 +136,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Id = 0,
                 Name = regUser.Name,
                 Surname = regUser.Surname,
-                Role = Role.manager,
+                Role = Role.doctor,
                 Email = regUser.Email
             };
             user = _userRepository.RegisterUser(user);
