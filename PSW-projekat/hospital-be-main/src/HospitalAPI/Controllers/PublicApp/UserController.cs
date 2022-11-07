@@ -1,9 +1,11 @@
 ﻿using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -16,6 +18,7 @@ namespace HospitalAPI.Controllers.PublicApp
             _userService = userService;
         }
 
+        //[Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {

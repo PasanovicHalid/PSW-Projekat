@@ -35,6 +35,7 @@ namespace HospitalAPI.Controllers.PublicApp
             var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
             if (result.Succeeded)
             {
+                //if (User.IsInRole("Patient"))
                 return Ok();
             }
             return BadRequest();
