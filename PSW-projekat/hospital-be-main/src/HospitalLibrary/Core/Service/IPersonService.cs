@@ -7,10 +7,10 @@ using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Core.Service
 {
-    public interface IUserService : IService<User>
+    public interface IPersonService : IService<Person>
     {
-        IEnumerable<User> GetAllDoctors();
-        IEnumerable<User> GetAllPatients();
+        IEnumerable<Person> GetAllDoctors();
+        IEnumerable<Person> GetAllPatients();
 
     }
 }

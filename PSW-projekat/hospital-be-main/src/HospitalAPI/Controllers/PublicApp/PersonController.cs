@@ -9,34 +9,34 @@ namespace HospitalAPI.Controllers.PublicApp
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class PersonController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IPersonService _personService;
 
-        public UserController(IUserService userService)
+        public PersonController(IPersonService personService)
         {
-            _userService = userService;
+            _personService = personService;
         }
 
         //[Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_userService.GetAll());
+            return Ok(_personService.GetAll());
         }
 
 
         [HttpGet("patient/")]
         public ActionResult GetAllPatients()
         {
-            return Ok(_userService.GetAllPatients());
+            return Ok(_personService.GetAllPatients());
 
         }
 
         [HttpGet("doctor/")]
         public ActionResult GetAllDoctors()
         {
-            return Ok(_userService.GetAllDoctors());
+            return Ok(_personService.GetAllDoctors());
 
         }
     }

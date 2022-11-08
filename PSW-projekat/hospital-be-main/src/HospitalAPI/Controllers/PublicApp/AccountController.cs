@@ -16,12 +16,12 @@ namespace HospitalAPI.Controllers.PublicApp
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IPersonRepository _userRepository;
         private readonly UserManager<SecUser> _userManager;
         private readonly SignInManager<SecUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(IUserRepository userRepository, UserManager<SecUser> userManager, SignInManager<SecUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(IPersonRepository userRepository, UserManager<SecUser> userManager, SignInManager<SecUser> signInManager, RoleManager<IdentityRole> roleManager)
         {
             _userRepository = userRepository;
             _userManager = userManager;
@@ -58,7 +58,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
 
-            User user = new User()
+            Person user = new Person()
             {
                 Id = 0,
                 Name = regUser.Name,
@@ -93,7 +93,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
 
-            User user = new User()
+            Person user = new Person()
             {
                 Id = 0,
                 Name = regUser.Name,
@@ -131,7 +131,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
 
-            User user = new User()
+            Person user = new Person()
             {
                 Id = 0,
                 Name = regUser.Name,

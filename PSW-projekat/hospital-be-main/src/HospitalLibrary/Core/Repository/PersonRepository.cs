@@ -10,54 +10,54 @@ using Microsoft.AspNetCore.Identity;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class UserRepository : IUserRepository
+    public class PersonRepository : IPersonRepository
     {
         private readonly HospitalDbContext _context;
 
-        public UserRepository(HospitalDbContext context)
+        public PersonRepository(HospitalDbContext context)
         {
             _context = context;
         }
 
-        public void Create(User entity)
+        public void Create(Person entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(User entity)
+        public void Delete(Person entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<Person> GetAll()
         {
-            return _context.User.ToList();
+            return _context.Persons.ToList();
         }
 
-        public IEnumerable<User> GetAllDoctors()
+        public IEnumerable<Person> GetAllDoctors()
         {
-            return _context.User.Where(x => x.Role == Role.doctor);
+            return _context.Persons.Where(x => x.Role == Role.doctor);
         }
 
-        public IEnumerable<User> GetAllPatients()
+        public IEnumerable<Person> GetAllPatients()
         {
-            return _context.User.Where(x => x.Role == Role.patient);
+            return _context.Persons.Where(x => x.Role == Role.patient);
         }
 
-        public User GetById(int id)
+        public Person GetById(int id)
         {
-            return _context.User.Find(id);
+            return _context.Persons.Find(id);
         }
 
-        public User RegisterUser(User user)
+        public Person RegisterUser(Person user)
         {
-            _context.User.Add(user);
+            _context.Persons.Add(user);
             _context.SaveChanges();
 
             return user;
         }
 
-        public void Update(User entity)
+        public void Update(Person entity)
         {
             throw new NotImplementedException();
         }
