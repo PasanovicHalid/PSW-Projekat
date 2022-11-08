@@ -1,9 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 
 namespace HospitalLibrary.Settings
 {
@@ -17,6 +15,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Patient> Patients { get; set; }
         public DbSet<WorkingDay> WorkingDays { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
+
+        public DbSet<PatientAllergies> PatientAllergies { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -67,6 +67,10 @@ namespace HospitalLibrary.Settings
                 new Allergy() { Id = 12, Name = "Alergija12", Deleted = false },
                 new Allergy() { Id = 13, Name = "Alergija13", Deleted = false }
             );
+
+            /*modelBuilder.Entity<PatientAllergies>().HasData(
+                new PatientAllergies() { Id=1, Allergy = new Allergy() { Id = 1, Name = "Polen", Deleted = false }, Patient = new Patient() { Id = 5, BloodType = BloodType.APlus }}
+            );*/
 
 
             base.OnModelCreating(modelBuilder);

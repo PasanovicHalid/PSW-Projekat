@@ -104,12 +104,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatientId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("Allergies");
 
@@ -268,7 +263,10 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("BloodType")
                         .HasColumnType("int");
 
-                    b.Property<int>("DoctorId")
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -282,20 +280,45 @@ namespace HospitalLibrary.Migrations
                         {
                             Id = 5,
                             BloodType = 0,
-                            DoctorId = 2
+                            Deleted = false
                         },
                         new
                         {
                             Id = 6,
                             BloodType = 1,
-                            DoctorId = 3
+                            Deleted = false
                         },
                         new
                         {
                             Id = 7,
                             BloodType = 2,
-                            DoctorId = 4
+                            Deleted = false
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.PatientAllergies", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AllergyId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AllergyId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("PatientAllergies");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Person", b =>
@@ -305,7 +328,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("BirthDate")
@@ -339,7 +362,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            AddressId = 1,
                             BirthDate = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             Deleted = false,
                             Email = "pera@gmail.com",
@@ -351,7 +373,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 2,
-                            AddressId = 2,
                             BirthDate = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             Deleted = false,
                             Email = "nikola@gmail.com",
@@ -363,7 +384,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 3,
-                            AddressId = 3,
                             BirthDate = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             Deleted = false,
                             Email = "marko@gmail.com",
@@ -375,7 +395,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 4,
-                            AddressId = 4,
                             BirthDate = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             Deleted = false,
                             Email = "stefan@gmail.com",
@@ -387,7 +406,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 5,
-                            AddressId = 2,
                             BirthDate = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             Deleted = false,
                             Email = "pacijent1@gmail.com",
@@ -399,7 +417,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 6,
-                            AddressId = 3,
                             BirthDate = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             Deleted = false,
                             Email = "pacijent2@gmail.com",
@@ -411,7 +428,6 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 7,
-                            AddressId = 4,
                             BirthDate = new DateTime(2022, 11, 8, 0, 0, 0, 0, DateTimeKind.Local),
                             Deleted = false,
                             Email = "pacijent3@gmail.com",
@@ -498,13 +514,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("WorkingDays");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Allergy", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", null)
-                        .WithMany("Allergies")
-                        .HasForeignKey("PatientId");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Person", "Doctor")
@@ -533,20 +542,31 @@ namespace HospitalLibrary.Migrations
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Person", "Doctor")
                         .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DoctorId");
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.PatientAllergies", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Allergy", "Allergy")
+                        .WithMany()
+                        .HasForeignKey("AllergyId");
+
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
+                    b.Navigation("Allergy");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Person", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
                 });
@@ -558,11 +578,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
-                {
-                    b.Navigation("Allergies");
                 });
 #pragma warning restore 612, 618
         }

@@ -155,5 +155,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok(user);
         }
+
+
     }
 }
