@@ -15,6 +15,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
+import { StatisticsComponent } from './statistics/statistics.component';
+import { NgChartsModule } from 'ng2-charts';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -25,7 +27,8 @@ const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'appointments/doctor/:id', component: AppointmentsComponent },
   { path: 'appointments/add', component: CreateAppointmentComponent },
-  { path: 'appointments/:id/update', component: UpdateAppointmentComponent }
+  { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
+  { path: 'statistics', component: StatisticsComponent }
 
 
 ];
@@ -39,7 +42,8 @@ const routes: Routes = [
     FeedbacksComponent,
     AppointmentsComponent,
     CreateAppointmentComponent,
-    UpdateAppointmentComponent
+    UpdateAppointmentComponent,
+    StatisticsComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +54,9 @@ const routes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    NgChartsModule
+
 
   ],
   exports: [ RouterModule ]
