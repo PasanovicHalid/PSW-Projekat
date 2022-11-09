@@ -61,7 +61,7 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
 
-        [HttpGet("/getAllergiesAndDoctors")]
+        [HttpGet("GetAllergiesAndDoctors")]
         public ActionResult GetAllergiesAndDoctors()
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());

@@ -9,7 +9,7 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <div class="input-group has-validation">
-                    <input type="text" class="form-control" id="name" required>
+                    <input type="text" class="form-control" id="name" required [(ngModel)]="registerPatientDto.name">
                     <div class="invalid-feedback">
                         Please enter a name.
                     </div>
@@ -19,7 +19,7 @@
                 <div class="mb-3">
                     <label for="surname" class="form-label">Surname</label>
                     <div class="input-group has-validation">
-                    <input type="text" class="form-control" id="surname" required>
+                    <input type="text" class="form-control" id="surname" required [(ngModel)]="registerPatientDto.surname">
                     <div class="invalid-feedback">
                         Please enter a surname.
                     </div>
@@ -32,7 +32,7 @@
                         <span class="input-group-text" id="genderPng">
                             <img src="../../../../assets/images/gender.png" width="24" height="24"/>
                         </span>
-                        <select class="form-select" aria-label="gender selector" id="gender" required>
+                        <select class="form-select" aria-label="gender selector" id="gender" required [(ngModel)]="registerPatientDto.gender">
                             <option selected disabled hidden value="">Choose your gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -50,7 +50,7 @@
                     <span class="input-group-text" id="birthdatePng">        
                         <img src="../../../../assets/images/birthday.png" width="24" height="24"/>
                     </span>
-                    <input type="date" class="form-control" id="birthdate" aria-describedby="birthdatePng" required>
+                    <input type="date" class="form-control" id="birthdate" aria-describedby="birthdatePng" required [(ngModel)]="registerPatientDto.birthDate">
                     <div class="invalid-feedback">
                         Please choose a birthdate.
                     </div>
@@ -63,7 +63,7 @@
                     <span class="input-group-text fw-bold" id="emailPng" style="width: 50px;">
                         &nbsp;@
                     </span>
-                    <input type="text" class="form-control" id="email" aria-describedby="emailPng" required>
+                    <input type="text" class="form-control" id="email" aria-describedby="emailPng" required [(ngModel)]="registerPatientDto.email">
                     <div class="invalid-feedback">
                         Please enter a email.
                     </div>
@@ -73,7 +73,7 @@
                     <div class="mb-3 col-sm-8">
                         <label for="street" class="form-label">Street</label>
                         <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="street" required>
+                            <input type="text" class="form-control" id="street" required [(ngModel)]="registerPatientDto.street">
                             <div class="invalid-feedback">
                                 Please enter a street.
                             </div>
@@ -82,7 +82,7 @@
                     <div class="mb-3 col-sm-4">
                         <label for="number" class="form-label">Number</label>
                         <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="number" required>
+                            <input type="text" class="form-control" id="number" required [(ngModel)]="registerPatientDto.number">
                             <div class="invalid-feedback">
                                 Please enter a number.
                             </div>
@@ -94,7 +94,7 @@
                     <div class="mb-3 col-sm-6">
                         <label for="city" class="form-label">City</label>
                         <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="city" required>
+                            <input type="text" class="form-control" id="city" required [(ngModel)]="registerPatientDto.city">
                             <div class="invalid-feedback">
                                 Please enter a city.
                             </div>
@@ -103,7 +103,7 @@
                     <div class="mb-3 col-sm-6">
                         <label for="township" class="form-label">Township</label>
                         <div class="input-group has-validation">
-                            <input type="text" class="form-control" id="township" required>
+                            <input type="text" class="form-control" id="township" required [(ngModel)]="registerPatientDto.township">
                             <div class="invalid-feedback">
                                 Please enter a township.
                             </div>
@@ -114,7 +114,7 @@
                 <div class="mb-3">
                     <label for="postCode" class="form-label">Post code</label>
                     <div class="input-group has-validation">
-                        <input type="number" class="form-control" id="postCode" required>
+                        <input type="number" class="form-control" id="postCode" required [(ngModel)]="registerPatientDto.postCode">
                         <div class="invalid-feedback">
                             Please enter a post code.
                         </div>
@@ -131,7 +131,7 @@
                     <span class="input-group-text" id="userPng">
                         <img src="../../../../assets/images/user.png" width="24" height="24"/>
                     </span>
-                    <input type="text" class="form-control" id="username" aria-describedby="userPng" required>
+                    <input type="text" class="form-control" id="username" aria-describedby="userPng" required [(ngModel)]="registerPatientDto.username">
                     <div class="invalid-feedback">
                         Please enter a username.
                     </div>
@@ -144,7 +144,7 @@
                     <span class="input-group-text" id="passwordPng">        
                         <img src="../../../../assets/images/password.png" width="24" height="24"/>
                     </span>
-                    <input type="password" class="form-control" id="password" aria-describedby="passwordPng" required>
+                    <input type="password" class="form-control" id="password" aria-describedby="passwordPng" required [(ngModel)]="registerPatientDto.password">
                     <div class="invalid-feedback">
                         Please enter a password.
                     </div>
@@ -158,7 +158,7 @@
                         <span class="input-group-text" id="bloodTypePng">        
                             <img src="../../../../assets/images/bloodtype.png" width="24" height="24"/>
                         </span>
-                        <select class="form-select" aria-label="blood type selector" id="bloodType" required>
+                        <select class="form-select" aria-label="blood type selector" id="bloodType" required [(ngModel)]="registerPatientDto.bloodType">
                             <option selected disabled hidden value="">Choose your blood type</option>
                             <option value="A+">A+</option>
                             <option value="B+">B+</option>
@@ -181,9 +181,9 @@
                         <span class="input-group-text" id="allergies">
                             <img src="../../../../assets/images/allergy.png" width="24" height="24"/>
                         </span>
-                        <select class="form-select" aria-label="allergies selector" id="allergies">
+                        <select class="form-select" aria-label="allergies selector" id="allergies" multiple [(ngModel)]="registerPatientDto.allergies">
                             <option selected disabled hidden value="">Select your allergies</option>
-                            <option value="allergies">ngFor generated</option>
+                            <option *ngFor="let allergy of allergiesAndDoctors.allergies" [value]="allergy.id">{{allergy.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -194,9 +194,9 @@
                         <span class="input-group-text" id="doctorPng">        
                             <img src="../../../../assets/images/doctor.png" width="24" height="24"/>
                         </span>
-                        <select class="form-select" aria-label="personal doctor selector" id="doctor" required>
+                        <select class="form-select" aria-label="personal doctor selector" id="doctor" required [(ngModel)]="registerPatientDto.doctorName">
                             <option selected disabled hidden value="">Select your doctor</option>
-                            <option value="doctors">ngFor generated</option>
+                            <option *ngFor="let doctor of allergiesAndDoctors.doctors" [value]="doctor.id">{{doctor.fullName}}</option>
                         </select>                        
                         <div class="invalid-feedback">
                             Please choose a doctor.

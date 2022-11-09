@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AllergiesAndDoctorsForPatientRegistrationDto } from '../model/allergiesAndDoctorsForPatientRegistrationDto.model';
+import { RegisterPatientDto } from '../model/registerPatientDto.model';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -8,9 +11,15 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  public allergiesAndDoctors: AllergiesAndDoctorsForPatientRegistrationDto = new AllergiesAndDoctorsForPatientRegistrationDto();
+  public registerPatientDto: RegisterPatientDto = new RegisterPatientDto();
+
+  constructor(private registerService: RegisterService, private router: Router) { }
 
   ngOnInit(): void {
+    this.registerService.getAllergiesAndDoctors().subscribe(res => {
+      this.allergiesAndDoctors = res;
+    })
   }
 
   register(event:any){
@@ -22,7 +31,9 @@ export class RegisterComponent implements OnInit {
     form.classList.add('was-validated');
 
     if (form.checkValidity() === true){
-      this.router.navigate(['/login']);
+      this.registerService.registerPatient(this.registerPatientDto).subscribe(res => {
+        this.router.navigate(['/login']);
+      });
     }
   }
 }

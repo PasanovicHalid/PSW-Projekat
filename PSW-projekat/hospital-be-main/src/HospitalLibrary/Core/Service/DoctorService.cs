@@ -47,22 +47,32 @@ namespace HospitalLibrary.Core.Service
 
         public AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors()
         {
-            IEnumerable<Person> allDoctors = _personRepository.GetAllDoctors();
-            //IEnumerable<Patient> allPatients = _personRepository.GetAllPatients();
-            IEnumerable<Allergy> allAllergies = _allergyRepository.GetAll();
             AllergiesAndDoctorsForPatientRegistrationDto allergiesAndDoctors = new AllergiesAndDoctorsForPatientRegistrationDto();
+            allergiesAndDoctors.Allergies = _allergyRepository.GetAll().ToList();
+            allergiesAndDoctors.Doctors = new List<DoctorForPatientRegistrationDto>();
+            List<Doctor> allDoctors = _doctorRepository.GetAllDoctorsForPatientRegistration().ToList();
+            List<Person> allDoctorsPersonalInforamtion = _personRepository.GetAllDoctors().ToList();
 
-            foreach (var doctor in allDoctors)
+            foreach (var doctor in allDoctorsPersonalInforamtion)
             {
-                DoctorForPatientRegistrationDto dto = new DoctorForPatientRegistrationDto()
+                foreach(var availableDoctor in allDoctors)
                 {
-                    Id = doctor.Id,
-                    FullName = doctor.Name + " " + doctor.Surname
-                };
-                allergiesAndDoctors.Doctors.Add(dto);
+                    if(doctor.Id == availableDoctor.Person.Id)
+                    {
+                        DoctorForPatientRegistrationDto dto = new DoctorForPatientRegistrationDto()
+                        {
+                            Id = doctor.Id,
+                            FullName = doctor.Name + " " + doctor.Surname
+                        };
+                        allergiesAndDoctors.Doctors.Add(dto);
+                        //mala optimizacija
+                        if (allergiesAndDoctors.Doctors.Count() == allDoctors.Count())
+                        {
+                            return allergiesAndDoctors;
+                        }
+                    }
+                }
             }
-            allergiesAndDoctors.Allergies = allAllergies.ToList();
-
             return allergiesAndDoctors;
         }
     }
