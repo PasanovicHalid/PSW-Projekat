@@ -11,14 +11,15 @@ namespace HospitalAPI.Controllers.PublicApp
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class PersonController : ControllerBase
     {
-        private readonly IUserService _userService;
-        private readonly UserManager<SecUser> _userManager;
 
-        public UserController(IUserService userService, UserManager<SecUser> userManager)
+        private readonly UserManager<SecUser> _userManager;
+        private readonly IPersonService _personService;
+
+        public PersonController(IPersonService personService, UserManager<SecUser> userManager)
         {
-            _userService = userService;
+            _personService = personService;
             _userManager = userManager;
         }
 
@@ -26,22 +27,21 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_userService.GetAll());
+            return Ok(_personService.GetAll());
         }
 
 
         [HttpGet("patient/")]
         public ActionResult GetAllPatients()
         {
-            return Ok(_userService.GetAllPatients());
+            return Ok(_personService.GetAllPatients());
 
         }
 
         [HttpGet("doctor/")]
         public ActionResult GetAllDoctors()
         {
-            return Ok(_userService.GetAllDoctors());
-
+            return Ok(_personService.GetAllDoctors());
         }
 
         [HttpGet("userInfo/")]
@@ -49,7 +49,7 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             var id = User.Claims.GetUserId();
 
-            return Ok(_userService.GetById(id));
+            return Ok(_personService.GetById(id));
         }
     }
 }
