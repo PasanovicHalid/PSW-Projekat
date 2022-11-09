@@ -34,7 +34,7 @@ namespace IntegrationAPITests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=IntegrationTestDb;";
+            return "Server=.;Database=IntegrationTestDb;TrustServerCertificate=False;Trusted_Connection=True";
         }
 
         private static void InitializeDatabase(IntegrationDbContext context)
@@ -42,8 +42,8 @@ namespace IntegrationAPITests.Setup
             context.Database.EnsureCreated();
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
             context.BloodBanks.Add(new BloodBank {
-                Id = 1,
                 Name = "asdsadsda",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
@@ -52,7 +52,6 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
             context.BloodBanks.Add(new BloodBank {
-                Id = 2,
                 Name = "aa",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
@@ -61,7 +60,6 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
             context.BloodBanks.Add(new BloodBank {
-                Id = 3,
                 Name = "bb",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
@@ -70,13 +68,23 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
             context.BloodBanks.Add(new BloodBank {
-                Id = 4,
                 Name = "rr",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
                 ApiKey = "sadfasdads",
                 ServerAddress = "https://www.messenger.com/t/100001603572170",
                 AccountStatus = AccountStatus.ACTIVE
+            });
+
+            context.ReportSettings.Add(new ReportSettings
+            {
+                CalculationDays = 0,
+                CalculationMonths = 1,
+                CalculationYears = 0,
+                DeliveryDays = 0,
+                DeliveryMonths = 1,
+                DeliveryYears = 0,
+                StartDeliveryDate = System.DateTime.Now
             });
 
             context.SaveChanges();
