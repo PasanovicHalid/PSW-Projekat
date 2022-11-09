@@ -57,10 +57,11 @@ namespace HospitalLibrary.Core.Service
         public AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors()
         {
             IEnumerable<Person> allDoctors = _personRepository.GetAllDoctors();
-            IEnumerable<Patient> allPatients = _personRepository.GetAllPatients();
+            //IEnumerable<Patient> allPatients = _personRepository.GetAllPatients();
             IEnumerable<Allergy> allAllergies = _allergyRepository.GetAll();
 
-            int minPatientCount = 
+            //int minPatientCount = 
+            return null;
         }
     }
 }

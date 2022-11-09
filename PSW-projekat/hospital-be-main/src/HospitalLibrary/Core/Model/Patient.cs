@@ -7,9 +7,8 @@ namespace HospitalLibrary.Core.Model
     public class Patient : BaseModel
     {
         public BloodType BloodType { get; set; }
-        //public virtual ICollection<Allergy> Allergies { get; set; }
-        public virtual Person Doctor { get; set; }
-        //public int DoctorId { get; set; }
 
+        public virtual Person Person { get; set; }
+        public virtual Doctor Doctor { get; set; }
     }
 }
