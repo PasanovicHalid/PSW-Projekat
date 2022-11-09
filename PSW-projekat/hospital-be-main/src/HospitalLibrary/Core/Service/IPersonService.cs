@@ -12,7 +12,7 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<Person> GetAllDoctors();
         IEnumerable<Person> GetAllPatients();
-        AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors();
 
+        Person RegisterPerson(Person person);
     }
 }

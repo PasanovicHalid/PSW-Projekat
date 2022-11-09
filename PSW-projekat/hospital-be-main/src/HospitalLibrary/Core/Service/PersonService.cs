@@ -11,10 +11,9 @@ namespace HospitalLibrary.Core.Service
 {
     public class PersonService : IPersonService
     {
-        private readonly AllergyRepository _allergyRepository;
-        private readonly IPersonRepository _personRepository;
+        private readonly PersonRepository _personRepository;
 
-        public PersonService(IPersonRepository personRepository)
+        public PersonService(PersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
@@ -49,19 +48,14 @@ namespace HospitalLibrary.Core.Service
             return _personRepository.GetById(id);
         }
 
+        public Person RegisterPerson(Person person)
+        {
+            return _personRepository.RegisterUser(person);
+        }
+
         public void Update(Person entity)
         {
             throw new NotImplementedException();
-        }
-
-        public AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors()
-        {
-            IEnumerable<Person> allDoctors = _personRepository.GetAllDoctors();
-            //IEnumerable<Patient> allPatients = _personRepository.GetAllPatients();
-            IEnumerable<Allergy> allAllergies = _allergyRepository.GetAll();
-
-            //int minPatientCount = 
-            return null;
         }
     }
 }

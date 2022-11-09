@@ -2,10 +2,12 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -16,17 +18,27 @@ namespace HospitalAPI.Controllers.PublicApp
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IPersonRepository _userRepository;
+        private readonly PersonService _personService;
         private readonly UserManager<SecUser> _userManager;
         private readonly SignInManager<SecUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly DoctorService _doctorService;
+        private readonly PatientService _patientService;
 
-        public AccountController(IPersonRepository userRepository, UserManager<SecUser> userManager, SignInManager<SecUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController( 
+                UserManager<SecUser> userManager, 
+                SignInManager<SecUser> signInManager,
+                RoleManager<IdentityRole> roleManager,
+                PersonService personService,
+                DoctorService doctorService,
+                PatientService patientService)
         {
-            _userRepository = userRepository;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _personService = personService;
+            _doctorService = doctorService;
+            _patientService = patientService;
         }
 
         [HttpGet("Login")]
@@ -48,8 +60,16 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+
+        [HttpGet("/getAllergiesAndDoctors")]
+        public ActionResult GetAllergiesAndDoctors()
+        {
+            return Ok(_doctorService.GetAllergiesAndDoctors());
+        }
+
+
         [HttpPost("CreateManager")]
-        public async Task<IActionResult> CreateManager(RegisterUserDto regUser)
+        public async Task<IActionResult> CreateManager(RegisterPatientDto regUser)
         {
             bool patientRoleExists = await _roleManager.RoleExistsAsync("Manager");
             if (!patientRoleExists)
@@ -66,7 +86,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Role = Role.manager,
                 Email = regUser.Email
             };
-            user = _userRepository.RegisterUser(user);
+            user = _personService.RegisterPerson(user);
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
@@ -84,7 +104,7 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpPost("RegisterPatient")]
-        public async Task<IActionResult> RegisterPatient(RegisterUserDto regUser)
+        public async Task<IActionResult> RegisterPatient(RegisterPatientDto regUser)
         {
             bool patientRoleExists = await _roleManager.RoleExistsAsync("Patient");
             if (!patientRoleExists)
@@ -99,9 +119,30 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = regUser.Name,
                 Surname = regUser.Surname,
                 Role = Role.patient,
-                Email = regUser.Email
+                Email = regUser.Email,
+                Gender = regUser.Gender,
+                BirthDate = Convert.ToDateTime(regUser.BirthDate),
+                Address = new Address()
+                {
+                    Street = regUser.Street,
+                    City = regUser.City,
+                    Number = regUser.Number,
+                    PostCode = regUser.PostCode,
+                    Township = regUser.Township,
+                }
             };
-            user = _userRepository.RegisterUser(user);
+            user = _personService.RegisterPerson(user);
+            Doctor doctor = _doctorService.GetById(regUser.DoctorName.Id);
+
+            Patient patient = new Patient()
+            {
+                BloodType = regUser.BloodType,
+                Person = user,
+                Doctor = doctor
+            };
+
+            patient = _patientService.RegisterPatient(patient);
+
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
@@ -118,11 +159,11 @@ namespace HospitalAPI.Controllers.PublicApp
             //var code = await _userManager.GenerateEmailConfirmationTokenAsync(secUser);
             //await _userManager.ConfirmEmailAsync(secUser, code);
 
-            return Ok(user);
+            return Ok();
         }
 
         [HttpPost("CreateDoctor")]
-        public async Task<IActionResult> CreateDoctor(RegisterUserDto regUser)
+        public async Task<IActionResult> CreateDoctor(RegisterPatientDto regUser)
         {
             bool patientRoleExists = await _roleManager.RoleExistsAsync("Doctor");
             if (!patientRoleExists)
@@ -139,7 +180,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Role = Role.doctor,
                 Email = regUser.Email
             };
-            user = _userRepository.RegisterUser(user);
+            user = _personService.RegisterPerson(user);
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,

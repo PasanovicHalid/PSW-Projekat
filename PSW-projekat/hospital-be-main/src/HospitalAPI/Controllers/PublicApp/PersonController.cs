@@ -38,11 +38,5 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             return Ok(_personService.GetAllDoctors());
         }
-
-        [HttpGet("/getAllergiesAndDoctors")]
-        public ActionResult GetAllergiesAndDoctors()
-        {
-            return Ok(_personService.GetAllergiesAndDoctors());
-        }
     }
 }

@@ -7,6 +7,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -47,6 +48,12 @@ namespace HospitalLibrary.Core.Repository
         public Person GetById(int id)
         {
             return _context.Persons.Find(id);
+        }
+
+        public Doctor GetDoctorById(int id)
+        {
+            Doctor doctor = _context.Doctors.Where(d => d.Id == id).FirstOrDefault();
+            return doctor;
         }
 
         public Person RegisterUser(Person user)
