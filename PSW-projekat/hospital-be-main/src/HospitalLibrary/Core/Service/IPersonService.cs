@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Core.Service
@@ -11,6 +12,7 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<Person> GetAllDoctors();
         IEnumerable<Person> GetAllPatients();
+        AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors();
 
     }
 }

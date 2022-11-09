@@ -83,7 +83,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(user);
         }
 
-            [HttpPost("RegisterPatient")]
+        [HttpPost("RegisterPatient")]
         public async Task<IActionResult> RegisterPatient(RegisterUserDto regUser)
         {
             bool patientRoleExists = await _roleManager.RoleExistsAsync("Patient");
@@ -109,7 +109,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 UserName = regUser.Username,
             };
             var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
-            if(registerUser != null)
+            if (registerUser != null)
             {
                 await _userManager.AddToRoleAsync(secUser, "Patient");
                 await _userManager.AddClaimAsync(secUser, new Claim("UserId", user.Id.ToString()));
@@ -155,7 +155,5 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok(user);
         }
-
-
     }
 }

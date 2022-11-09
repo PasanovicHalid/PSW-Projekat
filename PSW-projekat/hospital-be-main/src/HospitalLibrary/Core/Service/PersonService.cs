@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 
@@ -10,7 +11,7 @@ namespace HospitalLibrary.Core.Service
 {
     public class PersonService : IPersonService
     {
-
+        private readonly AllergyRepository _allergyRepository;
         private readonly IPersonRepository _personRepository;
 
         public PersonService(IPersonRepository personRepository)
@@ -51,6 +52,15 @@ namespace HospitalLibrary.Core.Service
         public void Update(Person entity)
         {
             throw new NotImplementedException();
+        }
+
+        public AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors()
+        {
+            IEnumerable<Person> allDoctors = _personRepository.GetAllDoctors();
+            IEnumerable<Patient> allPatients = _personRepository.GetAllPatients();
+            IEnumerable<Allergy> allAllergies = _allergyRepository.GetAll();
+
+            int minPatientCount = 
         }
     }
 }

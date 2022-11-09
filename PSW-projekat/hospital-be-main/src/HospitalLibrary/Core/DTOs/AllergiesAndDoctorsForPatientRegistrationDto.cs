@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace HospitalLibrary.Core.DTOs
 {
     public class AllergiesAndDoctorsForPatientRegistrationDto
     {
-
+        public List<Allergy> allergies;
+        public List<Doctor> doctors;
     }
 }

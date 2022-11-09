@@ -5,7 +5,7 @@
         
         <div class="row justify-content-evenly">
             <div class="col-md-5">
-                <h3 class="mb-2 mx-auto border-bottom border-white">Account information</h3>
+                <h3 class="mb-2 mx-auto border-bottom border-white">Personal information</h3>
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <div class="input-group has-validation">
@@ -60,16 +60,71 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <div class="input-group has-validation">
-                    <span class="input-group-text fw-bold" id="userPng" style="width: 50px;">
+                    <span class="input-group-text fw-bold" id="emailPng" style="width: 50px;">
                         &nbsp;@
                     </span>
-                    <input type="text" class="form-control" id="email" aria-describedby="userPng" required>
+                    <input type="text" class="form-control" id="email" aria-describedby="emailPng" required>
                     <div class="invalid-feedback">
                         Please enter a email.
                     </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="mb-3 col-sm-8">
+                        <label for="street" class="form-label">Street</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="street" required>
+                            <div class="invalid-feedback">
+                                Please enter a street.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-sm-4">
+                        <label for="number" class="form-label">Number</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="number" required>
+                            <div class="invalid-feedback">
+                                Please enter a number.
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="mb-3 col-sm-6">
+                        <label for="city" class="form-label">City</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="city" required>
+                            <div class="invalid-feedback">
+                                Please enter a city.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-sm-6">
+                        <label for="township" class="form-label">Township</label>
+                        <div class="input-group has-validation">
+                            <input type="text" class="form-control" id="township" required>
+                            <div class="invalid-feedback">
+                                Please enter a township.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="postCode" class="form-label">Post code</label>
+                    <div class="input-group has-validation">
+                        <input type="number" class="form-control" id="postCode" required>
+                        <div class="invalid-feedback">
+                            Please enter a post code.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-5">
+                <h3 class="mb-2 mx-auto border-bottom border-white">Account information</h3>
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
                     <div class="input-group has-validation">
@@ -95,9 +150,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="col-md-5">
                 <h3 class="mb-2 mx-auto border-bottom border-white">Medical information</h3>
                 <div class="mb-3">
                     <label for="bloodType" class="form-label">Blood Type</label>
