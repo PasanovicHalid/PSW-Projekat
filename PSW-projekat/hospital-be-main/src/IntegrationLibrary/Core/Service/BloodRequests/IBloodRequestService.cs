@@ -10,5 +10,6 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
     public interface IBloodRequestService
     {
         void Create(BloodRequest entity);
+        BloodRequest GetById(int id);
     }
 }

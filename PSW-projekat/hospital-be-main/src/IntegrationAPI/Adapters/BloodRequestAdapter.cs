@@ -13,7 +13,13 @@ namespace IntegrationAPI.Adapters
         {
             return new BloodRequest()
             {
-              
+                RequiredForDate = entity.RequiredForDate,
+                BloodQuantity = entity.BloodQuantity,
+                Reason = entity.Reason,
+                DoctorId = entity.DoctorId,
+                RequestState = entity.RequestState,
+                BloodType = entity.BloodType,
+                Id = entity.Id
             };
         }
 
@@ -21,7 +27,13 @@ namespace IntegrationAPI.Adapters
         {
             return new BloodRequestDTO()
             {
-              
+                RequiredForDate = entity.RequiredForDate,
+                BloodQuantity = entity.BloodQuantity,
+                Reason = entity.Reason,
+                DoctorId = entity.DoctorId,
+                RequestState = entity.RequestState,
+                BloodType = entity.BloodType,
+                Id = entity.Id
             };
         }
     }

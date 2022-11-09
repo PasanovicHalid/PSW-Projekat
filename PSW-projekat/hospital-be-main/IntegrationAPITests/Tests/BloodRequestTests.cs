@@ -31,13 +31,19 @@ namespace IntegrationAPITests.Tests
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
-            
+
             BloodRequestDTO testCase = new BloodRequestDTO()
             {
-               
+                Id = 1,
+                RequiredForDate = DateTime.Now,
+                BloodQuantity = 1,
+                Reason = "",
+                DoctorId = 1,
+                RequestState =0,
+                BloodType = 0,
             };
 
-            var result = ((OkObjectResult)controller.Create(testCase))?.Value as BloodRequest;
+            var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as BloodRequest;
             Assert.NotNull(result);
         }
     }

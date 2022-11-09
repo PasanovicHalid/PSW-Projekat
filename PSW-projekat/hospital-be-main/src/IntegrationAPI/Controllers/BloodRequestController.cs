@@ -18,16 +18,49 @@ namespace IntegrationAPI.Controllers
     {
 
 
-        private IBloodRequestService _bloodRequestService;
+        private readonly IBloodRequestService _bloodRequestService;
 
         public BloodRequestController(IBloodRequestService bloodRequestService)
         {
-            this._bloodRequestService = bloodRequestService;
+            _bloodRequestService = bloodRequestService;
         }
 
-        public OkObjectResult Create(BloodRequestDTO testCase)
+        [HttpPost]
+        public ActionResult Create(BloodRequestDTO entity)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            BloodRequest bloodRequest = BloodRequestAdapter.FromDTO(entity);
+            try
+            {
+                _bloodRequestService.Create(bloodRequest);
+                return CreatedAtAction("GetById", new { id = bloodRequest.Id }, bloodRequest);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            try
+            {
+                BloodRequest bloodRequest = _bloodRequestService.GetById(id);
+                if (bloodRequest == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(bloodRequest);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
