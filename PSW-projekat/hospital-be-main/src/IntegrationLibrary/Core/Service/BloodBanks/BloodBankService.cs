@@ -152,7 +152,7 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
 
         public void TestReciveFromMQ()
         {
-            throw new NotImplementedException();
+            _rabbitMQService.Recive();
         }
     }
 }

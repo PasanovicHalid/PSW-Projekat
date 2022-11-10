@@ -11,6 +11,7 @@ namespace IntegrationLibrary.Core.Model
         public string _name { get; set; }
         public DateTime _dateTime { get; set; }
         public int _bloodBankId { get; set; }
+        //public NewsStatus _newsStatus { get; set; }
         
         public News()
         {
@@ -20,6 +21,8 @@ namespace IntegrationLibrary.Core.Model
         public DateTime DateTime { get => _dateTime; set => _dateTime = value; }
 
         public int BloodBankId { get => _bloodBankId; set => _bloodBankId = value; }
+
+        //public NewsStatus NewsStatus { get => _newsStatus; set => _newsStatus = value; }
 
     }
 }

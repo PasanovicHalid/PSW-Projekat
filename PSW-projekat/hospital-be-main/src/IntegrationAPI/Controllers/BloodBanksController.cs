@@ -75,7 +75,7 @@ namespace IntegrationAPI.Controllers
             }
         }
 
-        [HttpGet("test")]
+        [HttpGet("testSend")]
         public ActionResult SendToMQ()
         {
             try
@@ -84,6 +84,18 @@ namespace IntegrationAPI.Controllers
                 return Ok();
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("testRecive")]
+        public ActionResult ReciveFromMQ()
+        {
+            try
+            {
+                _bloodBankService.TestReciveFromMQ();
+                return Ok();
+            } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
