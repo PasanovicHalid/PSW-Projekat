@@ -4,6 +4,13 @@
         <div>
             <canvas id="genderAgeChart" style="width:100%;max-width:700px">{{ genderAgeChart }}</canvas>
             <canvas id="bloodTypeChart" style="width:100%;max-width:700px">{{ bloodTypeChart }}</canvas>
+            <canvas  baseChart
+                [title]="barChartLegend"
+                [type]="'bar'"
+                [datasets]="doctorPercentage"
+                [labels]="doctorNames"
+                [options]="barChartOptions"> 
+            </canvas>
         </div>
     
     </body>

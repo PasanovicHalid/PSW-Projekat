@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart, Title } from 'chart.js';
+import { Router } from '@angular/router';
+import { Chart } from 'chart.js';
+import { StatisticsService } from '../services/statistics.service';
 
 @Component({
   selector: 'app-statistics',
@@ -8,15 +10,29 @@ import { Chart, Title } from 'chart.js';
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private statisticsService: StatisticsService, private router: Router) { }
 
   public bloodTypeChart : any;
-  public genderAgeChart: any;
+  public genderAgeChart : any;
+  public ageDoctorChart : any;
   public bloodTypeValues : any;
-
+  public doctorNames : any;
+  public doctorPercentage : any;
+  public barChartLegend = "naslov";
+  public barChartOptions = { }
   ngOnInit(): void {
-    this.bloodTypeValues = [34,5,9,4,2,1,38,7];
-    this.createBloodTypeChart();
+
+    this.statisticsService.getStatistics().subscribe( res =>{
+      //TODO retrieve data from DTO
+      this.bloodTypeValues = [34,6,9,2,3,1,38,70];
+      this.createBloodTypeChart();
+    });
+
+
+    //this.bloodTypeValues = [34,6,9,2,3,1,38,7];
+    this.doctorNames = ["prvo ime","drugo ime"];
+    this.doctorPercentage = [{data : [20,30], label : "doktori"}];
+    
     this.createGenderAgeChart();
   }
 
@@ -52,7 +68,7 @@ export class StatisticsComponent implements OnInit {
           pointBackgroundColor: "lightblue"
           }, 
           { 
-          data: [300,700,2000,5000,6000,4000],
+          data: [300,700,2000,1500,2000,1000],
           borderColor: "pink",
           label: "Female",
           fill: false,
@@ -60,9 +76,6 @@ export class StatisticsComponent implements OnInit {
           }
         ]
       },
-      options: {
-        
-      }
     });
   }
 
