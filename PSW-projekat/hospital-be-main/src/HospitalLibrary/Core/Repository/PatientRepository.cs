@@ -48,5 +48,12 @@ namespace HospitalLibrary.Core.Repository
 
             return patient;
         }
+
+        public Person getPersonByPatientId(int id)
+        {
+            var patient = _context.Patients.FirstOrDefault(d => d.Id == id);
+            var person = _context.Persons.FirstOrDefault(d => d.Id == patient.Person.Id);
+            return person;
+        }
     }
 }

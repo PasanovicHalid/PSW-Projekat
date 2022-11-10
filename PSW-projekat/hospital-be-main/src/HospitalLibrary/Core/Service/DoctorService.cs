@@ -65,5 +65,10 @@ namespace HospitalLibrary.Core.Service
 
             return allergiesAndDoctors;
         }
+
+        public Person getPersonByDoctorId(int id)
+        {
+            return _doctorRepository.getPersonByDoctorId(id);
+        }
     }
 }

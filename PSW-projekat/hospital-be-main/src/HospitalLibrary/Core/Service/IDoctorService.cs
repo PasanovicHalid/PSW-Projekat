@@ -11,5 +11,6 @@ namespace HospitalLibrary.Core.Service
     public interface IDoctorService : IService<Doctor>
     {
         AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors();
+        public Person getPersonByDoctorId(int id);
     }
 }

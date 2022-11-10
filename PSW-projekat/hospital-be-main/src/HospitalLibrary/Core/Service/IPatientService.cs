@@ -10,5 +10,6 @@ namespace HospitalLibrary.Core.Service
     public interface IPatientService : IService<Patient>
     {
         Patient RegisterPatient(Patient patient);
+        public Person getPersonByPatientId(int id);
     }
 }
