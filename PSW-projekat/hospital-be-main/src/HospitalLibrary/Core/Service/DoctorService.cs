@@ -70,5 +70,10 @@ namespace HospitalLibrary.Core.Service
         {
             return _doctorRepository.getPersonByDoctorId(id);
         }
+
+        public Doctor RegisterDoctor(Doctor doctor)
+        {
+            return _doctorRepository.RegisterDoctor(doctor);
+        }
     }
 }

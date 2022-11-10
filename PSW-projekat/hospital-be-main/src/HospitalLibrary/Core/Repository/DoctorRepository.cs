@@ -44,6 +44,13 @@ namespace HospitalLibrary.Core.Repository
             return person;
         }
 
+        public Doctor RegisterDoctor(Doctor doctor)
+        {
+            _context.Doctors.Add(doctor);
+            _context.SaveChanges();
+            return doctor;
+        }
+
         public void Update(Doctor entity)
         {
             throw new NotImplementedException();

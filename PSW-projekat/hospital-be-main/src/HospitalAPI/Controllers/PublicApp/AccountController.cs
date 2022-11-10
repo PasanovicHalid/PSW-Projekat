@@ -69,7 +69,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
 
         [HttpPost("CreateManager")]
-        public async Task<IActionResult> CreateManager(RegisterPatientDto regUser)
+        public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
         {
             bool patientRoleExists = await _roleManager.RoleExistsAsync("Manager");
             if (!patientRoleExists)
@@ -81,19 +81,29 @@ namespace HospitalAPI.Controllers.PublicApp
             Person user = new Person()
             {
                 Id = 0,
-                Name = regUser.Name,
-                Surname = regUser.Surname,
+                Name = createManagerDto.Name,
+                Surname = createManagerDto.Surname,
                 Role = Role.manager,
-                Email = regUser.Email
+                Email = createManagerDto.Email,
+                Gender = createManagerDto.Gender,
+                BirthDate = Convert.ToDateTime(createManagerDto.BirthDate),
+                Address = new Address()
+                {
+                    Street = createManagerDto.Street,
+                    City = createManagerDto.City,
+                    Number = createManagerDto.Number,
+                    PostCode = createManagerDto.PostCode,
+                    Township = createManagerDto.Township,
+                }
             };
             user = _personService.RegisterPerson(user);
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
-                Email = regUser.Email,
-                UserName = regUser.Username,
+                Email = createManagerDto.Email,
+                UserName = createManagerDto.Username,
             };
-            var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
+            var registerUser = await _userManager.CreateAsync(secUser, createManagerDto.Password);
             if (registerUser != null)
             {
                 await _userManager.AddToRoleAsync(secUser, "Manager");
@@ -163,7 +173,7 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpPost("CreateDoctor")]
-        public async Task<IActionResult> CreateDoctor(RegisterPatientDto regUser)
+        public async Task<IActionResult> CreateDoctor(CreateDoctorDto createDoctorDto)
         {
             bool patientRoleExists = await _roleManager.RoleExistsAsync("Doctor");
             if (!patientRoleExists)
@@ -175,19 +185,38 @@ namespace HospitalAPI.Controllers.PublicApp
             Person user = new Person()
             {
                 Id = 0,
-                Name = regUser.Name,
-                Surname = regUser.Surname,
+                Name = createDoctorDto.Name,
+                Surname = createDoctorDto.Surname,
                 Role = Role.doctor,
-                Email = regUser.Email
+                Email = createDoctorDto.Email,
+                Gender = createDoctorDto.Gender,
+                BirthDate = Convert.ToDateTime(createDoctorDto.BirthDate),
+                Address = new Address()
+                {
+                    Street = createDoctorDto.Street,
+                    City = createDoctorDto.City,
+                    Number = createDoctorDto.Number,
+                    PostCode = createDoctorDto.PostCode,
+                    Township = createDoctorDto.Township,
+                }
             };
             user = _personService.RegisterPerson(user);
+
+            Doctor doctor = new Doctor()
+            {
+                Specialization = createDoctorDto.Specialization,
+                Person = user,
+            };
+
+            doctor = _doctorService.RegisterDoctor(doctor);
+
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
-                Email = regUser.Email,
-                UserName = regUser.Username,
+                Email = createDoctorDto.Email,
+                UserName = createDoctorDto.Username,
             };
-            var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
+            var registerUser = await _userManager.CreateAsync(secUser, createDoctorDto.Password);
             if (registerUser != null)
             {
                 await _userManager.AddToRoleAsync(secUser, "Doctor");
