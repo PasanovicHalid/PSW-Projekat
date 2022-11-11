@@ -23,21 +23,6 @@ namespace HospitalLibrary.Identity
         {
             base.OnModelCreating(builder);
 
-            /*IdentityUser user = new IdentityUser()
-            {
-                UserName = "pera",
-                NormalizedUserName = "PERA",
-                Email = "pera@gmail.com",
-                NormalizedEmail = "PERA@GMAIL.COM"
-            };
-
-            PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
-            user.PasswordHash = ph.HashPassword(user, "1234");
-
-            builder.Entity<IdentityUser>().HasData(
-                user
-            );*/
-
         }
     }
 }
