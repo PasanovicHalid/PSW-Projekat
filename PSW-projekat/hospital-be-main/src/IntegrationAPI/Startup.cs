@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using IntegrationLibrary.Core.Repository.Reports;
+using IntegrationLibrary.Core.Service.Reports;
 
 namespace IntegrationAPI
 {
@@ -41,6 +43,9 @@ namespace IntegrationAPI
             services.AddScoped<IEmailService, EmailService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IBloodBankConnection, BloodBankHTTPConnection>();
+            services.AddHostedService<BloodReportHostedService>();
+            services.AddScoped<IReportSettingsRepository, ReportSettingsRepository>();
+            services.AddScoped<IReportSettingsService, ReportSettingsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

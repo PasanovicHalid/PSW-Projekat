@@ -18,6 +18,8 @@ namespace IntegrationLibrary.Core.Service
     {
         private readonly MailSettings _mailSettings;
 
+        public EmailService()
+        {        }
         public EmailService(IOptions<MailSettings> mailSettings)
         {
             _mailSettings = mailSettings.Value;

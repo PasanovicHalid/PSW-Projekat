@@ -13,6 +13,9 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
     {
         private readonly IntegrationDbContext _context;
 
+        public BloodBankRepository()
+        { 
+        }
         public BloodBankRepository(IntegrationDbContext context)
         {
             _context = context;

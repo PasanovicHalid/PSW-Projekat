@@ -1,8 +1,8 @@
 import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BloodRequest } from 'src/app/modules/blood-bank/model/blood-request.model';
-import { BloodBankService } from 'src/app/modules/blood-bank/services/blood-bank.service';
+import { BloodRequest } from '../model/blood-request.model';
+import { BloodBankService } from '../services/blood-bank.service';
 import { BloodBank } from '../model/blood-bank.model';
 import { ToastrService } from 'ngx-toastr';
 
