@@ -18,9 +18,9 @@ namespace HospitalAPI.Controllers.PublicApp
     public class FeedbacksController : ControllerBase
     {    
         private readonly FeedbackService _feedbackService;
-        private readonly IPersonService _userService;
+        private readonly PersonService _userService;
 
-        public FeedbacksController(FeedbackService feedbackService, IPersonService userService)
+        public FeedbacksController(FeedbackService feedbackService, PersonService userService)
         {
             _feedbackService = feedbackService;
             _userService = userService;

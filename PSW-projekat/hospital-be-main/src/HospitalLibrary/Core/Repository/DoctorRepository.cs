@@ -50,6 +50,19 @@ namespace HospitalLibrary.Core.Repository
              return _context.Doctors.Where(d => d.Id == id).FirstOrDefault();
         }
 
+        public Person getPersonByDoctorId(int id)
+        {
+            var doctor = _context.Doctors.FirstOrDefault(d => d.Id == id);
+            var person = _context.Persons.FirstOrDefault(d => d.Id == doctor.Person.Id);
+            return person;
+        }
+
+        public Doctor RegisterDoctor(Doctor doctor)
+        {
+            _context.Doctors.Add(doctor);
+            _context.SaveChanges();
+            return doctor;
+        }
 
         public void Update(Doctor entity)
         {

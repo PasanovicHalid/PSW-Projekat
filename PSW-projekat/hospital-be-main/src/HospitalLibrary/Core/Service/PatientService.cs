@@ -37,6 +37,11 @@ namespace HospitalLibrary.Core.Service
             return _patientRepository.GetById(id);
         }
 
+        public Person getPersonByPatientId(int id)
+        {
+            return _patientRepository.getPersonByPatientId(id);
+        }
+
         public Patient RegisterPatient(Patient patient)
         {
             return _patientRepository.RegisterPatient(patient);

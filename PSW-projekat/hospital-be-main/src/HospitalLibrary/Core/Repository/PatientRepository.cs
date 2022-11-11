@@ -3,8 +3,6 @@ using HospitalLibrary.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -47,6 +45,13 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
 
             return patient;
+        }
+
+        public Person getPersonByPatientId(int id)
+        {
+            var patient = _context.Patients.FirstOrDefault(d => d.Id == id);
+            var person = _context.Persons.FirstOrDefault(d => d.Id == patient.Person.Id);
+            return person;
         }
     }
 }

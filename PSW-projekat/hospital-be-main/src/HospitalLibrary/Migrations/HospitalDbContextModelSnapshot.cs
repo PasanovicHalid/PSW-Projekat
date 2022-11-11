@@ -47,48 +47,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Novi Sad",
-                            Deleted = false,
-                            Number = "1",
-                            PostCode = "21000",
-                            Street = "neka ulica1",
-                            Township = "Novi Sad"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Novi Sad",
-                            Deleted = false,
-                            Number = "2",
-                            PostCode = "21000",
-                            Street = "neka ulica2",
-                            Township = "Novi Sad"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Ledinci",
-                            Deleted = false,
-                            Number = "3",
-                            PostCode = "21207",
-                            Street = "neka ulica3",
-                            Township = "Novi Sad"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            City = "Sremska Kamenica",
-                            Deleted = false,
-                            Number = "4",
-                            PostCode = "21200",
-                            Street = "neka ulica4",
-                            Township = "Novi Sad"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Allergy", b =>
@@ -107,86 +65,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Allergies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Deleted = false,
-                            Name = "Polen"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Deleted = false,
-                            Name = "Prasina"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Deleted = false,
-                            Name = "Pas"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Deleted = false,
-                            Name = "Macka"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Deleted = false,
-                            Name = "Pcela"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Deleted = false,
-                            Name = "Ambrozija"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Deleted = false,
-                            Name = "Kikiriki"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Deleted = false,
-                            Name = "Gluten"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Deleted = false,
-                            Name = "Laktoza"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Deleted = false,
-                            Name = "Alergija10"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Deleted = false,
-                            Name = "Alergija11"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Deleted = false,
-                            Name = "Alergija12"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Deleted = false,
-                            Name = "Alergija13"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -302,26 +180,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("Patients");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 5,
-                            BloodType = 0,
-                            Deleted = false
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BloodType = 1,
-                            Deleted = false
-                        },
-                        new
-                        {
-                            Id = 7,
-                            BloodType = 2,
-                            Deleted = false
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.PatientAllergies", b =>
@@ -385,85 +243,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("Persons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BirthDate = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            Deleted = false,
-                            Email = "pera@gmail.com",
-                            Gender = 0,
-                            Name = "Pera",
-                            Role = 2,
-                            Surname = "Petrovic"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BirthDate = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            Deleted = false,
-                            Email = "nikola@gmail.com",
-                            Gender = 0,
-                            Name = "Nikola",
-                            Role = 0,
-                            Surname = "Nikolic"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BirthDate = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            Deleted = false,
-                            Email = "marko@gmail.com",
-                            Gender = 0,
-                            Name = "Marko",
-                            Role = 0,
-                            Surname = "Markovic"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BirthDate = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            Deleted = false,
-                            Email = "stefan@gmail.com",
-                            Gender = 0,
-                            Name = "Stefan",
-                            Role = 0,
-                            Surname = "Stefanovic"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BirthDate = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            Deleted = false,
-                            Email = "pacijent1@gmail.com",
-                            Gender = 0,
-                            Name = "Pacijent1",
-                            Role = 1,
-                            Surname = "Nikolic"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BirthDate = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            Deleted = false,
-                            Email = "pacijent2@gmail.com",
-                            Gender = 1,
-                            Name = "Pacijent2",
-                            Role = 1,
-                            Surname = "Markovic"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            BirthDate = new DateTime(2022, 11, 9, 0, 0, 0, 0, DateTimeKind.Local),
-                            Deleted = false,
-                            Email = "pacijent3@gmail.com",
-                            Gender = 2,
-                            Name = "Pacijent3",
-                            Role = 1,
-                            Surname = "Stefanovic"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
@@ -485,29 +264,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Deleted = false,
-                            Floor = 1,
-                            Number = "101A"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Deleted = false,
-                            Floor = 2,
-                            Number = "204"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Deleted = false,
-                            Floor = 3,
-                            Number = "305B"
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkingDay", b =>
