@@ -50,28 +50,18 @@ namespace HospitalLibrary.Core.Service
             AllergiesAndDoctorsForPatientRegistrationDto allergiesAndDoctors = new AllergiesAndDoctorsForPatientRegistrationDto();
             allergiesAndDoctors.Allergies = _allergyRepository.GetAll().ToList();
             allergiesAndDoctors.Doctors = new List<DoctorForPatientRegistrationDto>();
-            List<Doctor> allDoctors = _doctorRepository.GetAllDoctorsForPatientRegistration().ToList();
-            List<Person> allDoctorsPersonalInforamtion = _personRepository.GetAllDoctors().ToList();
 
-            foreach (var doctor in allDoctorsPersonalInforamtion)
-            {
-                foreach(var availableDoctor in allDoctors)
+            List<int> allDoctorsIds = _doctorRepository.GetAllDoctorsForPatientRegistration();
+            List<Person> allDoctorsPersonalInforamtion = _personRepository.GetAllDoctorsForPatientRegistration(allDoctorsIds).ToList();
+
+            foreach (var doctorPersonalInformation in allDoctorsPersonalInforamtion)
+            { 
+                DoctorForPatientRegistrationDto dto = new DoctorForPatientRegistrationDto()
                 {
-                    if(doctor.Id == availableDoctor.Person.Id)
-                    {
-                        DoctorForPatientRegistrationDto dto = new DoctorForPatientRegistrationDto()
-                        {
-                            Id = doctor.Id,
-                            FullName = doctor.Name + " " + doctor.Surname
-                        };
-                        allergiesAndDoctors.Doctors.Add(dto);
-                        //mala optimizacija
-                        if (allergiesAndDoctors.Doctors.Count() == allDoctors.Count())
-                        {
-                            return allergiesAndDoctors;
-                        }
-                    }
-                }
+                    Id = doctorPersonalInformation.Id,
+                    FullName = doctorPersonalInformation.Name + " " + doctorPersonalInformation.Surname
+                };
+                allergiesAndDoctors.Doctors.Add(dto);
             }
             return allergiesAndDoctors;
         }
