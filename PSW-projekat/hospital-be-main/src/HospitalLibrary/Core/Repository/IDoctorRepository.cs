@@ -8,6 +8,5 @@ namespace HospitalLibrary.Core.Repository
         public List<int> GetAllDoctorsForPatientRegistration();
         public Person getPersonByDoctorId(int id);
         Doctor RegisterDoctor(Doctor doctor);
-
     }
 }

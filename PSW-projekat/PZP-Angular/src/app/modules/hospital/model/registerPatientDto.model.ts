@@ -4,7 +4,7 @@ import { DoctorForPatientRegistrationDto } from "./doctorForPatientRegistrationD
 export class RegisterPatientDto {
     name: string = '';
     surname: string = '';
-    gender: Gender | undefined;
+    gender: Gender = Gender.male;
     birthDate: string = '';
     email: string = '';
     street: string = '';
@@ -14,7 +14,7 @@ export class RegisterPatientDto {
     postCode: string = '';
     username: string = '';
     password: string = '';
-    bloodType: BloodType | undefined;
+    bloodType: BloodType = BloodType.APlus;
     allergies: Array<Allergy> = [];
     doctorName: DoctorForPatientRegistrationDto = {id : 0, fullName : ''};
   

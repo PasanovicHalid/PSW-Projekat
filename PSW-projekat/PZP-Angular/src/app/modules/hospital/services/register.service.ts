@@ -15,10 +15,10 @@ export class RegisterService {
   constructor(private http: HttpClient) { }
 
   registerPatient(registerPatientDto: RegisterPatientDto): Observable<RegisterPatientDto> {
-    return this.http.post<RegisterPatientDto>(this.apiHost + 'api/account/RegisterPatient', registerPatientDto, {headers: this.headers});
+    return this.http.post<RegisterPatientDto>(this.apiHost + 'api/Account/RegisterPatient', registerPatientDto, {headers: this.headers});
   }
  
   getAllergiesAndDoctors(): Observable<AllergiesAndDoctorsForPatientRegistrationDto> {
-    return this.http.get<AllergiesAndDoctorsForPatientRegistrationDto>(this.apiHost + 'api/account/GetAllergiesAndDoctors', {headers: this.headers});
+    return this.http.get<AllergiesAndDoctorsForPatientRegistrationDto>(this.apiHost + 'api/Account/GetAllergiesAndDoctors', {headers: this.headers});
   }
 }
