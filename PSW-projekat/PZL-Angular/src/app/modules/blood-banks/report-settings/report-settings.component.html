@@ -1,1 +1,62 @@
-<p>report-settings works!</p>
+<div class="container">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>*Select period of report delivery</mat-label>
+            <mat-select name="bloodTypes" [(ngModel)]="selectedOptionDelivery" matInput>
+                <mat-option value=0>Each Month</mat-option>
+                <mat-option value=1>Every 6 Months</mat-option>
+                <mat-option value=2>Every Year</mat-option>
+                <mat-option value=3>Custom Range</mat-option>
+            </mat-select>
+        </mat-form-field ><br>
+        <div class="container" *ngIf="selectedOptionDelivery == 3">
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="start"
+            [(ngModel)]="settings.startDeliveryDate">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+            <mat-datepicker #start></mat-datepicker>
+          </mat-form-field><br>
+          <mat-form-field appearance="fill"  >
+            <mat-label>Days(max 31)</mat-label>
+            <input type="number" min="0" max="31" [(ngModel)]="settings.deliveryDays" matInput>
+          </mat-form-field><br>
+          <mat-form-field appearance="fill"  >
+            <mat-label>Months(max 11)</mat-label>
+            <input type="number" min="0" max="11" [(ngModel)]="settings.deliveryMonths" matInput>
+          </mat-form-field><br>
+          <mat-form-field appearance="fill"  >
+            <mat-label>Years</mat-label>
+            <input type="number" min="0" [(ngModel)]="settings.deliveryYears" matInput>
+          </mat-form-field><br>
+        </div><br>
+        
+        <mat-form-field appearance="fill">
+            <mat-label>*Select period for calculation blood consumption</mat-label>
+            <mat-select name="bloodTypes" [(ngModel)]="selectedOptionCalculation" id="periodCalculation" matInput>
+                <mat-option value=0>For each month</mat-option>
+                <mat-option value=1>For every 6 months</mat-option>
+                <mat-option value=2>For every year</mat-option>
+                <mat-option value=3>Custom Range</mat-option>
+            </mat-select>
+            </mat-form-field ><br>
+        <div class="container" *ngIf="selectedOptionCalculation == 3">
+              <mat-form-field appearance="fill"  >
+                <mat-label>Days(max 31)</mat-label>
+                <input type="number" min="0" max="31" [(ngModel)]="settings.calculationDays" matInput>
+              </mat-form-field><br>
+              <mat-form-field appearance="fill"  >
+                <mat-label>Months(max 11)</mat-label>
+                <input type="number" min="0" max="11" [(ngModel)]="settings.calculationMonths" matInput>
+              </mat-form-field><br>
+              <mat-form-field appearance="fill"  >
+                <mat-label>Years</mat-label>
+                <input type="number" min="0" [(ngModel)]="settings.calculationYears" matInput>
+              </mat-form-field><br>
+        </div><br>        
+        <button mat-stroked-button (click)="updateSettings()">
+            Submit
+        </button>
+    </div>
+</div>
