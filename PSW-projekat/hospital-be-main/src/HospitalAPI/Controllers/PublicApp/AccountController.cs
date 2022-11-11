@@ -1,14 +1,18 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
-using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers.PublicApp
@@ -24,6 +28,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly DoctorService _doctorService;
         private readonly PatientService _patientService;
+        private readonly IConfiguration _configuration;
 
         public AccountController( 
                 UserManager<SecUser> userManager, 
@@ -31,7 +36,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 RoleManager<IdentityRole> roleManager,
                 PersonService personService,
                 DoctorService doctorService,
-                PatientService patientService)
+                PatientService patientService,
+                IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,6 +45,7 @@ namespace HospitalAPI.Controllers.PublicApp
             _personService = personService;
             _doctorService = doctorService;
             _patientService = patientService;
+            _configuration = configuration;
         }
 
         [HttpGet("Login")]
@@ -47,10 +54,47 @@ namespace HospitalAPI.Controllers.PublicApp
             var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
             if (result.Succeeded)
             {
-                //User.IsInRole("Manager");
-                return Ok();
+                var user = await _userManager.FindByNameAsync(username);
+                if (user != null && await _userManager.CheckPasswordAsync(user, password))
+                {
+                    var userRoles = await _userManager.GetRolesAsync(user);
+
+                    var authClaims = new List<Claim>
+                    {
+                        new Claim("Name", user.UserName),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    };
+
+                    foreach (var userRole in userRoles)
+                    {
+                        authClaims.Add(new Claim("Role", userRole));
+                    }
+
+                    var token = GetToken(authClaims);
+
+                    return Ok(new
+                    {
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        expiration = token.ValidTo
+                    });
+                }
             }
-            return BadRequest();
+            return Unauthorized();
+        }
+
+        private JwtSecurityToken GetToken(List<Claim> authClaims)
+        {
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddDays(30),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return token;
         }
 
         [HttpGet("Logout")]

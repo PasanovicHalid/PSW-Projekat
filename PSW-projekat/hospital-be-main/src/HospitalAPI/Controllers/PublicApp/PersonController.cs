@@ -23,7 +23,7 @@ namespace HospitalAPI.Controllers.PublicApp
             _userManager = userManager;
         }
 
-        //[Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
