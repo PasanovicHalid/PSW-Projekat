@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model
 {
-    enum NewsStatus
+    public enum NewsStatus
     {
         Approved,
         Denied,
