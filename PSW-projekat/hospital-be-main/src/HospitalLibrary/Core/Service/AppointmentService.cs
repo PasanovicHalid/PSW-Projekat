@@ -44,7 +44,7 @@ namespace HospitalLibrary.Core.Service
 
         public void Create(Appointment entity)
         {
-            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(3)))
+            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(2)))
             {
                 entity.Deleted = false;
                 _appointmentRepository.Create(entity);
@@ -96,7 +96,7 @@ namespace HospitalLibrary.Core.Service
         public void Update(Appointment entity)
         {
             
-            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(3)))
+            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(2)))
             {
                 entity.Deleted = false;
                 _appointmentRepository.Update(entity);
@@ -111,16 +111,18 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Appointment appointment in allAppointments)
             {
+                
                 AppointmentDto appointmentDto = new AppointmentDto();
+
                 PatientDto patientDto = new PatientDto();
+                patientDto.Id = appointment.Patient.Id;
                 patientDto.Name = appointment.Patient.Name;
                 patientDto.Surname = appointment.Patient.Surname;
 
-                PatientDto doctorDto = new PatientDto();
+                DoctorDto doctorDto = new DoctorDto();
+                doctorDto.Id = appointment.Doctor.Id;
                 doctorDto.Name = appointment.Doctor.Name;
                 doctorDto.Surname = appointment.Doctor.Surname;
-
-                doctorDto.Id = appointment.Doctor.Id;
 
                 appointmentDto.Patinet = patientDto;
                 appointmentDto.Doctor = doctorDto;

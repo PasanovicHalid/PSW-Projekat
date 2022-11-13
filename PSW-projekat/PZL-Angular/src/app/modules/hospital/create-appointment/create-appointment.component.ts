@@ -46,14 +46,17 @@ export class CreateAppointmentComponent implements OnInit {
         var app = new DoctorDto(element.id, element.name, element.surname, element.email, element.username, element.role);
         this.doctors.push(app);
       });
+      console.log(this.doctors);
       this.dataSourceD.data = this.doctors;
     })
 
   }
   
   public createAppointment() {
+    console.log(this.appointment);
     if (!this.isValidInput()) return;
     this.appointmentService.createAppointment(this.appointment).subscribe(res => {
+      //console.log(res,this.appointment);
       this.router.navigate(['/appointments']);
     });
   }

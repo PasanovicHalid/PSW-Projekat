@@ -44,7 +44,7 @@ namespace HospitalLibrary.Core.Service
 
         public Doctor GetById(int id)
         {
-            return _doctorRepository.GetById(id);
+            return _idoctorRepository.GetById(id);
         }
 
         public void Update(Doctor entity)

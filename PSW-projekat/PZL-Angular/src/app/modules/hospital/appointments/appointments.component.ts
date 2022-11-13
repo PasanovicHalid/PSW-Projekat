@@ -26,11 +26,12 @@ export class AppointmentsComponent implements OnInit {
 
   
   ngOnInit(): void {
-    this.appointmentService.GetAllByDoctor(3).subscribe(res => {
+    this.appointmentService.GetAllByDoctor(2).subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
       result.forEach((element: any) => {
         var app = new Appointment(element.appointmentId, element.deleted, element.patinet, element.doctor, element.dateTime);
         this.patient1 = element.patinet;
+        console.log(app);
         this.appointments.push(app);
       });
       this.dataSource.data = this.appointments;
@@ -48,12 +49,12 @@ export class AppointmentsComponent implements OnInit {
   public deleteAppointment(id: number) {
     if(window.confirm('Are sure you want to delete this item ?')){
       this.appointmentService.deleteAppointment(id).subscribe(res => {
-        this.appointmentService.GetAllByDoctor(3).subscribe(res => {
+        this.appointmentService.GetAllByDoctor(2).subscribe(res => {
           let result = Object.values(JSON.parse(JSON.stringify(res)));
           this.appointments = []
           result.forEach((element: any) => {
     
-            var app = new Appointment(element.appointmentId, element.deleted, element.patinet, element.doctor, element.dateTime);
+            var app = new Appointment(element.id, element.deleted, element.patient, element.doctor, element.dateTime);
             this.patient1 = element.patinet;
             this.appointments.push(app);
           });
