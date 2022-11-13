@@ -2,6 +2,8 @@ import { HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Appointment } from '../model/appointment.model';
+import { PatientDto } from '../model/patient';
+import { Person } from '../model/person';
 import { User } from '../model/user';
 import { AppointmentService } from '../services/appointment.service';
 
@@ -13,7 +15,7 @@ import { AppointmentService } from '../services/appointment.service';
 export class UpdateAppointmentComponent implements OnInit {
 
   public appointment: Appointment = new Appointment(0, false, '', '', Date());
-  public newPatient1: User = new User(0, '', '', 0);
+  public newPatient1: PatientDto = new PatientDto(0, '','','','', 0);
   public odgovor: Response;
 
   
