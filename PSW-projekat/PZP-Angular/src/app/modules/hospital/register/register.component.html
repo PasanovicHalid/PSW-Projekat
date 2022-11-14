@@ -101,7 +101,7 @@
 
                 <div class="mb-3">
                     <label for="postCode" class="form-label">Post code</label>
-                    <input type="number" class="form-control" id="postCode" formControlName="postCode">
+                    <input type="text" class="form-control" id="postCode" formControlName="postCode">
                     <div *ngIf="registerForm.get('postCode').invalid && (registerForm.get('postCode').dirty || registerForm.get('postCode').touched)" class="text-danger mt-1">
                         Please enter a post code.
                     </div>
@@ -121,6 +121,9 @@
                     </div>
                     <div *ngIf="registerForm.get('username').invalid && (registerForm.get('username').dirty || registerForm.get('username').touched)" class="text-danger mt-1">
                         Please enter a username.
+                    </div>
+                    <div *ngIf="registerForm.get('username').hasError('uniqueUsername')" class="text-danger mt-1">
+                        Username is taken.
                     </div>
                 </div>
 

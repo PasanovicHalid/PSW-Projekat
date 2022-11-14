@@ -113,11 +113,20 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(user);
         }
 
+        [HttpPost("IsUsernameTaken")]
+        public async Task<IActionResult> IsUsernameTaken(String username)
+        {
+            if (await _userManager.FindByNameAsync(username) != null)
+            {
+                return BadRequest("Username is taken.");
+            }
+            return Ok();
+        }
+
         [HttpPost("RegisterPatient")]
         public async Task<IActionResult> RegisterPatient(RegisterPatientDto regUser)
         {
-            bool patientRoleExists = await _roleManager.RoleExistsAsync("Patient");
-            if (!patientRoleExists)
+            if (!(await _roleManager.RoleExistsAsync("Patient")))
             {
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
@@ -141,6 +150,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     Township = regUser.Township,
                 }
             };
+
             user = _personService.RegisterPerson(user);
             Doctor doctor = _doctorService.GetById(regUser.DoctorName.Id);
 
