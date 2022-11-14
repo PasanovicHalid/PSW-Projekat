@@ -100,11 +100,11 @@ namespace HospitalLibrary.Core.Service
         public void Update(Appointment entity)
         {
             
-            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(2)))
+           // if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(2))) 
             {
                 entity.Deleted = false;
                 _appointmentRepository.Update(entity);
-            }
+            } 
 
         }
 

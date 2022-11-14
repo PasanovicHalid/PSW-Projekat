@@ -49,13 +49,24 @@ namespace HospitalAPI.Controllers.PrivateApp
         public ActionResult GetById(int id)
         {
             var appointment = _appointmentService.GetById(id);
+
+            PatientDto patientDto = new PatientDto(appointment.Patient.Id, appointment.Patient.Person.Name,
+                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email, appointment.Patient.Person.Role);
+
+            DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
+               appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
+
+            AppointmentDto appointmentDto = new AppointmentDto(appointment.Id, appointment.DateTime, patientDto, doctorDto);
+
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            return Ok(appointment);
+            return Ok(appointmentDto);
         }
+
+
 
         [HttpPost]
         public ActionResult Create(Appointment appointment)
@@ -74,17 +85,20 @@ namespace HospitalAPI.Controllers.PrivateApp
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Appointment appointment)
+        public ActionResult Update(int id, AppointmentDto appointmentDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != appointment.Id)
+            if (id != appointmentDto.AppointmentId)
             {
                 return BadRequest();
             }
+
+            Appointment appointment = _appointmentService.GetById(appointmentDto.AppointmentId);
+            appointment.DateTime = appointmentDto.DateTime;
 
             try
             {
