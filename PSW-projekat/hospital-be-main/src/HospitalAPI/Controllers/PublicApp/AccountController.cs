@@ -113,19 +113,14 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(user);
         }
 
-        [HttpPost("IsUsernameTaken")]
-        public async Task<IActionResult> IsUsernameTaken(String username)
-        {
-            if (await _userManager.FindByNameAsync(username) != null)
-            {
-                return BadRequest("Username is taken.");
-            }
-            return Ok();
-        }
-
         [HttpPost("RegisterPatient")]
         public async Task<IActionResult> RegisterPatient(RegisterPatientDto regUser)
         {
+            if (await _userManager.FindByNameAsync(regUser.Username) != null)
+            {
+                return BadRequest("Username is taken.");
+            }
+
             if (!(await _roleManager.RoleExistsAsync("Patient")))
             {
                 IdentityRole identityRole = new IdentityRole("Patient");

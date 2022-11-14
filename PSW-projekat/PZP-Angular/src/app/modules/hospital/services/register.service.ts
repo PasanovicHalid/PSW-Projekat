@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AllergiesAndDoctorsForPatientRegistrationDto } from '../model/allergiesAndDoctorsForPatientRegistrationDto.model';
 import { RegisterPatientDto } from '../model/registerPatientDto.model';
 
@@ -22,7 +22,4 @@ export class RegisterService {
     return this.http.get<AllergiesAndDoctorsForPatientRegistrationDto>(this.apiHost + 'api/Account/GetAllergiesAndDoctors', {headers: this.headers});
   }
 
-  isUsernameTaken(username: string): Observable<boolean> {
-    return this.http.post<boolean>(this.apiHost + 'api/Account/IsUsernameTaken', username, {headers: this.headers});
-  }
 }

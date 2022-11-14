@@ -1,7 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { AbstractControl, AsyncValidator, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, map, catchError, of } from 'rxjs';
 import { AllergiesAndDoctorsForPatientRegistrationDto } from '../model/allergiesAndDoctorsForPatientRegistrationDto.model';
 import { Allergy } from '../model/allergy.model';
 import { DoctorForPatientRegistrationDto } from '../model/doctorForPatientRegistrationDto.model';
@@ -17,8 +16,9 @@ export class RegisterComponent implements OnInit {
 
   public allergiesAndDoctors: AllergiesAndDoctorsForPatientRegistrationDto = new AllergiesAndDoctorsForPatientRegistrationDto();
   public registerForm: FormGroup | any;
+  public usernameIsTaken:boolean = false;
 
-  constructor(private registerService: RegisterService, private router: Router, private fb: FormBuilder, private usernameValidator: UniqueUsernameValidator) { }
+  constructor(private registerService: RegisterService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.registerService.getAllergiesAndDoctors().subscribe(res => {
@@ -35,11 +35,7 @@ export class RegisterComponent implements OnInit {
       city: ['', Validators.required],
       township: ['', Validators.required],
       postCode: ['', Validators.required],
-      username: ['', [Validators.required, 
-                    {
-                      asyncValidators: this.usernameValidator.validate.bind(this.usernameValidator),
-                      updateOn: 'blur'
-                    }]],
+      username: ['', [Validators.required]],
       password: ['', Validators.required],
       bloodType: [BloodType, Validators.required],
       allergies: [Array<Allergy>],
@@ -67,20 +63,10 @@ export class RegisterComponent implements OnInit {
 
     this.registerService.registerPatient(registerPatientDto).subscribe(res => {
       this.router.navigate(['/login']);
+    },
+    (err) => {
+      if(err.error == "Username is taken.")
+        this.usernameIsTaken = true
     });
-  }
-}
-
-@Injectable({ providedIn: 'root' })
-export class UniqueUsernameValidator implements AsyncValidator {
-  constructor(private registerService: RegisterService) {}
-
-  validate(
-    control: AbstractControl
-  ): Observable<ValidationErrors | null> {
-    return this.registerService.isUsernameTaken(control.value).pipe(
-      map(isTaken => (isTaken ? { uniqueUsername: true } : null)),
-      catchError(() => of(null))
-    );
   }
 }

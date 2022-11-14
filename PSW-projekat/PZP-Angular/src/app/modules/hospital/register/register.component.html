@@ -122,7 +122,7 @@
                     <div *ngIf="registerForm.get('username').invalid && (registerForm.get('username').dirty || registerForm.get('username').touched)" class="text-danger mt-1">
                         Please enter a username.
                     </div>
-                    <div *ngIf="registerForm.get('username').hasError('uniqueUsername')" class="text-danger mt-1">
+                    <div *ngIf="usernameIsTaken" class="text-danger mt-1">
                         Username is taken.
                     </div>
                 </div>
@@ -171,7 +171,6 @@
                             <img src="../../../../assets/images/allergy.png" width="24" height="24"/>
                         </span>
                         <select class="form-select" aria-label="allergies selector" id="allergies" formControlName="allergies" multiple>
-                            <option selected disabled hidden value="">Select your allergies</option>
                             <option *ngFor="let allergy of allergiesAndDoctors.allergies" [ngValue]="allergy">{{allergy.name}}</option>
                         </select>
                     </div>
@@ -184,7 +183,6 @@
                             <img src="../../../../assets/images/doctor.png" width="24" height="24"/>
                         </span>
                         <select class="form-select" aria-label="personal doctor selector" id="doctor" formControlName="doctorName">
-                            <option selected disabled hidden value="">Select your doctor</option>
                             <option *ngFor="let doctor of allergiesAndDoctors.doctors" [ngValue]="doctor">{{doctor.fullName}}</option>
                         </select>
                     </div>
