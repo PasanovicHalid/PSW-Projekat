@@ -23,6 +23,6 @@ namespace IntegrationLibrary.Core.Model
         [Required]
         public BloodType BloodType { get; set; }
 
-
+        public int BloodBankId { get; set; }
     }
 }
