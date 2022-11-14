@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers.PrivateApp
 {
@@ -14,18 +15,34 @@ namespace HospitalAPI.Controllers.PrivateApp
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        private readonly IPersonService _userService;
+        private readonly IDoctorService _doctorService;
+        private readonly IPatientService _patientService;
 
-        public AppointmentController(IAppointmentService appointmentService, IPersonService userService)
+
+        public AppointmentController(IAppointmentService appointmentService, IDoctorService doctorService, IPatientService patientService)
         {
             _appointmentService = appointmentService;
-            _userService = userService;
+            _doctorService = doctorService;
+            _patientService = patientService;
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_appointmentService.GetAll());
+            List<AppointmentDto> appointmentDto = new List<AppointmentDto>();
+            foreach (var appointment in _appointmentService.GetAll())
+            {
+                PatientDto patientDto = new PatientDto(appointment.Patient.Id, appointment.Patient.Person.Name,
+                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email, appointment.Patient.Person.Role);
+
+                DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
+                   appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
+
+                appointmentDto.Add(new AppointmentDto(appointment.Id, appointment.DateTime, patientDto, doctorDto));
+
+            }
+
+            return Ok(appointmentDto);
         }
 
         [HttpGet("{id}")]
@@ -43,8 +60,9 @@ namespace HospitalAPI.Controllers.PrivateApp
         [HttpPost]
         public ActionResult Create(Appointment appointment)
         {
-            appointment.Doctor = _userService.GetById(appointment.Doctor.Id);
-            appointment.Patient = _userService.GetById(appointment.Patient.Id);
+            //ovde dobijemo doktorov id
+            appointment.Doctor = _doctorService.GetById(appointment.Doctor.Id);
+            appointment.Patient = _patientService.GetById(appointment.Patient.Id);
 
             if (!ModelState.IsValid)
             {
