@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.BloodBankConnection;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodRequests;
 using IntegrationLibrary.Core.Service.BloodRequests;
 using Moq;
@@ -21,6 +22,15 @@ namespace IntegrationAPITests.Tests
 
             List<BloodRequest> requests = service.getAcceptedRequests(7);
             requests.ShouldBeSameAs(CreateRequestList());
+        }
+
+        [Fact]
+        public void Send_reports_to_bank()
+        {
+           var mockSendReports = new Mock<IBloodBankConnection>();
+
+            PDFGenerator service = new PDFGenerator(mockSendReports.Object);
+
         }
         private static IBloodRequestRepository CreateStubRepository() {
             var stubRepository = new Mock<IBloodRequestRepository>();
