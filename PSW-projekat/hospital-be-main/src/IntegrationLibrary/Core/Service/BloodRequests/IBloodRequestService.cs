@@ -11,5 +11,6 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
     {
         void Create(BloodRequest entity);
         BloodRequest GetById(int id);
+        IEnumerable<BloodRequest> GetAcceptedRequests(int id);
     }
 }

@@ -67,28 +67,5 @@ namespace IntegrationLibrary.Core.Service.Reports
 
             }
         }
-
-        public bool ReportShouldBeSent()
-        {
-            ReportSettings setting = GetFirst();
-            if (setting.DeliveryYears > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryYears*365)) {
-                
-                return true;
-            }else if (setting.DeliveryMonths > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryMonths * 30))
-            {
-                return true;
-            }
-            else if(setting.DeliveryDays > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryDays))
-            {
-                return true;
-            }
-            return false;
-            
-        }
-        public int GetDaysSpanTillToday(DateTime dateForChecking)
-        {
-            DateTime today = DateTime.Now;
-            return (int)today.Subtract(dateForChecking).TotalDays;
-        }
     }
 }

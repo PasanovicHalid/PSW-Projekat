@@ -8,6 +8,9 @@ namespace IntegrationLibrary.Core.Service.Reports
 {
     public interface IReportSendingService
     {
+        bool ReportShouldBeSent();
+        int GetDaysSpanTillToday(DateTime date);
         Task GeneratePDFs();
+
     }
 }

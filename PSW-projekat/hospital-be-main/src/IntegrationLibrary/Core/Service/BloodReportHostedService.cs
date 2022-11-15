@@ -6,22 +6,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Service.Generators;
 using IntegrationLibrary.Core.Service.Reports;
+using IronPdf;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace IntegrationLibrary.Core.Service
 {
     public class BloodReportHostedService : IHostedService
     {
-
-        private readonly IReportSettingsService _reportSettingsService;
-        private readonly IReportSendingService _reportSendingService;
-        private readonly int ReportIntervalInSecs = 60;
+        private readonly IServiceScopeFactory scopeFactory;
+        private readonly int ReportIntervalInSecs = 600;
         private Timer timer;
 
-        BloodReportHostedService(IReportSettingsService reportSettingsService, IReportSendingService reportSendingService)
+        public BloodReportHostedService(IServiceScopeFactory scopeFactory)
         {
-            this._reportSettingsService = reportSettingsService;
-            this._reportSendingService = reportSendingService;
+            this.scopeFactory = scopeFactory;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -47,9 +46,17 @@ namespace IntegrationLibrary.Core.Service
 
         private async Task DoWork(Object o)
         {
-            if (_reportSettingsService.ReportShouldBeSent())
-                await _reportSendingService.GeneratePDFs();
-            return;
+           
+
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var reportSendingService = scope.ServiceProvider.GetService<IReportSendingService>();
+                if (reportSendingService.ReportShouldBeSent())
+                    await reportSendingService.GeneratePDFs();
+                Console.WriteLine("sss");
+            }
+            
+           
         }
     }
 }

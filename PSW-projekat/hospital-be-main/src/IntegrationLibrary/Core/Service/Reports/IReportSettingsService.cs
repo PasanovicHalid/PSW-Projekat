@@ -17,7 +17,6 @@ namespace IntegrationLibrary.Core.Service.Reports
         void Delete(ReportSettings entity);
 
         ReportSettings GetById(int id);
-        bool ReportShouldBeSent();
-        int GetDaysSpanTillToday(DateTime date);
+        
     }
 }
