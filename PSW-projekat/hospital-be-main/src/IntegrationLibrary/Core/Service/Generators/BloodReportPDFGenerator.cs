@@ -12,19 +12,81 @@ namespace IntegrationLibrary.Core.Service.Generators
 {
     public class BloodReportPDFGenerator
     {
-        public async Task CreatePDF(List<BloodRequest> acceptedRequests, BloodBank bank)
+        String html;
+        public async Task<byte[]> CreatePDF(List<BloodRequest> acceptedRequests, BloodBank bank)
         {
             var Renderer = new ChromePdfRenderer();
 
-            var html = @"<h1>Blood usage report</h1><div>" +
-                "<p>Blood bank: " + bank.Name + "</p>" +
-                "<p>Bank email: " + bank.Email + "</p></div>";
-
-            html += @"<div>does this really work</div>";
+            CreatePDFStyle();
+            CreatePDFBody(acceptedRequests, bank);
+            
             PdfDocument doc = Renderer.RenderHtmlAsPdf(html);
-
             String today = DateTime.Now.ToString("ddMMyyyy_hhmm");
-            doc.SaveAs("BloodReportFor"  + bank.Name.Replace(" ", "") + "_"+ today + ".pdf");
+            String filename = "BloodReportFor" + bank.Name.Replace(" ", "") + "_" + today + ".pdf";
+            doc.SaveAs(filename);
+
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\IntegrationAPI\" + filename;
+            //Console.WriteLine(path);
+            byte[] pdfFile = File.ReadAllBytes(path);
+            return pdfFile;
+        }
+
+        private void CreatePDFStyle()
+        {
+            html = @"<head><style>
+                            table.GeneratedTable {
+                                width: 100 %; 
+                                background-color: #ffffff; 
+                                border-collapse: collapse;
+                                border-width: 2px; 
+                                border-color: #ff5353; 
+                                border-style: solid; 
+                                color: #000000; } 
+                            table.GeneratedTable td, table.GeneratedTable th { 
+                                border-width: 2px; 
+                                border-color: #ff5353; 
+                                border-style: solid; 
+                                padding: 3px;}
+                            table.GeneratedTable thead { 
+                                background-color: #ff5353; }
+                        </style></head>";
+        }
+
+        private void CreatePDFBody(List<BloodRequest> acceptedRequests, BloodBank bank)
+        {
+            html += "<body><h1>Blood usage report</h1><div>" +
+                "<p>Blood bank: " + bank.Name + "</p>" +
+                "<p>Bank email: " + bank.Email + "</p><table class=\"GeneratedTable\"><thead><tr>" +
+                                     " <th> Request Date </th>" +
+                                     " <th> Blood type </th> " +
+                                    "  <th> Quantity (units)</th></tr></thead><tbody>";
+
+            foreach (BloodRequest request in acceptedRequests)
+            {
+                String requestDate = request.RequiredForDate.ToString("dd.MM.yyyy.");
+                String bloodType = GetBloodTypeAsString(request.BloodType);
+                html += "<tr><td>" + requestDate + "</td><td>" + bloodType + "</td><td>" + request.BloodQuantity + "</td></tr>";
+
+            }
+
+
+            html += @"</tbody></table></body>";
+        }
+
+        private String GetBloodTypeAsString(BloodType type)
+        {
+            switch (type)
+            {
+                case BloodType.ABP: return "AB positive";
+                case BloodType.ABN: return "AB negative";
+                case BloodType.AP: return "A positive";
+                case BloodType.AN: return "A negative";
+                case BloodType.BP: return "B positive";
+                case BloodType.BN: return "B negative";
+                case BloodType.OP: return "O positive";
+                case BloodType.ON: return "O negative";
+            }
+            return "";
         }
 
     }

@@ -58,7 +58,10 @@ namespace IntegrationLibrary.Core.Service.Reports
             foreach (BloodBank bank in banks)
             {
                 List<BloodRequest> acceptedRequests = (List<BloodRequest>)_bloodRequestService.GetAcceptedRequests(bank.Id);
-                await bloodReportPDFGenerator.CreatePDF(acceptedRequests, bank);
+                if(acceptedRequests.Count() <= 0)
+                    continue;
+                byte[] pdfFile = await bloodReportPDFGenerator.CreatePDF(acceptedRequests, bank);
+                
             }
         }
     }

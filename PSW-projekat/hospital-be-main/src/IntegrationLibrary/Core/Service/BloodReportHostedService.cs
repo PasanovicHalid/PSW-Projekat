@@ -46,8 +46,11 @@ namespace IntegrationLibrary.Core.Service
 
         private async Task DoWork(Object o)
         {
-           
-
+            //try { }
+            //catch(Exception e)
+            //{
+            //    throw IndexOutOfRangeException;
+            //}
             using (var scope = scopeFactory.CreateScope())
             {
                 var reportSendingService = scope.ServiceProvider.GetService<IReportSendingService>();
