@@ -173,4 +173,3 @@ SET IDENTITY_INSERT [dbo].[Treatments] ON
 INSERT [dbo].[Treatments] ([Id], [PatientId], [DateAdmission], [DateDischarge], [ReasonForAdmission], [ReasonForDischarge], [TreatmentState], [TherapyId], [RoomId], [Deleted]) VALUES (1, 2, '2022-11-16 11:30:00', '2022-11-16 13:00:00', 'Bol u grlu', 'Pacijent se oseca bolje', 1, 1, 1, 0)
 SET IDENTITY_INSERT [dbo].[Treatments] OFF
 GO
-

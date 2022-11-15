@@ -10,6 +10,7 @@ namespace HospitalLibrary.Core.Service
     public class DoctorService : IDoctorService
     {
 
+
         private readonly IDoctorRepository _idoctorRepository;
         private readonly IPersonRepository _personRepository;
         private readonly AllergyRepository _allergyRepository;
@@ -46,7 +47,6 @@ namespace HospitalLibrary.Core.Service
             throw new NotImplementedException();
         }
 
-
         public AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors()
         {
             AllergiesAndDoctorsForPatientRegistrationDto allergiesAndDoctors = new AllergiesAndDoctorsForPatientRegistrationDto();
@@ -67,7 +67,6 @@ namespace HospitalLibrary.Core.Service
             }
             return allergiesAndDoctors;
         }
-        
 
         public Person getPersonByDoctorId(int id)
         {
@@ -78,6 +77,5 @@ namespace HospitalLibrary.Core.Service
         {
             return _idoctorRepository.RegisterDoctor(doctor);
         }
-        
     }
 }
