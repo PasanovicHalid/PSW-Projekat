@@ -1,7 +1,10 @@
-﻿using IntegrationLibrary.Core.BloodBankConnection;
+﻿using IntegrationAPI;
+using IntegrationAPITests.Setup;
+using IntegrationLibrary.Core.BloodBankConnection;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodRequests;
 using IntegrationLibrary.Core.Service.BloodRequests;
+using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Shouldly;
 using System;
@@ -13,23 +16,47 @@ using Xunit;
 
 namespace IntegrationAPITests.Tests
 {
-    public class BloodBankReportPDFTests
+    public class BloodBankReportPDFTests : BaseIntegrationTest
     {
+        public BloodBankReportPDFTests(TestDatabaseFactory<Startup> factory) : base(factory)
+        {
+        }
+
+        private static PDFGenerator SetupSettingsGenerator(IServiceScope scope)
+        {
+            
+            return new PDFGenerator(scope.ServiceProvider.GetRequiredService<IBloodBankConnection>());
+        }
+
+        [Fact]
+        public void Create_PDF_report() 
+        {
+            using var scope = Factory.Services.CreateScope();
+            var generator = SetupSettingsGenerator(scope);
+
+            var result = generator.createPDF(7);
+            Assert.NotNull(result);
+        }
+
+
         [Fact]
         public void Find_accepted_requests_for_bank()
         {
             BloodRequestService service = new BloodRequestService(CreateStubRepository());
 
-            List<BloodRequest> requests = service.getAcceptedRequests(7);
+            List<BloodRequest> requests = service.GetAcceptedRequests(7);
             requests.ShouldBeSameAs(CreateRequestList());
         }
 
         [Fact]
         public void Send_reports_to_bank()
         {
-           var mockSendReports = new Mock<IBloodBankConnection>();
+            var mockSendReports = new Mock<IBloodBankConnection>();
 
             PDFGenerator service = new PDFGenerator(mockSendReports.Object);
+
+            service.generatePDF(1);
+            mockSendReports.Verify(n => n.SendReport(null));
 
         }
         private static IBloodRequestRepository CreateStubRepository() {

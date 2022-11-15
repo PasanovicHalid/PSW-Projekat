@@ -35,5 +35,19 @@ namespace IntegrationLibrary.Core.Model
             this.BloodType = bloodType;
             this.BloodBankId = bloodBankId;
         }
+        //public BloodRequest(DateTime requiredForDat, int bloodQuantity, string reason, int doctorId, RequestState state, BloodType bloodType)
+        //{
+        //    this.RequiredForDate = requiredForDat;
+        //    this.BloodQuantity = bloodQuantity;
+        //    this.Reason = reason;
+        //    this.DoctorId = doctorId;
+        //    this.RequestState = state;
+        //    this.BloodType = bloodType;
+        //}
+
+        public BloodRequest()
+        {
+
+        }
     }
 }
