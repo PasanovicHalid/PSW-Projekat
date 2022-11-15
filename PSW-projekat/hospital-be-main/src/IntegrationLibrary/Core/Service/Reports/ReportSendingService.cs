@@ -32,37 +32,49 @@ namespace IntegrationLibrary.Core.Service.Reports
         {
             ReportSettings setting = _reportSettingsService.GetFirst();
             if (setting.DeliveryYears > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryYears * 365))
-            {
-
                 return true;
-            }
             else if (setting.DeliveryMonths > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryMonths * 30))
-            {
                 return true;
-            }
             else if (setting.DeliveryDays > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryDays))
-            {
                 return true;
-            }
             return false;
 
         }
-        public int GetDaysSpanTillToday(DateTime dateForChecking)
+        public int GetDaysSpanTillToday(DateTime deliveryDate)
         {
             DateTime today = DateTime.Now;
-            return (int)today.Subtract(dateForChecking).TotalDays;
+            return (int)today.Subtract(deliveryDate).TotalDays;
         }
         public async Task GeneratePDFs()
         {
             List<BloodBank> banks = (List<BloodBank>)_bloodBankService.GetAll();
             foreach (BloodBank bank in banks)
             {
-                List<BloodRequest> acceptedRequests = (List<BloodRequest>)_bloodRequestService.GetAcceptedRequests(bank.Id);
+                List<BloodRequest> acceptedRequests = GetRequestsForWantedPeriod(bank.Id);
                 if(acceptedRequests.Count() <= 0)
                     continue;
                 byte[] pdfFile = await bloodReportPDFGenerator.CreatePDF(acceptedRequests, bank);
                 
             }
+        }
+
+        public List<BloodRequest> GetRequestsForWantedPeriod(int id)
+        {
+            ReportSettings setting = _reportSettingsService.GetFirst();
+            List<BloodRequest> reportRequests = new List<BloodRequest>();
+            DateTime today = DateTime.Now;
+
+            foreach(BloodRequest request in (List<BloodRequest>)_bloodRequestService.GetAcceptedRequests(id))
+            {
+                if (setting.CalculationYears > 0 && (request.RequiredForDate >= DateTime.Today.AddYears(-setting.CalculationYears)))
+                    reportRequests.Add(request);
+                else if (setting.CalculationMonths > 0 && (request.RequiredForDate >= DateTime.Today.AddMonths(-setting.CalculationMonths)))
+                    reportRequests.Add(request);
+                else if (setting.CalculationDays > 0 && (request.RequiredForDate >= DateTime.Today.AddDays(-setting.CalculationDays)))
+                    reportRequests.Add(request);
+            }
+
+            return reportRequests;
         }
     }
 }
