@@ -46,7 +46,7 @@ namespace HospitalAPI
                 .AddEntityFrameworkStores<AuthenticationDbContext>()
                 .AddDefaultTokenProviders();
 
-
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -75,6 +75,8 @@ namespace HospitalAPI
 
             services.AddScoped<IWorkingDayRepository, WorkingDayRepository>();
 
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddTransient<IEmailService, EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

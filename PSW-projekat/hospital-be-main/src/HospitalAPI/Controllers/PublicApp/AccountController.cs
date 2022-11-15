@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
+using HospitalLibrary.Core.Model.MailRequests;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
@@ -24,14 +25,16 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly DoctorService _doctorService;
         private readonly PatientService _patientService;
+        private readonly IEmailService _emailService;
 
-        public AccountController( 
-                UserManager<SecUser> userManager, 
+        public AccountController(
+                UserManager<SecUser> userManager,
                 SignInManager<SecUser> signInManager,
                 RoleManager<IdentityRole> roleManager,
                 PersonService personService,
                 DoctorService doctorService,
-                PatientService patientService)
+                PatientService patientService,
+                IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,18 +42,31 @@ namespace HospitalAPI.Controllers.PublicApp
             _personService = personService;
             _doctorService = doctorService;
             _patientService = patientService;
+            _emailService = emailService;
         }
 
         [HttpGet("Login")]
         public async Task<ActionResult> LoginAsync(string username, string password)
         {
-            var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
-            if (result.Succeeded)
+            SecUser secUser = new SecUser();
+            secUser = await _userManager.FindByNameAsync(username);
+            if (secUser == null)
             {
-                //User.IsInRole("Manager");
-                return Ok();
+                return BadRequest("Bad credentials");
             }
-            return BadRequest();
+
+            var statement = await _userManager.IsEmailConfirmedAsync(secUser);
+            if (statement == true)
+            {
+                var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
+                if (result.Succeeded)
+                {
+                    //User.IsInRole("Manager");
+                    return Ok();
+                }
+                return BadRequest("Bad credentials");
+            }
+            return BadRequest("Email not confirmed");
         }
 
         [HttpGet("Logout")]
@@ -171,7 +187,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 await _userManager.AddClaimAsync(secUser, new Claim("UserId", user.Id.ToString()));
             }
 
-            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(secUser);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(secUser);
+            _emailService.SendEmailAsync(new AccountValidationMailRequest(user, regUser.Username, code));
             //await _userManager.ConfirmEmailAsync(secUser, code);
 
             return Ok();
@@ -229,6 +246,27 @@ namespace HospitalAPI.Controllers.PublicApp
             }
 
             return Ok(user);
+        }
+
+        [HttpGet("AccountConfirmation")]
+        public async Task<IActionResult> AccountConfirmation(string username, string code)
+        {
+            SecUser secUser = new SecUser();
+            secUser = await _userManager.FindByNameAsync(username);
+            if (secUser == null)
+            {
+                return BadRequest("Bad credentials");
+            }
+
+            var statement = await _userManager.IsEmailConfirmedAsync(secUser);
+            if (statement == true)
+            {
+                return BadRequest("Email already confirmed");
+            }
+
+            var a = await _userManager.ConfirmEmailAsync(secUser, code);
+
+            return Ok();
         }
     }
 }

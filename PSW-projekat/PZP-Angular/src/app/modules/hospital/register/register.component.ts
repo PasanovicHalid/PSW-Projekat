@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
     registerPatientDto.doctorName = this.registerForm.value.doctorName;
 
     this.registerService.registerPatient(registerPatientDto).subscribe(res => {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/account-activation-info']);
     },
     (err) => {
       if(err.error == "Username is taken.")

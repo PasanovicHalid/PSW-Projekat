@@ -12,6 +12,8 @@ import { CreateFeedbackComponent } from './create-feedback/create-feedback.compo
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AccountActivationThanks } from "./account-activation/account-activation.component";
+import { AccountActivationInfo } from "./account-activation-info/account-activation-info.component";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'feedbacks/add', component: CreateFeedbackComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'account-activation', component: AccountActivationThanks },
+  { path: 'account-activation-info', component: AccountActivationInfo },
 ];
 
 @NgModule({
