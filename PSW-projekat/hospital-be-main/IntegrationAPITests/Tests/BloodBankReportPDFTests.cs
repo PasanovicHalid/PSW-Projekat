@@ -4,6 +4,7 @@ using IntegrationLibrary.Core.BloodBankConnection;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodRequests;
 using IntegrationLibrary.Core.Service.BloodRequests;
+using IntegrationLibrary.Core.Service.Generators;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Shouldly;
@@ -22,10 +23,10 @@ namespace IntegrationAPITests.Tests
         {
         }
 
-        private static PDFGenerator SetupSettingsGenerator(IServiceScope scope)
+        private static BloodReportPDFGenerator SetupSettingsGenerator(IServiceScope scope)
         {
             
-            return new PDFGenerator(scope.ServiceProvider.GetRequiredService<IBloodBankConnection>());
+            return new BloodRequestPDFGenerator(scope.ServiceProvider.GetRequiredService<IBloodBankConnection>());
         }
 
         [Fact]

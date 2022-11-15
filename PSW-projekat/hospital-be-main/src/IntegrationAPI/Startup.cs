@@ -50,6 +50,7 @@ namespace IntegrationAPI
             services.AddScoped<IReportSettingsService, ReportSettingsService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IReportSendingService, ReportSendingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
