@@ -55,22 +55,22 @@ namespace HospitalLibrary.Core.Service
 
         public AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors()
         {
-            IEnumerable<Person> allDoctors = _personRepository.GetAllDoctors();
-            //IEnumerable<Patient> allPatients = _personRepository.GetAllPatients();
-            IEnumerable<Allergy> allAllergies = _allergyRepository.GetAll();
             AllergiesAndDoctorsForPatientRegistrationDto allergiesAndDoctors = new AllergiesAndDoctorsForPatientRegistrationDto();
+            allergiesAndDoctors.Allergies = _allergyRepository.GetAll().ToList();
+            allergiesAndDoctors.Doctors = new List<DoctorForPatientRegistrationDto>();
 
-            foreach (var doctor in allDoctors)
-            {
+            List<int> allDoctorsIds = _doctorRepository.GetAllDoctorsForPatientRegistration();
+            List<Person> allDoctorsPersonalInforamtion = _personRepository.GetAllDoctorsForPatientRegistration(allDoctorsIds).ToList();
+
+            foreach (var doctorPersonalInformation in allDoctorsPersonalInforamtion)
+            { 
                 DoctorForPatientRegistrationDto dto = new DoctorForPatientRegistrationDto()
                 {
-                    Id = doctor.Id,
-                    FullName = doctor.Name + " " + doctor.Surname
+                    Id = doctorPersonalInformation.Id,
+                    FullName = doctorPersonalInformation.Name + " " + doctorPersonalInformation.Surname
                 };
                 allergiesAndDoctors.Doctors.Add(dto);
             }
-            allergiesAndDoctors.Allergies = allAllergies.ToList();
-
             return allergiesAndDoctors;
         }
         

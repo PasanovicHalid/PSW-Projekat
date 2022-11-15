@@ -12,6 +12,11 @@ namespace HospitalLibrary.Core.Repository
     {
         private readonly HospitalDbContext _context;
 
+        public AllergyRepository(HospitalDbContext context)
+        {
+            _context = context;
+        }
+
         public void Create(Allergy entity)
         {
             throw new NotImplementedException();

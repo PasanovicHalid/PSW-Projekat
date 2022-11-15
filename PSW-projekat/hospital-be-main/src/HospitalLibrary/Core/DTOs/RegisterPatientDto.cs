@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ namespace HospitalLibrary.Core.DTOs
 {
     public class RegisterPatientDto
     {
+        [Required][MaxLength(30)]
         public String Name { get; set; }
+        [Required]
         public String Surname { get; set; }
         public Gender Gender { get; set; }
         public String BirthDate { get; set; }
