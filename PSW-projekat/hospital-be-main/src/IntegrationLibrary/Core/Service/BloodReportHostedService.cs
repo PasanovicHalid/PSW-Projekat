@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Core.Service
     public class BloodReportHostedService : IHostedService
     {
         private readonly IServiceScopeFactory scopeFactory;
-        private readonly int ReportIntervalInSecs = 600;
+        private readonly int ReportIntervalInSecs = 90;
         private Timer timer;
 
         public BloodReportHostedService(IServiceScopeFactory scopeFactory)
@@ -46,18 +46,22 @@ namespace IntegrationLibrary.Core.Service
 
         private async Task DoWork(Object o)
         {
-            //try { }
-            //catch(Exception e)
-            //{
-            //    throw IndexOutOfRangeException;
-            //}
-            using (var scope = scopeFactory.CreateScope())
-            {
-                var reportSendingService = scope.ServiceProvider.GetService<IReportSendingService>();
-                if (reportSendingService.ReportShouldBeSent())
-                    await reportSendingService.GeneratePDFs();
-                Console.WriteLine("sss");
+            bool isSuccess = false;
+            try {
+                using (var scope = scopeFactory.CreateScope())
+                {
+                    var reportSendingService = scope.ServiceProvider.GetService<IReportSendingService>();
+                    if (reportSendingService.ReportShouldBeSent())
+                        isSuccess = await reportSendingService.GeneratePDFs();
+                    if (isSuccess)
+                        reportSendingService.ChangeReportDeliveryDate();
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
             
            
         }

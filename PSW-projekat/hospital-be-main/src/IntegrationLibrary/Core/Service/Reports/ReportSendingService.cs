@@ -47,6 +47,7 @@ namespace IntegrationLibrary.Core.Service.Reports
         }
         public async Task<bool> GeneratePDFs()
         {
+            bool isSuccess = false;
             List<BloodBank> banks = (List<BloodBank>)_bloodBankService.GetAll();
             foreach (BloodBank bank in banks)
             {
@@ -54,9 +55,11 @@ namespace IntegrationLibrary.Core.Service.Reports
                 if(acceptedRequests.Count() <= 0)
                     continue;
                 byte[] pdfFile = await bloodReportPDFGenerator.CreatePDF(acceptedRequests, bank);
-                return await _bloodBankConnection.SendBloodReports(bank, pdfFile);
+                isSuccess = await _bloodBankConnection.SendBloodReports(bank, pdfFile);
+                if(!isSuccess)
+                    return isSuccess;
             }
-            return false;
+            return isSuccess;
         }
 
         public List<BloodRequest> GetRequestsForWantedPeriod(int id)
@@ -76,6 +79,13 @@ namespace IntegrationLibrary.Core.Service.Reports
             }
 
             return reportRequests;
+        }
+
+        public void ChangeReportDeliveryDate()
+        {
+            ReportSettings setting = _reportSettingsService.GetFirst();
+            setting.StartDeliveryDate = DateTime.Now;
+            _reportSettingsService.Update(setting);
         }
     }
 }

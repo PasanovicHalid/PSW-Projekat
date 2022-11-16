@@ -79,33 +79,33 @@ namespace IntegrationAPITests.Setup
 
             context.ReportSettings.Add(new ReportSettings
             {
-                CalculationDays = 0,
-                CalculationMonths = 1,
+                CalculationDays = 1,
+                CalculationMonths = 0,
                 CalculationYears = 0,
                 DeliveryDays = 0,
                 DeliveryMonths = 1,
                 DeliveryYears = 0,
-                StartDeliveryDate = System.DateTime.Now
+                StartDeliveryDate = System.DateTime.Now.AddDays(-1),
             });
             context.BloodRequests.Add(new BloodRequest
             {
-                BloodBankId = 7,
+                BloodBankId = 1,
                 BloodQuantity = 2,
                 BloodType = BloodType.ON,
                 Reason = "For operation",
                 RequestState = RequestState.Accepted,
-                RequiredForDate = new System.DateTime(2022, 12, 15),
+                RequiredForDate = new System.DateTime(2022, 11, 15),
                 DoctorId = 1
 
             });
             context.BloodRequests.Add(new BloodRequest
             {
-                BloodBankId = 7,
+                BloodBankId = 1,
                 BloodQuantity = 3,
                 BloodType = BloodType.OP,
                 Reason = "For operation",
                 RequestState = RequestState.Accepted,
-                RequiredForDate = new System.DateTime(2022, 12, 15),
+                RequiredForDate = new System.DateTime(2022, 11, 15),
                 DoctorId = 1
 
             });

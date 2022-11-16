@@ -3,13 +3,18 @@ using IntegrationAPITests.Setup;
 using IntegrationLibrary.Core.BloodBankConnection;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodRequests;
+using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Core.Service.BloodBanks;
 using IntegrationLibrary.Core.Service.BloodRequests;
 using IntegrationLibrary.Core.Service.Generators;
+using IntegrationLibrary.Core.Service.Reports;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Moq;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,22 +27,25 @@ namespace IntegrationAPITests.Tests
         public BloodBankReportPDFTests(TestDatabaseFactory<Startup> factory) : base(factory)
         {
         }
+ 
+        private static ReportSendingService SetupSettingsService(IServiceScope scope)
+        {
+            var mockConnection = new Mock<IBloodBankConnection>();
+            return new ReportSendingService(mockConnection.Object,
+                                scope.ServiceProvider.GetRequiredService<IReportSettingsService>(),
+                                scope.ServiceProvider.GetRequiredService<IBloodBankService>(), scope.ServiceProvider.GetRequiredService<IBloodRequestService>());
+        }
 
-        //private static BloodReportPDFGenerator SetupSettingsGenerator(IServiceScope scope)
-        //{
+        [Fact]
+        public void Create_PDF_report()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var generator = SetupSettingsService(scope);
 
-        //    return new BloodRequestPDFGenerator(scope.ServiceProvider.GetRequiredService<IBloodBankConnection>());
-        //}
-
-        //[Fact]
-        //public void Create_PDF_report() 
-        //{
-        //    using var scope = Factory.Services.CreateScope();
-        //    var generator = SetupSettingsGenerator(scope);
-
-        //    var result = generator.createPDF(7);
-        //    Assert.NotNull(result);
-        //}
+            var result = generator.GeneratePDFs();
+            String path = @"D:\Faks\2. Projektovanje softvera\PROJEKAT\PSW-Projekat\PSW-projekat\hospital-be-main\IntegrationAPITests\bin\Debug\net5.0/BloodReportForasdsadsda_" + DateTime.Now.ToString("ddMMyyyy_hhmm") + ".pdf";
+            Assert.True(File.Exists(path));
+        }
 
 
         [Fact]
@@ -49,17 +57,6 @@ namespace IntegrationAPITests.Tests
             Assert.Equal(CreateRequestList().Count(), requests.Count());
         }
 
-        //[Fact]
-        //public void Send_reports_to_bank()
-        //{
-        //    var mockSendReports = new Mock<IBloodBankConnection>();
-
-        //    PDFGenerator service = new PDFGenerator(mockSendReports.Object);
-
-        //    service.generatePDF(1);
-        //    mockSendReports.Verify(n => n.SendReport(null));
-
-        //}
         private static IBloodRequestRepository CreateStubRepository() {
             var stubRepository = new Mock<IBloodRequestRepository>();
             var requests = new List<BloodRequest>();

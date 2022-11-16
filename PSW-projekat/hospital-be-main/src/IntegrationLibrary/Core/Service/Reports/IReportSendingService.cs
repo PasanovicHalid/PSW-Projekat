@@ -11,6 +11,7 @@ namespace IntegrationLibrary.Core.Service.Reports
         bool ReportShouldBeSent();
         int GetDaysSpanTillToday(DateTime date);
         Task<bool> GeneratePDFs();
+        void ChangeReportDeliveryDate();
 
     }
 }

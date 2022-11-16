@@ -64,6 +64,8 @@ namespace IntegrationLibrary.Core.BloodBankConnection
 
         static async Task<bool> PostAsync(HttpClient httpClient)
         {
+            string isSuccessful = "false";
+            Console.WriteLine("here");
             client.Timeout = TimeSpan.FromSeconds(120);
             ByteArrayContent byteContent = new ByteArrayContent(pdfFile);
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bankAPI);
@@ -71,7 +73,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
 
             response.EnsureSuccessStatusCode();
 
-            string isSuccessful = await response.Content.ReadAsStringAsync();
+            isSuccessful = await response.Content.ReadAsStringAsync();
             bankResponse = Boolean.Parse(isSuccessful);
             return bankResponse;
 
