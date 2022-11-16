@@ -10,7 +10,7 @@ namespace IntegrationLibrary.Core.Service.Reports
     {
         bool ReportShouldBeSent();
         int GetDaysSpanTillToday(DateTime date);
-        Task GeneratePDFs();
+        Task<bool> GeneratePDFs();
 
     }
 }

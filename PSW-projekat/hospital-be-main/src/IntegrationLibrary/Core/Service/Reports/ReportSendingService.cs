@@ -45,7 +45,7 @@ namespace IntegrationLibrary.Core.Service.Reports
             DateTime today = DateTime.Now;
             return (int)today.Subtract(deliveryDate).TotalDays;
         }
-        public async Task GeneratePDFs()
+        public async Task<bool> GeneratePDFs()
         {
             List<BloodBank> banks = (List<BloodBank>)_bloodBankService.GetAll();
             foreach (BloodBank bank in banks)
@@ -54,8 +54,9 @@ namespace IntegrationLibrary.Core.Service.Reports
                 if(acceptedRequests.Count() <= 0)
                     continue;
                 byte[] pdfFile = await bloodReportPDFGenerator.CreatePDF(acceptedRequests, bank);
-                
+                return await _bloodBankConnection.SendBloodReports(bank, pdfFile);
             }
+            return false;
         }
 
         public List<BloodRequest> GetRequestsForWantedPeriod(int id)
