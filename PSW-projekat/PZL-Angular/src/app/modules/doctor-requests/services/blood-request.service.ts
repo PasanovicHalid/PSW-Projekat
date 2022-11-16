@@ -25,13 +25,11 @@ export class BloodRequestService {
   }
 
   getBloodRequest(id : number): Observable<any> {
-    let queryParams = new URLSearchParams();
-    queryParams.append('id', id.toString());
-    return this.http.get<BloodRequest>(this.integrationApiHost + 'api/BloodRequest', {headers: this.headers, params: queryParams}).pipe(catchError(this.handleError))
+    return this.http.get<BloodRequest>(this.integrationApiHost + 'api/BloodRequest/' + id, {headers: this.headers}).pipe(catchError(this.handleError))
   }
 
   getDoctor(id : number): Observable<Doctor> {
-    return this.http.get<Doctor>(this.hospitalApiHost + 'api/Person/doctor', {headers: this.headers}).pipe(catchError(this.handleError))
+    return this.http.get<Doctor>(this.hospitalApiHost + 'api/Person/doctor/' + id, {headers: this.headers}).pipe(catchError(this.handleError))
   }
 
   
@@ -52,7 +50,6 @@ export class BloodRequestService {
         }
         result.push(bloodRequest);
       });
-      result.push(new DoctorBloodRequest())
       return result;
   }
 }

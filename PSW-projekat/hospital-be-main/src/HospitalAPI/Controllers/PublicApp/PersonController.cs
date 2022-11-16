@@ -43,6 +43,12 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_personService.GetAllDoctors());
         }
 
+        [HttpGet("doctor/{id}")]
+        public ActionResult GetDoctorById(int id)
+        {
+            return Ok(_personService.GetById(id));
+        }
+
         [HttpGet("userInfo/")]
         public ActionResult GetUserInfo()
         {

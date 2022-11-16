@@ -1,0 +1,6 @@
+﻿USE [IntegrationDb]
+GO
+SET IDENTITY_INSERT [dbo].[BloodRequests] ON 
+
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType]) VALUES (1, '2022-11-16 11:30:00', 5, 'Need it for operation', 4, 0, 0)
+SET IDENTITY_INSERT [dbo].[BloodRequests] OFF
