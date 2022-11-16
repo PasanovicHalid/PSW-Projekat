@@ -10,11 +10,18 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IService<Room> _roomService;
+        //private readonly IService<Room> _roomService;
+        private readonly IRoomService _roomService;
 
+        /*
         public RoomsController(IService<Room> roomService)
         {
             _roomService = roomService;
+        }
+        */
+        public RoomsController(IRoomService iroomService)
+        {
+            _roomService = iroomService;
         }
 
         // GET: api/rooms

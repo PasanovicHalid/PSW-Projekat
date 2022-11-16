@@ -9,7 +9,7 @@ import { TreatmentState } from "./treatmentState";
 export class Treatment {
     id: number;
     deleted: boolean;
-    patient: Patient;
+    patient: PatientDto;
     dateAdmission: Date;
     dateDischarge: Date;
     reasonForAdmission: string = '';

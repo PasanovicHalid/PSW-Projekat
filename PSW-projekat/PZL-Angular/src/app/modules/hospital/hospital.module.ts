@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "src/app/material/material.module";
+import { MatInput, MatInputModule} from '@angular/material/input';
 import { CreateRoomComponent } from "./create-room/create-room.component";
 import { RoomDetailComponent } from "./room-detail/room-detail.component";
 import { RoomsComponent } from "./rooms/rooms.component";
@@ -12,6 +13,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
@@ -53,7 +55,9 @@ const routes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule
 
   ],
   exports: [ RouterModule ]

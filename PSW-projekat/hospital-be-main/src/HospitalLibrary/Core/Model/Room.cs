@@ -13,5 +13,6 @@ namespace HospitalLibrary.Core.Model
         public RoomType RoomType { get; set; }
         public virtual Equipment Equipment { get; set; }
 
+
     }
 }

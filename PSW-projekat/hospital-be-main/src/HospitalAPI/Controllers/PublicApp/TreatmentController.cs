@@ -12,10 +12,16 @@ namespace HospitalAPI.Controllers.PublicApp
     public class TreatmentController : ControllerBase
     {
         private readonly ITreatmentService _treatmentService;
+        private readonly IPatientService _patientService;
+        private readonly IRoomService _roomService;
+        private ITreatmentService treatmentService;
 
-        public TreatmentController(ITreatmentService treatmentService)
+        public TreatmentController(ITreatmentService treatmentService, IPatientService patientService, IRoomService roomService)
         {
             _treatmentService = treatmentService;
+            _patientService = patientService;
+            _roomService = roomService;
+
         }
 
         [HttpGet]
@@ -27,13 +33,17 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpPost]
         public ActionResult Create(Treatment treatment)
         {
+            treatment.Patient = _patientService.GetById(treatment.Patient.Id);
+            treatment.Room = _roomService.GetById(treatment.Room.Id);
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             _treatmentService.Create(treatment);
-            return CreatedAtAction("GetById", new { id = treatment.Id }, treatment);
+            return Ok();
 
         }
 

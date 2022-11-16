@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Room } from 'src/app/modules/hospital/model/room.model';
 import { RoomService } from 'src/app/modules/hospital/services/room.service';
+import { Equipment } from '../model/equipment';
 
 @Component({
   selector: 'app-create-room',
@@ -10,7 +11,8 @@ import { RoomService } from 'src/app/modules/hospital/services/room.service';
 })
 export class CreateRoomComponent {
 
-  public room: Room = new Room();
+  //smor
+  public room: Room = new Room(0, false, 0, 0, 0, Equipment);
 
   constructor(private roomService: RoomService, private router: Router) { }
 
