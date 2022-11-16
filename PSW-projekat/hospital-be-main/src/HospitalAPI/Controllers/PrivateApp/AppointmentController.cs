@@ -81,7 +81,7 @@ namespace HospitalAPI.Controllers.PrivateApp
             }
 
             _appointmentService.Create(appointment);
-            return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
+            return Ok();
         }
 
         [HttpPut("{id}")]
@@ -111,7 +111,7 @@ namespace HospitalAPI.Controllers.PrivateApp
 
             }
 
-            return Ok(appointment);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
