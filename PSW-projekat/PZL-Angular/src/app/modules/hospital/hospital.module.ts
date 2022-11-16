@@ -20,6 +20,8 @@ import { AdmissionPatientTreatmentComponent } from './admission-patient-treatmen
 import { DischargePatientComponent } from './discharge-patient/discharge-patient.component';
 import { LoginComponent } from "./login/login.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CreateBloodRequestComponent } from './create-blood-request/create-blood-request.component';
+
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -33,8 +35,8 @@ const routes: Routes = [
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent },
-  { path: 'login', component: LoginComponent }
-  
+  { path: 'login', component: LoginComponent },
+  { path: 'bloodRequest/add', component: CreateBloodRequestComponent }
 ];
 
 @NgModule({
@@ -49,7 +51,8 @@ const routes: Routes = [
     UpdateAppointmentComponent,
     AdmissionPatientTreatmentComponent,
     DischargePatientComponent,
-    LoginComponent
+    LoginComponent,
+    CreateBloodRequestComponent
   ],
   imports: [
     CommonModule,

@@ -42,6 +42,7 @@ namespace IntegrationAPITests.Tests
                 BloodBankId = 0
             };
 
+
             var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as BloodRequest;
             result.Id = 0;
             JsonSerializer.Serialize(result).ShouldBe(JsonSerializer.Serialize(testCase));
@@ -97,6 +98,7 @@ namespace IntegrationAPITests.Tests
 
             var result = (OkResult)controller.UpdateFromDoctor(r);
             Assert.IsType<OkResult>(result);
+
         }
     }
 }
