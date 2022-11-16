@@ -18,10 +18,20 @@ export class StatisticsDto {
 
   export class DoctorStat {
     Name : string;
-    values : any[];
+    one : number;
+    two : number;
+    three : number;
+    four : number;
+    five : number;
+    six : number;
 
-    public constructor(name: string,values: any[]) {
+    public constructor(name: string,one : number,two : number,three : number,four : number,five : number,six : number) {
         this.Name = name;
-        this.values = values;
+        this.one = one;
+        this.two = two;
+        this.three = three;
+        this.four = four;
+        this.five = five;
+        this.six = six;
     }
   }

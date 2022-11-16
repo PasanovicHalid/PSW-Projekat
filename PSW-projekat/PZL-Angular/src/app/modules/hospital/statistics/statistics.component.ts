@@ -27,12 +27,12 @@ export class StatisticsComponent implements OnInit {
   
   public doctorNames : any;
   public doctorPercentage : any;
-  public barChartLegend = "naslov";
+  public barChartLegend = "";
   public barChartOptions = { }
   public stats : StatisticsDto;
 
   public dataSource = new MatTableDataSource<DoctorStat>();
-  public displayedColumns = ['Doctor','0-18'];
+  public displayedColumns = ['Doctor','0-18','18-30','30-45','45-60','60-80','80+'];
   
   ngOnInit(): void {
 
@@ -57,10 +57,12 @@ export class StatisticsComponent implements OnInit {
     let doctorStats = Object.values(JSON.parse(JSON.stringify(stats[4])));
     let doctorNames = Object.keys(JSON.parse(JSON.stringify(stats[4])));
     for(let i=0;i<doctorNames.length;i++){
-      let stat = new DoctorStat(doctorNames[i],(JSON.parse(JSON.stringify(doctorStats[i]))))
+      let nesto = (JSON.parse(JSON.stringify(doctorStats[i])))
+      let stat = new DoctorStat(doctorNames[i],nesto[0],nesto[1],nesto[2],nesto[3],nesto[4],nesto[5])
+      
       this.dataSource.data.push(stat)
     }
-    this.dataSource.data[0].values[1];
+    this.dataSource.data[0].one;
 
   }
 
@@ -88,20 +90,20 @@ export class StatisticsComponent implements OnInit {
       type: "line",
       data: {
         labels: ['0-18','18-30','30-45','45-60','60-80','80+'],
-        datasets: [
+        datasets: [ 
           { 
-          data: this.maleAgeGroupValues,
-          borderColor: "lightblue",
-          label: "Male",
-          fill: false,
-          pointBackgroundColor: "lightblue"
-          }, 
+            data: this.femaleAgeGroupValues,
+            borderColor: "pink",
+            label: "Female",
+            fill: false,
+            pointBackgroundColor: "pink"
+          },
           { 
-          data: this.femaleAgeGroupValues,
-          borderColor: "pink",
-          label: "Female",
-          fill: false,
-          pointBackgroundColor: "pink"
+            data: this.maleAgeGroupValues,
+            borderColor: "lightblue",
+            label: "Male",
+            fill: false,
+            pointBackgroundColor: "lightblue",          
           }
         ]
       },
