@@ -14,7 +14,7 @@ export class RoomService {
   constructor(private http: HttpClient) { }
 
   getRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.apiHost + 'api/rooms', {headers: this.headers});
+    return this.http.get<Room[]>('api/rooms', {headers: this.headers});
   }
 
   getRoom(id: number): Observable<Room> {

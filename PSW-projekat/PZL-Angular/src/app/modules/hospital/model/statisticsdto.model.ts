@@ -1,20 +1,27 @@
 export class StatisticsDto {
-    id: number = 0;
-    description: string = '';
-    username: string = '';
-    public: string = '';
-    dateCreated: string = '';
-    status: string = '';
+    NumberOfMalesPerAgeGroup : any[];
+    NumberOfFemalesPerAgeGroup : any[];
+    BloodtypePopularity : Map<string,number>;
+    AllergyPopularity : Map<string,number>;
+    DoctorAgeGroups : Map<string,number[]>;
   
     public constructor(obj?: any) {
         if (obj) {
-            this.id = obj.id;
-            this.description = obj.description;
-            this.username = obj.username;
-            this.public = obj.public;
-            this.dateCreated = obj.dateCreated;
-            this.status = obj.status;
+            this.NumberOfMalesPerAgeGroup = obj.NumberOfMalesPerAgeGroup;
+            this.NumberOfFemalesPerAgeGroup = obj.NumberOfFemalesPerAgeGroup;
+            this.BloodtypePopularity = obj.BloodtypePopularity;
+            this.AllergyPopularity = obj.AllergyPopularity;
+            this.DoctorAgeGroups = obj.DoctorAgeGroups;
         }
     }
   }
-  //TODO change to adequate model
+
+  export class DoctorStat {
+    Name : string;
+    values : any[];
+
+    public constructor(name: string,values: any[]) {
+        this.Name = name;
+        this.values = values;
+    }
+  }

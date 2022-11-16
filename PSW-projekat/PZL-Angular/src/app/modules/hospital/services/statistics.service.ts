@@ -13,7 +13,7 @@ export class StatisticsService {
 
   constructor(private http: HttpClient) { }
 
-  getStatistics(): Observable<StatisticsDto[]> {
-    return this.http.get<StatisticsDto[]>(this.apiHost + 'api/statistics', {headers: this.headers});
+  getStatistics(): Observable<StatisticsDto> {
+    return this.http.get<StatisticsDto>('api/statistics', {headers: this.headers});
   }
 }

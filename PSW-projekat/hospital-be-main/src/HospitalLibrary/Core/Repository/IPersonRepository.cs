@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -11,5 +12,7 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<Person> GetAllDoctors();
         IEnumerable<Person> GetAllPatients();
+
+        public int GetByAgeAndGender(DateTime to, DateTime from, Gender gender);
     }
 }

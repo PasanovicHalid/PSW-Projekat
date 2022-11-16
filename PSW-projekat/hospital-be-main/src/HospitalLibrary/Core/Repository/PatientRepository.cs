@@ -53,5 +53,20 @@ namespace HospitalLibrary.Core.Repository
             var person = _context.Persons.FirstOrDefault(d => d.Id == patient.Person.Id);
             return person;
         }
+
+        public IEnumerable<int> GetAllDoctorsWhoHavePatients()
+        {
+            return _context.Patients.Select(o => o.Doctor.Id).Distinct().ToList();
+        }
+
+        public int GetByAgeAndDoctor(DateTime to, DateTime from, int dId)
+        {
+            return _context.Patients.Where(x => x.Person.BirthDate >= from && x.Person.BirthDate < to && x.Doctor.Id == dId).Count();
+        }
+
+        public IEnumerable<PatientAllergies> GetAllPatientAllergies()
+        {
+            return _context.PatientAllergies.ToList();
+        }
     }
 }

@@ -12,18 +12,18 @@ namespace HospitalAPI.Controllers.PrivateApp
     [ApiController]
     public class StatisticsController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly StatisticsService _statisticsService;
 
-        public StatisticsController(IUserService userService)
+        public StatisticsController(StatisticsService statisticsService)
         {
-            _userService = userService;
+            _statisticsService = statisticsService;
         }
 
         [HttpGet]
         public ActionResult GetAllFeedbackDtos()
         {
             //TODO vraca DTO sa statistikom
-            return Ok();
+            return Ok(_statisticsService.GetStatistics());
         }
 
     }
