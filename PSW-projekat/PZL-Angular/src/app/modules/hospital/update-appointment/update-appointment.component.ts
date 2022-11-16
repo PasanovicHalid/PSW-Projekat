@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Appointment } from '../model/appointment.model';
 import { PatientDto } from '../model/patient';
-import { Person } from '../model/person';
 import { User } from '../model/user';
 import { AppointmentService } from '../services/appointment.service';
 

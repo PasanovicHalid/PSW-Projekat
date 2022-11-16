@@ -1,5 +1,4 @@
 import { BloodType } from "./bloodType";
-import { DoctorDto } from "./doctor";
 import { Doctor } from "./doctor1";
 import { Person } from "./person";
 import { Role } from "./role";

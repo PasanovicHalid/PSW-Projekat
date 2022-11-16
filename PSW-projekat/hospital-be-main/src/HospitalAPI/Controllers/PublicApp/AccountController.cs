@@ -66,7 +66,7 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
-        */
+        
 
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
