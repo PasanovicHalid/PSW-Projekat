@@ -116,7 +116,7 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpPost("RegisterPatient")]
         public async Task<IActionResult> RegisterPatient(RegisterPatientDto regUser)
         {
-            if (await _userManager.FindByNameAsync(regUser.Username) != null)
+            /*if (await _userManager.FindByNameAsync(regUser.Username) != null)
             {
                 return BadRequest("Username is taken.");
             }
@@ -125,7 +125,7 @@ namespace HospitalAPI.Controllers.PublicApp
             {
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
-            }
+            }*/
 
             Person user = new Person()
             {
