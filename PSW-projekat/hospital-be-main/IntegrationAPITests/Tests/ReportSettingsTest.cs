@@ -5,6 +5,7 @@ using IntegrationAPITests.Setup;
 using IntegrationLibrary.Core.Service.Reports;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace IntegrationAPITests.Tests
             };
 
             var result = ((OkObjectResult)controller.Update(testCase))?.Value as ReportSettingsDTO;
-            Assert.NotNull(result);
+            result.ShouldBe(testCase);
         }
     }
 }
