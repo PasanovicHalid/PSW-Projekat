@@ -64,7 +64,7 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
-            services.AddScoped<AllergyRepository>();
+            services.AddScoped< AllergyRepository>();
 
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPersonRepository, PersonRepository>();

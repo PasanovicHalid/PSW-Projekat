@@ -18,20 +18,20 @@ namespace HospitalAPI.Controllers.PublicApp
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
         private readonly UserManager<SecUser> _userManager;
         private readonly SignInManager<SecUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly DoctorService _doctorService;
-        private readonly PatientService _patientService;
+        private readonly IDoctorService _doctorService;
+        private readonly IPatientService _patientService;
 
         public AccountController( 
                 UserManager<SecUser> userManager, 
                 SignInManager<SecUser> signInManager,
                 RoleManager<IdentityRole> roleManager,
-                PersonService personService,
-                DoctorService doctorService,
-                PatientService patientService)
+                IPersonService personService,
+                IDoctorService doctorService,
+                IPatientService patientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

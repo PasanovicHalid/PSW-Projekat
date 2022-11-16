@@ -10,19 +10,13 @@ namespace HospitalLibrary.Core.Service
     public class DoctorService : IDoctorService
     {
 
-        private readonly DoctorRepository _doctorRepository;
         private readonly IDoctorRepository _idoctorRepository;
-        private readonly PersonRepository _personRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly AllergyRepository _allergyRepository;
 
-        public DoctorService(IDoctorRepository idoctorRepository)
+        public DoctorService(IDoctorRepository doctorRepository, IPersonRepository personRepository, AllergyRepository allergyRepository)
         {
-            _idoctorRepository = idoctorRepository;
-
-        }
-        public DoctorService(DoctorRepository doctorRepository, PersonRepository personRepository, AllergyRepository allergyRepository)
-        {
-            _doctorRepository = doctorRepository;
+            _idoctorRepository = doctorRepository;
             _personRepository = personRepository;
             _allergyRepository = allergyRepository;
         }
@@ -59,7 +53,7 @@ namespace HospitalLibrary.Core.Service
             allergiesAndDoctors.Allergies = _allergyRepository.GetAll().ToList();
             allergiesAndDoctors.Doctors = new List<DoctorForPatientRegistrationDto>();
 
-            List<int> allDoctorsIds = _doctorRepository.GetAllDoctorsForPatientRegistration();
+            List<int> allDoctorsIds = _idoctorRepository.GetAllDoctorsForPatientRegistration();
             List<Person> allDoctorsPersonalInforamtion = _personRepository.GetAllDoctorsForPatientRegistration(allDoctorsIds).ToList();
 
             foreach (var doctorPersonalInformation in allDoctorsPersonalInforamtion)
@@ -77,12 +71,12 @@ namespace HospitalLibrary.Core.Service
 
         public Person getPersonByDoctorId(int id)
         {
-            return _doctorRepository.getPersonByDoctorId(id);
+            return _idoctorRepository.getPersonByDoctorId(id);
         }
 
         public Doctor RegisterDoctor(Doctor doctor)
         {
-            return _doctorRepository.RegisterDoctor(doctor);
+            return _idoctorRepository.RegisterDoctor(doctor);
         }
         
     }
