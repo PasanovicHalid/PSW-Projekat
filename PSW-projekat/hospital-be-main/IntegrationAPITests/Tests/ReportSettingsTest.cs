@@ -40,7 +40,7 @@ namespace IntegrationAPITests.Tests
                 DeliveryDays = 0,
                 DeliveryMonths = 0,
                 DeliveryYears = 1,
-                StartDeliveryDate = System.DateTime.MinValue
+                StartDeliveryDate = DateTime.MinValue
             };
 
             var result = ((OkObjectResult)controller.Update(testCase))?.Value as ReportSettingsDTO;

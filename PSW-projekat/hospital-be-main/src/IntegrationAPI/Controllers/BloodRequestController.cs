@@ -1,4 +1,5 @@
 ﻿using IntegrationAPI.Adapters;
+using IntegrationAPI.Controllers.Interfaces;
 using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.BloodRequests;
@@ -56,6 +57,56 @@ namespace IntegrationAPI.Controllers
                 }
 
                 return Ok(bloodRequest);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            try
+            {
+                return Ok(_bloodRequestService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public ActionResult Update(BloodRequestDTO entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _bloodRequestService.Update(BloodRequestAdapter.FromDTO(entity));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok(entity);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                BloodRequest bloodRequest = _bloodRequestService.GetById(id);
+                if (bloodRequest == null)
+                {
+                    return NotFound();
+                }
+                _bloodRequestService.Delete(bloodRequest);
+                return NoContent();
             }
             catch
             {

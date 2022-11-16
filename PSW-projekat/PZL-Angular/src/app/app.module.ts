@@ -16,6 +16,7 @@ import { PagesModule } from "./modules/pages/pages.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
     PagesModule,
     HospitalModule,
     BloodBanksModule,
+    DoctorRequestsModule,
     CommonModule,
     ToastrModule.forRoot(),
   ],

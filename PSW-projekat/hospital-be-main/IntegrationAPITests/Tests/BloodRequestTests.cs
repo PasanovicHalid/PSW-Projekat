@@ -34,7 +34,6 @@ namespace IntegrationAPITests.Tests
 
             BloodRequestDTO testCase = new BloodRequestDTO()
             {
-                Id = 1,
                 RequiredForDate = DateTime.Now,
                 BloodQuantity = 1,
                 Reason = "",

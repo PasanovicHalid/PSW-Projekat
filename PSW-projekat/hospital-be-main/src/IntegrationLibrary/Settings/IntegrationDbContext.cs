@@ -24,22 +24,6 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1 , Name = "asdsadsda", Email = "asdasd@gmail.com", Password = "asdsadsdadas" , ApiKey = "sadfasdads" , ServerAddress = "https://www.messenger.com/t/100001603572170", AccountStatus = AccountStatus.ACTIVE } 
-            );
-            modelBuilder.Entity<ReportSettings>().HasData(
-                new ReportSettings()
-                {
-                    CalculationDays = 0,
-                    CalculationMonths = 1,
-                    CalculationYears = 0,
-                    DeliveryDays = 0,
-                    DeliveryMonths = 1,
-                    DeliveryYears = 0,
-                    Id = 1,
-                    StartDeliveryDate = Microsoft.VisualBasic.DateAndTime.Today
-                }
-                );
             base.OnModelCreating(modelBuilder);
         }
     }

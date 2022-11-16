@@ -24,13 +24,28 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             }
             catch
             {
-
+                throw new Exception("Error when creating a blood Request");
             }
+        }
+
+        public void Delete(BloodRequest entity)
+        {
+            _bloodRequestRepository.Delete(entity);
+        }
+
+        public IEnumerable<BloodRequest> GetAll()
+        {
+            return _bloodRequestRepository.GetAll();
         }
 
         public BloodRequest GetById(int id)
         {
             return _bloodRequestRepository.GetById(id);
+        }
+
+        public void Update(BloodRequest entity)
+        {
+            _bloodRequestRepository.Update(entity);
         }
     }
 }
