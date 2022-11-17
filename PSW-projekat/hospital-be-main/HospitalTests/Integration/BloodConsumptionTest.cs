@@ -2,6 +2,8 @@
 using HospitalAPI.Controllers.PrivateApp;
 using HospitalAPI.DTO;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.BloodConsumption;
 using HospitalTests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +25,7 @@ namespace HospitalTests.Integration
 
         private static BloodConsumptionController SetupSettingsController(IServiceScope scope)
         {
-            return new BloodConsumptionController(scope.ServiceProvider.GetRequiredService<IBloodConsumptionService>());
+            return new BloodConsumptionController(scope.ServiceProvider.GetRequiredService<IBloodConsumptionService>(), scope.ServiceProvider.GetRequiredService<IDoctorService>());
         }
 
         [Fact]
@@ -32,13 +34,27 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
 
+            
             BloodConsumptionDTO testCase = new BloodConsumptionDTO()
             {
-               
+                Id = 1,
+                Blood = new Blood() 
+                {Id=1, Deleted=false,BloodType = BloodType.APlus,
+                Quantity = 10
+                },
+                Purpose ="Potrebno za novu operaciju",
+                DoctorId = 1
+
             };
 
             var result = ((OkObjectResult)controller.Create(testCase))?.Value as DoctorBloodConsumption;
             Assert.NotNull(result);
+            Assert.Equal(testCase.Blood.Quantity, result.Blood.Quantity);
+            Assert.Equal(testCase.Blood.BloodType, result.Blood.BloodType);
+            Assert.Equal(testCase.DoctorId, result.Doctor.Id);
+            Assert.Equal(testCase.Purpose, result.Purpose);
+
+
         }
 
     }

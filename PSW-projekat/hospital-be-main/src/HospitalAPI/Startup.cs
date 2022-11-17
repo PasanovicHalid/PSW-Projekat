@@ -1,6 +1,8 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.BloodConsumption;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.BloodConsumption;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -111,8 +113,11 @@ namespace HospitalAPI
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
 
+
             services.AddScoped<IBedService, BedService>();
             services.AddScoped<IBedRepository, BedRepository>();
+            services.AddScoped<IBloodConsumptionService, BloodConsumptionService>();
+            services.AddScoped<IBloodConsumptionRepository, BloodConsumptionRepository>();
 
             services.AddScoped<ITherapyService, TherapyService>();
             services.AddScoped<ITherapyRepository, TherapyRepository>();

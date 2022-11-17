@@ -20,7 +20,8 @@ namespace HospitalLibrary.Core.Service.BloodConsumption
         }
         public void Create(DoctorBloodConsumption entity)
         {
-            throw new NotImplementedException();
+            _bloodConsumptionRepository.Create(entity);
+
         }
 
         public void Delete(DoctorBloodConsumption entity)

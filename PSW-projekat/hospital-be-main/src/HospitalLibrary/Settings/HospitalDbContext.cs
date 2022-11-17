@@ -23,6 +23,7 @@ namespace HospitalLibrary.Settings
         public DbSet<HistoryTreatment> HistoryTreatments { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Therapy> Therapys { get; set; }
+        public DbSet<DoctorBloodConsumption> BloodConsumptions { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 

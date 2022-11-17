@@ -1,4 +1,8 @@
-﻿using HospitalAPI.DTO;
+﻿using HospitalAPI.Adapters;
+using HospitalAPI.DTO;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.BloodConsumption;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +19,32 @@ namespace HospitalAPI.Controllers.PrivateApp
     public class BloodConsumptionController : ControllerBase
     {
         private readonly IBloodConsumptionService _bloodConsumptionService;
+        private readonly IDoctorService _doctorService;
 
 
-        public BloodConsumptionController(IBloodConsumptionService bloodConsumptionService)
+        public BloodConsumptionController(IBloodConsumptionService bloodConsumptionService, IDoctorService doctorService)
         {
             this._bloodConsumptionService = bloodConsumptionService;
+            this._doctorService = doctorService;
         }
 
         public ActionResult Create(BloodConsumptionDTO bloodConsumptionDTO)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            DoctorBloodConsumption bloodConsumption = BloodConsumptionAdapter.FromDTO(bloodConsumptionDTO);
+            try
+            {
+                bloodConsumption.Doctor = new Doctor();//_doctorService.GetById(bloodConsumptionDTO.DoctorId);
+                _bloodConsumptionService.Create(bloodConsumption);
+                return Ok(bloodConsumption);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

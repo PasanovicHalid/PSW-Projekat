@@ -18,7 +18,8 @@ namespace HospitalLibrary.Core.Repository.BloodConsumption
         }
         public void Create(DoctorBloodConsumption entity)
         {
-            throw new NotImplementedException();
+            _context.BloodConsumptions.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Delete(DoctorBloodConsumption entity)
@@ -28,12 +29,12 @@ namespace HospitalLibrary.Core.Repository.BloodConsumption
 
         public IEnumerable<DoctorBloodConsumption> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.BloodConsumptions.ToList();
         }
 
         public DoctorBloodConsumption GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.BloodConsumptions.Find(id);
         }
 
         public void Update(DoctorBloodConsumption entity)
