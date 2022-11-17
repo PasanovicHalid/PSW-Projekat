@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalAPI;
 using HospitalAPI.Controllers.PublicApp;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
 using HospitalTests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +18,23 @@ namespace HospitalTests.Integration
 {
     public class TreatmentTest : BaseIntegrationTest
     {
+
+        private ITreatmentService _treatmentService;
+        private readonly IPatientService _patientService;
+
         public TreatmentTest(TestDatabaseFactory<Startup> factory) : base(factory)
         { }
 
         private static TreatmentController SetupSettingsController(IServiceScope scope)
         {
-            return new TreatmentController(scope.ServiceProvider.GetRequiredService<ITreatmentService>());
+            
+            return new TreatmentController(scope.ServiceProvider.GetRequiredService<ITreatmentService>(),
+                                           scope.ServiceProvider.GetRequiredService<IPatientService>(),
+                                           scope.ServiceProvider.GetRequiredService<IRoomService>()
+               );
         }
 
-        
+
         [Fact]
         public void Find_single_treatment()
         {
@@ -38,8 +48,8 @@ namespace HospitalTests.Integration
             //da li je odg sprat
             Assert.NotNull(result);
         }
-        
-        
+
+
         [Fact]
         public void Find_a_patient_to_admission()
         {
@@ -62,9 +72,39 @@ namespace HospitalTests.Integration
             };
 
             //Assert
-            var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as Treatment;
+            var result = ((OkObjectResult)controller.Create(testCase))?.Value as Treatment;
             Assert.NotNull(result);
         }
-        
+
+        [Fact]
+        public void Find_treatment_to_close()
+        {
+             //Arrange
+             using var scope = Factory.Services.CreateScope();
+             var controller = SetupSettingsController(scope);
+
+            //Act
+            TreatmentDto testCase = new TreatmentDto() 
+            { 
+                Id = 9 ,
+                Patient = new PatientDto(),
+                DateAdmission = new DateTime(),
+                DateDischarge = new DateTime(),
+                ReasonForDischarge = "",
+                Therapy = new Therapy(),
+                Room = new Room()
+            };
+            
+
+            //Assert
+            var result = ((OkObjectResult)controller.Update(9,testCase))?.Value as TreatmentDto;
+            Assert.NotNull(result);
+            Assert.Equal(9, result.Id);
+            Assert.Equal(testCase.Patient, result.Patient);
+            Assert.NotNull(result.Patient);
+
+         
+        }
+
     }
 }

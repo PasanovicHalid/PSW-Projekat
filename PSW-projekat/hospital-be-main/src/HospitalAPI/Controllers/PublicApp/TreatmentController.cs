@@ -1,4 +1,5 @@
 ﻿using System;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
@@ -14,7 +15,8 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly ITreatmentService _treatmentService;
         private readonly IPatientService _patientService;
         private readonly IRoomService _roomService;
-        private ITreatmentService treatmentService;
+        //private ITreatmentService treatmentService;
+        //private ITreatmentService treatmentService1;
 
         public TreatmentController(ITreatmentService treatmentService, IPatientService patientService, IRoomService roomService)
         {
@@ -23,6 +25,8 @@ namespace HospitalAPI.Controllers.PublicApp
             _roomService = roomService;
 
         }
+
+        
 
         [HttpGet]
         public ActionResult GetAll()
@@ -64,26 +68,39 @@ namespace HospitalAPI.Controllers.PublicApp
         public ActionResult GetById(int id)
         {
             var treatment = _treatmentService.GetById(id);
+
+            PatientDto patientDto = new PatientDto(treatment.Patient.Id, treatment.Patient.Person.Name,
+                    treatment.Patient.Person.Surname, treatment.Patient.Person.Email, treatment.Patient.Person.Role);
+
+            TreatmentDto treatmentDto = new TreatmentDto(treatment.Id, patientDto, treatment.ReasonForDischarge, treatment.DateAdmission,
+                                                         treatment.DateDischarge, treatment.Room, treatment.Therapy);
+
             if (treatment == null)
             {
                 return NotFound();
             }
 
-            return Ok(treatment);
+            return Ok(treatmentDto);
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Treatment treatment)
+        public ActionResult Update(int id, TreatmentDto treatmentDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != treatment.Id)
+            if (id != treatmentDto.Id)
             {
                 return BadRequest();
             }
+
+            Treatment treatment = _treatmentService.GetById(treatmentDto.Id);
+            treatment.DateDischarge = treatmentDto.DateDischarge;
+            treatment.ReasonForDischarge = treatmentDto.ReasonForDischarge;
+
+
             try
             {
                 _treatmentService.Update(treatment);
