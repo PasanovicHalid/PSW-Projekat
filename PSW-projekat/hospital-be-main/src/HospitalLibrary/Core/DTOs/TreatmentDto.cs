@@ -12,17 +12,21 @@ namespace HospitalLibrary.Core.DTOs
     {
         public int Id { get; set; }
         public virtual PatientDto Patient { get; set; }
-        public string ReasonForAdmission { get; set; }
+        public string ReasonForDischarge { get; set; }
         public DateTime DateAdmission { get; set; }
+        public DateTime DateDischarge { get; set; }
         public virtual Room Room { get; set; }
         public virtual Therapy Therapy { get; set; }
 
-        public TreatmentDto(int id, PatientDto patientDto, string reasonForAdmission, DateTime dateAdmission, Room room, Therapy therapy)
+        public TreatmentDto() { }
+
+        public TreatmentDto(int id, PatientDto patient, string reasonForDischarge, DateTime dateAdmission, DateTime dateDischarge, Room room, Therapy therapy)
         {
             Id = id;
-            Patient = patientDto;
-            ReasonForAdmission = reasonForAdmission;
+            Patient = patient;
+            ReasonForDischarge = reasonForDischarge;
             DateAdmission = dateAdmission;
+            DateDischarge = dateDischarge;
             Room = room;
             Therapy = therapy;
         }
