@@ -70,11 +70,11 @@ namespace IntegrationLibrary.Core.Service.Reports
 
             foreach(BloodRequest request in (List<BloodRequest>)_bloodRequestService.GetAcceptedRequests(id))
             {
-                if (setting.CalculationYears > 0 && (request.RequiredForDate >= DateTime.Today.AddYears(-setting.CalculationYears)))
+                if (setting.CalculationYears > 0 && (request.RequiredForDate >= DateTime.Today.AddYears(-setting.CalculationYears)))        // da li je prosla godina
                     reportRequests.Add(request);
-                else if (setting.CalculationMonths > 0 && (request.RequiredForDate >= DateTime.Today.AddMonths(-setting.CalculationMonths)))
+                else if (setting.CalculationMonths > 0 && (request.RequiredForDate >= DateTime.Today.AddMonths(-setting.CalculationMonths)))    // da li je prosao mesec
                     reportRequests.Add(request);
-                else if (setting.CalculationDays > 0 && (request.RequiredForDate >= DateTime.Today.AddDays(-setting.CalculationDays)))
+                else if (setting.CalculationDays > 0 && (request.RequiredForDate >= DateTime.Today.AddDays(-setting.CalculationDays)))  //da il je prosao jedan dan
                     reportRequests.Add(request);
             }
 

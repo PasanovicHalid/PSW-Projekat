@@ -79,11 +79,11 @@ namespace IntegrationAPITests.Setup
 
             context.ReportSettings.Add(new ReportSettings
             {
-                CalculationDays = 1,
-                CalculationMonths = 0,
+                CalculationDays = 0,
+                CalculationMonths = 1,
                 CalculationYears = 0,
-                DeliveryDays = 0,
-                DeliveryMonths = 1,
+                DeliveryDays = 1,
+                DeliveryMonths = 0,
                 DeliveryYears = 0,
                 StartDeliveryDate = System.DateTime.Now.AddDays(-1),
             });
