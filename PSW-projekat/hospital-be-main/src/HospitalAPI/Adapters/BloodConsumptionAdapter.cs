@@ -15,7 +15,8 @@ namespace HospitalAPI.Adapters
             {
                 Blood = entity.Blood,
                 Date = DateTime.Today, 
-                Purpose = entity.Purpose
+                Purpose = entity.Purpose,
+                Doctor = new Doctor()
     };
         }
 

@@ -37,7 +37,7 @@ namespace HospitalAPI.Controllers.PrivateApp
             DoctorBloodConsumption bloodConsumption = BloodConsumptionAdapter.FromDTO(bloodConsumptionDTO);
             try
             {
-                bloodConsumption.Doctor = new Doctor();//_doctorService.GetById(bloodConsumptionDTO.DoctorId);
+              //  bloodConsumption.DoctorId = new Doctor();//_doctorService.GetById(bloodConsumptionDTO.DoctorId);
                 _bloodConsumptionService.Create(bloodConsumption);
                 return Ok(bloodConsumption);
             }
