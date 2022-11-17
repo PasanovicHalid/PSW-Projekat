@@ -32,7 +32,7 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
             //Act
-            var result = ((ObjectResult)controller.GetById(1))?.Value as Treatment;
+            var result = ((OkObjectResult)controller.GetById(1))?.Value as Treatment;
             //Assert
             //provera je samo da nije null. inace moze da se proveri da li je to ta koja nam treba
             //da li je odg sprat

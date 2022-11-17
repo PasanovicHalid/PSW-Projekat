@@ -15,6 +15,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IPatientService _patientService;
         private readonly IRoomService _roomService;
         private ITreatmentService treatmentService;
+        private ITreatmentService treatmentService1;
 
         public TreatmentController(ITreatmentService treatmentService, IPatientService patientService, IRoomService roomService)
         {
@@ -22,6 +23,11 @@ namespace HospitalAPI.Controllers.PublicApp
             _patientService = patientService;
             _roomService = roomService;
 
+        }
+
+        public TreatmentController(ITreatmentService treatmentService1)
+        {
+            this.treatmentService1 = treatmentService1;
         }
 
         [HttpGet]
