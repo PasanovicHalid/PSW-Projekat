@@ -1,13 +1,14 @@
-﻿using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Core.Model.Enums;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
-    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -23,7 +24,6 @@ namespace HospitalAPI.Controllers.PublicApp
             _userManager = userManager;
         }
 
-        [Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -44,6 +44,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_personService.GetAllDoctors());
         }
 
+        [Authorize(Roles="Admin")]
         [HttpGet("userInfo/")]
         public ActionResult GetUserInfo()
         {

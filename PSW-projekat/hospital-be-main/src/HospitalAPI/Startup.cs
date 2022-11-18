@@ -47,9 +47,10 @@ namespace HospitalAPI
                 options.Password.RequireLowercase = false;
             })
                 .AddEntityFrameworkStores<AuthenticationDbContext>()
+                .AddRoles<IdentityRole>()
                 .AddDefaultTokenProviders();
 
-            /*services.AddAuthentication(options =>
+            services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -67,7 +68,7 @@ namespace HospitalAPI
                     ValidIssuer = Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
                 };
-            });*/
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

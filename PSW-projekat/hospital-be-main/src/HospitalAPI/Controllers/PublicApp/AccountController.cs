@@ -63,6 +63,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     {
                         new Claim("Name", user.UserName),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(ClaimTypes.Role, "Admin"),                    
                     };
 
                     foreach (var userRole in userRoles)
