@@ -22,22 +22,22 @@ namespace HospitalAPI.Controllers.PublicApp
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
         private readonly UserManager<SecUser> _userManager;
         private readonly SignInManager<SecUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly DoctorService _doctorService;
-        private readonly PatientService _patientService;
         private readonly IConfiguration _configuration;
+        private readonly IDoctorService _doctorService;
+        private readonly IPatientService _patientService;
 
         public AccountController( 
                 UserManager<SecUser> userManager, 
                 SignInManager<SecUser> signInManager,
                 RoleManager<IdentityRole> roleManager,
-                PersonService personService,
-                DoctorService doctorService,
-                PatientService patientService,
-                IConfiguration configuration)
+                IConfiguration configuration,
+                IPersonService personService,
+                IDoctorService doctorService,
+                IPatientService patientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -48,26 +48,29 @@ namespace HospitalAPI.Controllers.PublicApp
             _configuration = configuration;
         }
 
-        [HttpGet("Login")]
-        public async Task<ActionResult> LoginAsync(string username, string password)
+        [HttpPost("Login")]
+        public async Task<ActionResult> LoginAsync(LoginUserDto loginUserDto)
         {
-            var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
+            var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, true, false);
             if (result.Succeeded)
             {
-                var user = await _userManager.FindByNameAsync(username);
-                if (user != null && await _userManager.CheckPasswordAsync(user, password))
+                var user = await _userManager.FindByNameAsync(loginUserDto.Username);
+                if (user != null && await _userManager.CheckPasswordAsync(user, loginUserDto.Password))
                 {
+                    //var id = user.Claims.GetUserId();
+                    var claims = await _userManager.GetClaimsAsync(user);
                     var userRoles = await _userManager.GetRolesAsync(user);
 
                     var authClaims = new List<Claim>
                     {
-                        new Claim("Name", user.UserName),
+                        new Claim("Id", claims[0].Value),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(ClaimTypes.Role, "Admin"),                    
+                                     
                     };
 
                     foreach (var userRole in userRoles)
                     {
+                        authClaims.Add(new Claim(ClaimTypes.Role, userRole));       
                         authClaims.Add(new Claim("Role", userRole));
                     }
 
@@ -80,7 +83,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     });
                 }
             }
-            return Unauthorized();
+            return BadRequest("Username or password is incorrect.");
         }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
@@ -105,13 +108,13 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+        [HttpGet("GetAllergiesAndDoctors")]
 
-        [HttpGet("/getAllergiesAndDoctors")]
         public ActionResult GetAllergiesAndDoctors()
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
-
+        
 
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
@@ -161,8 +164,12 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpPost("RegisterPatient")]
         public async Task<IActionResult> RegisterPatient(RegisterPatientDto regUser)
         {
-            bool patientRoleExists = await _roleManager.RoleExistsAsync("Patient");
-            if (!patientRoleExists)
+            if (await _userManager.FindByNameAsync(regUser.Username) != null)
+            {
+                return BadRequest("Username is taken.");
+            }
+
+            if (!(await _roleManager.RoleExistsAsync("Patient")))
             {
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
@@ -186,6 +193,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     Township = regUser.Township,
                 }
             };
+
             user = _personService.RegisterPerson(user);
             Doctor doctor = _doctorService.GetById(regUser.DoctorName.Id);
 

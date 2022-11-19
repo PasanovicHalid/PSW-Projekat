@@ -15,10 +15,16 @@ namespace HospitalLibrary.Settings
         public DbSet<Patient> Patients { get; set; }
         public DbSet<WorkingDay> WorkingDays { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
-
         public DbSet<Doctor> Doctors { get; set; }
-
         public DbSet<PatientAllergies> PatientAllergies { get; set; }
+        public DbSet<Treatment> Treatments { get; set; }
+        public DbSet<Bed> Beds { get; set; }
+        public DbSet<Blood> Bloods { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
+        public DbSet<HistoryTreatment> HistoryTreatments { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Therapy> Therapys { get; set; }
+
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }

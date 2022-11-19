@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model.Enums;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -16,9 +17,9 @@ namespace HospitalAPI.Controllers.PublicApp
     {
 
         private readonly UserManager<SecUser> _userManager;
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
 
-        public PersonController(PersonService personService, UserManager<SecUser> userManager)
+        public PersonController(IPersonService personService, UserManager<SecUser> userManager)
         {
             _personService = personService;
             _userManager = userManager;
@@ -44,13 +45,13 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_personService.GetAllDoctors());
         }
 
-        [Authorize(Roles="Admin")]
         [HttpGet("userInfo/")]
-        public ActionResult GetUserInfo()
+        public ActionResult GetUserInfo(string id)
         {
-            var id = User.Claims.GetUserId();
+            //var id = User.Claims.GetUserId();
+            Person person = _personService.GetById(int.Parse(id));
 
-            return Ok(_personService.GetById(id));
+            return Ok(person);
         }
     }
 }

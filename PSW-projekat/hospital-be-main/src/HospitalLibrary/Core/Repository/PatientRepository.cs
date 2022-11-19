@@ -29,6 +29,16 @@ namespace HospitalLibrary.Core.Repository
             return _context.Patients.ToList();
         }
 
+        public IEnumerable<Doctor> GetAllDoctors()
+        {
+            return _context.Patients.Select(p => p.Doctor).Distinct().ToList();
+        }
+
+        public IEnumerable<Doctor> GetAllDoctors2()
+        {
+            return _context.Patients.Select(p => p.Doctor);
+        }
+
         public Patient GetById(int id)
         {
             return _context.Patients.Where(d => d.Id == id).FirstOrDefault();

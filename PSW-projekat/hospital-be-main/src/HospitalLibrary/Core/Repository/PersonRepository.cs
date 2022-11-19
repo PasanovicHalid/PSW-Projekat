@@ -40,6 +40,11 @@ namespace HospitalLibrary.Core.Repository
             return _context.Persons.Where(x => x.Role == Role.doctor);
         }
 
+        public IEnumerable<Person> GetAllDoctorsForPatientRegistration(List<int> doctorIds)
+        {
+            return _context.Persons.Where(x => x.Role == Role.doctor && doctorIds.Contains(x.Id));
+        }
+
         public IEnumerable<Person> GetAllPatients()
         {
             return _context.Persons.Where(x => x.Role == Role.patient);
