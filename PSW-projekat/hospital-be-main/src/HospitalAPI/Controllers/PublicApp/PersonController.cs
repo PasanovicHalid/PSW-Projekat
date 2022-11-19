@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace HospitalAPI.Controllers.PublicApp
@@ -44,9 +45,9 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             return Ok(_personService.GetAllDoctors());
         }
-
-        [HttpGet("userInfo/")]
-        public ActionResult GetUserInfo(string id)
+        [Authorize(Roles ="Manager")]
+        [HttpGet("userInfo/{id}")]
+        public ActionResult GetUserInfo(String id)
         {
             //var id = User.Claims.GetUserId();
             Person person = _personService.GetById(int.Parse(id));

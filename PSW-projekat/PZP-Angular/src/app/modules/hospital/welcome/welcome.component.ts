@@ -19,6 +19,7 @@ export class WelcomeComponent implements OnInit {
   constructor(private feedbackService: FeedbackService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
+
     this.userService.getLoggedUser().subscribe(res => {
       console.log(res.name)
     })

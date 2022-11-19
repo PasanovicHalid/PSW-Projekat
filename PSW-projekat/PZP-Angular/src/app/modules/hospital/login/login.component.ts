@@ -32,13 +32,13 @@ export class LoginComponent implements OnInit {
     LoginDto.username = this.loginForm.value.username;
     LoginDto.password = this.loginForm.value.password;
     this.loginService.login(LoginDto ).subscribe(res => {
-      this.router.navigate(['']);
 
       const tokenInfo = this.getDecodedAccessToken(res.token); // decode token
       localStorage.setItem('currentUser', res.token);
       localStorage.setItem('currentUserRole', tokenInfo.Role);
       localStorage.setItem('currentUserId', tokenInfo.Id);
-      //console.log(localStorage.getItem("currentUserId"))
+
+      this.router.navigate(['']);
     },
     (err) => {
       if(err.error == "Username or password is incorrect.")

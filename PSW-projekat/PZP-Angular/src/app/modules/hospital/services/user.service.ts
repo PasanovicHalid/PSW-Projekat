@@ -11,7 +11,7 @@ export class UserService {
   public token = localStorage.getItem("currentUser");
   public tokenString = '' + this.token;
   apiHost: string = 'http://localhost:16177/';
-  headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': this.tokenString });
+  headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}`, });
 
   constructor(private http: HttpClient) { }
 
