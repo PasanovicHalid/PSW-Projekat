@@ -32,6 +32,18 @@ export class BloodRequestService {
     return this.http.get<Doctor>(this.hospitalApiHost + 'api/Person/doctor/' + id, {headers: this.headers}).pipe(catchError(this.handleError))
   }
 
+  acceptRequest(id : number) : Observable<any> {
+    return this.http.get<any>(this.integrationApiHost + 'api/BloodRequest/accept/' + id, {headers: this.headers}).pipe(catchError(this.handleError));
+  }
+
+  declineRequest(id : number) : Observable<any> {
+    return this.http.get<any>(this.integrationApiHost + 'api/BloodRequest/decline/' + id, {headers: this.headers}).pipe(catchError(this.handleError));
+  }
+
+  sendBackRequest(id : number, reason : string) : Observable<any> {
+    return this.http.put<any>(this.integrationApiHost + 'api/BloodRequest/return/' + id, JSON.stringify(reason), {headers: this.headers}).pipe(catchError(this.handleError));
+  }
+
   
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.status +'\n'+ error.error))

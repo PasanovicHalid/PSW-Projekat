@@ -16,6 +16,13 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             _bloodRequestRepository = bloodRequestRepository;
         }
 
+        public void AcceptRequest(int id)
+        {
+            BloodRequest request = _bloodRequestRepository.GetById(id);
+            request.RequestState = RequestState.Accepted;
+            _bloodRequestRepository.Update(request);
+        }
+
         public void Create(BloodRequest entity)
         {
             try
@@ -26,6 +33,13 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             {
                 throw new Exception("Error when creating a blood Request");
             }
+        }
+
+        public void DeclineRequest(int id)
+        {
+            BloodRequest request = _bloodRequestRepository.GetById(id);
+            request.RequestState = RequestState.Declined;
+            _bloodRequestRepository.Update(request);
         }
 
         public void Delete(BloodRequest entity)
@@ -41,6 +55,14 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         public BloodRequest GetById(int id)
         {
             return _bloodRequestRepository.GetById(id);
+        }
+
+        public void SendBackRequest(int id, string reason)
+        {
+            BloodRequest request = _bloodRequestRepository.GetById(id);
+            request.RequestState = RequestState.Returned;
+            request.Comment = reason;
+            _bloodRequestRepository.Update(request);
         }
 
         public void Update(BloodRequest entity)

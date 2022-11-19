@@ -43,6 +43,9 @@ namespace IntegrationAPITests.Setup
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
+
             context.BloodBanks.Add(new BloodBank {
                 Name = "asdsadsda",
                 Email = "asdasd@gmail.com",
@@ -85,6 +88,57 @@ namespace IntegrationAPITests.Setup
                 DeliveryMonths = 1,
                 DeliveryYears = 0,
                 StartDeliveryDate = System.DateTime.Now
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 1,
+                BloodType = BloodType.BP,
+                DoctorId = 4,
+                Reason = "sadasddas",
+                RequestState = RequestState.Pending,
+                RequiredForDate = System.DateTime.MaxValue
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.BN,
+                DoctorId = 2,
+                Reason = "asdasddas",
+                RequestState = RequestState.Pending,
+                RequiredForDate = System.DateTime.MaxValue
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.BN,
+                DoctorId = 1,
+                Reason = "asdasddas",
+                RequestState = RequestState.Accepted,
+                RequiredForDate = System.DateTime.MaxValue
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.BN,
+                DoctorId = 3,
+                Reason = "asdasddas",
+                RequestState = RequestState.Returned,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = "asddaswreqwreqwr"
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.ON,
+                DoctorId = 2,
+                Reason = "asdasddas",
+                RequestState = RequestState.Declined,
+                RequiredForDate = System.DateTime.MaxValue
             });
 
             context.SaveChanges();

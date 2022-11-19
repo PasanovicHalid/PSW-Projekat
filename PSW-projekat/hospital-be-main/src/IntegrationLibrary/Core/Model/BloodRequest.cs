@@ -23,6 +23,8 @@ namespace IntegrationLibrary.Core.Model
         [Required]
         public BloodType BloodType { get; set; }
 
+        public string Comment { get; set; }
+
 
     }
 }

@@ -6,11 +6,10 @@ using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.BloodRequests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 using Xunit;
 
 namespace IntegrationAPITests.Tests
@@ -43,7 +42,38 @@ namespace IntegrationAPITests.Tests
             };
 
             var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as BloodRequest;
-            Assert.NotNull(result);
+            result.Id = 0;
+            JsonSerializer.Serialize(result).ShouldBe(JsonSerializer.Serialize(testCase));
+        }
+
+        [Fact]
+        public void Accept_request_for_blood()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            var result = ((OkResult)controller.AcceptRequest(1));
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Decline_request_for_blood()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            var result = ((OkResult)controller.DeclineRequest(2));
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Return_request_for_blood()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            var result = ((OkResult)controller.SendBackRequest(2, "reason"));
+            Assert.IsType<OkResult>(result);
         }
     }
 }

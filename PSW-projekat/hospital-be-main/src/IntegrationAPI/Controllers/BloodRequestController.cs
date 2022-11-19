@@ -64,6 +64,49 @@ namespace IntegrationAPI.Controllers
             }
         }
 
+
+        [HttpGet("accept/{id}")]
+        public ActionResult AcceptRequest(int id)
+        {
+            try
+            {
+                _bloodRequestService.AcceptRequest(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpGet("decline/{id}")]
+        public ActionResult DeclineRequest(int id)
+        {
+            try
+            {
+                _bloodRequestService.DeclineRequest(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpPut("return/{id}")]
+        public ActionResult SendBackRequest(int id, [FromBody] string reason)
+        {
+            try
+            {
+                _bloodRequestService.SendBackRequest(id, reason);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
         [HttpGet]
         public ActionResult GetAll()
         {

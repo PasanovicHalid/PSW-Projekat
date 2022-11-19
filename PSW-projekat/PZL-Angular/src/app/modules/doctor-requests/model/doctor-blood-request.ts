@@ -7,10 +7,11 @@ export class DoctorBloodRequest {
     id : number = 0;
     requiredForDate : Date = new Date();
     bloodQuantity: number = 0;
-    reason: string = 'sadsdaas';
+    reason: string = '';
     doctor: Doctor = new Doctor();
     requestState: RequestState = RequestState.Pending;
     bloodType: BloodType = BloodType.ABN;
+    comment : string = '';
 
     public combineWithBloodRequest(request : BloodRequest) {
         this.id = request.id;

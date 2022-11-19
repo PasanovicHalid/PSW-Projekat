@@ -10,6 +10,8 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
 {
     public interface IBloodRequestService : ICRUDService<BloodRequest>
     {
-
+        void AcceptRequest(int id);
+        void DeclineRequest(int id);
+        void SendBackRequest(int id, string reason);
     }
 }

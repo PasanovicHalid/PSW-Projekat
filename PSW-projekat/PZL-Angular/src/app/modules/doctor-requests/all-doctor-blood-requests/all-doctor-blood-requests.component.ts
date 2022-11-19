@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { BloodType } from '../model/blood-type';
 import { DoctorBloodRequest } from '../model/doctor-blood-request';
+import { RequestState } from '../model/request-state';
 import { BloodRequestService } from '../services/blood-request.service';
 
 @Component({
@@ -34,5 +36,14 @@ export class AllDoctorBloodRequestsComponent implements OnInit {
   public chooseBloodRequest(id:number){
     this.router.navigate(['doctor-blood-request', id]);
   }
+
+  getBloodByValue(value: number) {
+    return Object.values(BloodType)[value]
+  }
+
+  getStateByValue(value: number) {
+    return Object.values(RequestState)[value]
+  }
+
 
 }
