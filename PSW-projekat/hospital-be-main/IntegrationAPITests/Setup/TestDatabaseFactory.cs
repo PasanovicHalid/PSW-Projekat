@@ -97,7 +97,8 @@ namespace IntegrationAPITests.Setup
                 DoctorId = 4,
                 Reason = "sadasddas",
                 RequestState = RequestState.Pending,
-                RequiredForDate = System.DateTime.MaxValue
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
             });
 
             context.BloodRequests.Add(new BloodRequest
@@ -107,7 +108,8 @@ namespace IntegrationAPITests.Setup
                 DoctorId = 2,
                 Reason = "asdasddas",
                 RequestState = RequestState.Pending,
-                RequiredForDate = System.DateTime.MaxValue
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
             });
 
             context.BloodRequests.Add(new BloodRequest
@@ -117,7 +119,8 @@ namespace IntegrationAPITests.Setup
                 DoctorId = 1,
                 Reason = "asdasddas",
                 RequestState = RequestState.Accepted,
-                RequiredForDate = System.DateTime.MaxValue
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
             });
 
             context.BloodRequests.Add(new BloodRequest
@@ -138,7 +141,8 @@ namespace IntegrationAPITests.Setup
                 DoctorId = 2,
                 Reason = "asdasddas",
                 RequestState = RequestState.Declined,
-                RequiredForDate = System.DateTime.MaxValue
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
             });
 
             context.SaveChanges();

@@ -75,5 +75,15 @@ namespace IntegrationAPITests.Tests
             var result = ((OkResult)controller.SendBackRequest(2, "reason"));
             Assert.IsType<OkResult>(result);
         }
+
+        [Fact]
+        public void Get_return_requests_for_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            var result = (OkObjectResult)controller.GetReturnedRequestsForDoctor(3);
+            Assert.IsType<OkObjectResult>(result);
+        }
     }
 }

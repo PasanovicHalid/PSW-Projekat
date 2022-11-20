@@ -161,13 +161,12 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                _bloodRequestService.DeclineRequest(id);
+                return Ok(_bloodRequestService.GetReturnedRequestsForDoctor(id));
             }
             catch
             {
                 return BadRequest();
             }
-            return Ok();
         }
     }
 }

@@ -24,19 +24,19 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BloodRequest>().HasData(
-                new BloodRequest()
-                {
-                    BloodQuantity = 5,
-                    BloodType = BloodType.BP,
-                    DoctorId = 4,
-                    Id = 1,
-                    Reason = "asdasdadsadsdas",
-                    RequestState = RequestState.Pending,
-                    RequiredForDate = DateTime.Now
-                }
-            );
-            base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<BloodRequest>().HasData(
+            //    new BloodRequest()
+            //    {
+            //        BloodQuantity = 5,
+            //        BloodType = BloodType.BP,
+            //        DoctorId = 4,
+            //        Id = 1,
+            //        Reason = "asdasdadsadsdas",
+            //        RequestState = RequestState.Pending,
+            //        RequiredForDate = DateTime.Now
+            //    }
+            //);
+            //base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -22,7 +22,7 @@ import { ReturnedRequestsForDoctorComponent } from './returned-requests-for-doct
 const routes: Routes = [
   {path: 'doctor-blood-requests', component: AllDoctorBloodRequestsComponent },
   {path: 'doctor-blood-request/:id', component: DoctorBloodRequestComponent },
-  {path: 'doctor-blood-request/:id', component: ReturnedRequestsForDoctorComponent }
+  {path: 'returned-request/:id', component: ReturnedRequestsForDoctorComponent }
 ];
 
 

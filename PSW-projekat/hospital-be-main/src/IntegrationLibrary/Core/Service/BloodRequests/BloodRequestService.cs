@@ -69,5 +69,15 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         {
             _bloodRequestRepository.Update(entity);
         }
+        public List<BloodRequest> GetReturnedRequestsForDoctor(int id)
+        {
+            List<BloodRequest> returnedRequests = new List<BloodRequest>();
+            foreach(BloodRequest b in _bloodRequestRepository.GetAll())
+            {
+                if(b.DoctorId.Equals(id) && b.RequestState.Equals(RequestState.Returned))
+                    returnedRequests.Add(b);
+            }
+            return returnedRequests;
+        }
     }
 }
