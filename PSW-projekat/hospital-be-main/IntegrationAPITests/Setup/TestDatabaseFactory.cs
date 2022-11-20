@@ -43,6 +43,7 @@ namespace IntegrationAPITests.Setup
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
             context.BloodBanks.Add(new BloodBank {
                 Name = "asdsadsda",
                 Email = "asdasd@gmail.com",
@@ -81,10 +82,32 @@ namespace IntegrationAPITests.Setup
                 CalculationDays = 0,
                 CalculationMonths = 1,
                 CalculationYears = 0,
-                DeliveryDays = 0,
-                DeliveryMonths = 1,
+                DeliveryDays = 1,
+                DeliveryMonths = 0,
                 DeliveryYears = 0,
-                StartDeliveryDate = System.DateTime.Now
+                StartDeliveryDate = System.DateTime.Now.AddDays(-1),
+            });
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodBankId = 1,
+                BloodQuantity = 2,
+                BloodType = BloodType.ON,
+                Reason = "For operation",
+                RequestState = RequestState.Accepted,
+                RequiredForDate = new System.DateTime(2022, 11, 15),
+                DoctorId = 1
+
+            });
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodBankId = 1,
+                BloodQuantity = 3,
+                BloodType = BloodType.OP,
+                Reason = "For operation",
+                RequestState = RequestState.Accepted,
+                RequiredForDate = new System.DateTime(2022, 11, 15),
+                DoctorId = 1
+
             });
 
             context.SaveChanges();

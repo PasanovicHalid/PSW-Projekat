@@ -22,5 +22,7 @@ namespace IntegrationAPI.DTO
         [Required]
         public BloodType BloodType { get; set; }
 
+        public int BloodBankId { get; set; }
+
     }
 }
