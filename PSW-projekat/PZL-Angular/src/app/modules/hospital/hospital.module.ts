@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
+import { AdmissionPatientTreatmentComponent } from './admission-patient-treatment/admission-patient-treatment.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'appointments/doctor/:id', component: AppointmentsComponent },
   { path: 'appointments/add', component: CreateAppointmentComponent },
-  { path: 'appointments/:id/update', component: UpdateAppointmentComponent }
+  { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
+  { path: 'treatments/add', component: AdmissionPatientTreatmentComponent }
 
 
 ];
@@ -39,7 +41,8 @@ const routes: Routes = [
     FeedbacksComponent,
     AppointmentsComponent,
     CreateAppointmentComponent,
-    UpdateAppointmentComponent
+    UpdateAppointmentComponent,
+    AdmissionPatientTreatmentComponent
   ],
   imports: [
     CommonModule,

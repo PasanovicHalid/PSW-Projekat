@@ -11,5 +11,8 @@ namespace HospitalLibrary.Core.Repository
     {
         public Patient RegisterPatient(Patient patient);
         public Person getPersonByPatientId(int id);
+        public IEnumerable<Doctor> GetAllDoctors();
+        public void AddAllergyToPatient(Patient patient, Allergy allergy);
+        public Patient getPatientByPersonId(int id);
     }
 }

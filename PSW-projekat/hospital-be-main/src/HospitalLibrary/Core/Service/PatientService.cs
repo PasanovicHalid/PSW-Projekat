@@ -10,11 +10,12 @@ namespace HospitalLibrary.Core.Service
 {
     public class PatientService : IPatientService
     {
-        private readonly PatientRepository _patientRepository;
+        private readonly IPatientRepository _patientRepository;
 
-        public PatientService(PatientRepository patientRepository)
+        public PatientService(IPatientRepository patientRepository)
         {
             _patientRepository = patientRepository;
+
         }
 
         public void Create(Patient entity)
@@ -42,6 +43,11 @@ namespace HospitalLibrary.Core.Service
             return _patientRepository.getPersonByPatientId(id);
         }
 
+        public Patient getPatientByPersonId(int id)
+        {
+            return _patientRepository.getPatientByPersonId(id);
+        }
+
         public Patient RegisterPatient(Patient patient)
         {
             return _patientRepository.RegisterPatient(patient);
@@ -50,6 +56,11 @@ namespace HospitalLibrary.Core.Service
         public void Update(Patient entity)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddAllergyToPatient(Patient patient, Allergy allergy)
+        {
+            _patientRepository.AddAllergyToPatient(patient, allergy);
         }
     }
 }

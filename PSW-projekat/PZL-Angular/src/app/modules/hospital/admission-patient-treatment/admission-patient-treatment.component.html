@@ -1,0 +1,34 @@
+
+<div class="container">
+    <div>
+        <p>Admission patient to hospital treatment</p>
+        <mat-form-field appearance="fill">
+            <mat-label>Patient</mat-label>
+            <mat-select [(ngModel)]="treatment.patient" >
+                <mat-option *ngFor="let patient of patients" [value]="patient">{{patient.person.name}} {{patient.person.surname}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label>Date admission</mat-label>
+            <input type="datetime-local" matInput [(ngModel)]="treatment.dateAdmission" name="dateAdmission">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Reason For Admission</mat-label>
+            <input type="text" matInput [(ngModel)]="treatment.reasonForAdmission" name="reasonForAdmission">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Therapy</mat-label>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Room</mat-label>
+        </mat-form-field><br>
+
+        <button mat-stroked-button (click)="createTreatment()">
+            Submit
+        </button>
+    </div>
+</div>

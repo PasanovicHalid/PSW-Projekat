@@ -1,0 +1,45 @@
+<div class="d-flex flex-column flex-wrap justify-content-center text-dark my-3 mx-3" style="min-width: 400px;">
+    <h1 class="text-center">Your profile in Zdravo hospital.</h1>
+    <p class="text-center">All your personal information in one place.</p>
+</div>
+<div class="d-flex flex-wrap justify-content-center text-white my-3">
+    <div class="d-flex flex-column bg-dark p-4 rounded-3 mx-3 mb-3" style="min-width: 400px;">
+        <h2 class="border-bottom border-white">Personal information</h2>
+        <p>Name: {{patientInfo.name}}</p>
+        <p>Surname: {{patientInfo.surname}}</p>
+        <div [ngSwitch]="patientInfo.gender">
+            <p *ngSwitchCase="0">Gender: Male</p>
+            <p *ngSwitchCase="1">Gender: Female</p>
+            <p *ngSwitchCase="2">Gender: Female</p>
+            <p *ngSwitchDefault>Failed to get gender.</p>
+        </div>
+        <p>Birthday: {{patientInfo.birthDate.split(' ')[0]}}</p>
+        <h3 class="border-bottom border-white">Address</h3>
+        <p>Street: {{patientInfo.street}} {{patientInfo.number}}</p>
+        <p>City: {{patientInfo.city}}</p>
+        <p>PostCode: {{patientInfo.postCode}}</p>
+    </div>
+    <div class="d-flex flex-column bg-dark p-4 rounded-3 mx-3 mb-3" style="min-width: 400px;">
+        <h2 class="border-bottom border-white">Account information</h2>
+        <p>Username: {{patientInfo.username}}</p>
+        <p>Email: {{patientInfo.email}}</p>
+        <p>Password: {{patientInfo.password}}</p>
+    </div>
+    <div class="d-flex flex-column bg-dark p-4 rounded-3 mx-3 mb-3" style="min-width: 400px;">
+        <h2 class="border-bottom border-white">Medical information</h2>
+        <p>Personal doctor: {{patientInfo.doctorName.fullName}}</p>
+        <div [ngSwitch]="patientInfo.bloodType">
+            <p *ngSwitchCase="0">Blood type: A+</p>
+            <p *ngSwitchCase="1">Blood type: B+</p>
+            <p *ngSwitchCase="2">Blood type: AB+</p>
+            <p *ngSwitchCase="3">Blood type: O+</p>
+            <p *ngSwitchCase="4">Blood type: A-</p>
+            <p *ngSwitchCase="5">Blood type: B-</p>
+            <p *ngSwitchCase="6">Blood type: AB-</p>
+            <p *ngSwitchCase="7">Blood type: O-</p>
+            <p *ngSwitchDefault>Failed to get blood type.</p>
+        </div>
+        <h3 class="border-bottom border-white">Allergies</h3>
+        <p *ngFor="let allergy of patientInfo.allergies">-{{allergy.name}}</p>
+    </div>
+</div>

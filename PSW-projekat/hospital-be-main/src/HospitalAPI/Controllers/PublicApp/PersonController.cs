@@ -1,13 +1,16 @@
-﻿using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
-    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -15,15 +18,14 @@ namespace HospitalAPI.Controllers.PublicApp
     {
 
         private readonly UserManager<SecUser> _userManager;
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
 
-        public PersonController(PersonService personService, UserManager<SecUser> userManager)
+        public PersonController(IPersonService personService, UserManager<SecUser> userManager)
         {
             _personService = personService;
             _userManager = userManager;
         }
 
-        //[Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -43,13 +45,14 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             return Ok(_personService.GetAllDoctors());
         }
-
-        [HttpGet("userInfo/")]
-        public ActionResult GetUserInfo()
+        [Authorize(Roles ="Manager")]
+        [HttpGet("userInfo/{id}")]
+        public ActionResult GetUserInfo(String id)
         {
-            var id = User.Claims.GetUserId();
+            //var id = User.Claims.GetUserId();
+            Person person = _personService.GetById(int.Parse(id));
 
-            return Ok(_personService.GetById(id));
+            return Ok(person);
         }
     }
 }

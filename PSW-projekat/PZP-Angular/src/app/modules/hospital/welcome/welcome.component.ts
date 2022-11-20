@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FeedbackDto } from '../model/feedbackDto.model';
 import { FeedbackService } from '../services/feedback.service'
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-welcome',
@@ -14,17 +15,24 @@ export class WelcomeComponent implements OnInit {
   public feedbacks: FeedbackDto[] = [];
   public feedbackCount = 0;
 
-  constructor(private feedbackService: FeedbackService, private router: Router) { }
+  constructor(private feedbackService: FeedbackService, private router: Router, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.feedbackCount = 1;
+
+    this.userService.getLoggedUser().subscribe(res => {
+      console.log(res.name)
+    })
+
+    /*this.feedbackCount = 1;
     this.feedbackService.getAllFeedbackPublicDtos().subscribe(res => {
       this.feedbacks = res;
       if (this.feedbackCount > this.feedbacks.length) {
         this.feedbackCount = this.feedbacks.length
       }
       this.dataSourceFeedbacks = this.feedbacks.slice(0, this.feedbackCount);
-    })
+    });*/
+
+
   }
 
   showMore() {

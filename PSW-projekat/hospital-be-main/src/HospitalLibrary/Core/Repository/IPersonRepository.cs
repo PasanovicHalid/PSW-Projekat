@@ -11,5 +11,7 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<Person> GetAllDoctors();
         IEnumerable<Person> GetAllPatients();
+        Person RegisterUser(Person person);
+        IEnumerable<Person> GetAllDoctorsForPatientRegistration(List<int> allDoctorsIds);
     }
 }

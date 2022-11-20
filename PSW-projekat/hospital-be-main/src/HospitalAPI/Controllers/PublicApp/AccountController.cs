@@ -8,8 +8,13 @@ using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers.PublicApp
@@ -19,22 +24,24 @@ namespace HospitalAPI.Controllers.PublicApp
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
         private readonly UserManager<SecUser> _userManager;
         private readonly SignInManager<SecUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly DoctorService _doctorService;
-        private readonly PatientService _patientService;
         private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
+        private readonly IDoctorService _doctorService;
+        private readonly IPatientService _patientService;
 
         public AccountController(
                 UserManager<SecUser> userManager,
                 SignInManager<SecUser> signInManager,
                 RoleManager<IdentityRole> roleManager,
-                PersonService personService,
-                DoctorService doctorService,
-                PatientService patientService,
-                IEmailService emailService)
+                IEmailService emailService,
+                IConfiguration configuration,
+                IPersonService personService,
+                IDoctorService doctorService,
+                IPatientService patientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -43,30 +50,72 @@ namespace HospitalAPI.Controllers.PublicApp
             _doctorService = doctorService;
             _patientService = patientService;
             _emailService = emailService;
+            _configuration = configuration;
         }
 
-        [HttpGet("Login")]
-        public async Task<ActionResult> LoginAsync(string username, string password)
+        [HttpPost("Login")]
+        public async Task<ActionResult> LoginAsync(LoginUserDto loginUserDto)
         {
             SecUser secUser = new SecUser();
-            secUser = await _userManager.FindByNameAsync(username);
+            secUser = await _userManager.FindByNameAsync(loginUserDto.Username);
             if (secUser == null)
             {
-                return BadRequest("Bad credentials");
+                return BadRequest("Username or password is incorrect.");
             }
 
             var statement = await _userManager.IsEmailConfirmedAsync(secUser);
             if (statement == true)
             {
-                var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
+                var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, true, false);
                 if (result.Succeeded)
                 {
-                    //User.IsInRole("Manager");
-                    return Ok();
+                    var user = await _userManager.FindByNameAsync(loginUserDto.Username);
+                    if (user != null && await _userManager.CheckPasswordAsync(user, loginUserDto.Password))
+                    {
+                        //var id = user.Claims.GetUserId();
+                        var claims = await _userManager.GetClaimsAsync(user);
+                        var userRoles = await _userManager.GetRolesAsync(user);
+
+                        var authClaims = new List<Claim>
+                    {
+                        new Claim("Id", claims[0].Value),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+
+                    };
+
+                        foreach (var userRole in userRoles)
+                        {
+                            authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                            authClaims.Add(new Claim("Role", userRole));
+                        }
+
+                        var token = GetToken(authClaims);
+
+                        return Ok(new
+                        {
+                            token = new JwtSecurityTokenHandler().WriteToken(token),
+                            expiration = token.ValidTo
+                        });
+                    }
                 }
-                return BadRequest("Bad credentials");
+                return BadRequest("Username or password is incorrect.");
             }
             return BadRequest("Email not confirmed");
+        }
+
+        private JwtSecurityToken GetToken(List<Claim> authClaims)
+        {
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddDays(30),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return token;
         }
 
         [HttpGet("Logout")]
@@ -76,13 +125,12 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
-
         [HttpGet("GetAllergiesAndDoctors")]
         public ActionResult GetAllergiesAndDoctors()
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
-
+        
 
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
@@ -173,6 +221,11 @@ namespace HospitalAPI.Controllers.PublicApp
             };
 
             patient = _patientService.RegisterPatient(patient);
+
+            foreach(var allergy in regUser.Allergies)
+            {
+                _patientService.AddAllergyToPatient(patient, allergy);
+            }
 
             SecUser secUser = new SecUser()
             {
