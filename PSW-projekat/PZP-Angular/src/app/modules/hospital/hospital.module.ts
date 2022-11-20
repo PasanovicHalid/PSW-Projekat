@@ -12,6 +12,7 @@ import { CreateFeedbackComponent } from './create-feedback/create-feedback.compo
 import { WelcomeComponent } from "./welcome/welcome.component";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { PatientInfoComponent } from './patient-info/patient-info.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'feedbacks/add', component: CreateFeedbackComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'patientInfo', component: PatientInfoComponent }
 ];
 
 @NgModule({
@@ -34,7 +36,8 @@ const routes: Routes = [
     CreateFeedbackComponent,
     WelcomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PatientInfoComponent
   ],
   imports: [
     CommonModule,

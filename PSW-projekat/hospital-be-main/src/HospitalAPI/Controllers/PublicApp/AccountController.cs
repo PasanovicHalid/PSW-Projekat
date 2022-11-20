@@ -109,7 +109,6 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpGet("GetAllergiesAndDoctors")]
-
         public ActionResult GetAllergiesAndDoctors()
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());
@@ -205,6 +204,11 @@ namespace HospitalAPI.Controllers.PublicApp
             };
 
             patient = _patientService.RegisterPatient(patient);
+
+            foreach(var allergy in regUser.Allergies)
+            {
+                _patientService.AddAllergyToPatient(patient, allergy);
+            }
 
             SecUser secUser = new SecUser()
             {

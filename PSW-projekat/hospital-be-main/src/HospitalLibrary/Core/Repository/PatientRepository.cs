@@ -63,5 +63,21 @@ namespace HospitalLibrary.Core.Repository
             var person = _context.Persons.FirstOrDefault(d => d.Id == patient.Person.Id);
             return person;
         }
+
+        public void AddAllergyToPatient(Patient patient, Allergy allergy)
+        {
+            PatientAllergies patientAllergies = new PatientAllergies()
+            {
+                Patient = patient,
+                Allergy = allergy
+            };
+            _context.PatientAllergies.Add(patientAllergies);
+        }
+
+        public Patient getPatientByPersonId(int id)
+        {
+            var patient = _context.Patients.FirstOrDefault(d => d.Person.Id == id);
+            return patient;
+        }
     }
 }
