@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Core.Service
     public class BloodReportHostedService : IHostedService
     {
         private readonly IServiceScopeFactory scopeFactory;
-        private readonly int ReportIntervalInSecs = 90;
+        private readonly int ReportIntervalInHours = 24;       //svaki dan
         private Timer timer;
 
         public BloodReportHostedService(IServiceScopeFactory scopeFactory)
@@ -31,7 +31,7 @@ namespace IntegrationLibrary.Core.Service
             // Invoke the DoWork method every 5 seconds. 
             timer = new Timer(callback: async o => await DoWork(o),
             state: null, dueTime: TimeSpan.FromSeconds(0),
-            period: TimeSpan.FromSeconds(ReportIntervalInSecs));
+            period: TimeSpan.FromSeconds(ReportIntervalInHours));
             return Task.CompletedTask;
         }
 
