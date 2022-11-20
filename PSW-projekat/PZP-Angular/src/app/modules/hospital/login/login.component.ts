@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('currentUserId', tokenInfo.Id);
 
       if(localStorage.getItem('currentUserRole') == 'Patient')
-        this.router.navigate(['/home']);
+        this.router.navigate(['/homePatient']);
     },
     (err) => {
       if(err.error == "Username or password is incorrect.")
