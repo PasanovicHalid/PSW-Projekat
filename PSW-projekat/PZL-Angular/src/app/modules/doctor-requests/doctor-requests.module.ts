@@ -17,17 +17,20 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/app/material/material.module';
+import { ReturnedRequestsForDoctorComponent } from './returned-requests-for-doctor/returned-requests-for-doctor.component';
 
 const routes: Routes = [
   {path: 'doctor-blood-requests', component: AllDoctorBloodRequestsComponent },
-  {path: 'doctor-blood-request/:id', component: DoctorBloodRequestComponent }
+  {path: 'doctor-blood-request/:id', component: DoctorBloodRequestComponent },
+  {path: 'doctor-blood-request/:id', component: ReturnedRequestsForDoctorComponent }
 ];
 
 
 @NgModule({
   declarations: [
     AllDoctorBloodRequestsComponent,
-    DoctorBloodRequestComponent
+    DoctorBloodRequestComponent,
+    ReturnedRequestsForDoctorComponent
   ],
   imports: [
     CommonModule,

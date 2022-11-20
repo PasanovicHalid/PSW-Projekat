@@ -156,5 +156,18 @@ namespace IntegrationAPI.Controllers
                 return BadRequest();
             }
         }
+        [HttpGet("doctor/{id}")]
+        public ActionResult GetReturnedRequestsForDoctor(int id)
+        {
+            try
+            {
+                _bloodRequestService.DeclineRequest(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
     }
 }
