@@ -18,20 +18,20 @@ namespace HospitalAPI.Controllers.PublicApp
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
         private readonly UserManager<SecUser> _userManager;
         private readonly SignInManager<SecUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly DoctorService _doctorService;
-        private readonly PatientService _patientService;
+        private readonly IDoctorService _doctorService;
+        private readonly IPatientService _patientService;
 
         public AccountController( 
                 UserManager<SecUser> userManager, 
                 SignInManager<SecUser> signInManager,
                 RoleManager<IdentityRole> roleManager,
-                PersonService personService,
-                DoctorService doctorService,
-                PatientService patientService)
+                IPersonService personService,
+                IDoctorService doctorService,
+                IPatientService patientService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -60,13 +60,13 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+        [HttpGet("GetAllergiesAndDoctors")]
 
-        [HttpGet("/getAllergiesAndDoctors")]
         public ActionResult GetAllergiesAndDoctors()
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
-
+        
 
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
@@ -116,8 +116,12 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpPost("RegisterPatient")]
         public async Task<IActionResult> RegisterPatient(RegisterPatientDto regUser)
         {
-            bool patientRoleExists = await _roleManager.RoleExistsAsync("Patient");
-            if (!patientRoleExists)
+            if (await _userManager.FindByNameAsync(regUser.Username) != null)
+            {
+                return BadRequest("Username is taken.");
+            }
+
+            if (!(await _roleManager.RoleExistsAsync("Patient")))
             {
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
@@ -141,6 +145,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     Township = regUser.Township,
                 }
             };
+
             user = _personService.RegisterPerson(user);
             Doctor doctor = _doctorService.GetById(regUser.DoctorName.Id);
 

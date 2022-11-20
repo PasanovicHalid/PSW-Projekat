@@ -9,13 +9,14 @@ namespace HospitalLibrary.Core.Service
 {
     public class DoctorService : IDoctorService
     {
-        private readonly DoctorRepository _doctorRepository;
-        private readonly PersonRepository _personRepository;
+
+        private readonly IDoctorRepository _idoctorRepository;
+        private readonly IPersonRepository _personRepository;
         private readonly AllergyRepository _allergyRepository;
 
-        public DoctorService(DoctorRepository doctorRepository, PersonRepository personRepository, AllergyRepository allergyRepository)
+        public DoctorService(IDoctorRepository doctorRepository, IPersonRepository personRepository, AllergyRepository allergyRepository)
         {
-            _doctorRepository = doctorRepository;
+            _idoctorRepository = doctorRepository;
             _personRepository = personRepository;
             _allergyRepository = allergyRepository;
         }
@@ -32,12 +33,12 @@ namespace HospitalLibrary.Core.Service
 
         public IEnumerable<Doctor> GetAll()
         {
-            return _doctorRepository.GetAll();
+            return _idoctorRepository.GetAll();
         }
 
         public Doctor GetById(int id)
         {
-            return _doctorRepository.GetById(id);
+            return _idoctorRepository.GetById(id);
         }
 
         public void Update(Doctor entity)
@@ -45,35 +46,38 @@ namespace HospitalLibrary.Core.Service
             throw new NotImplementedException();
         }
 
+
         public AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors()
         {
-            IEnumerable<Person> allDoctors = _personRepository.GetAllDoctors();
-            //IEnumerable<Patient> allPatients = _personRepository.GetAllPatients();
-            IEnumerable<Allergy> allAllergies = _allergyRepository.GetAll();
             AllergiesAndDoctorsForPatientRegistrationDto allergiesAndDoctors = new AllergiesAndDoctorsForPatientRegistrationDto();
+            allergiesAndDoctors.Allergies = _allergyRepository.GetAll().ToList();
+            allergiesAndDoctors.Doctors = new List<DoctorForPatientRegistrationDto>();
 
-            foreach (var doctor in allDoctors)
-            {
+            List<int> allDoctorsIds = _idoctorRepository.GetAllDoctorsForPatientRegistration();
+            List<Person> allDoctorsPersonalInforamtion = _personRepository.GetAllDoctorsForPatientRegistration(allDoctorsIds).ToList();
+
+            foreach (var doctorPersonalInformation in allDoctorsPersonalInforamtion)
+            { 
                 DoctorForPatientRegistrationDto dto = new DoctorForPatientRegistrationDto()
                 {
-                    Id = doctor.Id,
-                    FullName = doctor.Name + " " + doctor.Surname
+                    Id = doctorPersonalInformation.Id,
+                    FullName = doctorPersonalInformation.Name + " " + doctorPersonalInformation.Surname
                 };
                 allergiesAndDoctors.Doctors.Add(dto);
             }
-            allergiesAndDoctors.Allergies = allAllergies.ToList();
-
             return allergiesAndDoctors;
         }
+        
 
         public Person getPersonByDoctorId(int id)
         {
-            return _doctorRepository.getPersonByDoctorId(id);
+            return _idoctorRepository.getPersonByDoctorId(id);
         }
 
         public Doctor RegisterDoctor(Doctor doctor)
         {
-            return _doctorRepository.RegisterDoctor(doctor);
+            return _idoctorRepository.RegisterDoctor(doctor);
         }
+        
     }
 }
