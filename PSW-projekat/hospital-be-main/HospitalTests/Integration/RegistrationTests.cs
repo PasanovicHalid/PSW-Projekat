@@ -22,7 +22,7 @@ namespace HospitalTests.Integration
         public RegistrationTests(TestDatabaseFactory<Startup> factory) : base(factory)
         { }
 
-        private static AccountController SetupSettingsController(IServiceScope scope)
+        /*private static AccountController SetupSettingsController(IServiceScope scope)
         {
             return new AccountController(scope.ServiceProvider.GetRequiredService<UserManager<SecUser>>(), scope.ServiceProvider.GetRequiredService<SignInManager<SecUser>>(),
                                          scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<IPersonService>(),
@@ -137,6 +137,6 @@ namespace HospitalTests.Integration
 
             //Assert
             Assert.NotNull(result);
-        }
+        }*/
     }
 }
