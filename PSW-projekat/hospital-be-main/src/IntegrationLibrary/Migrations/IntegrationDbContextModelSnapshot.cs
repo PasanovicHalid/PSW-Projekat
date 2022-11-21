@@ -92,6 +92,42 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("BloodRequests");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("_bloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("_dateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("_status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Newses");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.ReportSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -123,6 +159,22 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ReportSettings");
+<<<<<<< HEAD
+=======
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CalculationDays = 0,
+                            CalculationMonths = 1,
+                            CalculationYears = 0,
+                            DeliveryDays = 0,
+                            DeliveryMonths = 1,
+                            DeliveryYears = 0,
+                            StartDeliveryDate = new DateTime(2022, 11, 21, 0, 0, 0, 0, DateTimeKind.Local)
+                        });
+>>>>>>> origin/feature-T9-accept_news
                 });
 #pragma warning restore 612, 618
         }
