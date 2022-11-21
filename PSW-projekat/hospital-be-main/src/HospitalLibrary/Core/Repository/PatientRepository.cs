@@ -76,7 +76,6 @@ namespace HospitalLibrary.Core.Repository
                 };
                 _context.PatientAllergies.Add(patientAllergies);
             }
-            _context.SaveChanges();
         }
 
         public Patient getPatientByPersonId(int id)
