@@ -14,7 +14,7 @@ import { HospitalModule } from "./modules/hospital/hospital.module";
 import { BloodBanksModule } from './modules/blood-banks/blood-banks.module';
 import { PagesModule } from "./modules/pages/pages.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.module';
 
@@ -40,8 +40,9 @@ import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.
     DoctorRequestsModule,
     CommonModule,
     ToastrModule.forRoot(),
+    DatePipe
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

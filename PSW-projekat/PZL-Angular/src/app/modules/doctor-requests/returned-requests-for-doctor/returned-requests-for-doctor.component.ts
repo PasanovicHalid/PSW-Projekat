@@ -24,9 +24,8 @@ export class ReturnedRequestsForDoctorComponent implements OnInit {
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
-      console.log(params) //log the entire params object
-      console.log(params['id']) //log the value of id
       this.getDoctorsRequests(params['id']);
+      localStorage.setItem("doctorID",params['id'] );
     });
     
   }
@@ -39,7 +38,7 @@ export class ReturnedRequestsForDoctorComponent implements OnInit {
       });
   }
   public chooseBloodRequest(id:number){
-    this.router.navigate(['doctor-blood-request', id]);
+    this.router.navigate(['/update-request', id]);
   }
 
   getBloodByValue(value: number) {

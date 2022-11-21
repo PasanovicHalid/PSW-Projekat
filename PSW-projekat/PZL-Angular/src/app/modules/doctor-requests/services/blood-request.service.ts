@@ -47,7 +47,10 @@ export class BloodRequestService {
   getReturnedRequestsForDoctor(id : number) : Observable<any> {
     return this.http.get<any>(this.integrationApiHost + 'api/BloodRequest/doctor/' + id, {headers: this.headers}).pipe(catchError(this.handleError));
   }
-  
+  updateRequestFromDoctor(request : DoctorBloodRequest) : Observable<any> {
+    console.log(request)
+    return this.http.put<any>(this.integrationApiHost + 'api/BloodRequest/update-from-doctor', JSON.stringify(request), {headers: this.headers}).pipe(catchError(this.handleError));
+  }
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.status +'\n'+ error.error))
   }

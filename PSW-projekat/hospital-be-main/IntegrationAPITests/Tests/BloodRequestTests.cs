@@ -85,5 +85,17 @@ namespace IntegrationAPITests.Tests
             var result = (OkObjectResult)controller.GetReturnedRequestsForDoctor(3);
             Assert.IsType<OkObjectResult>(result);
         }
+
+        [Fact]
+        public void Update_requests_from_doctor()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            BloodRequestDTO r = new BloodRequestDTO(5, new DateTime(2022,12,12), 3, "i need it", 3, RequestState.Returned, BloodType.ABP, "asddaswreqwreqwr");
+
+            var result = (OkResult)controller.UpdateFromDoctor(r);
+            Assert.IsType<OkResult>(result);
+        }
     }
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AllDoctorBloodRequestsComponent } from './all-doctor-blood-requests/all-doctor-blood-requests.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -18,11 +18,13 @@ import { MatRadioModule } from '@angular/material/radio';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/app/material/material.module';
 import { ReturnedRequestsForDoctorComponent } from './returned-requests-for-doctor/returned-requests-for-doctor.component';
+import { UpdateRequestForDoctorComponent } from './update-request-for-doctor/update-request-for-doctor.component';
 
 const routes: Routes = [
   {path: 'doctor-blood-requests', component: AllDoctorBloodRequestsComponent },
   {path: 'doctor-blood-request/:id', component: DoctorBloodRequestComponent },
-  {path: 'returned-request/:id', component: ReturnedRequestsForDoctorComponent }
+  {path: 'returned-requests/:id', component: ReturnedRequestsForDoctorComponent },
+  {path: 'update-request/:id', component: UpdateRequestForDoctorComponent }
 ];
 
 
@@ -30,7 +32,8 @@ const routes: Routes = [
   declarations: [
     AllDoctorBloodRequestsComponent,
     DoctorBloodRequestComponent,
-    ReturnedRequestsForDoctorComponent
+    ReturnedRequestsForDoctorComponent,
+    UpdateRequestForDoctorComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ToastrModule.forRoot()
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 
   exports: [ RouterModule ]
 })

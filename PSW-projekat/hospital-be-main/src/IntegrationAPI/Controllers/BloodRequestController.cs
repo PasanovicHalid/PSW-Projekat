@@ -168,5 +168,23 @@ namespace IntegrationAPI.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPut("update-from-doctor")]
+        public ActionResult UpdateFromDoctor(BloodRequestDTO entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _bloodRequestService.UpdateFromDoctor(BloodRequestAdapter.FromDTO(entity));
+            }
+            catch
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         void DeclineRequest(int id);
         void SendBackRequest(int id, string reason);
         List<BloodRequest> GetReturnedRequestsForDoctor(int id);
+        void UpdateFromDoctor(BloodRequest request);
     }
 }

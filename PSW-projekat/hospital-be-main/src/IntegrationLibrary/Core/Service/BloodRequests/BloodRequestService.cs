@@ -79,5 +79,11 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             }
             return returnedRequests;
         }
+
+        public void UpdateFromDoctor(BloodRequest request)
+        {
+            request.RequestState = RequestState.Pending;
+            _bloodRequestRepository.Update(request);
+        }
     }
 }
