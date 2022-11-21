@@ -16,6 +16,7 @@ import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
 import { AdmissionPatientTreatmentComponent } from './admission-patient-treatment/admission-patient-treatment.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -27,7 +28,9 @@ const routes: Routes = [
   { path: 'appointments/doctor/:id', component: AppointmentsComponent },
   { path: 'appointments/add', component: CreateAppointmentComponent },
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
-  { path: 'treatments/add', component: AdmissionPatientTreatmentComponent }
+  { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
+  { path: 'login', component: LoginComponent }
+
 
 
 ];
@@ -42,7 +45,8 @@ const routes: Routes = [
     AppointmentsComponent,
     CreateAppointmentComponent,
     UpdateAppointmentComponent,
-    AdmissionPatientTreatmentComponent
+    AdmissionPatientTreatmentComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

@@ -64,20 +64,31 @@ namespace HospitalLibrary.Core.Repository
             return person;
         }
 
-        public void AddAllergyToPatient(Patient patient, Allergy allergy)
+        public void AddAllergyToPatient(Patient patient, List<Allergy> allergies)
         {
-            PatientAllergies patientAllergies = new PatientAllergies()
+            foreach (var allergy in allergies)
             {
-                Patient = patient,
-                Allergy = allergy
-            };
-            _context.PatientAllergies.Add(patientAllergies);
+                PatientAllergies patientAllergies = new PatientAllergies()
+                {
+                    Patient = patient,
+                    Allergy = allergy,
+                    Deleted = false
+                };
+                _context.PatientAllergies.Add(patientAllergies);
+            }
+            _context.SaveChanges();
         }
 
         public Patient getPatientByPersonId(int id)
         {
             var patient = _context.Patients.FirstOrDefault(d => d.Person.Id == id);
             return patient;
+        }
+
+        public IEnumerable<Allergy> GetAllAllergiesForPatient(int id)
+        {
+            var patientAllergies = _context.PatientAllergies.Where(p => p.Patient.Id == id).Select(a => a.Allergy);
+            return patientAllergies;
         }
     }
 }
