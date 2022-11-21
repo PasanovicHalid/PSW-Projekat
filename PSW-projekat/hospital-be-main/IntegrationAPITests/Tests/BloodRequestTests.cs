@@ -39,6 +39,7 @@ namespace IntegrationAPITests.Tests
                 DoctorId = 1,
                 RequestState =0,
                 BloodType = 0,
+                BloodBankId = 0
             };
 
             var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as BloodRequest;
@@ -92,7 +93,7 @@ namespace IntegrationAPITests.Tests
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
 
-            BloodRequestDTO r = new BloodRequestDTO(5, new DateTime(2022,12,12), 3, "i need it", 3, RequestState.Returned, BloodType.ABP, "asddaswreqwreqwr");
+            BloodRequestDTO r = new BloodRequestDTO(5, new DateTime(2022,12,12), 3, "i need it", 3, RequestState.Returned, BloodType.ABP, "asddaswreqwreqwr", 0);
 
             var result = (OkResult)controller.UpdateFromDoctor(r);
             Assert.IsType<OkResult>(result);

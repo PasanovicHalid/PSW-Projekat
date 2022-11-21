@@ -8,10 +8,10 @@ namespace IntegrationLibrary.Core.Model
 {
     public class News : BaseModel
     {
-        public string _name { get; set; }
-        public DateTime _dateTime { get; set; }
-        public int _bloodBankId { get; set; }
-        public NewsStatus _status { get; set; }
+        private string _name;
+        private DateTime _dateTime;
+        private int _bloodBankId;
+        private NewsStatus _status;
 
         public News()
         {

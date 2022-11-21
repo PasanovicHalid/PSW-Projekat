@@ -80,10 +80,9 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"News\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Newses\";");
             context.Newses.Add(new News
             {
-                Id = 1,
                 Name = "Blood donation",
                 DateTime = new DateTime(2022, 01, 01, 9, 15, 0)
             }); ;
