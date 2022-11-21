@@ -35,7 +35,7 @@ namespace IntegrationAPITests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=IntegrationTestDb;";
+            return "Server=.;Database=IntegrationTestDb;TrustServerCertificate=False;Trusted_Connection=True";
         }
 
         private static void InitializeDatabase(IntegrationDbContext context)
@@ -43,8 +43,9 @@ namespace IntegrationAPITests.Setup
             context.Database.EnsureCreated();
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
             context.BloodBanks.Add(new BloodBank {
-                Id = 1,
                 Name = "asdsadsda",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
@@ -53,7 +54,6 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
             context.BloodBanks.Add(new BloodBank {
-                Id = 2,
                 Name = "aa",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
@@ -62,7 +62,6 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
             context.BloodBanks.Add(new BloodBank {
-                Id = 3,
                 Name = "bb",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
@@ -71,7 +70,6 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
             context.BloodBanks.Add(new BloodBank {
-                Id = 4,
                 Name = "rr",
                 Email = "asdasd@gmail.com",
                 Password = "asdsadsdadas",
@@ -87,6 +85,38 @@ namespace IntegrationAPITests.Setup
                 Name = "Blood donation",
                 DateTime = new DateTime(2022, 01, 01, 9, 15, 0)
             }); ;
+            context.ReportSettings.Add(new ReportSettings
+            {
+                CalculationDays = 0,
+                CalculationMonths = 1,
+                CalculationYears = 0,
+                DeliveryDays = 1,
+                DeliveryMonths = 0,
+                DeliveryYears = 0,
+                StartDeliveryDate = System.DateTime.Now.AddDays(-1),
+            });
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodBankId = 1,
+                BloodQuantity = 2,
+                BloodType = BloodType.ON,
+                Reason = "For operation",
+                RequestState = RequestState.Accepted,
+                RequiredForDate = new System.DateTime(2022, 11, 15),
+                DoctorId = 1
+
+            });
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodBankId = 1,
+                BloodQuantity = 3,
+                BloodType = BloodType.OP,
+                Reason = "For operation",
+                RequestState = RequestState.Accepted,
+                RequiredForDate = new System.DateTime(2022, 11, 15),
+                DoctorId = 1
+
+            });
 
             context.SaveChanges();
         }

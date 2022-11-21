@@ -15,7 +15,8 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         private static int quantity;
         private static String bankEmail;
         private static Boolean bankResponse;
-        private static String bankAPI; 
+        private static String bankAPI;
+        private static byte[] pdfFile;
 
         public bool SendBloodRequest(BloodBank bank, string bType, int quant)
         {
@@ -44,6 +45,38 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             bankResponse = Boolean.Parse(hasBlood);
             return bankResponse;            
             
+        }
+
+        public async Task<bool> SendBloodReports(BloodBank bank, byte[] pdf)
+        {
+            client = new()
+            {
+                BaseAddress = new Uri(bank.ServerAddress)
+            };
+            pdfFile = pdf;
+            bankEmail = bank.Email;
+            bankAPI = bank.ApiKey;
+
+            PostAsync(client).Wait();
+
+            return bankResponse;
+        }
+
+        static async Task<bool> PostAsync(HttpClient httpClient)
+        {
+            string isSuccessful = "false";
+            Console.WriteLine("here");
+            client.Timeout = TimeSpan.FromSeconds(120);
+            ByteArrayContent byteContent = new ByteArrayContent(pdfFile);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bankAPI);
+            using HttpResponseMessage response = await httpClient.PostAsync("api/bloodbank/" + bankEmail, byteContent);
+
+            response.EnsureSuccessStatusCode();
+
+            isSuccessful = await response.Content.ReadAsStringAsync();
+            bankResponse = Boolean.Parse(isSuccessful);
+            return bankResponse;
+
         }
     }
 }

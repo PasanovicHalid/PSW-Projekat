@@ -8,8 +8,8 @@ namespace HospitalLibrary.Core.Model
 {
     public class Appointment: BaseModel
     {
-        public virtual User Patient { get; set; }
-        public virtual User Doctor { get; set; }
+        public virtual Patient Patient { get; set; }
+        public virtual Doctor Doctor { get; set; }
         public DateTime DateTime { get; set; }
       }
 }

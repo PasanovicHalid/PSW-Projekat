@@ -7,7 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MaterialModule } from 'src/app/material/material.module';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectModule} from '@angular/material/select';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core'; 
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,6 +35,7 @@ const routes: Routes = [
   { path: 'report-settings', component: ReportSettingsComponent },
 ];
 
+
 @NgModule({
   declarations: [
     BloodBankChangePasswordComponent,
@@ -49,6 +53,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     HttpClientModule,
     FormsModule,
     MaterialModule,
@@ -56,7 +62,12 @@ const routes: Routes = [
     CommonModule,
     ToastrModule.forRoot(),
   ],
-
-  exports: [RouterModule],
+  providers: [  
+    MatDatepickerModule,  
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  ],
+  
+  
+  exports: [ RouterModule ]
 })
 export class BloodBanksModule {}

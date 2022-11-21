@@ -1,14 +1,20 @@
+using System.Text.Json.Serialization;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace HospitalAPI
 {
@@ -27,8 +33,48 @@ namespace HospitalAPI
             services.AddCors();
             services.AddDbContext<HospitalDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
-            
+
+            services.AddDbContext<AuthenticationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("HospitalDb")));
+
+            services.AddIdentity<SecUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
+                options.SignIn.RequireConfirmedEmail = true;
+                options.Password.RequiredLength = 3;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
+                .AddEntityFrameworkStores<AuthenticationDbContext>()
+                .AddRoles<IdentityRole>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
+
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
@@ -42,18 +88,33 @@ namespace HospitalAPI
 
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddScoped<AllergyRepository>();
+
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IDoctorService,DoctorService>();
+
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
 
             services.AddScoped<IWorkingDayRepository, WorkingDayRepository>();
+
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<ITreatmentService, TreatmentService>();
+            services.AddScoped<ITreatmentRepository, TreatmentRepository>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HospitalDbContext hospitalDbContext)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HospitalDbContext hospitalDbContext, AuthenticationDbContext authenticationDbContext)
         {
+            //authenticationDbContext.Database.EnsureCreated();
             hospitalDbContext.Database.EnsureCreated();
+
             app.UseHttpsRedirection();
 
             if (env.IsDevelopment())
@@ -73,6 +134,7 @@ namespace HospitalAPI
                     .AllowAnyHeader();
             });
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

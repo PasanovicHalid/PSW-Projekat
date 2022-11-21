@@ -1,6 +1,5 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "src/app/material/material.module";
 import { CreateRoomComponent } from "./create-room/create-room.component";
@@ -15,6 +14,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
+import { AdmissionPatientTreatmentComponent } from './admission-patient-treatment/admission-patient-treatment.component';
+import { LoginComponent } from "./login/login.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -25,9 +27,10 @@ const routes: Routes = [
   { path: 'appointments', component: AppointmentsComponent },
   { path: 'appointments/doctor/:id', component: AppointmentsComponent },
   { path: 'appointments/add', component: CreateAppointmentComponent },
-  { path: 'appointments/:id/update', component: UpdateAppointmentComponent }
-
-
+  { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
+  { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
+  { path: 'login', component: LoginComponent }
+  
 ];
 
 @NgModule({
@@ -39,7 +42,9 @@ const routes: Routes = [
     FeedbacksComponent,
     AppointmentsComponent,
     CreateAppointmentComponent,
-    UpdateAppointmentComponent
+    UpdateAppointmentComponent,
+    AdmissionPatientTreatmentComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +56,6 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule
-
   ],
   exports: [ RouterModule ]
 })
