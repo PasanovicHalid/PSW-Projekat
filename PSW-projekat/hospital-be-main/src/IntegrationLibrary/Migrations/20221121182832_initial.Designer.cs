@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221116142827_version_0.5")]
-    partial class version_05
+    [Migration("20221121182832_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -76,6 +76,9 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BloodQuantity")
                         .HasColumnType("int");
 
@@ -122,21 +125,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("_bloodBankId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("_dateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("_status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("_text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("_title")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Newses");
@@ -146,15 +134,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 2,
                             BloodBankId = 1,
-                            DateTime = new DateTime(2022, 11, 16, 0, 0, 0, 0, DateTimeKind.Local),
+                            DateTime = new DateTime(2022, 11, 21, 0, 0, 0, 0, DateTimeKind.Local),
                             Status = 0,
                             Text = "Come and give me blood!",
-                            Title = "First blood of the year!",
-                            _bloodBankId = 1,
-                            _dateTime = new DateTime(2022, 11, 16, 0, 0, 0, 0, DateTimeKind.Local),
-                            _status = 0,
-                            _text = "Come and give me blood!",
-                            _title = "First blood of the year!"
+                            Title = "First blood of the year!"
                         });
                 });
 
@@ -200,7 +183,7 @@ namespace IntegrationLibrary.Migrations
                             DeliveryDays = 0,
                             DeliveryMonths = 1,
                             DeliveryYears = 0,
-                            StartDeliveryDate = new DateTime(2022, 11, 16, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDeliveryDate = new DateTime(2022, 11, 21, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 #pragma warning restore 612, 618

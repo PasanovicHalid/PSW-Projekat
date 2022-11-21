@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using IntegrationLibrary.Core.Service.Newses;
-
 using IntegrationLibrary.Core.Repository.Newses;
 
 namespace IntegrationAPI
