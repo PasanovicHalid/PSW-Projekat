@@ -77,7 +77,7 @@ namespace IntegrationAPI.Controllers
             }
         }
 
-        [HttpGet("testSend")]
+        [HttpGet("test")]
         public ActionResult SendToMQ()
         {
             try

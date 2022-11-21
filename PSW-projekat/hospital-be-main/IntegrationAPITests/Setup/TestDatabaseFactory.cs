@@ -80,12 +80,6 @@ namespace IntegrationAPITests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Newses\";");
-            context.Newses.Add(new News
-            {
-                Name = "Blood donation",
-                DateTime = new DateTime(2022, 01, 01, 9, 15, 0)
-            }); ;
             context.ReportSettings.Add(new ReportSettings
             {
                 CalculationDays = 0,
@@ -173,6 +167,15 @@ namespace IntegrationAPITests.Setup
                 RequiredForDate = System.DateTime.MaxValue,
                 Comment = ""
             });
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Newses\";");
+            context.Newses.Add(new News
+            {
+                Status = NewsStatus.PENDING,
+                Title = "Blood donation",
+                Text = " Come and give me blood",
+                DateTime = new DateTime(2022, 01, 01, 9, 15, 0),
+                BloodBankId = 1,
+            }); 
 
             context.SaveChanges();
         }

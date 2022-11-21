@@ -8,8 +8,8 @@ namespace IntegrationLibrary.Core.Model
 {
     public enum NewsStatus
     {
-        Approved,
-        Denied,
-        Pending
+        PENDING,
+        ACTIVATED,
+        DECLINED
     }
 }

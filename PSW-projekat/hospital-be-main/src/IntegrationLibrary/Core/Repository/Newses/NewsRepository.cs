@@ -34,7 +34,9 @@ namespace IntegrationLibrary.Core.Repository.Newses
 
         public IEnumerable<News> GetAll()
         {
-            return _context.Newses.ToList();
+            return (from newses in _context.Newses
+                    where newses.Status != NewsStatus.DECLINED
+                    select newses).ToList();
         }
 
         public News GetById(int id)
@@ -53,6 +55,13 @@ namespace IntegrationLibrary.Core.Repository.Newses
             {
                 throw;
             }
+        }
+
+        public IEnumerable<News> GetAllPending()
+        { 
+            return (from newses in _context.Newses
+                    where newses.Status == NewsStatus.PENDING
+                    select newses).ToList();   
         }
     }
 }

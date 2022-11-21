@@ -17,5 +17,5 @@ SET IDENTITY_INSERT [dbo].[BloodBanks] OFF
 
 GO
 SET IDENTITY_INSERT [dbo].[Newses] ON 
-INSERT [dbo].[Newses] ([Id], [Name], [DateTime], [BloodBankId], [Status]) VALUES (1, 'sadfasddas', '2022-11-16 11:30:00', 1, 0)
+INSERT [dbo].[Newses] ([Id], [Title], [Text], [Status], [DateTime], [BloodBankId]) VALUES (1, 'sadfasddas', 'sadsdasdasdasda', 0, '2022-11-16 11:30:00', 1)
 SET IDENTITY_INSERT [dbo].[Newses] OFF

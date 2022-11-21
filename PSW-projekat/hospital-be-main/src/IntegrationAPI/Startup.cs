@@ -17,6 +17,8 @@ using IntegrationLibrary.Core.Service.BloodRequests;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using IntegrationLibrary.Core.Service.Newses;
+using IntegrationLibrary.Core.Repository.Newses;
 
 namespace IntegrationAPI
 {
@@ -75,6 +77,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IReportSendingService, ReportSendingService>();
+            services.AddScoped<INewsRepository, NewsRepository>();
+            services.AddScoped<INewsService, NewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -20,19 +20,15 @@ import { BloodBankRegistrationComponent } from './blood-bank-registration/blood-
 import { BloodBanksComponent } from './blood-banks/blood-banks.component';
 import { BloodRequestsComponent } from './blood-requests/blood-requests.component';
 import { ReportSettingsComponent } from './report-settings/report-settings.component';
+import { NewsComponent } from './news/news.component';
 
 const routes: Routes = [
-  {
-    path: 'blood-bank-registration',
-    component: BloodBankRegistrationComponent,
-  },
-  { path: 'blood-banks', component: BloodBanksComponent },
-  {
-    path: 'blood-bank-change-password',
-    component: BloodBankChangePasswordComponent,
-  },
-  { path: 'blood-requests', component: BloodRequestsComponent },
-  { path: 'report-settings', component: ReportSettingsComponent },
+  {path: 'blood-bank-registration', component: BloodBankRegistrationComponent},
+  {path: 'blood-banks', component: BloodBanksComponent},
+  {path: 'blood-bank-change-password', component: BloodBankChangePasswordComponent},
+  {path: 'blood-requests', component: BloodRequestsComponent},
+  {path: 'report-settings', component: ReportSettingsComponent},
+  {path: 'news', component: NewsComponent }
 ];
 
 
@@ -43,6 +39,7 @@ const routes: Routes = [
     BloodBanksComponent,
     BloodRequestsComponent,
     ReportSettingsComponent,
+    NewsComponent
   ],
   imports: [
     CommonModule,

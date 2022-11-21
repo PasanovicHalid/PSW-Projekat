@@ -14,10 +14,10 @@ namespace IntegrationLibrary.Settings
     public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
-        public DbSet<News> Newses { get; set; }
         public DbSet<ReportSettings> ReportSettings { get; set; }
-
+        public DbSet<News> Newses { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
+
 
         public IntegrationDbContext([NotNull] DbContextOptions options) : base(options)
         {
@@ -25,19 +25,7 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<BloodRequest>().HasData(
-            //    new BloodRequest()
-            //    {
-            //        BloodQuantity = 5,
-            //        BloodType = BloodType.BP,
-            //        DoctorId = 4,
-            //        Id = 1,
-            //        Reason = "asdasdadsadsdas",
-            //        RequestState = RequestState.Pending,
-            //        RequiredForDate = DateTime.Now
-            //    }
-            //);
-            //base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
