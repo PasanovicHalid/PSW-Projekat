@@ -5,6 +5,7 @@ using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(patientDto);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpGet ("GetByPersonId/{id}")]
         public async Task<ActionResult> GetById(int id)
         {
