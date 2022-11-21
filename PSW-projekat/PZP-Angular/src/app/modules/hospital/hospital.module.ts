@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { AccountActivationThanks } from "./account-activation/account-activation.component";
 import { AccountActivationInfo } from "./account-activation-info/account-activation-info.component";
 import { PatientInfoComponent } from './patient-info/patient-info.component';
+import { AuthGuard } from "./services/auth.guard";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -27,8 +28,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'account-activation', component: AccountActivationThanks },
   { path: 'account-activation-info', component: AccountActivationInfo },
-  { path: 'patientInfo', component: PatientInfoComponent }
-];
+  { path: 'patientInfo', component: PatientInfoComponent, canActivate: [ AuthGuard ] }
+]
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
+  providers: [ AuthGuard ]
 })
 export class HospitalModule { }
