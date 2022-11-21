@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Model
 {
     public class PatientAllergies : BaseModel
     {
-        public virtual Patient Patient { get; set; }
-        public virtual Allergy Allergy { get; set; }
+        public int PatientId { get; set; }
+        public int AllergyId { get; set; }
     }
 }
