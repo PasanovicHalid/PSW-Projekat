@@ -58,9 +58,14 @@ namespace HospitalLibrary.Core.Service
             throw new NotImplementedException();
         }
 
-        public void AddAllergyToPatient(Patient patient, Allergy allergy)
+        public void AddAllergyToPatient(Patient patient, List<Allergy> allergies)
         {
-            _patientRepository.AddAllergyToPatient(patient, allergy);
+            _patientRepository.AddAllergyToPatient(patient, allergies);
+        }
+
+        public IEnumerable<Allergy> GetAllAllergiesForPatient(int id)
+        {
+            return _patientRepository.GetAllAllergiesForPatient(id);
         }
     }
 }

@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -11,34 +12,34 @@ import jwt_decode from 'jwt-decode';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  public loginForm: FormGroup | any;
   public credentialsMissmach:boolean = false;
-  public username: string;
-  public password: string;
 
   constructor(private loginService: LoginService, private router: Router, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.username = "pera";
-    this.password = "123";
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required,Validators.minLength(3)]],
+      password: ['', [Validators.required,Validators.minLength(3)]],
+    });
   }
 
   login(){
+
     let LoginDto = new LoginUserDto();
-    LoginDto.username = this.username;
-    LoginDto.password = this.password;
-    console.log("Morate sami da hardkodujete ne mogu da resim sa ngModel jednostavno nece da odluci da radi: " + this.username + " - " + this.password)
+    LoginDto.username = this.loginForm.value.username;
+    LoginDto.password = this.loginForm.value.password;
     this.loginService.login(LoginDto ).subscribe(res => {
 
       const tokenInfo = this.getDecodedAccessToken(res.token); // decode token
       localStorage.setItem('currentUser', res.token);
       localStorage.setItem('currentUserRole', tokenInfo.Role);
       localStorage.setItem('currentUserId', tokenInfo.Id);
-      
-      if(localStorage.getItem('currentUserRole') == 'Manager')
-        this.router.navigate(['/homeManager']);
-      if(localStorage.getItem('currentUserRole') == 'Doctor')
-        this.router.navigate(['/homeDoctor']);
+
+      if(tokenInfo.Role == 'Manager')
+        this.router.navigate(['homeManager']);
+      if(tokenInfo.Role == 'Doctor')
+        this.router.navigate(['homeDoctor']);
     },
     (err) => {
       if(err.error == "Username or password is incorrect.")
@@ -54,4 +55,3 @@ export class LoginComponent implements OnInit {
     }
   }
 }
-

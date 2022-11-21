@@ -62,7 +62,6 @@ namespace HospitalAPI.Controllers.PublicApp
             {
                 return BadRequest("Username or password is incorrect.");
             }
-
             var statement = await _userManager.IsEmailConfirmedAsync(secUser);
             if (statement == true)
             {
@@ -76,12 +75,19 @@ namespace HospitalAPI.Controllers.PublicApp
                         var claims = await _userManager.GetClaimsAsync(user);
                         var userRoles = await _userManager.GetRolesAsync(user);
 
-                        var authClaims = new List<Claim>
-                    {
-                        new Claim("Id", claims[0].Value),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        if(!((userRoles[0]=="Manager" && loginUserDto.Flag == "PZL")||
+                           (userRoles[0] == "Doctor" && loginUserDto.Flag == "PZL")||
+                           (userRoles[0] == "Patient" && loginUserDto.Flag == "PZP")))
+                        {
+                            return BadRequest("Wrong application.");
+                        }
 
-                    };
+                        var authClaims = new List<Claim>
+                        {
+                            new Claim("Id", claims[0].Value),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+
+                        };
 
                         foreach (var userRole in userRoles)
                         {
@@ -222,10 +228,9 @@ namespace HospitalAPI.Controllers.PublicApp
 
             patient = _patientService.RegisterPatient(patient);
 
-            foreach(var allergy in regUser.Allergies)
-            {
-                _patientService.AddAllergyToPatient(patient, allergy);
-            }
+        
+            _patientService.AddAllergyToPatient(patient, regUser.Allergies);
+            
 
             SecUser secUser = new SecUser()
             {

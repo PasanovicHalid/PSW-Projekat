@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'login', component: LoginComponent }
+  
 ];
 
 @NgModule({
@@ -42,7 +43,8 @@ const routes: Routes = [
     AppointmentsComponent,
     CreateAppointmentComponent,
     UpdateAppointmentComponent,
-    AdmissionPatientTreatmentComponent
+    AdmissionPatientTreatmentComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

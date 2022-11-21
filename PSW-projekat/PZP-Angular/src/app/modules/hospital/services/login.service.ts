@@ -18,6 +18,7 @@ export class LoginService {
   }
 
   logout(){
+    localStorage.clear();
     return this.http.get<any>(this.apiHost + 'api/Account/Logout', {headers: this.headers});
   }
 }

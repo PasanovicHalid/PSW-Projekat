@@ -4,11 +4,14 @@ import { DoctorForPatientRegistrationDto } from "./doctorForPatientRegistrationD
 export class LoginUserDto {
     username: string = '';
     password: string = '';
+    flag: string = 'PZP';
+
 
     public constructor(obj?: any) {
         if (obj) {
             this.username = obj.username;
             this.password = obj.password;
+            this.flag = 'PZP';
         }
     }
   }

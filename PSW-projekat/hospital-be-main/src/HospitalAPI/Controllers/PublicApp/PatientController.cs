@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
@@ -45,6 +46,7 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             Patient patient = _patientService.getPatientByPersonId(id);
             var secUser = await _userManager.FindByEmailAsync(patient.Person.Email);
+            List<Allergy> allergies = _patientService.GetAllAllergiesForPatient(patient.Id).ToList();
             RegisterPatientDto patientDto = new RegisterPatientDto()
             {
                 BirthDate = patient.Person.BirthDate.ToString(),
@@ -53,7 +55,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = patient.Person.Name,
                 Gender = patient.Person.Gender,
 
-                Allergies = null,
+                Allergies = allergies,
                 BloodType = patient.BloodType,
                 DoctorName = new DoctorForPatientRegistrationDto() { 
                     FullName = patient.Doctor.Person.Name + " " + patient.Doctor.Person.Surname, 
