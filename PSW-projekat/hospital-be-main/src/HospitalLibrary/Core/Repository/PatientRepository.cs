@@ -29,6 +29,16 @@ namespace HospitalLibrary.Core.Repository
             return _context.Patients.ToList();
         }
 
+        public IEnumerable<Doctor> GetAllDoctors()
+        {
+            return _context.Patients.Select(p => p.Doctor).Distinct().ToList();
+        }
+
+        public IEnumerable<Doctor> GetAllDoctors2()
+        {
+            return _context.Patients.Select(p => p.Doctor);
+        }
+
         public Patient GetById(int id)
         {
             return _context.Patients.Where(d => d.Id == id).FirstOrDefault();
@@ -52,6 +62,32 @@ namespace HospitalLibrary.Core.Repository
             var patient = _context.Patients.FirstOrDefault(d => d.Id == id);
             var person = _context.Persons.FirstOrDefault(d => d.Id == patient.Person.Id);
             return person;
+        }
+
+        public void AddAllergyToPatient(Patient patient, List<Allergy> allergies)
+        {
+            foreach (var allergy in allergies)
+            {
+                PatientAllergies patientAllergies = new PatientAllergies()
+                {
+                    Patient = patient,
+                    Allergy = allergy,
+                    Deleted = false
+                };
+                _context.PatientAllergies.Add(patientAllergies);
+            }
+        }
+
+        public Patient getPatientByPersonId(int id)
+        {
+            var patient = _context.Patients.FirstOrDefault(d => d.Person.Id == id);
+            return patient;
+        }
+
+        public IEnumerable<Allergy> GetAllAllergiesForPatient(int id)
+        {
+            var patientAllergies = _context.PatientAllergies.Where(p => p.Patient.Id == id).Select(a => a.Allergy);
+            return patientAllergies;
         }
     }
 }
