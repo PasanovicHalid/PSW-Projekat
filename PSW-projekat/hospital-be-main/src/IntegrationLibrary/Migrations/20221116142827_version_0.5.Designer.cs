@@ -4,14 +4,16 @@ using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221116142827_version_0.5")]
+    partial class version_05
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,9 +75,6 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BloodBankId")
-                        .HasColumnType("int");
 
                     b.Property<int>("BloodQuantity")
                         .HasColumnType("int");
@@ -201,7 +200,7 @@ namespace IntegrationLibrary.Migrations
                             DeliveryDays = 0,
                             DeliveryMonths = 1,
                             DeliveryYears = 0,
-                            StartDeliveryDate = new DateTime(2022, 11, 14, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDeliveryDate = new DateTime(2022, 11, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 #pragma warning restore 612, 618
