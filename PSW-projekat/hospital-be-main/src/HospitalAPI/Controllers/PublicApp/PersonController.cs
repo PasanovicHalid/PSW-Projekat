@@ -45,6 +45,7 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             return Ok(_personService.GetAllDoctors());
         }
+
         [Authorize(Roles ="Manager")]
         [HttpGet("userInfo/{id}")]
         public ActionResult GetUserInfo(String id)
