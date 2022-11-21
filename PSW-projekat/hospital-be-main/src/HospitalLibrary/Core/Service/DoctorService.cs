@@ -53,7 +53,7 @@ namespace HospitalLibrary.Core.Service
             allergiesAndDoctors.Allergies = _allergyRepository.GetAll().ToList();
             allergiesAndDoctors.Doctors = new List<DoctorForPatientRegistrationDto>();
 
-            List<int> allDoctorsIds = _idoctorRepository.GetAllDoctorsForPatientRegistration();
+            List<int> allDoctorsIds = _idoctorRepository.GetAllDoctorsForPatientRegistration().ToList();
             List<Person> allDoctorsPersonalInforamtion = _personRepository.GetAllDoctorsForPatientRegistration(allDoctorsIds).ToList();
 
             foreach (var doctorPersonalInformation in allDoctorsPersonalInforamtion)

@@ -33,18 +33,18 @@ namespace HospitalLibrary.Core.Repository
         }
 
         
-        public List<int> GetAllDoctorsForPatientRegistration()
+        public IEnumerable<int> GetAllDoctorsForPatientRegistration()
         {
-            //int minPatients = GetAll().ToList().Min(pNum => pNum.Patients.Count());
-            //List<Doctor> allDoctors = _context.Doctors.Where(d => d.Patients.Count() <= minPatients + 2).ToList();
+            int minPatients = GetAll().ToList().Min(pNum => pNum.Patients.Count());
+            List<Doctor> allDoctors = _context.Doctors.Where(d => d.Patients.Count() <= minPatients + 2).ToList();
 
             List<int> doctorPersonIds = new List<int>();
-            /*
+    
             foreach (Doctor doctor in allDoctors)
             {
                 doctorPersonIds.Add(doctor.Person.Id);
             }
-            */
+            
             return doctorPersonIds;
         }
         

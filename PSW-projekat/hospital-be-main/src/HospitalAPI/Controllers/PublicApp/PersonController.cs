@@ -1,9 +1,13 @@
-﻿using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
@@ -22,7 +26,6 @@ namespace HospitalAPI.Controllers.PublicApp
             _userManager = userManager;
         }
 
-        //[Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -43,18 +46,14 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_personService.GetAllDoctors());
         }
 
-        [HttpGet("doctor/{id}")]
-        public ActionResult GetDoctorById(int id)
+        [Authorize(Roles ="Manager")]
+        [HttpGet("userInfo/{id}")]
+        public ActionResult GetUserInfo(String id)
         {
-            return Ok(_personService.GetById(id));
-        }
+            //var id = User.Claims.GetUserId();
+            Person person = _personService.GetById(int.Parse(id));
 
-        [HttpGet("userInfo/")]
-        public ActionResult GetUserInfo()
-        {
-            var id = User.Claims.GetUserId();
-
-            return Ok(_personService.GetById(id));
+            return Ok(person);
         }
     }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BloodType } from '../model/blood-type';
+import { Doctor } from '../model/doctor';
 import { DoctorBloodRequest } from '../model/doctor-blood-request';
 import { RequestState } from '../model/request-state';
 import { BloodRequestService } from '../services/blood-request.service';
@@ -22,10 +23,10 @@ export class DoctorBloodRequestComponent implements OnInit {
     this.route.paramMap.subscribe(paramMap => {
       let id : any = this.route.snapshot.paramMap.get('id') ;
       this.bloodRequestService.getBloodRequest(parseFloat(id)).subscribe(request => {
-        this.bloodRequestService.getDoctor(request.doctorId).subscribe(doctor => {
+        this.bloodRequestService.getDoctors().subscribe(doctors => {
           this.request = new DoctorBloodRequest();
           this.request.combineWithBloodRequest(request);
-          this.request.doctor = doctor;
+          this.request = this.findDoctorForRequest(doctors, this.request, request.doctorId)
         }, (error) => {
           this.errorMessage = error;
         })
@@ -59,6 +60,16 @@ export class DoctorBloodRequestComponent implements OnInit {
   sendBack() {
     this.bloodRequestService.sendBackRequest(this.request.id, this.request.comment).subscribe(res => {
       this.router.navigate(['/doctor-blood-requests']);})
+  }
+
+  findDoctorForRequest(doctors: Doctor[], request: DoctorBloodRequest, doctorId : number) : DoctorBloodRequest{
+    for (let doctor of doctors) {
+      if(doctor.id == doctorId){
+        request.doctor = doctor;
+        break;
+      }
+    }
+    return request;
   }
 
 }

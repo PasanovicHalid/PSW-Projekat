@@ -62,6 +62,9 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
                     b.Property<int>("BloodQuantity")
                         .HasColumnType("int");
 
@@ -87,18 +90,6 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodRequests");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BloodQuantity = 5,
-                            BloodType = 6,
-                            DoctorId = 4,
-                            Reason = "asdasdadsadsdas",
-                            RequestState = 0,
-                            RequiredForDate = new DateTime(2022, 11, 19, 16, 18, 2, 836, DateTimeKind.Local).AddTicks(8715)
-                        });
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.ReportSettings", b =>

@@ -10,5 +10,6 @@ namespace IntegrationLibrary.Core.BloodBankConnection
     public interface IBloodBankConnection
     {
         Boolean SendBloodRequest(BloodBank bank, String bloodType, int quantity);
+        Task<bool> SendBloodReports(BloodBank bank, byte[] pdf);
     }
 }

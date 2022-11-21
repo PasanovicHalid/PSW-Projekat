@@ -51,6 +51,17 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         {
             return _bloodRequestRepository.GetAll();
         }
+        
+        public IEnumerable<BloodRequest> GetAcceptedRequests(int id)
+        {
+            List<BloodRequest> acceptedRequests = new List<BloodRequest>();
+            foreach (BloodRequest bloodRequest in _bloodRequestRepository.GetAll())
+            {
+                if (bloodRequest.BloodBankId == id && bloodRequest.RequestState == RequestState.Accepted)
+                    acceptedRequests.Add(bloodRequest);
+            }
+            return acceptedRequests;
+        }
 
         public BloodRequest GetById(int id)
         {
