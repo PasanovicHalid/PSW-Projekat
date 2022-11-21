@@ -326,20 +326,5 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok();
         }
-
-        [HttpPost("IsAuthenticated")]
-        public async Task<IActionResult> IsAuthenticated(string username)
-        {
-            /*
-            SecUser secUser = new SecUser();
-            secUser = await _userManager.FindByNameAsync(username);
-            if (secUser == null)
-            {
-                return BadRequest();
-            }
-            */
-            var state = _signInManager.IsSignedIn(HttpContext.User);
-            return Ok(state);
-        }
     }
 }

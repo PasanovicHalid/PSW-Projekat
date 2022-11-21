@@ -23,14 +23,14 @@ export class WelcomeComponent implements OnInit {
       console.log(res.name)
     })
 
-    /*this.feedbackCount = 1;
+    this.feedbackCount = 1;
     this.feedbackService.getAllFeedbackPublicDtos().subscribe(res => {
       this.feedbacks = res;
       if (this.feedbackCount > this.feedbacks.length) {
         this.feedbackCount = this.feedbacks.length
       }
       this.dataSourceFeedbacks = this.feedbacks.slice(0, this.feedbackCount);
-    });*/
+    });
     
   }
 

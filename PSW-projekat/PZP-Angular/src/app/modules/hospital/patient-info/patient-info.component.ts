@@ -20,7 +20,6 @@ export class PatientInfoComponent implements OnInit {
     this.userService.getLoggedPatient().subscribe(res => {
       this.patientInfo = res;
     });
-    this.authService.isAuthenticated("nevena")
   }
 
   logout(){

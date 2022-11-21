@@ -12,8 +12,7 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    var able = this.authService.isAuthenticated("nevena");
-    if(able){
+    if(this.authService.isAuthenticated()){
       return true;
     }
     this.router.navigate(['/login']);
