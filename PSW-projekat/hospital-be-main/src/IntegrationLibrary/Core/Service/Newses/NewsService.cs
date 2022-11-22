@@ -11,9 +11,11 @@ namespace IntegrationLibrary.Core.Service.Newses
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newsRepository;
-        public NewsService(INewsRepository newsRepository)
+        private readonly IRabbitMQService _rabbitMQService;
+        public NewsService(INewsRepository newsRepository, IRabbitMQService rabbitMQService)
         {
             _newsRepository = newsRepository;
+            _rabbitMQService = rabbitMQService;
         }
         public void Create(News entity)
         {
@@ -82,6 +84,12 @@ namespace IntegrationLibrary.Core.Service.Newses
         }
         public IEnumerable<News> GetAllPending()
         {
+            //_rabbitMQService.Send();
+            List<News> recivedNews =_rabbitMQService.Recive();
+            foreach (News entity in recivedNews)
+            {
+                Create(entity);
+            }
             return _newsRepository.GetAllPending();
        }
     }

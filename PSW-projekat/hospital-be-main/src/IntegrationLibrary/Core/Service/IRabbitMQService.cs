@@ -9,6 +9,6 @@ namespace IntegrationLibrary.Core.Service
     public interface IRabbitMQService
     {
         void Send();
-        void Recive();
+        List<Model.News> Recive();
     }
 }
