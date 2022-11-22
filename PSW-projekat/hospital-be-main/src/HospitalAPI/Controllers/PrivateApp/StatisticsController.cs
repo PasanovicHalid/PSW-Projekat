@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,8 +20,9 @@ namespace HospitalAPI.Controllers.PrivateApp
             _statisticsService = statisticsService;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
-        public ActionResult GetAllFeedbackDtos()
+        public ActionResult GetStatistics()
         {
             //TODO vraca DTO sa statistikom
             return Ok(_statisticsService.GetStatistics());

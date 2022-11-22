@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
 import { DoctorStat, StatisticsDto } from '../model/statisticsdto.model';
+import { LoginService } from '../services/login.service';
 import { StatisticsService } from '../services/statistics.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { StatisticsService } from '../services/statistics.service';
 })
 export class StatisticsComponent implements OnInit {
 
-  constructor(private statisticsService: StatisticsService, private router: Router) { }
+  constructor(private statisticsService: StatisticsService,private loginService: LoginService, private router: Router) { }
 
   public bloodTypeChart : any;
   public genderAgeChart : any;
@@ -36,6 +37,8 @@ export class StatisticsComponent implements OnInit {
   
   ngOnInit(): void {
 
+    if(localStorage.getItem("currentUserRole")!="Manager")
+      this.router.navigate([''])
     this.statisticsService.getStatistics().subscribe( res =>{
       let stats = Object.values(JSON.parse(JSON.stringify(res)));
       this.setFields(stats);
@@ -108,6 +111,12 @@ export class StatisticsComponent implements OnInit {
         ]
       },
     });
+  }
+
+  logoutUser(){
+    this.loginService.logout().subscribe(res => {
+      
+    })
   }
 
 }
