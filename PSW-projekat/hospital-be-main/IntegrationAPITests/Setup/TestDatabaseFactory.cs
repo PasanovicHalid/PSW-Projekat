@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Linq;
 
 namespace IntegrationAPITests.Setup
@@ -43,7 +44,9 @@ namespace IntegrationAPITests.Setup
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
+
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
+
             context.BloodBanks.Add(new BloodBank {
                 Name = "asdsadsda",
                 Email = "asdasd@gmail.com",
@@ -109,6 +112,70 @@ namespace IntegrationAPITests.Setup
                 DoctorId = 1
 
             });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 1,
+                BloodType = BloodType.BP,
+                DoctorId = 4,
+                Reason = "sadasddas",
+                RequestState = RequestState.Pending,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.BN,
+                DoctorId = 2,
+                Reason = "asdasddas",
+                RequestState = RequestState.Pending,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.BN,
+                DoctorId = 1,
+                Reason = "asdasddas",
+                RequestState = RequestState.Accepted,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.BN,
+                DoctorId = 3,
+                Reason = "asdasddas",
+                RequestState = RequestState.Returned,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = "asddaswreqwreqwr"
+            });
+
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 5,
+                BloodType = BloodType.ON,
+                DoctorId = 2,
+                Reason = "asdasddas",
+                RequestState = RequestState.Declined,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = ""
+            });
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Newses\";");
+            context.Newses.Add(new News
+            {
+                Status = NewsStatus.PENDING,
+                Title = "Blood donation",
+                Text = " Come and give me blood",
+                DateTime = new DateTime(2022, 01, 01, 9, 15, 0),
+                BloodBankId = 1,
+            }); 
 
             context.SaveChanges();
         }

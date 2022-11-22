@@ -65,7 +65,6 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         static async Task<bool> PostAsync(HttpClient httpClient)
         {
             string isSuccessful = "false";
-            Console.WriteLine("here");
             client.Timeout = TimeSpan.FromSeconds(120);
             ByteArrayContent byteContent = new ByteArrayContent(pdfFile);
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bankAPI);

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221107225923_version_0.3")]
-    partial class version_03
+    [Migration("20221121234850_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,18 +55,70 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodBanks");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccountStatus = 1,
-                            ApiKey = "sadfasdads",
-                            Email = "asdasd@gmail.com",
-                            Name = "asdsadsda",
-                            Password = "asdsadsdadas",
-                            ServerAddress = "https://www.messenger.com/t/100001603572170"
-                        });
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestState")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RequiredForDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodRequests");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.News", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Newses");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.ReportSettings", b =>
@@ -100,19 +152,6 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ReportSettings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CalculationDays = 0,
-                            CalculationMonths = 1,
-                            CalculationYears = 0,
-                            DeliveryDays = 0,
-                            DeliveryMonths = 1,
-                            DeliveryYears = 0,
-                            StartDeliveryDate = new DateTime(2022, 11, 7, 0, 0, 0, 0, DateTimeKind.Local)
-                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -59,7 +59,7 @@ namespace IntegrationLibrary.Core.Service
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                
             }
             
             

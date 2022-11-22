@@ -74,6 +74,7 @@ namespace IntegrationLibrary.Core.Model
 
         [Required]
         public string ServerAddress { get => _serverAddress; set => _serverAddress = value; }
+
         [Required]
         public string ApiKey { get => _apiKey; set => _apiKey = value; }
 
