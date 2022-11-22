@@ -64,7 +64,6 @@ namespace HospitalLibrary.Core.Repository
             return person;
         }
          
-         
         public void AddAllergyToPatient(Patient patient, List<Allergy> allergies)
         {
             foreach (Allergy allergy in allergies)
