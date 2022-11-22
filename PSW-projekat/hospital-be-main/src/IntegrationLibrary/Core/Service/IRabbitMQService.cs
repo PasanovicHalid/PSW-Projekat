@@ -10,6 +10,6 @@ namespace IntegrationLibrary.Core.Service
     public interface IRabbitMQService
     {
         void Send();
-        List<Model.News> Recive(List<BloodBank> bloodBanks);
+        List<News> Recive(List<BloodBank> bloodBanks);
     }
 }

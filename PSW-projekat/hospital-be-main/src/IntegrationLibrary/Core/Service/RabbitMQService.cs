@@ -38,7 +38,7 @@ namespace IntegrationLibrary.Core.Service
 
         public List<News> Recive(List<BloodBank> bloodBanks)
         {
-            List<News> news = new List<News>();
+            List<News> newses = new List<News>();
             var factory = new ConnectionFactory
             {
                 Uri = new Uri("amqp://guest:guest@localhost:5672")
@@ -57,7 +57,6 @@ namespace IntegrationLibrary.Core.Service
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine(message);
                 dynamic stuff = JsonConvert.DeserializeObject(message);
-                //Console.WriteLine(stuff.ToString());
                 try
                 {
                     News n = new News();
@@ -67,23 +66,16 @@ namespace IntegrationLibrary.Core.Service
                     if (checkBloodBankExists((string)stuff._bloodBankEmail, bloodBanks) &&
                     checkBloodBankApiKey((string)stuff._bloodBankEmail, (string)stuff._apiKey, bloodBanks))
                     {
-                        news.Add(n);
+                        newses.Add(n);
                     }
-
                 } catch
                 {
                     throw;
                 }
-
-                
-                //Console.WriteLine("title:");
-                //Console.WriteLine(n.Title);
-                //Console.WriteLine("text:");
-                //Console.WriteLine(n.Text);
             };
             channel.BasicConsume("News", true, consumer);
 
-            return news;
+            return newses;
 
         }
         public bool checkBloodBankApiKey(string bankEmail, string bankApiKey, List<BloodBank> bloodBanks)

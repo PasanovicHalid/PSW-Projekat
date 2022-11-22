@@ -89,11 +89,7 @@ namespace IntegrationLibrary.Core.Service.Newses
         {
             try
             {
-                List<News> recivedNews = _rabbitMQService.Recive(_bloodBankRepository.GetAll().ToList());
-                foreach (News entity in recivedNews)
-                {
-                    Create(entity);
-                }
+                UpdateNews();
                 return _newsRepository.GetAllPending();
             } catch
             {
@@ -101,5 +97,19 @@ namespace IntegrationLibrary.Core.Service.Newses
             }
             
        }
+        private void UpdateNews()
+        {
+            try
+            {
+                List<News> recivedNews = _rabbitMQService.Recive(_bloodBankRepository.GetAll().ToList());
+                foreach (News entity in recivedNews)
+                {
+                    Create(entity);
+                }
+            } catch
+            {
+                throw;
+            }
+        }
     }
 }
