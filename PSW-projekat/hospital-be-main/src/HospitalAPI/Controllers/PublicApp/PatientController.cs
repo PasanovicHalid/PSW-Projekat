@@ -42,6 +42,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(patientDto);
         }
 
+        /*
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -53,6 +54,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok(patient);
         }
+        */
 
         [HttpGet("patientsNoTreatment")]
         public ActionResult GetPatientsNoTreatment()

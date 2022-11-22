@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'appointments/add', component: CreateAppointmentComponent },
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
-  { path: 'treatments/:id/update', component: DischargePatientComponent }
+  { path: 'treatments/:id/update', component: DischargePatientComponent },
   { path: 'login', component: LoginComponent }
   
 ];
@@ -48,7 +48,7 @@ const routes: Routes = [
     CreateAppointmentComponent,
     UpdateAppointmentComponent,
     AdmissionPatientTreatmentComponent,
-    DischargePatientComponent
+    DischargePatientComponent,
     LoginComponent
   ],
   imports: [
