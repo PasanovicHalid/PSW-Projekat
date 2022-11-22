@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Feedback } from 'src/app/modules/hospital/model/feedback.model';
 import { FeedbackService } from 'src/app/modules/hospital/services/feedback.service';
 import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 
 
 @Component({
@@ -21,6 +22,14 @@ export class CreateFeedbackComponent{
     this.feedbackService.createFeedback(this.feedback).subscribe(res => {
       this.router.navigate(['']);
     });
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch(Error) {
+      return null;
+    }
   }
 
   private isValidInput(): boolean {

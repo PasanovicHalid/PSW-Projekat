@@ -67,6 +67,40 @@ namespace IntegrationLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RequestState")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RequiredForDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodRequests");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.ReportSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -109,7 +143,7 @@ namespace IntegrationLibrary.Migrations
                             DeliveryDays = 0,
                             DeliveryMonths = 1,
                             DeliveryYears = 0,
-                            StartDeliveryDate = new DateTime(2022, 11, 7, 0, 0, 0, 0, DateTimeKind.Local)
+                            StartDeliveryDate = new DateTime(2022, 11, 14, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 #pragma warning restore 612, 618

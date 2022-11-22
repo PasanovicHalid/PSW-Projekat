@@ -12,15 +12,17 @@ namespace HospitalLibrary.Core.Service
 {
     public class StatisticsService
     {
-        private readonly PatientRepository _patientRepository;
-        private readonly PersonRepository _personRepository;
-        private readonly DoctorRepository _doctorRepository;
-        
-        public StatisticsService(PatientRepository patientRepository, PersonRepository personRepository,  DoctorRepository doctorRepository)
+        private readonly IPatientRepository _patientRepository;
+        private readonly IPersonRepository _personRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly AllergyRepository _allergyRepository;
+
+        public StatisticsService(IPatientRepository patientRepository, IPersonRepository personRepository,  IDoctorRepository doctorRepository, AllergyRepository allergyRepository)
         {
             _patientRepository = patientRepository;
             _personRepository = personRepository;
             _doctorRepository = doctorRepository;
+            _allergyRepository = allergyRepository;
         }
         
         public StatisticsDto GetStatistics()
@@ -57,7 +59,7 @@ namespace HospitalLibrary.Core.Service
             IEnumerable<PatientAllergies> allergiesThatPatientsHave = _patientRepository.GetAllPatientAllergies();
             Dictionary<string, int> allergyPopularity = new Dictionary<string, int>();
             foreach (PatientAllergies pa in allergiesThatPatientsHave)
-                allergyPopularity.TryAdd(pa.Allergy.Name, allergiesThatPatientsHave.Where(x => x.Allergy.Id == pa.Allergy.Id).Count());
+                allergyPopularity.TryAdd(_allergyRepository.GetById(pa.AllergyId).Name, allergiesThatPatientsHave.Where(x => x.AllergyId == pa.AllergyId).Count());
             stats.AllergyPopularity = allergyPopularity;
         }
 

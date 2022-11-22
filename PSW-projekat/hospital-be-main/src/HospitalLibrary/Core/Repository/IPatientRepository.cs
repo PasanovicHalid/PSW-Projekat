@@ -14,5 +14,9 @@ namespace HospitalLibrary.Core.Repository
         IEnumerable<PatientAllergies> GetAllPatientAllergies();
         IEnumerable<int> GetAllDoctorsWhoHavePatients();
         int GetByAgeAndDoctor(DateTime dateTime1, DateTime dateTime2, int id);
+        public IEnumerable<Doctor> GetAllDoctors();
+        public void AddAllergyToPatient(Patient patient, List<Allergy> allergies);
+        public Patient getPatientByPersonId(int id);
+        public IEnumerable<Allergy> GetAllAllergiesForPatient(int id);
     }
 }

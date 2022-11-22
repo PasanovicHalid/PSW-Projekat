@@ -1,6 +1,5 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "src/app/material/material.module";
 import { CreateRoomComponent } from "./create-room/create-room.component";
@@ -17,6 +16,9 @@ import { CreateAppointmentComponent } from './create-appointment/create-appointm
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
 import { StatisticsComponent } from './statistics/statistics.component';
 import { NgChartsModule } from 'ng2-charts';
+import { AdmissionPatientTreatmentComponent } from './admission-patient-treatment/admission-patient-treatment.component';
+import { LoginComponent } from "./login/login.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -28,9 +30,10 @@ const routes: Routes = [
   { path: 'appointments/doctor/:id', component: AppointmentsComponent },
   { path: 'appointments/add', component: CreateAppointmentComponent },
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
-  { path: 'statistics', component: StatisticsComponent }
-
-
+  { path: 'statistics', component: StatisticsComponent },
+  { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
+  { path: 'login', component: LoginComponent }
+  
 ];
 
 @NgModule({
@@ -43,7 +46,9 @@ const routes: Routes = [
     AppointmentsComponent,
     CreateAppointmentComponent,
     UpdateAppointmentComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    AdmissionPatientTreatmentComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -55,9 +60,8 @@ const routes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
-    NgChartsModule
-
-
+    NgChartsModule,
+    MatSelectModule
   ],
   exports: [ RouterModule ]
 })
