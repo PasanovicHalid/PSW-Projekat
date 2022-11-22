@@ -31,7 +31,7 @@ namespace IntegrationLibrary.Core.Service
             // Invoke the DoWork method every 5 seconds. 
             timer = new Timer(callback: async o => await DoWork(o),
             state: null, dueTime: TimeSpan.FromSeconds(0),
-            period: TimeSpan.FromSeconds(ReportIntervalInHours));
+            period: TimeSpan.FromHours(ReportIntervalInHours));
             return Task.CompletedTask;
         }
 
@@ -44,26 +44,29 @@ namespace IntegrationLibrary.Core.Service
             timer?.Change(Timeout.Infinite, 0); return Task.CompletedTask;
         }
 
-        private async Task DoWork(Object o)
+        private async Task<bool> DoWork(Object o)
         {
-            bool isSuccess = false;
-            try {
-                using (var scope = scopeFactory.CreateScope())
+            
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var reportSendingService = scope.ServiceProvider.GetService<IReportSendingService>();
+                bool isSuccess = false;
+                try
                 {
-                    var reportSendingService = scope.ServiceProvider.GetService<IReportSendingService>();
                     if (reportSendingService.ReportShouldBeSent())
                         isSuccess = await reportSendingService.GeneratePDFs();
                     if (isSuccess)
                         reportSendingService.ChangeReportDeliveryDate();
+                    
+                    return isSuccess;
+
+                }
+                catch (Exception e)
+                {
+                    reportSendingService.DeleteMadeFiles();
+                    return false;
                 }
             }
-            catch (Exception e)
-            {
-                
-            }
-            
-            
-           
         }
     }
 }
