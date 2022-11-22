@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DoctorDto } from '../model/doctor';
-import { PatientDto } from '../model/patient';
+import { DoctorDto } from '../model/doctorDto';
+import { PatientDto } from '../model/patientDto';
 import { User } from '../model/user';
 
 @Injectable({

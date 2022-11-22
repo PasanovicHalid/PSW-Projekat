@@ -12,7 +12,6 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<Person> GetAllDoctors();
         IEnumerable<Person> GetAllPatients();
-
         Person RegisterPerson(Person person);
     }
 }

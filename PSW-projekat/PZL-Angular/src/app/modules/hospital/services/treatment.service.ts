@@ -30,7 +30,7 @@ export class TreatmentService {
   }
 
   updateTreatment(treatment: any): Observable<any> {
-    return this.http.put<any>(this.apiHost + 'api/treatment/' + treatment.Id, treatment, {headers: this.headers});
+    return this.http.put<any>(this.apiHost + 'api/treatment/' + treatment.id, treatment, {headers: this.headers});
   }
 
 }

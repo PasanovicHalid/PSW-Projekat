@@ -5,8 +5,8 @@ import { AppointmentService } from 'src/app/modules/hospital/services/appointmen
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../services/user.service';
-import { PatientDto } from '../model/patient';
-import { DoctorDto } from '../model/doctor';
+import { PatientDto } from '../model/patientDto';
+import { DoctorDto } from '../model/doctorDto';
 
 
 @Component({

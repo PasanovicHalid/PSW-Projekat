@@ -10,11 +10,18 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IService<Room> _roomService;
+        //private readonly IService<Room> _roomService;
+        private readonly IRoomService _roomService;
 
+        /*
         public RoomsController(IService<Room> roomService)
         {
             _roomService = roomService;
+        }
+        */
+        public RoomsController(IRoomService iroomService)
+        {
+            _roomService = iroomService;
         }
 
         // GET: api/rooms
@@ -89,5 +96,13 @@ namespace HospitalAPI.Controllers
             _roomService.Delete(room);
             return NoContent();
         }
+
+        [HttpGet("room/{roomId}")]
+        public ActionResult GetAllBedsByRoom(int roomId)
+        {
+            return Ok(_roomService.GetAllBedsByRoom(roomId));
+        }
+
+
     }
 }
