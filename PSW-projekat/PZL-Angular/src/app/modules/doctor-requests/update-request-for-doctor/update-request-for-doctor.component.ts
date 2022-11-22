@@ -24,18 +24,22 @@ export class UpdateRequestForDoctorComponent implements OnInit {
   constructor(private bloodRequestService: BloodRequestService, public datepipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
-      this.getRequest(params['id']);
-    }, (error) => {
-      this.errorMessage = error;
-    });
+    if(localStorage.getItem("currentUserRole") == 'Doctor'){
+      this.routeSub = this.route.params.subscribe(params => {
+        this.getRequest(params['id']);
+      }, (error) => {
+        this.errorMessage = error;
+      });
+    }
+    else{
+      this.router.navigate(['/forbidden-access']);
+    }  
   }
 
   public getRequest(id: number){
     this.bloodRequestService.getBloodRequest(id).subscribe(res => {
         this.request = res;
         this.date = this.datepipe.transform(this.request.requiredForDate, 'MM-dd-yyyy')!;
-        console.log(this.request.requiredForDate)
         
       }, (error) => {
         this.errorMessage = error;
@@ -50,9 +54,23 @@ export class UpdateRequestForDoctorComponent implements OnInit {
   }
 
   send() {
-    this.bloodRequestService.updateRequestFromDoctor(this.request).subscribe(res => {
-      this.router.navigate(['/returned-requests', localStorage.getItem("doctorID")]);
-    });
+    if(this.validate()){
+      this.bloodRequestService.updateRequestFromDoctor(this.request).subscribe(res => {
+        this.router.navigate(['/returned-requests']);
+      });
+    }
+    else{
+      alert("You have to fill all fields!");
+    }
+    
+  }
+
+  validate(){
+    if((this.request.bloodQuantity <= 0 || this.request.bloodQuantity > 10) || this.request.reason == ""
+      || this.request.bloodType.toString() == "" || this.request.requiredForDate.toString() == ""){
+        return false;
+    }
+    return true;
   }
 
   public ConvertToString(obj: BloodType): String{

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BloodType } from '../model/blood-type';
 import { DoctorBloodRequest } from '../model/doctor-blood-request';
 import { RequestState } from '../model/request-state';
@@ -20,14 +20,15 @@ export class ReturnedRequestsForDoctorComponent implements OnInit {
   public errorMessage: any;
   private routeSub: Subscription;
 
-  constructor(private bloodRequestService: BloodRequestService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private bloodRequestService: BloodRequestService, private router: Router) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
-      this.getDoctorsRequests(params['id']);
-      localStorage.setItem("doctorID",params['id'] );
-    });
-    
+    if(localStorage.getItem("currentUserRole") == 'Doctor'){
+      this.getDoctorsRequests(Number(localStorage.getItem("currentUserId")!));
+    }
+    else{
+      this.router.navigate(['/forbidden-access']);
+    }
   }
 
   public getDoctorsRequests(id: number){
@@ -47,10 +48,6 @@ export class ReturnedRequestsForDoctorComponent implements OnInit {
 
   getStateByValue(value: number) {
     return Object.values(RequestState)[value]
-  }
-
-  ngOnDestroy() {
-    this.routeSub.unsubscribe();
   }
 
 }

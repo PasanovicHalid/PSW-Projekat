@@ -20,10 +20,14 @@ export class BloodRequestsComponent implements OnInit {
   constructor(private bloodBankService: BloodBankService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.bloodBankService.getBloodBanks().subscribe(res =>{
-      this.bloodBanks = res;
-    });
-      
+    if(localStorage.getItem("currentUserRole") == 'Manager'){
+      this.bloodBankService.getBloodBanks().subscribe(res =>{
+        this.bloodBanks = res;
+      });
+    }
+    else{
+      this.router.navigate(['/forbidden-access']);
+    }
   }
 
   public sendBloodRequest() {
