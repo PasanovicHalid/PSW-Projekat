@@ -39,7 +39,7 @@ namespace HospitalAPI
 
             services.AddIdentity<SecUser, IdentityRole>(options =>
             {
-                options.User.RequireUniqueEmail = false;
+                options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
                 options.Password.RequiredLength = 3;
                 options.Password.RequireNonAlphanumeric = false;

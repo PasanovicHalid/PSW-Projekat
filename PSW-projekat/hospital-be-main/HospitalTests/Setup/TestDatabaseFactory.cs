@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Identity;
 
 namespace HospitalTests.Setup
 {
@@ -28,13 +29,14 @@ namespace HospitalTests.Setup
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<HospitalDbContext>));
             services.Remove(descriptor);
 
-            services.AddDbContext<HospitalDbContext>(opt => opt.UseSqlServer(CreateConnectionStringForTest()));
+            services.AddDbContext<HospitalDbContext>(opt => opt.UseSqlServer(CreateConnectionStringForTest()).UseLazyLoadingProxies());
+            services.AddDbContext<AuthenticationDbContext>(options => options.UseSqlServer(CreateConnectionStringForTest()));
             return services.BuildServiceProvider();
         }
 
         private static string CreateConnectionStringForTest()
         {
-            return "Server=.;Database=HospitaTestlDb;TrustServerCertificate=False;Trusted_Connection=True";
+            return "Server=.;Database=HospitalDb;TrustServerCertificate=False;Trusted_Connection=True";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
@@ -88,8 +90,6 @@ namespace HospitalTests.Setup
                 Patients= null 
             });
             */
-            
-
             context.SaveChanges();
         }
     }

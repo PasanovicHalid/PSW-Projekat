@@ -66,15 +66,16 @@ namespace HospitalLibrary.Core.Repository
 
         public void AddAllergyToPatient(Patient patient, List<Allergy> allergies)
         {
-            foreach (var allergy in allergies)
+            foreach (Allergy allergy in allergies)
             {
                 PatientAllergies patientAllergies = new PatientAllergies()
                 {
-                    Patient = patient,
-                    Allergy = allergy,
+                    PatientId = patient.Id,
+                    AllergyId = allergy.Id,
                     Deleted = false
                 };
                 _context.PatientAllergies.Add(patientAllergies);
+                _context.SaveChanges();
             }
         }
 
@@ -86,8 +87,9 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Allergy> GetAllAllergiesForPatient(int id)
         {
-            var patientAllergies = _context.PatientAllergies.Where(p => p.Patient.Id == id).Select(a => a.Allergy);
-            return patientAllergies;
+            var allergiesIds = _context.PatientAllergies.Where(p => p.PatientId == id).Select(a => a.AllergyId);
+            var allergies = _context.Allergies.Where(a => allergiesIds.Contains(a.Id));
+            return allergies;
         }
     }
 }
