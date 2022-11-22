@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using IntegrationLibrary.Core.Service;
 
 namespace IntegrationAPITests
 {
@@ -33,6 +34,7 @@ namespace IntegrationAPITests
         {
            
                var stubRepo = new Mock<INewsRepository>();
+               var rabbitRepo = new Mock<IRabbitMQService>();
                var newses = new List<News>();
                News n1 = new News()
                {
@@ -46,7 +48,7 @@ namespace IntegrationAPITests
                 stubRepo.Setup(m => m.GetAll()).Returns(newses);
                 stubRepo.Setup(m => m.GetById(1)).Returns(n1);
 
-                NewsService newsService = new NewsService(stubRepo.Object);
+                NewsService newsService = new NewsService(stubRepo.Object, rabbitRepo.Object);
 
                         News n = newsService.GetById(1);
                       Assert.NotNull(n);
