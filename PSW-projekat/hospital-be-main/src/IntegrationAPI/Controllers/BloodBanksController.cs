@@ -11,6 +11,7 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]

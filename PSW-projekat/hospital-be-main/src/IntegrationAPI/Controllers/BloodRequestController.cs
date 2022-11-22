@@ -2,6 +2,7 @@
 using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.BloodRequests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
