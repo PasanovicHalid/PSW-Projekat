@@ -23,7 +23,7 @@ namespace IntegrationLibrary.Core.Service
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            channel.QueueDeclare("News1",
+            channel.QueueDeclare("News",
                 durable: false,
                 exclusive: false,
                 autoDelete: false,
@@ -31,7 +31,7 @@ namespace IntegrationLibrary.Core.Service
             var message = new { Name = "Producer", Message = n1.ToString() };
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
-            channel.BasicPublish("", "News1", null, body);
+            channel.BasicPublish("", "News", null, body);
         }
 
         public List<News> Recive()
