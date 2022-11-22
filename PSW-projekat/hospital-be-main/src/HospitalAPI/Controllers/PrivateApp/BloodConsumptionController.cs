@@ -28,6 +28,7 @@ namespace HospitalAPI.Controllers.PrivateApp
             this._doctorService = doctorService;
         }
 
+        [HttpPost]
         public ActionResult Create(BloodConsumptionDTO bloodConsumptionDTO)
         {
             if (!ModelState.IsValid)
@@ -37,7 +38,8 @@ namespace HospitalAPI.Controllers.PrivateApp
             DoctorBloodConsumption bloodConsumption = BloodConsumptionAdapter.FromDTO(bloodConsumptionDTO);
             try
             {
-              //  bloodConsumption.DoctorId = new Doctor();//_doctorService.GetById(bloodConsumptionDTO.DoctorId);
+                bloodConsumption.Doctor = _doctorService.GetById(bloodConsumptionDTO.DoctorId);
+              
                 _bloodConsumptionService.Create(bloodConsumption);
                 return Ok(bloodConsumption);
             }

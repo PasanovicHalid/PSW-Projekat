@@ -42,7 +42,6 @@ namespace HospitalTests.Setup
         private static void InitializeDatabase(HospitalDbContext context)
         {
             context.Database.EnsureCreated();
-
             /*
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
@@ -63,6 +62,7 @@ namespace HospitalTests.Setup
                 AccountStatus = AccountStatus.ACTIVE
             });
             */
+
             /*
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Allergies\";");
             context.Allergies.Add(new Allergy() { Id = 1, Name = "Polen", Deleted = false });

@@ -13,9 +13,11 @@ namespace HospitalAPI.Adapters
         {
             return new DoctorBloodConsumption()
             {
+                Id = entity.Id,
                 Blood = entity.Blood,
-                Date = DateTime.Today, 
+                Date = DateTime.Today,
                 Purpose = entity.Purpose,
+                Deleted = false,
                 Doctor = new Doctor()
     };
         }
@@ -24,6 +26,7 @@ namespace HospitalAPI.Adapters
         {
             return new BloodConsumptionDTO()
             {
+                Id = entity.Id,
                 Blood = entity.Blood,
                 DoctorId = entity.Doctor.Id,
                 Purpose = entity.Purpose

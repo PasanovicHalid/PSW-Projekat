@@ -37,9 +37,9 @@ namespace HospitalTests.Integration
             
             BloodConsumptionDTO testCase = new BloodConsumptionDTO()
             {
-                Id = 1,
-                Blood = new Blood() 
-                {Id=1, Deleted=false,BloodType = BloodType.APlus,
+                Id  = 1,
+                Blood = new Blood 
+                {Id=1, Deleted=false,BloodType = 0,
                 Quantity = 10
                 },
                 Purpose ="Potrebno za novu operaciju",
@@ -48,7 +48,8 @@ namespace HospitalTests.Integration
             };
 
             var result = ((ObjectResult)controller.Create(testCase))?.Value as DoctorBloodConsumption;
-            Assert.Null(result);
+            Assert.NotNull(result);
+            Assert.NotNull(result.Doctor);
           //  Assert.Equal(testCase.Blood.Quantity, result.Blood.Quantity);
            // Assert.Equal(testCase.Blood.BloodType, result.Blood.BloodType);
            // Assert.Equal(testCase.DoctorId, result.Doctor.Id);
