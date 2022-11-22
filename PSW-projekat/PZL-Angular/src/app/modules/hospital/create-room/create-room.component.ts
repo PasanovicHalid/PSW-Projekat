@@ -10,7 +10,8 @@ import { RoomService } from 'src/app/modules/hospital/services/room.service';
 })
 export class CreateRoomComponent {
 
-  public room: Room = new Room();
+  //smor
+  public room: Room = new Room(0, false, 0, 0, 0, [], [], []);
 
   constructor(private roomService: RoomService, private router: Router) { }
 

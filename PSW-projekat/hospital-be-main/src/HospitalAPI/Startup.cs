@@ -80,8 +80,11 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
 
-            services.AddScoped<IService<Room>, RoomService>();
-            services.AddScoped<IRepository<Room>, RoomRepository>();
+            //services.AddScoped<IService<Room>, RoomService>();
+            //services.AddScoped<IRepository<Room>, RoomRepository>();
+
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
 
             services.AddScoped<FeedbackService>();
             services.AddScoped<FeedbackRepository>();
@@ -109,6 +112,8 @@ namespace HospitalAPI
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
 
+            services.AddScoped<IBedService, BedService>();
+            services.AddScoped<IBedRepository, BedRepository>();
 
         }
 

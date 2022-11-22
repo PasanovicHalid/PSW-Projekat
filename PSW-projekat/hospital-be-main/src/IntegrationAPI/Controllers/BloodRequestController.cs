@@ -1,4 +1,5 @@
 ﻿using IntegrationAPI.Adapters;
+using IntegrationAPI.Controllers.Interfaces;
 using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.BloodRequests;
@@ -63,6 +64,129 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest();
             }
+        }
+
+
+        [HttpGet("accept/{id}")]
+        public ActionResult AcceptRequest(int id)
+        {
+            try
+            {
+                _bloodRequestService.AcceptRequest(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpGet("decline/{id}")]
+        public ActionResult DeclineRequest(int id)
+        {
+            try
+            {
+                _bloodRequestService.DeclineRequest(id);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpPut("return/{id}")]
+        public ActionResult SendBackRequest(int id, [FromBody] string reason)
+        {
+            try
+            {
+                _bloodRequestService.SendBackRequest(id, reason);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            try
+            {
+                return Ok(_bloodRequestService.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public ActionResult Update(BloodRequestDTO entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _bloodRequestService.Update(BloodRequestAdapter.FromDTO(entity));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+            return Ok(entity);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                BloodRequest bloodRequest = _bloodRequestService.GetById(id);
+                if (bloodRequest == null)
+                {
+                    return NotFound();
+                }
+                _bloodRequestService.Delete(bloodRequest);
+                return NoContent();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+        [HttpGet("doctor/{id}")]
+        public ActionResult GetReturnedRequestsForDoctor(int id)
+        {
+            try
+            {
+                return Ok(_bloodRequestService.GetReturnedRequestsForDoctor(id));
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("update-from-doctor")]
+        public ActionResult UpdateFromDoctor(BloodRequestDTO entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _bloodRequestService.UpdateFromDoctor(BloodRequestAdapter.FromDTO(entity));
+            }
+            catch
+            {
+                return NotFound();
+            }
+            return Ok();
         }
     }
 }

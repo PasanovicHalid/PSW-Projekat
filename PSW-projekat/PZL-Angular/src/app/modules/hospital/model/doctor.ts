@@ -1,19 +1,19 @@
+import { BloodType } from "./bloodType";
+import { DoctorDto } from "./doctorDto";
+import { Person } from "./person";
 import { Role } from "./role";
+import { Specialization } from "./specialization";
 
-export class DoctorDto {
+export class Doctor{
     id: number = 0;
-    name: string = '';
-    surname: string = '';
-    email: string = '';
-    username: string = '';
-    role: Role;
+    deleted: boolean = false;
+    specialization: Specialization;
+    person: Person;
 
-    public constructor(id: any, name:any, surname: any, email:any, username: any, role:any) {
+    public constructor(id: any, deleted:any, specialization: any, person:any) {
         this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.username = username;
-        this.role = role;
+        this.deleted = deleted;
+        this.specialization = specialization;
+        this.person = person;
     }
 }

@@ -1,0 +1,40 @@
+<h5>{{errorMessage}}</h5>
+<div class="table-header" *ngIf="!errorMessage">
+    <div class="container">
+        <p class="table-title">Request</p>
+            <mat-form-field appearance="fill">
+                <mat-select name="bloodTypes" id="bloodTypes" 
+                [(ngModel)]="this.request.bloodType" matInput>
+                <mat-option *ngFor="let  bloodType of bloodTypes" [value]="bloodType">{{ConvertToString(bloodType)}}</mat-option>
+                </mat-select>
+            </mat-form-field ><br>
+            
+            <mat-form-field appearance="fill">
+                <!-- <mat-label>{{request.requiredForDate}}</mat-label> -->
+                <input type="text" matInput name="dateControl" [placeholder]="date"
+                onfocus="(this.type='date')" [(ngModel)]="this.request.requiredForDate">
+                <!-- <input type="date" matInput [(ngModel)]="this.request.requiredForDate" name="dateTime" > -->
+            </mat-form-field><br>
+            <mat-form-field appearance="fill"  >
+                <mat-label>Quantity(units - max 10)</mat-label>
+                <input type="number" min="0" max="10" [(ngModel)]="request.bloodQuantity" matInput>
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Reason:</mat-label>
+                <textarea matInput [(ngModel)]="request.reason" style="resize: none;"></textarea>
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Comment:</mat-label>
+                <textarea readonly matInput value="{{request.comment}}" style="resize: none;"></textarea>
+            </mat-form-field><br>
+            <mat-form-field appearance="fill">
+                <mat-label>Request state:</mat-label>
+                <input readonly matInput value="{{getStateByValue(request.requestState)}}">
+            </mat-form-field><br>
+            <div>
+                <button class="m-1" mat-stroked-button (click)="send()">
+                    Send Back
+                </button>
+            </div>           
+    </div>
+</div>

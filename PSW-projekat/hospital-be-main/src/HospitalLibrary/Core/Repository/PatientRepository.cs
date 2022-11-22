@@ -1,8 +1,8 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -56,7 +56,7 @@ namespace HospitalLibrary.Core.Repository
 
             return patient;
         }
-
+        
         public Person getPersonByPatientId(int id)
         {
             var patient = _context.Patients.FirstOrDefault(d => d.Id == id);
@@ -78,6 +78,7 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.PatientAllergies.ToList();
         }
+
         public void AddAllergyToPatient(Patient patient, List<Allergy> allergies)
         {
             foreach (Allergy allergy in allergies)

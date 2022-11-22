@@ -2,7 +2,7 @@ import { HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Appointment } from '../model/appointment.model';
-import { PatientDto } from '../model/patient';
+import { PatientDto } from '../model/patientDto';
 import { User } from '../model/user';
 import { AppointmentService } from '../services/appointment.service';
 

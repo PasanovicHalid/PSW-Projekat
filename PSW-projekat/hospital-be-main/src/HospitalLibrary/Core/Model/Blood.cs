@@ -11,5 +11,6 @@ namespace HospitalLibrary.Core.Model
     {
         public BloodType BloodType { get; set; }
         public int Quantity { get; set; }
+
     }
 }

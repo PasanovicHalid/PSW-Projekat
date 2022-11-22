@@ -1,7 +1,7 @@
 import { Blood } from "./blood";
-import { DoctorDto } from "./doctor";
+import { DoctorDto } from "./doctorDto";
 import { Medicine } from "./medicine";
-import { PatientDto } from "./patient";
+import { PatientDto } from "./patientDto";
 
 export class Therapy {
     id: number;

@@ -1,7 +1,6 @@
 import { RoomDetailComponent } from "../room-detail/room-detail.component";
-import { DoctorDto } from "./doctor";
-import { PatientDto } from "./patient";
-import { Patient } from "./patient1";
+import { DoctorDto } from "./doctorDto";
+import { PatientDto } from "./patientDto";
 import { Room} from "./room.model";
 import { Therapy } from "./therapy";
 import { TreatmentState } from "./treatmentState";
@@ -9,7 +8,7 @@ import { TreatmentState } from "./treatmentState";
 export class Treatment {
     id: number;
     deleted: boolean;
-    patient: Patient;
+    patient: PatientDto;
     dateAdmission: Date;
     dateDischarge: Date;
     reasonForAdmission: string = '';
