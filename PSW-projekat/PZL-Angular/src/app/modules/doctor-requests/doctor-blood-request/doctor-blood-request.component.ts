@@ -20,23 +20,28 @@ export class DoctorBloodRequestComponent implements OnInit {
   constructor(private bloodRequestService: BloodRequestService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(paramMap => {
-      let id : any = this.route.snapshot.paramMap.get('id') ;
-      this.bloodRequestService.getBloodRequest(parseFloat(id)).subscribe(request => {
-        this.bloodRequestService.getDoctors().subscribe(doctors => {
-          this.request = new DoctorBloodRequest();
-          this.request.combineWithBloodRequest(request);
-          this.request = this.findDoctorForRequest(doctors, this.request, request.doctorId)
+    if(localStorage.getItem("currentUserRole") == 'Manager'){
+      this.route.paramMap.subscribe(paramMap => {
+        let id : any = this.route.snapshot.paramMap.get('id') ;
+        this.bloodRequestService.getBloodRequest(parseFloat(id)).subscribe(request => {
+          this.bloodRequestService.getDoctors().subscribe(doctors => {
+            this.request = new DoctorBloodRequest();
+            this.request.combineWithBloodRequest(request);
+            this.request = this.findDoctorForRequest(doctors, this.request, request.doctorId)
+          }, (error) => {
+            this.errorMessage = error;
+          })
+    
         }, (error) => {
-          this.errorMessage = error;
+            this.errorMessage = error;
         })
-  
-      }, (error) => {
-          this.errorMessage = error;
+      } , (error) => {
+        this.errorMessage = error;
       })
-    } , (error) => {
-      this.errorMessage = error;
-    })
+    }
+    else{
+      this.router.navigate(['/forbidden-access']);
+    }  
   }
 
   getBloodByValue(value: number) {

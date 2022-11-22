@@ -13,7 +13,6 @@ h1 {
   font-family: "Luckiest Guy", cursive;
   letter-spacing: 0.9rem;
   background: -webkit-linear-gradient(#666, black);
-  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 p {

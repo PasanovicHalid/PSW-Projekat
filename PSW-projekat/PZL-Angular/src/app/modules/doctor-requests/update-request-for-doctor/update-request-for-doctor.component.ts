@@ -54,9 +54,23 @@ export class UpdateRequestForDoctorComponent implements OnInit {
   }
 
   send() {
-    this.bloodRequestService.updateRequestFromDoctor(this.request).subscribe(res => {
-      this.router.navigate(['/returned-requests']);
-    });
+    if(this.validate()){
+      this.bloodRequestService.updateRequestFromDoctor(this.request).subscribe(res => {
+        this.router.navigate(['/returned-requests']);
+      });
+    }
+    else{
+      alert("You have to fill all fields!");
+    }
+    
+  }
+
+  validate(){
+    if((this.request.bloodQuantity <= 0 || this.request.bloodQuantity > 10) || this.request.reason == ""
+      || this.request.bloodType.toString() == "" || this.request.requiredForDate.toString() == ""){
+        return false;
+    }
+    return true;
   }
 
   public ConvertToString(obj: BloodType): String{
