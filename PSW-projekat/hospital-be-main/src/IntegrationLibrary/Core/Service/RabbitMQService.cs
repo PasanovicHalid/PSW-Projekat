@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Exceptions;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.Newses;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -14,6 +15,7 @@ namespace IntegrationLibrary.Core.Service
 
     public class RabbitMQService : IRabbitMQService
     {
+        public RabbitMQService() {}
         public void Send()
         {
             News n1 = new News("Title 1", "Text1", DateTime.Now, 2);
@@ -34,7 +36,7 @@ namespace IntegrationLibrary.Core.Service
             channel.BasicPublish("", "News", null, body);
         }
 
-        public List<News> Recive()
+        public List<News> Recive(List<BloodBank> bloodBanks)
         {
             List<News> news = new List<News>();
             var factory = new ConnectionFactory
@@ -55,21 +57,58 @@ namespace IntegrationLibrary.Core.Service
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine(message);
                 dynamic stuff = JsonConvert.DeserializeObject(message);
-                Console.WriteLine(stuff.ToString());
-                News n = new News();
-                n.Title = stuff._title;
-                n.Text = stuff._text;
-                n.Status = NewsStatus.PENDING;
-                news.Add(n);
-                Console.WriteLine("title:");
-                Console.WriteLine(n.Title);
-                Console.WriteLine("text:");
-                Console.WriteLine(n.Text);
+                //Console.WriteLine(stuff.ToString());
+                try
+                {
+                    News n = new News();
+                    n.Title = stuff._title;
+                    n.Text = stuff._text;
+                    n.Status = NewsStatus.PENDING;
+                    if (checkBloodBankExists((string)stuff._bloodBankEmail, bloodBanks) &&
+                    checkBloodBankApiKey((string)stuff._bloodBankEmail, (string)stuff._apiKey, bloodBanks))
+                    {
+                        news.Add(n);
+                    }
+
+                } catch
+                {
+                    throw;
+                }
+
+                
+                //Console.WriteLine("title:");
+                //Console.WriteLine(n.Title);
+                //Console.WriteLine("text:");
+                //Console.WriteLine(n.Text);
             };
             channel.BasicConsume("News", true, consumer);
 
             return news;
 
+        }
+        public bool checkBloodBankApiKey(string bankEmail, string bankApiKey, List<BloodBank> bloodBanks)
+        {
+            foreach (BloodBank entity in bloodBanks)
+            {
+                if (entity.Email.Equals(bankEmail))
+                {
+                    if (!entity.ApiKey.Equals(bankApiKey)){
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        public bool checkBloodBankExists(string bankEmail, List<BloodBank> bloodBanks)
+        {
+            foreach (BloodBank entity in bloodBanks)
+            {
+                if (entity.Email.Equals(bankEmail))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

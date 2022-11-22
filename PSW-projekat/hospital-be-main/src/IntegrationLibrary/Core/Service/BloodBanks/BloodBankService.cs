@@ -145,14 +145,5 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
             return true;
         }
 
-        public void TestSendToMQ()
-        {
-            _rabbitMQService.Send();
-        }
-
-        public void TestReciveFromMQ()
-        {
-            _rabbitMQService.Recive();
-        }
     }
 }

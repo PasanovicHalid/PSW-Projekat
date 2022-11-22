@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.BloodBanks;
 using IntegrationLibrary.Core.Repository.Newses;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ namespace IntegrationLibrary.Core.Service.Newses
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newsRepository;
+        private readonly IBloodBankRepository _bloodBankRepository;
         private readonly IRabbitMQService _rabbitMQService;
-        public NewsService(INewsRepository newsRepository, IRabbitMQService rabbitMQService)
+        public NewsService(INewsRepository newsRepository, IRabbitMQService rabbitMQService, IBloodBankRepository bloodBankRepository)
         {
             _newsRepository = newsRepository;
             _rabbitMQService = rabbitMQService;
+            _bloodBankRepository = bloodBankRepository;
         }
         public void Create(News entity)
         {
@@ -84,13 +87,19 @@ namespace IntegrationLibrary.Core.Service.Newses
         }
         public IEnumerable<News> GetAllPending()
         {
-            //_rabbitMQService.Send();
-            List<News> recivedNews =_rabbitMQService.Recive();
-            foreach (News entity in recivedNews)
+            try
             {
-                Create(entity);
+                List<News> recivedNews = _rabbitMQService.Recive(_bloodBankRepository.GetAll().ToList());
+                foreach (News entity in recivedNews)
+                {
+                    Create(entity);
+                }
+                return _newsRepository.GetAllPending();
+            } catch
+            {
+                throw;
             }
-            return _newsRepository.GetAllPending();
+            
        }
     }
 }
