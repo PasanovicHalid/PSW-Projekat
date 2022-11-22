@@ -1,7 +1,7 @@
 import { RoomDetailComponent } from "../room-detail/room-detail.component";
-import { DoctorDto } from "./doctorDto";
 import { PatientDto } from "./patientDto";
 import { Room} from "./room.model";
+import { RoomDto } from "./roomDto";
 import { Therapy } from "./therapy";
 import { TreatmentState } from "./treatmentState";
 
@@ -15,7 +15,7 @@ export class Treatment {
     reasonForDischarge: string = '';
     treatmentState: TreatmentState;
     therapy: Therapy;
-    room: Room;
+    room: RoomDto;
 
     public constructor(id: any, deleted: any, patient: any, dateAdmission: any, dateDischarge: any, reasonForAdmission: any, reasonForDischarge: any, treatmentState: any, therapy: any, room: any) {
         this.id = id;

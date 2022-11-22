@@ -46,7 +46,9 @@ namespace HospitalAPI.Controllers.PublicApp
             }
 
             _treatmentService.Create(treatment);
-            return CreatedAtAction("GetById", new { id = treatment.Id }, treatment);
+            //return CreatedAtAction("GetById", new { id = treatment.Id }, treatment);
+
+            return Ok();
 
         }
 

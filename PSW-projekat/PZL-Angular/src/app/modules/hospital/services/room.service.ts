@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BedDto } from '../model/bedDto';
 import { Room } from '../model/room.model';
+import { RoomDto } from '../model/roomDto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,8 @@ export class RoomService {
 
   constructor(private http: HttpClient) { }
 
-  getRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.apiHost + 'api/rooms', {headers: this.headers});
+  getRooms(): Observable<RoomDto[]> {
+    return this.http.get<RoomDto[]>(this.apiHost + 'api/rooms', {headers: this.headers});
   }
 
   getRoom(id: number): Observable<Room> {

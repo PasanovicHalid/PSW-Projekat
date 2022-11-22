@@ -14,6 +14,8 @@ import { UserService } from '../services/user.service';
 import { BedService } from '../services/bed.service';
 import { PatientService } from '../services/patient.service';
 import { Role } from '../model/role';
+import { RoomDto } from "../model/roomDto";
+
 
 
 @Component({
@@ -25,11 +27,11 @@ export class AdmissionPatientTreatmentComponent implements OnInit {
 
   public treatment: Treatment = new Treatment(0, false, PatientDto, Date(), new Date(),'', '', TreatmentState.close, null, Room);
   public dataSourcePatients = new MatTableDataSource<PatientDto>();
-  public dataSourceRooms = new MatTableDataSource<Room>();
+  public dataSourceRooms = new MatTableDataSource<RoomDto>();
   public dataSourceBeds = new MatTableDataSource<BedDto>();
 
   public patients: PatientDto[] = [];
-  public rooms: Room[] = [];
+  public rooms: RoomDto[] = [];
   public kreveti: BedDto[] = [];
   public idk: number = 0;
   public pomK: BedDto;
@@ -66,7 +68,7 @@ export class AdmissionPatientTreatmentComponent implements OnInit {
     this.roomService.getRooms().subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
       result.forEach((element: any) => {
-        var app = new Room(element.id, element.deleted, element.number, element.floor, element.roomType, element.medicines, element.bloods, element.beds);
+        var app = new RoomDto(element.id, element.number, element.floor, element.roomType, element.bedDtos);
         this.rooms.push(app);
       });
       this.dataSourceRooms.data = this.rooms;
@@ -95,8 +97,7 @@ export class AdmissionPatientTreatmentComponent implements OnInit {
 
   private isValidInput(): boolean {
     //ne zaboravi da dodas terapiju kasnije
-    return this.treatment?.patient.toString() != ''  && this.treatment?.dateAdmission.toString() != '' && this.treatment?.reasonForAdmission.toString() != ''  && this.treatment?.room.toString() != ''
-    && this.treatment?.room.beds.toString() != '';
+    return this.treatment?.patient.toString() != ''  && this.treatment?.dateAdmission.toString() != '' && this.treatment?.reasonForAdmission.toString() != ''  && this.treatment?.room.toString() != '';
   }
 
 }

@@ -710,6 +710,7 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Bloods");
 
                     b.Navigation("Medicines");
+                });
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.Navigation("Patients");
