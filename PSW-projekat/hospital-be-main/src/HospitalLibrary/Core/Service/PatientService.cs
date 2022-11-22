@@ -66,6 +66,11 @@ namespace HospitalLibrary.Core.Service
             return _patientRepository.getPersonByPatientId(id);
         }
 
+        public Patient getPatientByPersonId(int id)
+        {
+            return _patientRepository.getPatientByPersonId(id);
+        }
+
         public Patient RegisterPatient(Patient patient)
         {
             return _patientRepository.RegisterPatient(patient);
@@ -74,6 +79,16 @@ namespace HospitalLibrary.Core.Service
         public void Update(Patient entity)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddAllergyToPatient(Patient patient, List<Allergy> allergies)
+        {
+            _patientRepository.AddAllergyToPatient(patient, allergies);
+        }
+
+        public IEnumerable<Allergy> GetAllAllergiesForPatient(int id)
+        {
+            return _patientRepository.GetAllAllergiesForPatient(id);
         }
     }
 }

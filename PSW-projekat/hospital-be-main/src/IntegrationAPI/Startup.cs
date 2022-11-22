@@ -14,6 +14,11 @@ using IntegrationLibrary.Core.Repository.Reports;
 using IntegrationLibrary.Core.Service.Reports;
 using IntegrationLibrary.Core.Repository.BloodRequests;
 using IntegrationLibrary.Core.Service.BloodRequests;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using IntegrationLibrary.Core.Service.Newses;
+using IntegrationLibrary.Core.Repository.Newses;
 
 namespace IntegrationAPI
 {
@@ -33,6 +38,26 @@ namespace IntegrationAPI
             services.AddDbContext<IntegrationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("IntegrationDb")));
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
+
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -45,11 +70,15 @@ namespace IntegrationAPI
             services.AddScoped<IEmailService, EmailService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IBloodBankConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IRabbitMQService, RabbitMQService>();
             services.AddHostedService<BloodReportHostedService>();
             services.AddScoped<IReportSettingsRepository, ReportSettingsRepository>();
             services.AddScoped<IReportSettingsService, ReportSettingsService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
             services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<IReportSendingService, ReportSendingService>();
+            services.AddScoped<INewsRepository, NewsRepository>();
+            services.AddScoped<INewsService, NewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +103,7 @@ namespace IntegrationAPI
                     .AllowAnyHeader();
             });
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

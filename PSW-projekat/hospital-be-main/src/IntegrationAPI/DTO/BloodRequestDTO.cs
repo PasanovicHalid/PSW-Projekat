@@ -21,6 +21,22 @@ namespace IntegrationAPI.DTO
         public RequestState RequestState { get; set; }
         [Required]
         public BloodType BloodType { get; set; }
+        public string Comment { get; set; }
+        public int BloodBankId { get; set; }
+
+        public BloodRequestDTO() { }
+        
+        public BloodRequestDTO(int id, DateTime date, int quantity, string reason, int doctorID, RequestState state, BloodType type, string comm, int bloodBankId) {
+            RequiredForDate = date;
+            BloodQuantity = quantity;
+            Reason = reason;
+            DoctorId = doctorID;
+            RequestState = state;
+            BloodType = type;
+            Comment = comm;
+            Id = id;
+            BloodBankId = bloodBankId;
+        }
 
     }
 }

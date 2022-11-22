@@ -4,6 +4,7 @@ using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Exceptions;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.BloodBanks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -61,6 +62,7 @@ namespace IntegrationAPI.Controllers
             
         }
 
+        [Authorize(Roles ="Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -70,6 +72,32 @@ namespace IntegrationAPI.Controllers
                 return Ok(_bloodBankService.GetAll());
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("test")]
+        public ActionResult SendToMQ()
+        {
+            try
+            {
+                _bloodBankService.TestSendToMQ();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("testRecive")]
+        public ActionResult ReciveFromMQ()
+        {
+            try
+            {
+                _bloodBankService.TestReciveFromMQ();
+                return Ok();
+            } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

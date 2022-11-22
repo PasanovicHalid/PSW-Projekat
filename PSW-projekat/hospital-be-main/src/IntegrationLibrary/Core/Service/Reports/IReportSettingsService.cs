@@ -17,5 +17,6 @@ namespace IntegrationLibrary.Core.Service.Reports
         void Delete(ReportSettings entity);
 
         ReportSettings GetById(int id);
+        
     }
 }

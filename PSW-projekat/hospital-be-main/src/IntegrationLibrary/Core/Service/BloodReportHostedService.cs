@@ -4,14 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.Service.Generators;
+using IntegrationLibrary.Core.Service.Reports;
+using IronPdf;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace IntegrationLibrary.Core.Service
 {
     public class BloodReportHostedService : IHostedService
     {
-        private readonly int ReportIntervalInSecs = 60;
+        private readonly IServiceScopeFactory scopeFactory;
+        private readonly int ReportIntervalInHours = 24;       //svaki dan
         private Timer timer;
+
+        public BloodReportHostedService(IServiceScopeFactory scopeFactory)
+        {
+            this.scopeFactory = scopeFactory;
+        }
         public Task StartAsync(CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
@@ -21,7 +31,7 @@ namespace IntegrationLibrary.Core.Service
             // Invoke the DoWork method every 5 seconds. 
             timer = new Timer(callback: async o => await DoWork(o),
             state: null, dueTime: TimeSpan.FromSeconds(0),
-            period: TimeSpan.FromSeconds(ReportIntervalInSecs));
+            period: TimeSpan.FromSeconds(ReportIntervalInHours));
             return Task.CompletedTask;
         }
 
@@ -36,7 +46,24 @@ namespace IntegrationLibrary.Core.Service
 
         private async Task DoWork(Object o)
         {
+            bool isSuccess = false;
+            try {
+                using (var scope = scopeFactory.CreateScope())
+                {
+                    var reportSendingService = scope.ServiceProvider.GetService<IReportSendingService>();
+                    if (reportSendingService.ReportShouldBeSent())
+                        isSuccess = await reportSendingService.GeneratePDFs();
+                    if (isSuccess)
+                        reportSendingService.ChangeReportDeliveryDate();
+                }
+            }
+            catch (Exception e)
+            {
+                
+            }
             
+            
+           
         }
     }
 }

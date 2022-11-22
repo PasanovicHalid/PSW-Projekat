@@ -370,20 +370,16 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AllergyId")
+                    b.Property<int>("AllergyId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AllergyId");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("PatientAllergies");
                 });
@@ -641,7 +637,7 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Patients")
                         .HasForeignKey("DoctorId");
 
                     b.HasOne("HospitalLibrary.Core.Model.Person", "Person")
@@ -651,21 +647,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.PatientAllergies", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Allergy", "Allergy")
-                        .WithMany()
-                        .HasForeignKey("AllergyId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Allergy");
-
-                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Person", b =>
@@ -729,6 +710,9 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Bloods");
 
                     b.Navigation("Medicines");
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }

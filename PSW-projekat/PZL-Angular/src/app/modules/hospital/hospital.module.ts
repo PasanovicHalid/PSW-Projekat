@@ -1,6 +1,5 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "src/app/material/material.module";
 import { MatInput, MatInputModule} from '@angular/material/input';
@@ -19,6 +18,8 @@ import { CreateAppointmentComponent } from './create-appointment/create-appointm
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
 import { AdmissionPatientTreatmentComponent } from './admission-patient-treatment/admission-patient-treatment.component';
 import { DischargePatientComponent } from './discharge-patient/discharge-patient.component';
+import { LoginComponent } from "./login/login.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -32,8 +33,8 @@ const routes: Routes = [
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent }
-
-
+  { path: 'login', component: LoginComponent }
+  
 ];
 
 @NgModule({
@@ -48,6 +49,7 @@ const routes: Routes = [
     UpdateAppointmentComponent,
     AdmissionPatientTreatmentComponent,
     DischargePatientComponent
+    LoginComponent
   ],
   imports: [
     CommonModule,
