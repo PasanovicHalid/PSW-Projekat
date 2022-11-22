@@ -68,7 +68,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
         [Authorize(Roles = "Patient")]
         [HttpGet ("GetByPersonId/{id}")]
-        public async Task<ActionResult> GetById(int id)
+        public async Task<ActionResult> GetByPersonId(int id)
         {
             Patient patient = _patientService.getPatientByPersonId(id);
             var secUser = await _userManager.FindByEmailAsync(patient.Person.Email);
