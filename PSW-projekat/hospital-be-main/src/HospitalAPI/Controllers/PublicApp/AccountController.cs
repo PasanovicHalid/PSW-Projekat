@@ -2,7 +2,6 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Model.MailRequests;
-using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Cors;
@@ -196,7 +195,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
-
+            
             Person user = new Person()
             {
                 Id = 0,

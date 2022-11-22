@@ -1,4 +1,5 @@
-﻿using HospitalAPI;
+﻿using Microsoft.Extensions.Configuration;
+using HospitalAPI;
 using HospitalAPI.Controllers.PublicApp;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
@@ -8,11 +9,7 @@ using HospitalTests.Setup;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace HospitalTests.Integration
@@ -22,11 +19,13 @@ namespace HospitalTests.Integration
         public RegistrationTests(TestDatabaseFactory<Startup> factory) : base(factory)
         { }
 
-        /*private static AccountController SetupSettingsController(IServiceScope scope)
+        private static AccountController SetupSettingsController(IServiceScope scope)
         {
             return new AccountController(scope.ServiceProvider.GetRequiredService<UserManager<SecUser>>(), scope.ServiceProvider.GetRequiredService<SignInManager<SecUser>>(),
-                                         scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<IPersonService>(),
-                                         scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>());
+                                         scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<IEmailService>(),
+                                         scope.ServiceProvider.GetRequiredService<IConfiguration>(), scope.ServiceProvider.GetRequiredService<IPersonService>(),
+                                         scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>()
+                                         );
         }
 
         [Fact]
@@ -137,6 +136,6 @@ namespace HospitalTests.Integration
 
             //Assert
             Assert.NotNull(result);
-        }*/
+        }
     }
 }

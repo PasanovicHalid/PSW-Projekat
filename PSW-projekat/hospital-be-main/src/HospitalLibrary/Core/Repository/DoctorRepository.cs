@@ -35,7 +35,8 @@ namespace HospitalLibrary.Core.Repository
         
         public IEnumerable<int> GetAllDoctorsForPatientRegistration()
         {
-            int minPatients = GetAll().ToList().Min(pNum => pNum.Patients.Count());
+            var dotors = this.GetAll();
+            int minPatients = _context.Doctors.ToList().Min(pNum => pNum.Patients.Count());
             List<Doctor> allDoctors = _context.Doctors.Where(d => d.Patients.Count() <= minPatients + 2).ToList();
 
             List<int> doctorPersonIds = new List<int>();
