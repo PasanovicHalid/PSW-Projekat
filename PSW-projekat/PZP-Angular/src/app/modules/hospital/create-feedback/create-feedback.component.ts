@@ -19,6 +19,9 @@ export class CreateFeedbackComponent{
 
   public createFeedback() {
     if (!this.isValidInput()) return;
+    let id = localStorage.getItem("currentUserId");
+    if(id!=null)
+      this.feedback.userId = id;
     this.feedbackService.createFeedback(this.feedback).subscribe(res => {
       this.router.navigate(['']);
     });

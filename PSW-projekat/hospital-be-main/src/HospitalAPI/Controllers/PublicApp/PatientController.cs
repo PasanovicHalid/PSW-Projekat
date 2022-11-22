@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
-
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]

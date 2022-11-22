@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,16 @@ using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
     public class FeedbacksController : ControllerBase
     {    
         private readonly FeedbackService _feedbackService;
-        private readonly PersonService _userService;
+        private readonly IPersonService _userService;
 
-        public FeedbacksController(FeedbackService feedbackService, PersonService userService)
+        public FeedbacksController(FeedbackService feedbackService, IPersonService userService)
         {
             _feedbackService = feedbackService;
             _userService = userService;
@@ -44,6 +46,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(feedback);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpPost]
         public ActionResult Create(CreateFeedbackDto feedbackDto)
         {
@@ -105,6 +108,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return NoContent();
         }
 
+        [AllowAnonymous]
         [HttpGet("public")]
         public ActionResult GetAllFeedbackPublicDtos()
         {
