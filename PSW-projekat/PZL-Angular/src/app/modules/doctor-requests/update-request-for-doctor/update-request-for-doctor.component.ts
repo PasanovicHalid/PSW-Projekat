@@ -24,18 +24,22 @@ export class UpdateRequestForDoctorComponent implements OnInit {
   constructor(private bloodRequestService: BloodRequestService, public datepipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe(params => {
-      this.getRequest(params['id']);
-    }, (error) => {
-      this.errorMessage = error;
-    });
+    if(localStorage.getItem("currentUserRole") == 'Doctor'){
+      this.routeSub = this.route.params.subscribe(params => {
+        this.getRequest(params['id']);
+      }, (error) => {
+        this.errorMessage = error;
+      });
+    }
+    else{
+      this.router.navigate(['/forbidden-access']);
+    }  
   }
 
   public getRequest(id: number){
     this.bloodRequestService.getBloodRequest(id).subscribe(res => {
         this.request = res;
         this.date = this.datepipe.transform(this.request.requiredForDate, 'MM-dd-yyyy')!;
-        console.log(this.request.requiredForDate)
         
       }, (error) => {
         this.errorMessage = error;
@@ -51,7 +55,7 @@ export class UpdateRequestForDoctorComponent implements OnInit {
 
   send() {
     this.bloodRequestService.updateRequestFromDoctor(this.request).subscribe(res => {
-      this.router.navigate(['/returned-requests', localStorage.getItem("doctorID")]);
+      this.router.navigate(['/returned-requests']);
     });
   }
 
