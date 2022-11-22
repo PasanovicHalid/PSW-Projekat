@@ -11,5 +11,6 @@ namespace HospitalLibrary.Core.Repository
     {
         public Patient RegisterPatient(Patient patient);
         public Person getPersonByPatientId(int id);
+
     }
 }

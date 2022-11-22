@@ -96,5 +96,13 @@ namespace HospitalAPI.Controllers
             _roomService.Delete(room);
             return NoContent();
         }
+
+        [HttpGet("room/{roomId}")]
+        public ActionResult GetAllBedsByRoom(int roomId)
+        {
+            return Ok(_roomService.GetAllBedsByRoom(roomId));
+        }
+
+
     }
 }

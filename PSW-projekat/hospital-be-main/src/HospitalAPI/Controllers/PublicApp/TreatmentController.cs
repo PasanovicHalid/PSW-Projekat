@@ -15,12 +15,16 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly ITreatmentService _treatmentService;
         private readonly IPatientService _patientService;
         private readonly IRoomService _roomService;
+        private readonly IBedService _bedService;
 
-        public TreatmentController(ITreatmentService treatmentService, IPatientService patientService, IRoomService roomService)
+
+        public TreatmentController(ITreatmentService treatmentService, IPatientService patientService, IRoomService roomService,
+            IBedService bedService)
         {
             _treatmentService = treatmentService;
             _patientService = patientService;
             _roomService = roomService;
+            _bedService = bedService;
 
         }
 
@@ -36,14 +40,13 @@ namespace HospitalAPI.Controllers.PublicApp
             treatment.Patient = _patientService.GetById(treatment.Patient.Id);
             treatment.Room = _roomService.GetById(treatment.Room.Id);
 
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             _treatmentService.Create(treatment);
-            return Ok();
+            return CreatedAtAction("GetById", new { id = treatment.Id }, treatment);
 
         }
 

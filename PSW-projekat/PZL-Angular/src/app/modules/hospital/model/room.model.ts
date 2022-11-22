@@ -1,4 +1,7 @@
-import { Equipment } from "./equipment";
+import { Bed } from "./bed";
+import { BedDto } from "./bedDto";
+import { Blood } from "./blood";
+import { Medicine } from "./medicine";
 import { RoomType } from "./roomType";
 
 export class Room {
@@ -7,7 +10,9 @@ export class Room {
     number: string = '';
     floor: number = 0;
     roomType: RoomType;
-    equipment: Equipment;
+    medicines: Medicine[];
+    bloods: Blood[];
+    beds: BedDto[];
 
     /*
     public constructor(obj?: any) {
@@ -20,13 +25,15 @@ export class Room {
         }
     }
     */
-    public constructor(id: any, deleted:any, number: any, floor: any, roomType: any, equipment: any) {
+    public constructor(id: any, deleted:any, number: any, floor: any, roomType: any, medicines: any, bloods: any, beds: any) {
         this.id = id;
         this.deleted = deleted;
         this.number = number;
         this.floor = floor;
         this.roomType = roomType;
-        this.equipment = equipment;
+        this.medicines = medicines;
+        this.bloods = bloods;
+        this.beds = beds;
 
     }
 

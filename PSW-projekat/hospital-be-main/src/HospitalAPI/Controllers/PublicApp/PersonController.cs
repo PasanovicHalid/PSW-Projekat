@@ -51,5 +51,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok(_personService.GetById(id));
         }
+
+
     }
 }

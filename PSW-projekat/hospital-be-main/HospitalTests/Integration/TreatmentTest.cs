@@ -25,16 +25,19 @@ namespace HospitalTests.Integration
         public TreatmentTest(TestDatabaseFactory<Startup> factory) : base(factory)
         { }
 
+        
         private static TreatmentController SetupSettingsController(IServiceScope scope)
         {
             
             return new TreatmentController(scope.ServiceProvider.GetRequiredService<ITreatmentService>(),
                                            scope.ServiceProvider.GetRequiredService<IPatientService>(),
-                                           scope.ServiceProvider.GetRequiredService<IRoomService>()
+                                           scope.ServiceProvider.GetRequiredService<IRoomService>(),
+                                           scope.ServiceProvider.GetRequiredService<IBedService>()
                );
         }
+        
 
-
+        
         [Fact]
         public void Find_single_treatment()
         {
@@ -48,7 +51,7 @@ namespace HospitalTests.Integration
             //da li je odg sprat
             Assert.NotNull(result);
         }
-
+        
 
         [Fact]
         public void Find_a_patient_to_admission()
@@ -56,22 +59,38 @@ namespace HospitalTests.Integration
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
+
+
             //Act
             Treatment testCase = new Treatment()
             {
-                Id = 2,
-                Patient = new Patient(),
+                Patient = null,
+                /*
+                Patient = new Patient() { Id = 1,
+                                           Deleted = false,
+                                           BloodType = BloodType.APlus,
+                                           Person = new Person() { Id = 3, Name = "mile", Surname = "milic",
+                                            Email = "milica@gmail.com", Address = null, Gender = Gender.male,
+                                            BirthDate = DateTime.Now, Role = Role.patient
+                                            }, 
+                                           Doctor = null},  
+                */
                 DateAdmission = DateTime.Now,
-                ReasonForAdmission = "glavobolja",
-                TreatmentState = TreatmentState.open,
-                Therapy = new Therapy(),
-                Room = new Room()
+                DateDischarge = DateTime.Now,
+                ReasonForAdmission = "Bol u stomaku",
+                ReasonForDischarge = "dobro je",
+                TreatmentState = 0,
+                Therapy = null,
+                Room = null,
+                Deleted = false
+
             };
             //Assert
-            var result = ((OkObjectResult)controller.Create(testCase))?.Value as Treatment;
+            var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as Treatment;
             Assert.NotNull(result);
         }
 
+        
         [Fact]
         public void Find_treatment_to_close()
         {
@@ -101,6 +120,6 @@ namespace HospitalTests.Integration
 
          
         }
-
+        
     }
 }

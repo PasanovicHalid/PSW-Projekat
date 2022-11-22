@@ -1,5 +1,5 @@
-import { DoctorDto } from "./doctor";
-import { PatientDto } from "./patient";
+import { DoctorDto } from "./doctorDto";
+import { PatientDto } from "./patientDto";
 
 export class Appointment {
     id: number;

@@ -1,8 +1,8 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Settings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -53,5 +53,6 @@ namespace HospitalLibrary.Core.Repository
             var person = _context.Persons.FirstOrDefault(d => d.Id == patient.Person.Id);
             return person;
         }
+
     }
 }

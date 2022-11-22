@@ -1,4 +1,4 @@
 export enum BedState {
-   taken,
-   free
+   taken ,
+   free 
 }

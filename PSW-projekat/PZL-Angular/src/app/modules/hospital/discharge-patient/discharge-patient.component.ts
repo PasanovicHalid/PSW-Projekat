@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { PatientDto } from '../model/patient';
+import { PatientDto } from '../model/patientDto';
 import { Room } from '../model/room.model';
 import { Treatment } from '../model/treatment';
 import { TreatmentState } from '../model/treatmentState';
@@ -48,7 +48,7 @@ export class DischargePatientComponent implements OnInit {
     this.roomService.getRooms().subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
       result.forEach((element: any) => {
-        var app = new Room(element.id, element.deleted, element.number, element.floor, element.roomType, element.equipment);
+        var app = new Room(element.id, element.deleted, element.number, element.floor, element.roomType, element.medicines, element.bloods, element.beds);
         this.rooms.push(app);
       });
       this.dataSourceRooms.data = this.rooms;

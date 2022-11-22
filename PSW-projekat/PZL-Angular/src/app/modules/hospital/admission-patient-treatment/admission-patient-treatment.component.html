@@ -3,18 +3,25 @@
     <div>
 
         <h1>Admission patient to hospital treatment</h1>
-
+ 
         <mat-form-field appearance="fill">
             <mat-label>Patient</mat-label>
-            <mat-select [(ngModel)]="treatment.patient" >
+            <mat-select [(ngModel)]="treatment.patient" (ngModelChange)="handleOptionChangePatient()">
                 <mat-option *ngFor="let patient of patients" [value]="patient">{{patient.name}} {{patient.surname}}</mat-option>
             </mat-select>
         </mat-form-field>
         
         <mat-form-field appearance="fill">
             <mat-label>Room</mat-label>
-            <mat-select [(ngModel)]="treatment.room" >
+            <mat-select [(ngModel)]="treatment.room" (ngModelChange)="handleOptionChangeRoom()">
                 <mat-option *ngFor="let room of rooms" [value]="room">{{room.number}}, Floor: {{room.floor}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+            <mat-label>Bed of choosed room</mat-label>
+            <mat-select  [(ngModel)]="pomK" (ngModelChange)="handleOptionChangeBed()">
+                <mat-option *ngFor="let bed of kreveti" [value]="bed">{{bed.name}}</mat-option>
             </mat-select>
         </mat-form-field>
 

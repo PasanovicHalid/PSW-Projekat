@@ -11,5 +11,7 @@ namespace HospitalLibrary.Core.Service
     {
         Patient RegisterPatient(Patient patient);
         public Person getPersonByPatientId(int id);
+        public IEnumerable<Patient> GetPatientsNoTreatment();
+
     }
 }
