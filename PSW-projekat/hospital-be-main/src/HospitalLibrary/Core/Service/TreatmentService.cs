@@ -44,6 +44,9 @@ namespace HospitalLibrary.Core.Service
         public void Update(Treatment treatment)
         {
             treatment.Deleted = false;
+           // treatment.TreatmentState.Equals("close");
+            
+
             _treatmentRepository.Update(treatment);
         }
     }
