@@ -51,5 +51,10 @@ namespace HospitalLibrary.Core.Repository
                 throw;
             }
         }
+
+        public Bed GetByPatientId(int id)
+        {
+            return _context.Beds.Where(b => b.Patient.Id == id).FirstOrDefault<Bed>();
+        }
     }
 }

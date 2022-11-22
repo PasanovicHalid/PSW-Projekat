@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PatientDto } from '../model/patientDto';
 import { Room } from '../model/room.model';
+import { RoomDto } from '../model/roomDto';
 import { Treatment } from '../model/treatment';
 import { TreatmentState } from '../model/treatmentState';
 import { RoomService } from '../services/room.service';
@@ -18,9 +19,9 @@ export class DischargePatientComponent implements OnInit {
 
   public treatment: Treatment = new Treatment(0, false, PatientDto, Date(), new Date(),'', '', TreatmentState.close, null, Room);
   public dataSourcePatients = new MatTableDataSource<PatientDto>();
-  public dataSourceRooms = new MatTableDataSource<Room>();
+  public dataSourceRooms = new MatTableDataSource<RoomDto>();
   public patients: PatientDto[] = [];
-  public rooms: Room[] = [];
+  public rooms: RoomDto[] = [];
   public newPatient1: PatientDto = new PatientDto(0, '','','','', 0);
 
   constructor(private treatmentService: TreatmentService, private userService: UserService, private roomService: RoomService, private router: Router, private route: ActivatedRoute ) { }
@@ -48,7 +49,7 @@ export class DischargePatientComponent implements OnInit {
     this.roomService.getRooms().subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
       result.forEach((element: any) => {
-        var app = new Room(element.id, element.deleted, element.number, element.floor, element.roomType, element.medicines, element.bloods, element.beds);
+        var app = new RoomDto(element.id, element.number, element.floor, element.roomType, element.bedDtos);
         this.rooms.push(app);
       });
       this.dataSourceRooms.data = this.rooms;

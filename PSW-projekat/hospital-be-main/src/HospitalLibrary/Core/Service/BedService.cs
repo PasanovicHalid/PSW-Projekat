@@ -42,6 +42,11 @@ namespace HospitalLibrary.Core.Service
             _bedRepository.Update(bed);
 
         }
+
+        public Bed GetByPatientId(int id)
+        {
+            return _bedRepository.GetByPatientId(id);
+        }
         
     }
 }

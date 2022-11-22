@@ -15,9 +15,9 @@ export class Treatment {
     reasonForDischarge: string = '';
     treatmentState: TreatmentState;
     therapy: Therapy;
-    room: RoomDto;
+    roomDto: RoomDto;
 
-    public constructor(id: any, deleted: any, patient: any, dateAdmission: any, dateDischarge: any, reasonForAdmission: any, reasonForDischarge: any, treatmentState: any, therapy: any, room: any) {
+    public constructor(id: any, deleted: any, patient: any, dateAdmission: any, dateDischarge: any, reasonForAdmission: any, reasonForDischarge: any, treatmentState: any, therapy: any, roomDto: any) {
         this.id = id;
         this.deleted = deleted;
         this.patient = patient;
@@ -27,7 +27,7 @@ export class Treatment {
         this.reasonForDischarge = reasonForDischarge;
         this.treatmentState = treatmentState;
         this.therapy = therapy;
-        this.room = room;
+        this.roomDto = roomDto;
 
     }
 }
