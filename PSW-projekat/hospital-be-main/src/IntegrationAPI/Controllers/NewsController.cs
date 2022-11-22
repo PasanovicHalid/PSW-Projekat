@@ -34,7 +34,6 @@ namespace IntegrationAPI.Controllers
         [HttpGet("pending")]
         public ActionResult GetAllPending()
         {
-            Console.WriteLine("asdffsadsdASASASASASASfasfd");
             try
             {
                 return Ok(_newsService.GetAllPending());
