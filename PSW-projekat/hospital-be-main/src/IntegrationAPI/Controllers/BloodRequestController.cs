@@ -37,7 +37,7 @@ namespace IntegrationAPI.Controllers
             try
             {
                 _bloodRequestService.Create(bloodRequest);
-                return Ok(bloodRequest);
+                return Ok(entity);
             }
             catch (Exception ex)
             {

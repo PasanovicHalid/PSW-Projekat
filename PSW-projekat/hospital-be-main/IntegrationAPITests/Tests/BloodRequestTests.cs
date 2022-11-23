@@ -37,14 +37,15 @@ namespace IntegrationAPITests.Tests
                 BloodQuantity = 1,
                 Reason = "",
                 DoctorId = 1,
-                RequestState =0,
+                RequestState = 0,
                 BloodType = 0,
-                BloodBankId = 0
+                BloodBankId = 0,
+                Id =0
             };
 
-
-            var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as BloodRequest;
+            var result = ((OkObjectResult)controller.Create(testCase))?.Value as BloodRequestDTO;
             result.Id = 0;
+            result.ShouldBe(testCase);
             JsonSerializer.Serialize(result).ShouldBe(JsonSerializer.Serialize(testCase));
         }
 

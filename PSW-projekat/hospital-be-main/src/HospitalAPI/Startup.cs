@@ -92,14 +92,14 @@ namespace HospitalAPI
 
             services.AddScoped<AllergyRepository>();
 
-            services.AddScoped<PersonService>();
-            services.AddScoped<PersonRepository>();
+            services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
-            services.AddScoped<DoctorRepository>();
-            services.AddScoped<DoctorService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IDoctorService, DoctorService>();
 
-            services.AddScoped<PatientRepository>();
-            services.AddScoped<PatientService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
 
             services.AddScoped<IWorkingDayRepository, WorkingDayRepository>();
 

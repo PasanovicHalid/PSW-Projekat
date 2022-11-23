@@ -2,9 +2,16 @@
     <div>
         <mat-form-field appearance="fill">
             <mat-label>Blood Type</mat-label>
-            <mat-select [(ngModel)]="bloodRequest.bloodType" >
-                <mat-option *ngFor="let  bloodType of bloodTypes" [value]="bloodType">{{ConvertToString(bloodType)}}</mat-option>
-            </mat-select>
+            <mat-select name="bloodTypes" id="bloodTypes" [(ngModel)]="bloodType" matInput>
+                <mat-option value="AP">A+</mat-option>
+                <mat-option value="AN">A-</mat-option>
+                <mat-option value="BP">B+</mat-option>
+                <mat-option value="BN">B-</mat-option>
+                <mat-option value="ABP">AB+</mat-option>
+                <mat-option value="ABN">AB-</mat-option>
+                <mat-option value="OP">O+</mat-option>
+                <mat-option value="ON">O-</mat-option>
+              </mat-select>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Blood Quantity</mat-label>

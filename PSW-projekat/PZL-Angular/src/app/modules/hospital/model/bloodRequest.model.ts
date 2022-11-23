@@ -1,5 +1,6 @@
+import { BloodType } from "../../doctor-requests/model/blood-type";
 import { RequestState } from "./requestState";
-import { BloodType } from "./bloodType";
+
 
 
 export class BloodRequest {
@@ -11,6 +12,8 @@ export class BloodRequest {
     reason: string;
     requestState: RequestState;
     bloodType: BloodType;
+    comment: string='';
+    BloodBankId: number = 1;
 
     public constructor(id: any, deleted: any, requiredForDate: any, doctorId: any, bloodQuantity: any, reason: any, requestState: any, bloodType: any) {
         this.id = id;
