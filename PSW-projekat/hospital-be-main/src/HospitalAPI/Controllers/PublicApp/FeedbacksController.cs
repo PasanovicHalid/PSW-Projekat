@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
-    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -28,12 +27,14 @@ namespace HospitalAPI.Controllers.PublicApp
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet("/real")]
         public ActionResult GetAll()
         {
             return Ok(_feedbackService.GetAll());
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -70,6 +71,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult Update(int id, Feedback feedback)
         {
@@ -95,6 +97,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(feedback);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {

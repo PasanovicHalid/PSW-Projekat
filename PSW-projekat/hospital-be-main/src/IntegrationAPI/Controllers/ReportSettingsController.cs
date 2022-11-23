@@ -10,7 +10,7 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Manager, Doctor")]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
