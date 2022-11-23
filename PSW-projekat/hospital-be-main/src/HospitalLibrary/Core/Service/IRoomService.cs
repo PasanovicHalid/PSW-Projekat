@@ -11,6 +11,9 @@ namespace HospitalLibrary.Core.Service
     public interface IRoomService : IService<Room>
     {
         IEnumerable<BedDto> GetAllBedsByRoom(int roomId);
+        public IEnumerable<Medicine> GetAllStorageMedicnes();
+        public IEnumerable<Blood> GetAllStorageBloods();
+
 
     }
 }

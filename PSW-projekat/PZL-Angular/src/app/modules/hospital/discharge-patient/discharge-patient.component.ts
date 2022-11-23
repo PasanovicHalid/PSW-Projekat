@@ -1,3 +1,4 @@
+import { NodeWithI18n } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -34,17 +35,6 @@ export class DischargePatientComponent implements OnInit {
         console.log(res);
         this.treatment = res;
     })
-
-
-    /*this.userService.GetAllPatients().subscribe(res => {
-      let result = Object.values(JSON.parse(JSON.stringify(res)));
-      result.forEach((element: any) => {
-        var app = new PatientDto(element.id, element.name, element.surname, element.email, element.username, element.role);
-        this.patients.push(app);
-      });
-      console.log(this.patients);
-      this.dataSourcePatients.data = this.patients;
-    })*/
 
     this.roomService.getRooms().subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));

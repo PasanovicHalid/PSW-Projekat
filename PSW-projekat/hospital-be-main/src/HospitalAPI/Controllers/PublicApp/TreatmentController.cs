@@ -19,15 +19,21 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IPatientService _patientService;
         private readonly IRoomService _roomService;
         private readonly IBedService _bedService;
+        private readonly IBloodService _bloodService;
+        private readonly IMedicineService _medicineService;
+        private readonly ITherapyService _therapyService;
 
 
         public TreatmentController(ITreatmentService treatmentService, IPatientService patientService, IRoomService roomService,
-            IBedService bedService)
+            IBedService bedService, IBloodService bloodService, IMedicineService medicineService, ITherapyService therapyService)
         {
             _treatmentService = treatmentService;
             _patientService = patientService;
             _roomService = roomService;
             _bedService = bedService;
+            _bloodService = bloodService;
+            _medicineService = medicineService;
+            _therapyService = therapyService;
 
         }
 
@@ -44,7 +50,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
                 ICollection<BedDto> bedDtos = new List<BedDto>();
 
-                foreach(var bed in treatment.Room.Beds)
+                foreach (var bed in treatment.Room.Beds)
                 {
                     PatientDto patientDto2 = null;
 
@@ -71,15 +77,30 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpPost]
         public ActionResult Create(TreatmentDto treatmentDto)
         {
-            Treatment treatment = new Treatment();
+            
+            if (!(treatmentDto.Therapy.Medicine == null)) {
 
+                treatmentDto.Therapy.Medicine = _medicineService.GetById(treatmentDto.Therapy.Medicine.Id);
+            }
+
+            if (!(treatmentDto.Therapy.Blood == null))
+            {
+                treatmentDto.Therapy.Blood = _bloodService.GetById(treatmentDto.Therapy.Blood.Id);
+            }
+
+            //sto ako ovo ne stavim pravi jos jednu terapiju
+            //treatmentDto.Therapy = _therapyService.GetById(treatmentDto.Therapy.Id);
+
+            Treatment treatment = new Treatment();
             treatment.Id = treatmentDto.Id;
             treatment.Patient = _patientService.GetById(treatmentDto.Patient.Id);
             treatment.Room = _roomService.GetById(treatmentDto.RoomDto.Id);
             treatment.DateAdmission = treatmentDto.DateAdmission;
             treatment.ReasonForAdmission = treatmentDto.ReasonForAdmission;
             treatment.ReasonForDischarge = treatmentDto.ReasonForDischarge;
+            treatment.Therapy = treatmentDto.Therapy;
             treatment.DateDischarge = DateTime.Now;
+
 
             if (!ModelState.IsValid)
             {
@@ -161,7 +182,7 @@ namespace HospitalAPI.Controllers.PublicApp
             treatment.DateDischarge = treatmentDto.DateDischarge;
             treatment.ReasonForDischarge = treatmentDto.ReasonForDischarge;
             treatment.TreatmentState = HospitalLibrary.Core.Model.Enums.TreatmentState.close;
-            
+
 
             try
             {

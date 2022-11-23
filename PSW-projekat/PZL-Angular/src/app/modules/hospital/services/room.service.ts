@@ -2,6 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BedDto } from '../model/bedDto';
+import { Blood } from '../model/blood';
+import { BloodType } from '../model/bloodType';
+import { Medicine } from '../model/medicine';
 import { Room } from '../model/room.model';
 import { RoomDto } from '../model/roomDto';
 
@@ -38,4 +41,13 @@ export class RoomService {
   GetAllBedsByRoom(roomId: number) : Observable<any[]> {
     return this.http.get<BedDto[]>(this.apiHost + 'api/rooms/room/' + roomId, {headers: this.headers});
   }
+
+  getAllStorageMedicnes() : Observable<any[]> {
+    return this.http.get<Medicine[]>(this.apiHost + 'api/rooms/room/medicines', {headers: this.headers});
+  }
+
+  getAllStorageBloods() : Observable<any[]> {
+    return this.http.get<Blood[]>(this.apiHost + 'api/rooms/room/bloods', {headers: this.headers});
+  }
+
 }

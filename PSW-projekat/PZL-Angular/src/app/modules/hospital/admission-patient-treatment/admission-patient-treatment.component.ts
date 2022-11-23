@@ -15,6 +15,11 @@ import { BedService } from '../services/bed.service';
 import { PatientService } from '../services/patient.service';
 import { Role } from '../model/role';
 import { RoomDto } from "../model/roomDto";
+import { Blood } from '../model/blood';
+import { Medicine } from '../model/medicine';
+import { TherapyService } from '../services/therapy.service';
+import { MedicineService } from '../services/medicine.service';
+import { BloodService } from '../services/blood.service';
 
 
 
@@ -25,20 +30,29 @@ import { RoomDto } from "../model/roomDto";
 })
 export class AdmissionPatientTreatmentComponent implements OnInit {
 
-  public treatment: Treatment = new Treatment(0, false, PatientDto, Date(), new Date(),'', '', TreatmentState.close, null, RoomDto);
+  public treatment: Treatment = new Treatment(0, false, PatientDto, Date(), new Date(),'', '', TreatmentState.close, Therapy, RoomDto);
   public dataSourcePatients = new MatTableDataSource<PatientDto>();
   public dataSourceRooms = new MatTableDataSource<RoomDto>();
   public dataSourceBeds = new MatTableDataSource<BedDto>();
+  public dataSourceMedicines = new MatTableDataSource<Medicine>();
+  public dataSourceBloods = new MatTableDataSource<Blood>();
 
   public patients: PatientDto[] = [];
   public rooms: RoomDto[] = [];
   public kreveti: BedDto[] = [];
+  public bloods: Blood[] = [];
+  public medicines: Medicine[] = [];
+
   public idk: number = 0;
   public pomK: BedDto;
   public idp: number = 0;
 
+  public therapy: Therapy = new Therapy(0, false, Medicine, Blood, 0, 0);
+
   constructor(private treatmentService: TreatmentService, private roomService: RoomService, 
-              private bedService: BedService, private patientService: PatientService, private router: Router) { }
+              private bedService: BedService, private patientService: PatientService, 
+              private therapyService: TherapyService, private medicineService: MedicineService,
+              private bloodService: BloodService, private router: Router) { }
 
   public handleOptionChangeRoom() {
      this.idk = this.treatment.roomDto.id;
@@ -75,6 +89,24 @@ export class AdmissionPatientTreatmentComponent implements OnInit {
       this.dataSourceRooms.data = this.rooms;
     })
 
+    this.roomService.getAllStorageMedicnes().subscribe(res => {
+      let result = Object.values(JSON.parse(JSON.stringify(res)));
+      result.forEach((element: any) => {
+        var app = new Medicine(element.id, element.deleted, element.name, element.quantity);
+        this.medicines.push(app);
+      });
+      this.dataSourceMedicines.data = this.medicines;
+    })
+
+    this.roomService.getAllStorageBloods().subscribe(res => {
+      let result = Object.values(JSON.parse(JSON.stringify(res)));
+      result.forEach((element: any) => {
+        var app = new Blood(element.id, element.deleted, element.bloodType, element.quantity);
+        this.bloods.push(app);
+      });
+      this.dataSourceBloods.data = this.bloods;
+    })
+
   }
 
   public handleOptionChangePatient() {
@@ -90,16 +122,120 @@ export class AdmissionPatientTreatmentComponent implements OnInit {
 
   public createTreatment() {
     console.log(this.treatment);
+
     if (!this.isValidInput()){
-      window.confirm("The fields are not valid entered!") }
-    this.treatmentService.createTreatment(this.treatment).subscribe(res => {
-      window.confirm("The patient was admitted for inpatient treatment!");
-    });
+      window.confirm("The fields are not valid entered!")
+    }
+
+    this.treatment.therapy = this.therapy;
+
+
+    if(!this.ZaKrv() && !this.ZaLek()){
+
+    this.roomService.getAllStorageMedicnes().subscribe(res => {
+      let result = Object.values(JSON.parse(JSON.stringify(res)));
+      result.forEach((element: any) => {
+        var app = new Medicine(element.id, element.deleted, element.name, element.quantity);
+
+        if(element.name == this.therapy.medicine.name)
+        {
+          if(element.quantity < this.therapy.quantitytMedicine) {
+          window.confirm("There is not enough amount of selected medicine"); }
+          else {
+
+            this.medicineService.updateQuantityMedicine(this.therapy.medicine, this.therapy.quantitytMedicine).subscribe(res =>{
+              window.confirm("The quantity of medicine is changed!");
+            });
+
+            this.roomService.getAllStorageBloods().subscribe(res => {
+              let result = Object.values(JSON.parse(JSON.stringify(res)));
+              result.forEach((element: any) => {
+                var app = new Blood(element.id, element.deleted, element.bloodType, element.quantity);
+        
+                if(element.bloodType == this.therapy.blood.bloodType)
+                {
+                  if(element.quantity < this.therapy.quantityBlood) {
+                  window.confirm("There is not enough amount of selected blood"); }
+                  else {
+        
+                    this.bloodService.updateQuantityBlood(this.therapy.blood, this.therapy.quantityBlood).subscribe(res =>{
+                      window.confirm("The quantity of blood is changed!");
+                    });
+        
+                    this.treatmentService.createTreatment(this.treatment).subscribe(res => {
+                      window.confirm("The patient was admitted for inpatient treatment!");
+                    });
+                  } 
+                }});})
+          } 
+        }});})
+    }
+
+  }
+
+  public ZaKrv(): boolean
+  {
+    if(this.therapy.quantityBlood != 0 && this.therapy.quantitytMedicine == 0)
+    {
+    this.roomService.getAllStorageBloods().subscribe(res => {
+      let result = Object.values(JSON.parse(JSON.stringify(res)));
+      result.forEach((element: any) => {
+        var app = new Blood(element.id, element.deleted, element.bloodType, element.quantity);
+
+        if(element.bloodType == this.therapy.blood.bloodType)
+        {
+          if(element.quantity < this.therapy.quantityBlood) {
+          window.confirm("There is not enough amount of selected blood"); }
+          else {
+
+            this.bloodService.updateQuantityBlood(this.therapy.blood, this.therapy.quantityBlood).subscribe(res =>{
+              window.confirm("The quantity of blood is changed!");
+            });
+
+            this.treatmentService.createTreatment(this.treatment).subscribe(res => {
+              window.confirm("The patient was admitted for inpatient treatment!");
+            });
+          } 
+        }});})
+        return true;
+      } 
+      else{
+      return false;
+      }
+  }
+
+  public ZaLek() : boolean
+  {
+    if(this.therapy.quantitytMedicine != 0 && this.therapy.quantityBlood == 0)
+    {
+    this.roomService.getAllStorageMedicnes().subscribe(res => {
+      let result = Object.values(JSON.parse(JSON.stringify(res)));
+      result.forEach((element: any) => {
+        var app = new Medicine(element.id, element.deleted, element.name, element.quantity);
+
+        if(element.name == this.therapy.medicine.name)
+        {
+          if(element.quantity < this.therapy.quantitytMedicine) {
+          window.confirm("There is not enough amount of selected medicine"); }
+          else {
+
+            this.medicineService.updateQuantityMedicine(this.therapy.medicine, this.therapy.quantitytMedicine).subscribe(res =>{
+              window.confirm("The quantity of medicine is changed!");
+            });
+
+            this.treatmentService.createTreatment(this.treatment).subscribe(res => {
+              window.confirm("The patient was admitted for inpatient treatment!");
+            });
+          } 
+        }});})
+        return true;
+      }
+      else{
+      return false;
+      }
   }
 
   private isValidInput(): boolean {
-    //ne zaboravi da dodas terapiju kasnije
-    return this.treatment?.patient.toString() != ''  && this.treatment?.dateAdmission.toString() != '' && this.treatment?.reasonForAdmission.toString() != ''  && this.treatment?.roomDto.toString() != '';
-  }
+    return this.treatment?.patient.toString() != ''  && this.treatment?.dateAdmission.toString() != '' && this.treatment?.reasonForAdmission.toString() != ''  && this.treatment?.roomDto.toString() != '';  }
 
 }

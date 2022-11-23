@@ -20,12 +20,13 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Therapy</mat-label>
-            <input matInput [(ngModel)]="treatment.therapy" disabled>
+            <input matInput [(ngModel)]="treatment.therapy.blood.bloodType" disabled>
+            <input matInput [(ngModel)]="treatment.therapy.medicine.name" disabled>
         </mat-form-field>
         
         <mat-form-field appearance="fill">
             <mat-label>Date of patient admission</mat-label>
-            <input matInput [(ngModel)]="treatment.dateAdmission" disabled>
+            <input matInput [(ngModel)]="treatment.dateAdmission" name="dateAdmission" disabled>
         </mat-form-field><br>
 
         <mat-form-field appearance="fill">

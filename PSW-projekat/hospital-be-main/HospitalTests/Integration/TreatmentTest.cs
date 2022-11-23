@@ -32,7 +32,10 @@ namespace HospitalTests.Integration
             return new TreatmentController(scope.ServiceProvider.GetRequiredService<ITreatmentService>(),
                                            scope.ServiceProvider.GetRequiredService<IPatientService>(),
                                            scope.ServiceProvider.GetRequiredService<IRoomService>(),
-                                           scope.ServiceProvider.GetRequiredService<IBedService>()
+                                           scope.ServiceProvider.GetRequiredService<IBedService>(),
+                                           scope.ServiceProvider.GetRequiredService<IBloodService>(),
+                                           scope.ServiceProvider.GetRequiredService<IMedicineService>(),
+                                           scope.ServiceProvider.GetRequiredService<ITherapyService>()
                );
         }
         
@@ -62,7 +65,7 @@ namespace HospitalTests.Integration
 
 
             //Act
-            Treatment testCase = new Treatment()
+            TreatmentDto testCase = new TreatmentDto()
             {
                 Patient = null,
                 /*
@@ -79,10 +82,8 @@ namespace HospitalTests.Integration
                 DateDischarge = DateTime.Now,
                 ReasonForAdmission = "Bol u stomaku",
                 ReasonForDischarge = "dobro je",
-                TreatmentState = 0,
                 Therapy = null,
-                Room = null,
-                Deleted = false
+                RoomDto = null
 
             };
             //Assert

@@ -10,6 +10,8 @@ namespace HospitalLibrary.Core.Model
     {
         public virtual Medicine Medicine { get; set; }
         public virtual Blood Blood { get; set; }
+        public int QuantitytMedicine { get; set; }
+        public int QuantityBlood { get; set; }
 
     }
 }
