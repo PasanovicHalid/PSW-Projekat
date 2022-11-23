@@ -1,0 +1,45 @@
+
+<div class="container">
+    <div>
+
+        <h1>Discharge patient from hospital</h1>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="treatment.patient.name" disabled>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Surname</mat-label>
+            <input matInput [(ngModel)]="treatment.patient.surname" disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Room</mat-label>
+            <input matInput [(ngModel)]="treatment.roomDto.number " disabled>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Therapy</mat-label>
+            <input matInput [(ngModel)]="treatment.therapy" disabled>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill">
+            <mat-label>Date of patient admission</mat-label>
+            <input matInput [(ngModel)]="treatment.dateAdmission" disabled>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Date of patient discharge</mat-label>
+            <input type="datetime-local" matInput [(ngModel)]="treatment.dateDischarge" >
+        </mat-form-field>
+       
+        <mat-form-field appearance="fill">
+            <mat-label>Reason for patient discharge</mat-label>
+            <input type="text" matInput [(ngModel)]="treatment.reasonForDischarge" name="reasonForAdmission">
+        </mat-form-field><br>
+
+        <button mat-stroked-button (click)="updateTreatment()">
+            Discharge
+        </button>
+    </div>
+</div>

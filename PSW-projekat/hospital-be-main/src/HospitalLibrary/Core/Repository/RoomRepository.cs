@@ -6,7 +6,8 @@ using System.Linq;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class RoomRepository : IRepository<Room>
+    //ovde menjano
+    public class RoomRepository : IRoomRepository
     {
         private readonly HospitalDbContext _context;
 
@@ -50,5 +51,6 @@ namespace HospitalLibrary.Core.Repository
             _context.Rooms.Remove(room);
             _context.SaveChanges();
         }
+
     }
 }

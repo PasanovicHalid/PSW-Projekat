@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System.Collections.Generic;
+using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -10,18 +12,49 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly IService<Room> _roomService;
+        private readonly IRoomService _roomService;
 
-        public RoomsController(IService<Room> roomService)
+        public RoomsController(IRoomService iroomService)
         {
-            _roomService = roomService;
+            _roomService = iroomService;
         }
 
         // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_roomService.GetAll());
+            List<RoomDto> roomDtos = new List<RoomDto>();
+
+            foreach (var room in _roomService.GetAll()) 
+            {
+                List<BedDto> bedDtos = new List<BedDto>();
+
+                foreach (Bed bed in room.Beds) 
+                {
+
+                    if (bed.Patient == null) 
+                    {
+                        BedDto bedDtoNull = new BedDto(bed.Id, bed.Name, bed.BedState,
+                          null, bed.Quantity);
+
+                        bedDtos.Add(bedDtoNull);
+                        continue;
+                    } 
+
+                    PatientDto patientDto = new PatientDto(bed.Patient.Id, bed.Patient.Person.Name,
+                    bed.Patient.Person.Surname, bed.Patient.Person.Email, bed.Patient.Person.Role);
+
+                    BedDto bedDto = new BedDto(bed.Id, bed.Name, bed.BedState, patientDto, bed.Quantity);
+
+                    bedDtos.Add(bedDto);
+
+                }
+
+                RoomDto roomDto = new RoomDto(room.Id,room.Number, room.Floor, room.RoomType, bedDtos);   
+                roomDtos.Add(roomDto);
+            }
+
+            return Ok(roomDtos);
         }
 
         // GET api/rooms/2
@@ -89,5 +122,13 @@ namespace HospitalAPI.Controllers
             _roomService.Delete(room);
             return NoContent();
         }
+
+        [HttpGet("room/{roomId}")]
+        public ActionResult GetAllBedsByRoom(int roomId)
+        {
+            return Ok(_roomService.GetAllBedsByRoom(roomId));
+        }
+
+
     }
 }

@@ -10,6 +10,7 @@ using IntegrationLibrary.Settings;
 using Moq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace IntegrationAPITests
 {
@@ -47,10 +48,35 @@ namespace IntegrationAPITests
             stubRepo.Setup(m => m.GetById(1)).Returns(b1);
 
 
-            BloodBankService bloodBankService = new BloodBankService(stubRepo.Object, new EmailService(), new BloodBankHTTPConnection() );
+            BloodBankService bloodBankService = new BloodBankService(stubRepo.Object, new EmailService(), new BloodBankHTTPConnection(), new RabbitMQService() );
 
             BloodBank t =  bloodBankService.GetById(2);
             Assert.Null(t);
+        }
+        [Fact]
+        public void Check_cerdentials_of_blood_bank()
+        {
+            var rabbit = new RabbitMQService();
+            BloodBank b1 = new BloodBank
+            {
+                Id = 1,
+                Name = "name",
+                Email = "bloodymary@gmail.com",
+                Password = "password",
+                ApiKey = "good_key",
+                ServerAddress = "https://www.messenger.com/t/100001603572170",
+                AccountStatus = AccountStatus.ACTIVE
+            };
+            List<BloodBank> bloodBanks = new List<BloodBank>();
+            bloodBanks.Add(b1);
+            string email = "bloodymary@gmail.com";
+            string apiKey = "good_key";
+
+            Assert.True(rabbit.checkBloodBankExists(email, bloodBanks) == true);
+            Assert.True(rabbit.checkBloodBankApiKey(email, apiKey, bloodBanks) == true);
+
+            Assert.False(rabbit.checkBloodBankExists("bad_email", bloodBanks) == true);
+            Assert.False(rabbit.checkBloodBankApiKey(email, "bad_key", bloodBanks) == true);
         }
     }
 }

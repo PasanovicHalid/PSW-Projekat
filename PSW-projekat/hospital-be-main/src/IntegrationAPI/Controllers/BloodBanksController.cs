@@ -4,6 +4,7 @@ using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Exceptions;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.BloodBanks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -61,6 +62,7 @@ namespace IntegrationAPI.Controllers
             
         }
 
+        [Authorize(Roles ="Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -74,6 +76,7 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)

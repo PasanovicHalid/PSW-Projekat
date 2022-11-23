@@ -1,14 +1,19 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
-using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Model.MailRequests;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers.PublicApp
@@ -22,13 +27,17 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly UserManager<SecUser> _userManager;
         private readonly SignInManager<SecUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
         private readonly IDoctorService _doctorService;
         private readonly IPatientService _patientService;
 
-        public AccountController( 
-                UserManager<SecUser> userManager, 
+        public AccountController(
+                UserManager<SecUser> userManager,
                 SignInManager<SecUser> signInManager,
                 RoleManager<IdentityRole> roleManager,
+                IEmailService emailService,
+                IConfiguration configuration,
                 IPersonService personService,
                 IDoctorService doctorService,
                 IPatientService patientService)
@@ -39,18 +48,79 @@ namespace HospitalAPI.Controllers.PublicApp
             _personService = personService;
             _doctorService = doctorService;
             _patientService = patientService;
+            _emailService = emailService;
+            _configuration = configuration;
         }
 
-        [HttpGet("Login")]
-        public async Task<ActionResult> LoginAsync(string username, string password)
+        [HttpPost("Login")]
+        public async Task<ActionResult> LoginAsync(LoginUserDto loginUserDto)
         {
-            var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
-            if (result.Succeeded)
+            SecUser secUser = new SecUser();
+            secUser = await _userManager.FindByNameAsync(loginUserDto.Username);
+            if (secUser == null)
             {
-                //User.IsInRole("Manager");
-                return Ok();
+                return BadRequest("Username or password is incorrect.");
             }
-            return BadRequest();
+            var statement = await _userManager.IsEmailConfirmedAsync(secUser);
+            if (statement == true)
+            {
+                var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, true, false);
+                if (result.Succeeded)
+                {
+                    var user = await _userManager.FindByNameAsync(loginUserDto.Username);
+                    if (user != null && await _userManager.CheckPasswordAsync(user, loginUserDto.Password))
+                    {
+                        //var id = user.Claims.GetUserId();
+                        var claims = await _userManager.GetClaimsAsync(user);
+                        var userRoles = await _userManager.GetRolesAsync(user);
+
+                        if(!((userRoles[0]=="Manager" && loginUserDto.Flag == "PZL")||
+                           (userRoles[0] == "Doctor" && loginUserDto.Flag == "PZL")||
+                           (userRoles[0] == "Patient" && loginUserDto.Flag == "PZP")))
+                        {
+                            return BadRequest("Wrong application.");
+                        }
+
+                        var authClaims = new List<Claim>
+                        {
+                            new Claim("Id", claims[0].Value),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+
+                        };
+
+                        foreach (var userRole in userRoles)
+                        {
+                            authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                            authClaims.Add(new Claim("Role", userRole));
+                        }
+
+                        var token = GetToken(authClaims);
+
+                        return Ok(new
+                        {
+                            token = new JwtSecurityTokenHandler().WriteToken(token),
+                            expiration = token.ValidTo
+                        });
+                    }
+                }
+                return BadRequest("Username or password is incorrect.");
+            }
+            return BadRequest("Email not confirmed");
+        }
+
+        private JwtSecurityToken GetToken(List<Claim> authClaims)
+        {
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddDays(30),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return token;
         }
 
         [HttpGet("Logout")]
@@ -61,7 +131,6 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpGet("GetAllergiesAndDoctors")]
-
         public ActionResult GetAllergiesAndDoctors()
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());
@@ -126,7 +195,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
-
+            
             Person user = new Person()
             {
                 Id = 0,
@@ -158,6 +227,10 @@ namespace HospitalAPI.Controllers.PublicApp
 
             patient = _patientService.RegisterPatient(patient);
 
+        
+            _patientService.AddAllergyToPatient(patient, regUser.Allergies);
+            
+
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
@@ -171,7 +244,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 await _userManager.AddClaimAsync(secUser, new Claim("UserId", user.Id.ToString()));
             }
 
-            //var code = await _userManager.GenerateEmailConfirmationTokenAsync(secUser);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(secUser);
+            _emailService.SendEmailAsync(new AccountValidationMailRequest(user, regUser.Username, code));
             //await _userManager.ConfirmEmailAsync(secUser, code);
 
             return Ok();
@@ -229,6 +303,27 @@ namespace HospitalAPI.Controllers.PublicApp
             }
 
             return Ok(user);
+        }
+
+        [HttpGet("AccountConfirmation")]
+        public async Task<IActionResult> AccountConfirmation(string username, string code)
+        {
+            SecUser secUser = new SecUser();
+            secUser = await _userManager.FindByNameAsync(username);
+            if (secUser == null)
+            {
+                return BadRequest("Bad credentials");
+            }
+
+            var statement = await _userManager.IsEmailConfirmedAsync(secUser);
+            if (statement == true)
+            {
+                return BadRequest("Email already confirmed");
+            }
+
+            var a = await _userManager.ConfirmEmailAsync(secUser, code);
+
+            return Ok();
         }
     }
 }

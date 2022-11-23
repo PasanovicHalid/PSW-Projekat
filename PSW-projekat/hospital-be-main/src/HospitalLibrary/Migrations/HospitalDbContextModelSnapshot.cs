@@ -19,33 +19,6 @@ namespace HospitalLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("HospitalLibrary.Core.DTOs.PatientDto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PatientDto");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -218,15 +191,20 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PatientDtoId")
+                    b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientDtoId");
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Beds");
                 });
@@ -247,7 +225,12 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Bloods");
                 });
@@ -273,36 +256,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BedId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("BloodId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("MedicineId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BedId");
-
-                    b.HasIndex("BloodId");
-
-                    b.HasIndex("MedicineId");
-
-                    b.ToTable("Equipments");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -372,7 +325,12 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Medicines");
                 });
@@ -412,20 +370,16 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AllergyId")
+                    b.Property<int>("AllergyId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AllergyId");
-
-                    b.HasIndex("PatientId");
 
                     b.ToTable("PatientAllergies");
                 });
@@ -478,9 +432,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("EquipmentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Floor")
                         .HasColumnType("int");
 
@@ -491,8 +442,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EquipmentId");
 
                     b.ToTable("Rooms");
 
@@ -642,11 +591,22 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
                 {
-                    b.HasOne("HospitalLibrary.Core.DTOs.PatientDto", "PatientDto")
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientDtoId");
+                        .HasForeignKey("PatientId");
 
-                    b.Navigation("PatientDto");
+                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
+                        .WithMany("Beds")
+                        .HasForeignKey("RoomId");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Blood", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
+                        .WithMany("Bloods")
+                        .HasForeignKey("RoomId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
@@ -658,27 +618,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Equipment", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Bed", "Bed")
-                        .WithMany()
-                        .HasForeignKey("BedId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.Blood", "Blood")
-                        .WithMany()
-                        .HasForeignKey("BloodId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.Medicine", "Medicine")
-                        .WithMany()
-                        .HasForeignKey("MedicineId");
-
-                    b.Navigation("Bed");
-
-                    b.Navigation("Blood");
-
-                    b.Navigation("Medicine");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Person", "User")
@@ -688,10 +627,17 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Medicine", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Room", null)
+                        .WithMany("Medicines")
+                        .HasForeignKey("RoomId");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Patients")
                         .HasForeignKey("DoctorId");
 
                     b.HasOne("HospitalLibrary.Core.Model.Person", "Person")
@@ -703,21 +649,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.PatientAllergies", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Allergy", "Allergy")
-                        .WithMany()
-                        .HasForeignKey("AllergyId");
-
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId");
-
-                    b.Navigation("Allergy");
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Person", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Address", "Address")
@@ -725,15 +656,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Equipment", "Equipment")
-                        .WithMany()
-                        .HasForeignKey("EquipmentId");
-
-                    b.Navigation("Equipment");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>
@@ -779,6 +701,19 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
+                {
+                    b.Navigation("Beds");
+
+                    b.Navigation("Bloods");
+
+                    b.Navigation("Medicines");
+                });
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.Navigation("Patients");
                 });
 #pragma warning restore 612, 618
         }

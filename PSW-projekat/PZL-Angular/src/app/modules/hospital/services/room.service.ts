@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BedDto } from '../model/bedDto';
 import { Room } from '../model/room.model';
+import { RoomDto } from '../model/roomDto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,8 @@ export class RoomService {
 
   constructor(private http: HttpClient) { }
 
-  getRooms(): Observable<Room[]> {
-    return this.http.get<Room[]>(this.apiHost + 'api/rooms', {headers: this.headers});
+  getRooms(): Observable<RoomDto[]> {
+    return this.http.get<RoomDto[]>(this.apiHost + 'api/rooms', {headers: this.headers});
   }
 
   getRoom(id: number): Observable<Room> {
@@ -31,5 +33,9 @@ export class RoomService {
 
   updateRoom(room: any): Observable<any> {
     return this.http.put<any>(this.apiHost + 'api/rooms/' + room.id, room, {headers: this.headers});
+  }
+
+  GetAllBedsByRoom(roomId: number) : Observable<any[]> {
+    return this.http.get<BedDto[]>(this.apiHost + 'api/rooms/room/' + roomId, {headers: this.headers});
   }
 }

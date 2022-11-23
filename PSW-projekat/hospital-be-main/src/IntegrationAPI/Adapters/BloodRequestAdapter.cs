@@ -19,7 +19,8 @@ namespace IntegrationAPI.Adapters
                 DoctorId = entity.DoctorId,
                 RequestState = entity.RequestState,
                 BloodType = entity.BloodType,
-                Id = entity.Id
+                Id = entity.Id,
+                BloodBankId = entity.BloodBankId
             };
         }
 
@@ -33,7 +34,8 @@ namespace IntegrationAPI.Adapters
                 DoctorId = entity.DoctorId,
                 RequestState = entity.RequestState,
                 BloodType = entity.BloodType,
-                Id = entity.Id
+                Id = entity.Id,
+                BloodBankId = entity.BloodBankId
             };
         }
     }

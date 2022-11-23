@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace HospitalAPI
 {
@@ -36,8 +39,8 @@ namespace HospitalAPI
 
             services.AddIdentity<SecUser, IdentityRole>(options =>
             {
-                options.User.RequireUniqueEmail = false;
-                options.SignIn.RequireConfirmedEmail = false;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
                 options.Password.RequiredLength = 3;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
@@ -45,8 +48,30 @@ namespace HospitalAPI
                 options.Password.RequireLowercase = false;
             })
                 .AddEntityFrameworkStores<AuthenticationDbContext>()
+                .AddRoles<IdentityRole>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidAudience = Configuration["JWT:ValidAudience"],
+                    ValidIssuer = Configuration["JWT:ValidIssuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+                };
+            });
 
             services.AddControllers();
 
@@ -55,8 +80,11 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
 
-            services.AddScoped<IService<Room>, RoomService>();
-            services.AddScoped<IRepository<Room>, RoomRepository>();
+            //services.AddScoped<IService<Room>, RoomService>();
+            //services.AddScoped<IRepository<Room>, RoomRepository>();
+
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
 
             services.AddScoped<FeedbackService>();
             services.AddScoped<FeedbackRepository>();
@@ -64,7 +92,7 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
-            services.AddScoped< AllergyRepository>();
+            services.AddScoped<AllergyRepository>();
 
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IPersonRepository, PersonRepository>();
@@ -77,8 +105,13 @@ namespace HospitalAPI
 
             services.AddScoped<IWorkingDayRepository, WorkingDayRepository>();
 
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
+
+            services.AddScoped<IBedService, BedService>();
+            services.AddScoped<IBedRepository, BedRepository>();
 
         }
 
