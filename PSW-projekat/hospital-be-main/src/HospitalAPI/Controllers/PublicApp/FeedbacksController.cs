@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,20 +19,22 @@ namespace HospitalAPI.Controllers.PublicApp
     public class FeedbacksController : ControllerBase
     {    
         private readonly FeedbackService _feedbackService;
-        private readonly PersonService _userService;
+        private readonly IPersonService _userService;
 
-        public FeedbacksController(FeedbackService feedbackService, PersonService userService)
+        public FeedbacksController(FeedbackService feedbackService, IPersonService userService)
         {
             _feedbackService = feedbackService;
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet("/real")]
         public ActionResult GetAll()
         {
             return Ok(_feedbackService.GetAll());
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -44,6 +47,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(feedback);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpPost]
         public ActionResult Create(CreateFeedbackDto feedbackDto)
         {
@@ -67,6 +71,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult Update(int id, Feedback feedback)
         {
@@ -92,6 +97,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(feedback);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
@@ -105,6 +111,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return NoContent();
         }
 
+        [AllowAnonymous]
         [HttpGet("public")]
         public ActionResult GetAllFeedbackPublicDtos()
         {

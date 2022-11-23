@@ -21,16 +21,22 @@ export class AllDoctorBloodRequestsComponent implements OnInit {
   constructor(private bloodRequestService: BloodRequestService, private router: Router) { }
 
   ngOnInit(): void {
-    this.bloodRequestService.getBloodRequests().subscribe(requests => {
-      this.bloodRequestService.getDoctors().subscribe(doctors => {
-        this.requests = this.bloodRequestService.combineDoctorsWithRequests(requests, doctors);
-        this.dataSource.data = this.requests;
+    if(localStorage.getItem("currentUserRole") == 'Manager'){
+      this.bloodRequestService.getBloodRequests().subscribe(requests => {
+        this.bloodRequestService.getDoctors().subscribe(doctors => {
+          this.requests = this.bloodRequestService.combineDoctorsWithRequests(requests, doctors);
+          this.dataSource.data = this.requests;
+        }, (error) => {
+          this.errorMessage = error;
+        })
       }, (error) => {
         this.errorMessage = error;
       })
-    }, (error) => {
-      this.errorMessage = error;
-    })
+    }
+    else{
+      this.router.navigate(['/forbidden-access']);
+    }
+    
   }
 
   public chooseBloodRequest(id:number){

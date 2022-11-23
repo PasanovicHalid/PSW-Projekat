@@ -1,4 +1,3 @@
-using System.Text.Json.Serialization;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
@@ -74,7 +73,6 @@ namespace HospitalAPI
             });
 
             services.AddControllers();
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
@@ -98,12 +96,14 @@ namespace HospitalAPI
             services.AddScoped<IPersonRepository, PersonRepository>();
 
             services.AddScoped<IDoctorRepository, DoctorRepository>();
-            services.AddScoped<IDoctorService,DoctorService>();
+            services.AddScoped<IDoctorService, DoctorService>();
 
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IPatientRepository, PatientRepository>();
 
             services.AddScoped<IWorkingDayRepository, WorkingDayRepository>();
+
+            services.AddScoped<StatisticsService>();
 
             services.AddScoped<IEmailService, EmailService>();
             services.AddTransient<IEmailService, EmailService>();

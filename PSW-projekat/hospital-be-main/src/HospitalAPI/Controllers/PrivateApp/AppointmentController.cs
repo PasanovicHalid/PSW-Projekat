@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers.PrivateApp
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -57,7 +59,6 @@ namespace HospitalAPI.Controllers.PrivateApp
                appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
 
             AppointmentDto appointmentDto = new AppointmentDto(appointment.Id, appointment.DateTime, patientDto, doctorDto);
-
             if (appointment == null)
             {
                 return NotFound();
@@ -66,12 +67,9 @@ namespace HospitalAPI.Controllers.PrivateApp
             return Ok(appointmentDto);
         }
 
-
-
         [HttpPost]
         public ActionResult Create(Appointment appointment)
         {
-            //ovde dobijemo doktorov id
             appointment.Doctor = _doctorService.GetById(appointment.Doctor.Id);
             appointment.Patient = _patientService.GetById(appointment.Patient.Id);
 
@@ -96,13 +94,12 @@ namespace HospitalAPI.Controllers.PrivateApp
             {
                 return BadRequest();
             }
-
             Appointment appointment = _appointmentService.GetById(appointmentDto.AppointmentId);
             appointment.DateTime = appointmentDto.DateTime;
 
             try
             {
-                _appointmentService.Update(appointment);
+                _appointmentService.Update(appointmentDto);
             }
             catch(Exception ex)
             {

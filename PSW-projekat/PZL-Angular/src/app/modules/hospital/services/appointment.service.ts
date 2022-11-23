@@ -30,8 +30,6 @@ export class AppointmentService {
   }
 
   updateAppointment(appointment: any): Observable<any> {
-    console.log(appointment);
-    console.log(appointment.appointmentId);
     return this.http.put<any>(this.apiHost + 'api/appointment/' + appointment.appointmentId, appointment, {headers: this.headers});
   }
 

@@ -50,13 +50,19 @@ export class DischargePatientComponent implements OnInit {
     if (!this.isValidInput()) return;
     this.treatmentService.updateTreatment(this.treatment).subscribe(res => {
       console.log(this.treatment);
-      this.router.navigate(['/treatments']);
+      let fileName = 'report';
+        let blob: Blob = res.body as Blob;
+        let a = document.createElement('a');
+        a.download=fileName;
+        a.href = window.URL.createObjectURL(blob);
+        a.click();
+      this.router.navigate(['/treatments/add']);
       window.confirm("The patient was discharged from hospital!");
     });
   }
 
   private isValidInput(): boolean {
-    return true;
+    return this.treatment?.dateDischarge.toString() != '' && this.treatment?.reasonForDischarge.toString() != '';
   }
 
 }

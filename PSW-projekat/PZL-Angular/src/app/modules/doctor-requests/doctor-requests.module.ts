@@ -23,7 +23,7 @@ import { UpdateRequestForDoctorComponent } from './update-request-for-doctor/upd
 const routes: Routes = [
   {path: 'doctor-blood-requests', component: AllDoctorBloodRequestsComponent },
   {path: 'doctor-blood-request/:id', component: DoctorBloodRequestComponent },
-  {path: 'returned-requests/:id', component: ReturnedRequestsForDoctorComponent },
+  {path: 'returned-requests', component: ReturnedRequestsForDoctorComponent },
   {path: 'update-request/:id', component: UpdateRequestForDoctorComponent }
 ];
 

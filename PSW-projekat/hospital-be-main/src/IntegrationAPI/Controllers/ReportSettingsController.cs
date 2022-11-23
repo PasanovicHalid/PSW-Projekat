@@ -3,12 +3,14 @@ using IntegrationAPI.Controllers.Interfaces;
 using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace IntegrationAPI.Controllers
 {
+    [Authorize(Roles = "Manager, Doctor")]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]

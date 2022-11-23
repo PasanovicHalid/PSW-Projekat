@@ -2,11 +2,13 @@
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -18,6 +20,7 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             _doctorService = doctorService;
         }
+
 
         [HttpGet]
         public ActionResult GetAll()

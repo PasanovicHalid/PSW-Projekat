@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.Repository
 
         public Allergy GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Allergies.Find(id);
         }
 
         public void Update(Allergy entity)

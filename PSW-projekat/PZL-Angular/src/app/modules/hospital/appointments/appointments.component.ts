@@ -29,9 +29,8 @@ export class AppointmentsComponent implements OnInit {
     this.appointmentService.GetAllByDoctor(2).subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
       result.forEach((element: any) => {
-        var app = new Appointment(element.appointmentId, element.deleted, element.patient, element.doctor, element.dateTime);
-        this.patient1 = element.patient;
-        console.log(app);
+        var app = new Appointment(element.appointmentId, element.deleted, element.patinet, element.doctor, element.dateTime);
+        this.patient1 = element.patinet;
         this.appointments.push(app);
       });
       this.dataSource.data = this.appointments;

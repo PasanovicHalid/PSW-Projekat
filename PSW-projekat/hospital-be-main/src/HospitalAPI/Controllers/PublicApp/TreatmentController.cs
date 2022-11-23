@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -97,6 +99,7 @@ namespace HospitalAPI.Controllers.PublicApp
             treatment.ReasonForAdmission = treatmentDto.ReasonForAdmission;
             treatment.ReasonForDischarge = treatmentDto.ReasonForDischarge;
             treatment.Therapy = treatmentDto.Therapy;
+            treatment.DateDischarge = DateTime.Now;
 
 
             if (!ModelState.IsValid)
@@ -196,8 +199,15 @@ namespace HospitalAPI.Controllers.PublicApp
                 return BadRequest(ex.Message);
 
             }
-            return Ok();
+
+            byte[] file = _treatmentService.GeneratePdf(treatment);
+            Guid uniqueSuffix = Guid.NewGuid();
+            System.IO.File.WriteAllBytes("report" + ".pdf", file);
+            //return Ok();
             //return Ok(treatment);
+            return File(file, "application/pdf", "report"  + ".pdf");
         }
+
+
     }
 }

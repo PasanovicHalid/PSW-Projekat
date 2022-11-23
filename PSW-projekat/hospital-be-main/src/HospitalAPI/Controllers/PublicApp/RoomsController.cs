@@ -3,11 +3,13 @@ using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]

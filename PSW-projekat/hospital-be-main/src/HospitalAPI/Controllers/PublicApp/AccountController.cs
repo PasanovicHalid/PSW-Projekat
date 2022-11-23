@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Model.MailRequests;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -130,13 +132,14 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+
         [HttpGet("GetAllergiesAndDoctors")]
         public ActionResult GetAllergiesAndDoctors()
         {
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
-        
 
+        [Authorize(Roles = "Manager")]
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
         {
@@ -251,6 +254,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPost("CreateDoctor")]
         public async Task<IActionResult> CreateDoctor(CreateDoctorDto createDoctorDto)
         {

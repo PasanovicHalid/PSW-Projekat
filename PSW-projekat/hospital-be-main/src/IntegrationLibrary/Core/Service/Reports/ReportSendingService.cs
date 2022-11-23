@@ -48,16 +48,18 @@ namespace IntegrationLibrary.Core.Service.Reports
         public async Task<bool> GeneratePDFs()
         {
             bool isSuccess = false;
-            List<BloodBank> banks = (List<BloodBank>)_bloodBankService.GetAll();
-            foreach (BloodBank bank in banks)
+            foreach (BloodBank bank in (List<BloodBank>)_bloodBankService.GetAll())
             {
                 List<BloodRequest> acceptedRequests = GetRequestsForWantedPeriod(bank.Id);
                 if(acceptedRequests.Count() <= 0)
                     continue;
                 byte[] pdfFile = await bloodReportPDFGenerator.CreatePDF(acceptedRequests, bank);
                 isSuccess = await _bloodBankConnection.SendBloodReports(bank, pdfFile);
-                if(!isSuccess)
+                if (!isSuccess)
+                {
+                    bloodReportPDFGenerator.DeleteMadeFiles(bank.Name);
                     return isSuccess;
+                }     
             }
             return isSuccess;
         }
@@ -86,6 +88,14 @@ namespace IntegrationLibrary.Core.Service.Reports
             ReportSettings setting = _reportSettingsService.GetFirst();
             setting.StartDeliveryDate = DateTime.Now;
             _reportSettingsService.Update(setting);
+        }
+
+        public void DeleteMadeFiles()
+        {
+            foreach (BloodBank bank in (List<BloodBank>)_bloodBankService.GetAll())
+            {
+                bloodReportPDFGenerator.DeleteMadeFiles(bank.Name);               
+            }
         }
     }
 }
