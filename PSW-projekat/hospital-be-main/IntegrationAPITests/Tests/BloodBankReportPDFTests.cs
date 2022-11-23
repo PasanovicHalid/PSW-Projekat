@@ -43,7 +43,7 @@ namespace IntegrationAPITests.Tests
             var generator = SetupSettingsService(scope);
 
             var result = generator.GeneratePDFs();
-            String path = @"D:\Faks\2. Projektovanje softvera\PSWPROJEKAT\PSW-Projekat\PSW-projekat\hospital-be-main\IntegrationAPITests\bin\Debug\net5.0\BloodReportForasdsadsda_" + DateTime.Now.ToString("ddMMyyyy_hhmm") + ".pdf";
+            String path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\net5.0\BloodReportForasdsadsda_" + DateTime.Now.ToString("ddMMyyyy") + ".pdf";
             Assert.True(File.Exists(path));
         }
 

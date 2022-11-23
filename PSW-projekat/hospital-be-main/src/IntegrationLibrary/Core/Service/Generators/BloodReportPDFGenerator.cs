@@ -31,7 +31,7 @@ namespace IntegrationLibrary.Core.Service.Generators
         }
         private String createFileName(String bankName)
         {
-            String today = DateTime.Now.ToString("ddMMyyyy_hhmm");
+            String today = DateTime.Now.ToString("ddMMyyyy");
             String filename = "BloodReportFor" + bankName.Replace(" ", "") + "_" + today + ".pdf";
             return filename;
         }
