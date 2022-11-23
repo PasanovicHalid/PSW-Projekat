@@ -77,7 +77,7 @@ namespace HospitalAPI.Controllers.PublicApp
             treatment.DateAdmission = treatmentDto.DateAdmission;
             treatment.ReasonForAdmission = treatmentDto.ReasonForAdmission;
             treatment.ReasonForDischarge = treatmentDto.ReasonForDischarge;
-
+            treatment.DateDischarge = DateTime.Now;
 
             if (!ModelState.IsValid)
             {
@@ -176,8 +176,15 @@ namespace HospitalAPI.Controllers.PublicApp
                 return BadRequest(ex.Message);
 
             }
+
+            byte[] file = _treatmentService.GeneratePdf(treatment);
+            Guid uniqueSuffix = Guid.NewGuid();
+            System.IO.File.WriteAllBytes("report" + treatment.Patient.Person.Name + treatment.Patient.Person.Surname 
+                                          + "_" +uniqueSuffix + ".pdf", file);
             return Ok();
             //return Ok(treatment);
         }
+
+
     }
 }
