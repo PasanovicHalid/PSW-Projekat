@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Repository;
 
 namespace HospitalLibrary.Core.Service
@@ -64,6 +65,7 @@ namespace HospitalLibrary.Core.Service
             return null;
         }
 
+
         public ICollection<BedDto> CreateBedDto(ICollection<Bed> pomocniKreveti)
         {
             List<BedDto> bedDtos = new List<BedDto>();
@@ -86,5 +88,44 @@ namespace HospitalLibrary.Core.Service
             return beds;
         }
 
-}
+        public IEnumerable<Medicine> GetAllStorageMedicnes()
+        {
+            ICollection<Medicine> medicines = new Collection<Medicine>();
+
+            foreach (Room room in _roomRepository.GetAll())
+            {
+                if (!(room.RoomType.Equals(RoomType.storage))) continue;
+
+                foreach (Medicine medicine in room.Medicines) 
+                {
+                    if (medicine.Quantity == 0) continue;
+                    medicines.Add(medicine);
+                }
+                return medicines;
+              
+            }
+            return null;
+        }
+
+        public IEnumerable<Blood> GetAllStorageBloods()
+        {
+            ICollection<Blood> bloods = new Collection<Blood>();
+
+            foreach (Room room in _roomRepository.GetAll())
+            {
+                if (!(room.RoomType.Equals(RoomType.storage))) continue;
+
+                foreach (Blood blood in room.Bloods)
+                {
+                    if (blood.Quantity == 0) continue;
+                    bloods.Add(blood);
+                }
+                return bloods;
+
+            }
+            return null;
+        }
+
+
+    }
 }

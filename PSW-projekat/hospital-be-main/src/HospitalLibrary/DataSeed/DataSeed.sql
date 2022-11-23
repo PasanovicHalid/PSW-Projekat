@@ -116,9 +116,11 @@ INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N
 GO
 SET IDENTITY_INSERT [dbo].[Rooms] ON 
 
-INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (1, N'101A', 0,  1, 0)
-INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (2, N'204', 2, 0)
-INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (3, N'305B', 3, 0)
+INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (1, N'101A', 5,  1, 0)
+INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (2, N'204', 5, 2, 0)
+INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (3, N'305B', 5, 3, 0)
+INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (4, N'STORAGE', 0, 3, 0)
+
 SET IDENTITY_INSERT [dbo].[Rooms] OFF
 GO
 SET IDENTITY_INSERT [dbo].[WorkingDays] ON 
@@ -133,30 +135,30 @@ SET IDENTITY_INSERT [dbo].[Appointments] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Medicines] ON 
 
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (1, 'Brufen', 12, 1, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (2, 'Aspirin', 20, 1, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (3, 'Dexomen', 10, 1, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (4, 'Robenan', 5, 2, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (5, 'Fervex', 2, 2, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (1, 'Brufen', 12, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (2, 'Aspirin', 20, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (3, 'Dexomen', 10, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (4, 'Robenan', 5, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (5, 'Fervex', 1, 4, 0)
 SET IDENTITY_INSERT [dbo].[Medicines] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Bloods] ON 
 
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (1, 0, 11, 1, 0)
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (2, 2, 3, 1, 0)
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (3, 1, 10, 2, 0)
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (4, 3, 5, 3, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (1, 0, 2, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (2, 2, 3, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (3, 1, 10, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (4, 3, 5, 4, 0)
 SET IDENTITY_INSERT [dbo].[Bloods] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Therapys] ON 
 
-INSERT [dbo].[Therapys] ([Id], [MedicineId], [BloodId], [Deleted]) VALUES (1, 2, 3, 0)
+INSERT [dbo].[Therapys] ([Id], [MedicineId], [BloodId], [QuantitytMedicine], [QuantityBlood], [Deleted]) VALUES (1, 2, 3, 2, 1, 0)
 SET IDENTITY_INSERT [dbo].[Therapys] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Beds] ON 
 
 INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (1, 'Dekubitalni', 1, NULL, 10, 1, 0)
-INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (2, 'Dormeo', 0, 5, 5, 1, 0)
+INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (2, 'Dormeo', 0, NULL, 5, 1, 0)
 INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (3, 'Intenzivni', 1, NULL, 3, 1, 0)
 INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (4, 'Poluintenzivni', 0, 3, 6, 2, 0)
 INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (5, 'Invalidski', 1, NULL, 8, 2, 0)

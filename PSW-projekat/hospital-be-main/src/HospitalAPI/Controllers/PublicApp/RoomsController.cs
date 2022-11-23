@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,10 @@ namespace HospitalAPI.Controllers
 
             foreach (var room in _roomService.GetAll()) 
             {
+
+                if (room.RoomType.Equals(RoomType.storage)) continue;
+
+
                 List<BedDto> bedDtos = new List<BedDto>();
 
                 foreach (Bed bed in room.Beds) 
@@ -127,6 +132,18 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAllBedsByRoom(int roomId)
         {
             return Ok(_roomService.GetAllBedsByRoom(roomId));
+        }
+
+        [HttpGet("room/medicines")]
+        public ActionResult GetAllStorageMedicnes()
+        {
+            return Ok(_roomService.GetAllStorageMedicnes());
+        }
+
+        [HttpGet("room/bloods")]
+        public ActionResult GetAllStorageBloods()
+        {
+            return Ok(_roomService.GetAllStorageBloods());
         }
 
 

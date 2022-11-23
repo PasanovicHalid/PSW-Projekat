@@ -30,9 +30,11 @@ namespace HospitalLibrary.Settings
         {
 
             modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, Number = "101A", Floor = 1 },
-                new Room() { Id = 2, Number = "204", Floor = 2 },
-                new Room() { Id = 3, Number = "305B", Floor = 3 }
+                new Room() { Id = 1, Number = "101A", RoomType = RoomType.rehabilitationRoom, Floor = 1, Deleted = false },
+                new Room() { Id = 2, Number = "204", RoomType = RoomType.rehabilitationRoom, Floor = 2, Deleted = false },
+                new Room() { Id = 3, Number = "305B", RoomType = RoomType.rehabilitationRoom, Floor = 3, Deleted = false },
+                new Room() { Id = 4, Number = "STORAGE", RoomType = RoomType.storage, Floor = 3, Deleted = false }
+
             );
 
             modelBuilder.Entity<Allergy>().HasData(

@@ -107,11 +107,22 @@ namespace HospitalAPI
 
             services.AddScoped<IEmailService, EmailService>();
             services.AddTransient<IEmailService, EmailService>();
+
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
 
             services.AddScoped<IBedService, BedService>();
             services.AddScoped<IBedRepository, BedRepository>();
+
+            services.AddScoped<ITherapyService, TherapyService>();
+            services.AddScoped<ITherapyRepository, TherapyRepository>();
+
+            services.AddScoped<IMedicineService, MedicineService>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
+
+            services.AddScoped<IBloodService, BloodService>();
+            services.AddScoped<IBloodRepository, BloodRepository>();
+
 
         }
 
