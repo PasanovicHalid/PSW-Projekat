@@ -19,9 +19,9 @@ namespace HospitalAPI.Controllers.PublicApp
     {
 
         private readonly UserManager<SecUser> _userManager;
-        private readonly PersonService _personService;
+        private readonly IPersonService _personService;
 
-        public PersonController(PersonService personService, UserManager<SecUser> userManager)
+        public PersonController(IPersonService personService, UserManager<SecUser> userManager)
         {
             _personService = personService;
             _userManager = userManager;
