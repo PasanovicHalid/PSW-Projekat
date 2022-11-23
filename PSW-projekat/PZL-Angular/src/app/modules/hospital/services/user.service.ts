@@ -15,11 +15,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  GetAllPatients(): Observable<PatientDto[]> {
-    return this.http.get<PatientDto[]>(this.apiHost + 'api/patient', {headers: this.headers});
+  GetAllPatients(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiHost + 'api/User/patient', {headers: this.headers});
   }
 
-  GetAllDoctors(): Observable<DoctorDto[]> {
-    return this.http.get<DoctorDto[]>(this.apiHost + 'api/doctor', {headers: this.headers});
+  GetAllDoctors(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiHost + 'api/User/doctor', {headers: this.headers});
   }
 }

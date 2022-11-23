@@ -37,7 +37,7 @@ namespace IntegrationAPI.Controllers
             try
             {
                 _bloodRequestService.Create(bloodRequest);
-                return CreatedAtAction("GetById", new { id = bloodRequest.Id }, bloodRequest);
+                return Ok(entity);
             }
             catch (Exception ex)
             {
