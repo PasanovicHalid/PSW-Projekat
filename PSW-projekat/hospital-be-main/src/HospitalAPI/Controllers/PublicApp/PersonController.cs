@@ -11,7 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
-
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]

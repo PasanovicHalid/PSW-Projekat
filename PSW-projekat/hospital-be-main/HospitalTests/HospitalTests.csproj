@@ -32,4 +32,9 @@
     <ProjectReference Include="..\src\HospitalAPI\HospitalAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\src\HospitalAPI\HospitalAPI.csproj" />
+    <ProjectReference Include="..\src\HospitalLibrary\HospitalLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

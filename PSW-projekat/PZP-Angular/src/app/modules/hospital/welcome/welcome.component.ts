@@ -19,10 +19,6 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userService.getLoggedUser().subscribe(res => {
-      console.log(res.name)
-    })
-
     this.feedbackCount = 1;
     this.feedbackService.getAllFeedbackPublicDtos().subscribe(res => {
       this.feedbacks = res;

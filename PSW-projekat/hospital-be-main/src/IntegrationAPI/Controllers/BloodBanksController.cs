@@ -11,6 +11,7 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
+    [Authorize(Roles ="Manager, Doctor")]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]

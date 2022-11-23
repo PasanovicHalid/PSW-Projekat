@@ -103,6 +103,8 @@ namespace HospitalAPI
 
             services.AddScoped<IWorkingDayRepository, WorkingDayRepository>();
 
+            services.AddScoped<StatisticsService>();
+
             services.AddScoped<IEmailService, EmailService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<ITreatmentService, TreatmentService>();

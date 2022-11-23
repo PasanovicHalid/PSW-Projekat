@@ -4,6 +4,8 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HomeDoctorComponent } from './homeDoctor/homeDoctor.component';
 import { HomeManagerComponent } from './homeManager/homeManager.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuardDoctor } from '../hospital/services/authDoctor.guard';
+import { AuthGuardManager } from '../hospital/services/authManager.guard';
 import { ForbiddenAccessComponent } from './forbidden-access/forbidden-access.component';
 
 const routes: Routes = [
@@ -22,6 +24,10 @@ const routes: Routes = [
     CommonModule,
     AppRoutingModule,
     RouterModule.forChild(routes),
+  ],
+  providers: [ 
+    AuthGuardManager, 
+    AuthGuardDoctor,
   ]
 })
 export class PagesModule { }

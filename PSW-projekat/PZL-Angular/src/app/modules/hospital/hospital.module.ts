@@ -16,23 +16,28 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
+import { StatisticsComponent } from './statistics/statistics.component';
+import { NgChartsModule } from 'ng2-charts';
 import { AdmissionPatientTreatmentComponent } from './admission-patient-treatment/admission-patient-treatment.component';
 import { DischargePatientComponent } from './discharge-patient/discharge-patient.component';
 import { LoginComponent } from "./login/login.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AuthGuardDoctor } from '../hospital/services/authDoctor.guard';
+import { AuthGuardManager } from '../hospital/services/authManager.guard';
 import { CreateBloodRequestComponent } from './create-blood-request/create-blood-request.component';
 
 
 const routes: Routes = [
-  { path: 'rooms', component: RoomsComponent },
-  { path: 'rooms/add', component: CreateRoomComponent },
-  { path: 'rooms/:id', component: RoomDetailComponent },
-  { path: 'rooms/:id/update', component: UpdateRoomComponent },
-  { path: 'feedbacks', component: FeedbacksComponent },
-  { path: 'appointments', component: AppointmentsComponent },
-  { path: 'appointments/doctor/:id', component: AppointmentsComponent },
-  { path: 'appointments/add', component: CreateAppointmentComponent },
-  { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
+  { path: 'rooms', component: RoomsComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'rooms/add', component: CreateRoomComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'rooms/:id', component: RoomDetailComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'rooms/:id/update', component: UpdateRoomComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'feedbacks', component: FeedbacksComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'appointments', component: AppointmentsComponent, canActivate: [ AuthGuardDoctor ] },
+  { path: 'appointments/doctor/:id', component: AppointmentsComponent, canActivate: [ AuthGuardDoctor ] },
+  { path: 'appointments/add', component: CreateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
+  { path: 'appointments/:id/update', component: UpdateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
+  { path: 'statistics', component: StatisticsComponent },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent },
   { path: 'login', component: LoginComponent },
@@ -49,6 +54,7 @@ const routes: Routes = [
     AppointmentsComponent,
     CreateAppointmentComponent,
     UpdateAppointmentComponent,
+    StatisticsComponent,
     AdmissionPatientTreatmentComponent,
     DischargePatientComponent,
     LoginComponent,
@@ -63,10 +69,10 @@ const routes: Routes = [
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatSelectModule,
     MatInputModule,
-    MatFormFieldModule
-
+    MatFormFieldModule,
+    NgChartsModule,
+    MatSelectModule
   ],
   exports: [ RouterModule ]
 })

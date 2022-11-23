@@ -73,5 +73,10 @@ namespace HospitalLibrary.Core.Repository
         {
             throw new NotImplementedException();
         }
+
+        public int GetByAgeAndGender(DateTime to, DateTime from, Gender gender)
+        {
+            return _context.Persons.Where(x => x.Role == Role.patient && x.BirthDate >= from && x.BirthDate < to && x.Gender == gender).Count();
+        }
     }
 }

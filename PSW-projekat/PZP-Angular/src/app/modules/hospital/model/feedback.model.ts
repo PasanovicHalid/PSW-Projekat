@@ -4,13 +4,13 @@ export class Feedback {
   isAnonimous: boolean = false;
   isPublic: boolean = false;
   dateCreated: Date = new Date();
-  userId: string = '2';
+  userId: string = '';
   status: FeedbackStatus = FeedbackStatus.Pending;
 
   public constructor(obj?: any) {
       if (obj) {
           this.id = obj.id;
-          this.description = obj.number;
+          this.description = obj.description;
           this.isAnonimous = obj.isAnonimous;
           this.isPublic = obj.isPublic;
           this.dateCreated = obj.dateCreated;
