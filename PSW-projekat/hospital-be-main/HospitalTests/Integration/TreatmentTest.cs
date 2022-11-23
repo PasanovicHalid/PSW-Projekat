@@ -20,17 +20,21 @@ namespace HospitalTests.Integration
     {
 
         private ITreatmentService _treatmentService;
-        private readonly IPatientService _patientService;
+        private static IPatientService _patientService;
+        private readonly ITherapyService _therapyService;
+        private readonly IMedicineService _medicineService;
+        private readonly IBloodService _bloodService;
+        private readonly IRoomService _roomService;
 
         public TreatmentTest(TestDatabaseFactory<Startup> factory) : base(factory)
         { }
 
-        
+
         private static TreatmentController SetupSettingsController(IServiceScope scope)
         {
             
-            return new TreatmentController(scope.ServiceProvider.GetRequiredService<ITreatmentService>(),
-                                           scope.ServiceProvider.GetRequiredService<IPatientService>(),
+            return new TreatmentController(scope.ServiceProvider.GetRequiredService<IPatientService>(),
+                                           scope.ServiceProvider.GetRequiredService<ITreatmentService>(),
                                            scope.ServiceProvider.GetRequiredService<IRoomService>(),
                                            scope.ServiceProvider.GetRequiredService<IBedService>(),
                                            scope.ServiceProvider.GetRequiredService<IBloodService>(),
@@ -39,8 +43,6 @@ namespace HospitalTests.Integration
                );
         }
         
-
-        
         [Fact]
         public void Find_single_treatment()
         {
@@ -48,47 +50,43 @@ namespace HospitalTests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
             //Act
-            var result = ((OkObjectResult)controller.GetById(1))?.Value as Treatment;
+            var result = ((OkObjectResult)controller.GetById(1))?.Value as TreatmentDto;
             //Assert
-            //provera je samo da nije null. inace moze da se proveri da li je to ta koja nam treba
-            //da li je odg sprat
             Assert.NotNull(result);
         }
-        
 
         [Fact]
-        public void Find_a_patient_to_admission()
+        public void Admission_patient_to_treatment()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
 
+            PatientDto patientDto = new PatientDto(6, "Tara", "Taric", "tara@gmail.com", Role.patient);
+            Medicine medicine = new Medicine(2, false, "Aspirin", 20);
+            Blood blood = new Blood(1, false, BloodType.APlus, 2);
+            //a id u terapiji?
+            Therapy therapy = new Therapy(medicine, blood, 1, 1);
+            RoomDto roomDto = new RoomDto(1, "101A", 1, RoomType.rehabilitationRoom, null);
 
             //Act
             TreatmentDto testCase = new TreatmentDto()
             {
-                Patient = null,
-                /*
-                Patient = new Patient() { Id = 1,
-                                           Deleted = false,
-                                           BloodType = BloodType.APlus,
-                                           Person = new Person() { Id = 3, Name = "mile", Surname = "milic",
-                                            Email = "milica@gmail.com", Address = null, Gender = Gender.male,
-                                            BirthDate = DateTime.Now, Role = Role.patient
-                                            }, 
-                                           Doctor = null},  
-                */
+                Patient = patientDto,
+                ReasonForDischarge = "",
+                ReasonForAdmission = "Prelom ruke",
                 DateAdmission = DateTime.Now,
                 DateDischarge = DateTime.Now,
-                ReasonForAdmission = "Bol u stomaku",
-                ReasonForDischarge = "dobro je",
-                Therapy = null,
-                RoomDto = null
+                RoomDto = roomDto,
+                Therapy = therapy
 
             };
+
+            var result = ((OkResult)controller.Create(testCase));
+
             //Assert
-            //var result = ((CreatedAtActionResult)controller.Create(testCase))?.Value as Treatment;
-            //Assert.NotNull(result);
+            Assert.NotNull(result);
+            Assert.NotNull(testCase.Therapy);
         }
 
         
@@ -100,27 +98,39 @@ namespace HospitalTests.Integration
              var controller = SetupSettingsController(scope);
 
             //Act
-            TreatmentDto testCase = new TreatmentDto() 
-            { 
-                Id = 9 ,
-                Patient = new PatientDto(),
-                DateAdmission = new DateTime(),
-                DateDischarge = new DateTime(),
+            PatientDto patientDto = new PatientDto(6, "Tara", "Taric", "tara@gmail.com", Role.patient);
+            Medicine medicine = new Medicine(2, false, "Aspirin", 20);
+            Blood blood = new Blood(1, false, BloodType.APlus, 2);
+            Therapy therapy = new Therapy(medicine, blood, 1, 1);
+            RoomDto roomDto = new RoomDto(1, "101A", 1, RoomType.rehabilitationRoom, null);
+
+            TreatmentDto testCase = new TreatmentDto()
+            {
+                Id = 2,
+                Patient = patientDto,
                 ReasonForDischarge = "",
-                Therapy = new Therapy(),
-                RoomDto = new RoomDto()
+                ReasonForAdmission = "Glavobolja",
+                DateAdmission = new DateTime(2022, 11, 23, 20, 22, 0, 0),
+                DateDischarge = new DateTime(2022, 11, 23, 21, 22, 29, 277),
+                RoomDto = roomDto,
+                Therapy = therapy
+
             };
+            testCase.DateDischarge = new DateTime();
+            testCase.ReasonForDischarge = "Laksse mu je sad";
             
+            var result = ((FileContentResult)controller.Update(2,testCase));
 
             //Assert
-            var result = ((OkObjectResult)controller.Update(9,testCase))?.Value as TreatmentDto;
             Assert.NotNull(result);
-            Assert.Equal(9, result.Id);
+            /*
+            Assert.Equal(2, result.Id);
             Assert.Equal(testCase.Patient, result.Patient);
             Assert.NotNull(result.Patient);
-
+            */
          
         }
-        
+
+
     }
 }

@@ -24,11 +24,11 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly ITherapyService _therapyService;
 
 
-        public TreatmentController(ITreatmentService treatmentService, IPatientService patientService, IRoomService roomService,
+        public TreatmentController(IPatientService patientService, ITreatmentService treatmentService, IRoomService roomService,
             IBedService bedService, IBloodService bloodService, IMedicineService medicineService, ITherapyService therapyService)
         {
-            _treatmentService = treatmentService;
             _patientService = patientService;
+            _treatmentService = treatmentService;
             _roomService = roomService;
             _bedService = bedService;
             _bloodService = bloodService;
@@ -88,7 +88,6 @@ namespace HospitalAPI.Controllers.PublicApp
                 treatmentDto.Therapy.Blood = _bloodService.GetById(treatmentDto.Therapy.Blood.Id);
             }
 
-            //sto ako ovo ne stavim pravi jos jednu terapiju
             //treatmentDto.Therapy = _therapyService.GetById(treatmentDto.Therapy.Id);
 
             Treatment treatment = new Treatment();
