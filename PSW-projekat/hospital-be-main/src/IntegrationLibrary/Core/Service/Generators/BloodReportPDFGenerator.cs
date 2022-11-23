@@ -21,16 +21,27 @@ namespace IntegrationLibrary.Core.Service.Generators
             CreatePDFBody(acceptedRequests, bank);
             
             PdfDocument doc = Renderer.RenderHtmlAsPdf(html);
-            String today = DateTime.Now.ToString("ddMMyyyy_hhmm");
-            String filename = "BloodReportFor" + bank.Name.Replace(" ", "") + "_" + today + ".pdf";
+
+            String filename = createFileName(bank.Name);
             doc.SaveAs(filename);
 
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\IntegrationAPI\" + filename;
-            //Console.WriteLine(path);
             byte[] pdfFile = File.ReadAllBytes(path);
             return pdfFile;
         }
+        private String createFileName(String bankName)
+        {
+            String today = DateTime.Now.ToString("ddMMyyyy_hhmm");
+            String filename = "BloodReportFor" + bankName.Replace(" ", "") + "_" + today + ".pdf";
+            return filename;
+        }
 
+        public void DeleteMadeFiles(String bankName)
+        {
+            String path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\IntegrationAPI\" + createFileName(bankName);
+            if (File.Exists(path))
+                File.Delete(path);
+        }
         private void CreatePDFStyle()
         {
             html = @"<head><style>

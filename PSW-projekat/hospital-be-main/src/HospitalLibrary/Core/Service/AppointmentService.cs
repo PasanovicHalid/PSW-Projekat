@@ -45,12 +45,12 @@ namespace HospitalLibrary.Core.Service
         public void Create(Appointment entity)
         {
             /*
-            if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(3)))
-            {
-                entity.Deleted = false;
-                _appointmentRepository.Create(entity);
-            }
-            */
+             if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(3)))
+             {
+                 entity.Deleted = false;
+                 _appointmentRepository.Create(entity);
+             }
+             */
             entity.Deleted = false;
             _appointmentRepository.Create(entity);
         }
@@ -100,11 +100,11 @@ namespace HospitalLibrary.Core.Service
         public void Update(Appointment entity)
         {
             
-           // if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(2))) 
+           // if (InWorkingTime(entity, workingDayRepository.GetAllWorkingDaysByUser(2)))
             {
                 entity.Deleted = false;
                 _appointmentRepository.Update(entity);
-            } 
+            }
 
         }
 
@@ -115,10 +115,10 @@ namespace HospitalLibrary.Core.Service
 
             foreach (Appointment appointment in allAppointments)
             {
-                
+
                 AppointmentDto appointmentDto = new AppointmentDto();
 
-                
+
                 PatientDto patientDto = new PatientDto();
                 patientDto.Id = appointment.Patient.Id;
                 patientDto.Name = appointment.Patient.Person.Name;
@@ -128,16 +128,14 @@ namespace HospitalLibrary.Core.Service
                 doctorDto.Id = appointment.Doctor.Id;
                 doctorDto.Name = appointment.Doctor.Person.Name;
                 doctorDto.Surname = appointment.Doctor.Person.Surname;
-                
+
 
                 /*
                 Patient patient = new Patient();
                 Doctor doctor = new Doctor();
-
                 patient.Id = appointment.Patient.Id;
                 patient.Person.Name = appointment.Patient.Person.Name;
                 patient.Person.Surname = appointment.Patient.Person.Surname;
-
                 doctor.Id = appointment.Doctor.Id;
                 doctor.Person.Name = appointment.Doctor.Person.Name;
                 doctor.Person.Surname = appointment.Doctor.Person.Surname;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Core.DTOs
 {
@@ -22,6 +21,5 @@ namespace HospitalLibrary.Core.DTOs
             Patient = patient;
             Doctor = doctor;
         }
-
     }
 }

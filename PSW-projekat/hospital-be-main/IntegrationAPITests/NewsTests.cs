@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Core.Repository.BloodBanks;
 
 namespace IntegrationAPITests
 {
@@ -33,6 +35,8 @@ namespace IntegrationAPITests
         {
            
                var stubRepo = new Mock<INewsRepository>();
+               var rabbitMock = new Mock<IRabbitMQService>();
+               var bloodRepo = new Mock<IBloodBankRepository>();
                var newses = new List<News>();
                News n1 = new News()
                {
@@ -46,7 +50,8 @@ namespace IntegrationAPITests
                 stubRepo.Setup(m => m.GetAll()).Returns(newses);
                 stubRepo.Setup(m => m.GetById(1)).Returns(n1);
 
-                NewsService newsService = new NewsService(stubRepo.Object);
+                NewsService newsService = new NewsService(stubRepo.Object, rabbitMock.Object
+                    , bloodRepo.Object);
 
                         News n = newsService.GetById(1);
                       Assert.NotNull(n);
@@ -83,5 +88,6 @@ namespace IntegrationAPITests
 
             Assert.True((((OkObjectResult)controller.GetById(newsId)).Value as News).Status == NewsStatus.ACTIVATED);
         }
+        
     }
 }

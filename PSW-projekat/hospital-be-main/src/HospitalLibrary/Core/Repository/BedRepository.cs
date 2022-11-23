@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,11 @@ namespace HospitalLibrary.Core.Repository
             {
                 throw;
             }
+        }
+
+        public Bed GetByPatientId(int id)
+        {
+            return _context.Beds.Where(b => b.Patient.Id == id).FirstOrDefault<Bed>();
         }
     }
 }

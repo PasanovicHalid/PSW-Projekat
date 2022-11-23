@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -33,14 +34,52 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_treatmentService.GetAll());
+            List<TreatmentDto> treatmentDto = new List<TreatmentDto>();
+            foreach (var treatment in _treatmentService.GetAll())
+            {
+                PatientDto patientDto = new PatientDto(treatment.Patient.Id, treatment.Patient.Person.Name,
+                    treatment.Patient.Person.Surname, treatment.Patient.Person.Email, treatment.Patient.Person.Role);
+
+                //int id, string number, int floor, RoomType roomType, ICollection<BedDto> bedDtos
+
+                ICollection<BedDto> bedDtos = new List<BedDto>();
+
+                foreach(var bed in treatment.Room.Beds)
+                {
+                    PatientDto patientDto2 = null;
+
+                    if (bed.Patient != null)
+                    {
+                        patientDto2 = new PatientDto(bed.Patient.Id, bed.Patient.Person.Name,
+                        bed.Patient.Person.Surname, bed.Patient.Person.Email, bed.Patient.Person.Role);
+
+                        bedDtos.Add(new BedDto(bed.Id, bed.Name, bed.BedState, patientDto2, bed.Quantity));
+                    }
+                }
+
+                RoomDto roomDto = new RoomDto(treatment.Room.Id, treatment.Room.Number, treatment.Room.Floor, treatment.Room.RoomType,
+                    bedDtos);
+
+                treatmentDto.Add(new TreatmentDto(treatment.Id, patientDto, treatment.ReasonForDischarge, treatment.ReasonForAdmission, treatment.DateAdmission,
+                    treatment.DateDischarge, roomDto, treatment.Therapy));
+
+            }
+
+            return Ok(treatmentDto);
         }
 
         [HttpPost]
-        public ActionResult Create(Treatment treatment)
+        public ActionResult Create(TreatmentDto treatmentDto)
         {
-            treatment.Patient = _patientService.GetById(treatment.Patient.Id);
-            treatment.Room = _roomService.GetById(treatment.Room.Id);
+            Treatment treatment = new Treatment();
+
+            treatment.Id = treatmentDto.Id;
+            treatment.Patient = _patientService.GetById(treatmentDto.Patient.Id);
+            treatment.Room = _roomService.GetById(treatmentDto.RoomDto.Id);
+            treatment.DateAdmission = treatmentDto.DateAdmission;
+            treatment.ReasonForAdmission = treatmentDto.ReasonForAdmission;
+            treatment.ReasonForDischarge = treatmentDto.ReasonForDischarge;
+            treatment.DateDischarge = DateTime.Now;
 
             if (!ModelState.IsValid)
             {
@@ -48,7 +87,9 @@ namespace HospitalAPI.Controllers.PublicApp
             }
 
             _treatmentService.Create(treatment);
-            return CreatedAtAction("GetById", new { id = treatment.Id }, treatment);
+            //return CreatedAtAction("GetById", new { id = treatment.Id }, treatment);
+
+            return Ok();
 
         }
 
@@ -73,8 +114,27 @@ namespace HospitalAPI.Controllers.PublicApp
             PatientDto patientDto = new PatientDto(treatment.Patient.Id, treatment.Patient.Person.Name,
                     treatment.Patient.Person.Surname, treatment.Patient.Person.Email, treatment.Patient.Person.Role);
 
-            TreatmentDto treatmentDto = new TreatmentDto(treatment.Id, patientDto, treatment.ReasonForDischarge, treatment.DateAdmission,
-                                                         treatment.DateDischarge, treatment.Room, treatment.Therapy);
+            ICollection<BedDto> bedDtos = new List<BedDto>();
+
+            foreach (var bed in treatment.Room.Beds)
+            {
+                PatientDto patientDto2 = null;
+
+                if (bed.Patient != null)
+                {
+                    patientDto2 = new PatientDto(bed.Patient.Id, bed.Patient.Person.Name,
+                    bed.Patient.Person.Surname, bed.Patient.Person.Email, bed.Patient.Person.Role);
+
+                    bedDtos.Add(new BedDto(bed.Id, bed.Name, bed.BedState, patientDto2, bed.Quantity));
+                }
+
+            }
+
+            RoomDto roomDto = new RoomDto(treatment.Room.Id, treatment.Room.Number, treatment.Room.Floor, treatment.Room.RoomType,
+                    bedDtos);
+
+            TreatmentDto treatmentDto = new TreatmentDto(treatment.Id, patientDto, treatment.ReasonForDischarge, treatment.ReasonForAdmission,
+                treatment.DateAdmission, treatment.DateDischarge, roomDto, treatment.Therapy);
 
             if (treatment == null)
             {
@@ -100,10 +160,16 @@ namespace HospitalAPI.Controllers.PublicApp
             Treatment treatment = _treatmentService.GetById(treatmentDto.Id);
             treatment.DateDischarge = treatmentDto.DateDischarge;
             treatment.ReasonForDischarge = treatmentDto.ReasonForDischarge;
-
+            treatment.TreatmentState = HospitalLibrary.Core.Model.Enums.TreatmentState.close;
+            
 
             try
             {
+                Bed bed = _bedService.GetByPatientId(treatment.Patient.Id);
+                bed.BedState = HospitalLibrary.Core.Model.Enums.BedState.free;
+                bed.Patient = null;
+
+                _bedService.Update(bed);
                 _treatmentService.Update(treatment);
             }
             catch (Exception ex)
@@ -113,7 +179,14 @@ namespace HospitalAPI.Controllers.PublicApp
 
             }
 
-            return Ok(treatment);
+            byte[] file = _treatmentService.GeneratePdf(treatment);
+            Guid uniqueSuffix = Guid.NewGuid();
+            System.IO.File.WriteAllBytes("report" + ".pdf", file);
+            //return Ok();
+            //return Ok(treatment);
+            return File(file, "application/pdf", "report"  + ".pdf");
         }
+
+
     }
 }

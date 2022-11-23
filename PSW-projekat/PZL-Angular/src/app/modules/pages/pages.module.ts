@@ -6,16 +6,19 @@ import { HomeManagerComponent } from './homeManager/homeManager.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardDoctor } from '../hospital/services/authDoctor.guard';
 import { AuthGuardManager } from '../hospital/services/authManager.guard';
+import { ForbiddenAccessComponent } from './forbidden-access/forbidden-access.component';
 
 const routes: Routes = [
-  { path: 'homeManager', component: HomeManagerComponent, canActivate: [ AuthGuardManager ] },
-  { path: 'homeDoctor', component: HomeDoctorComponent, canActivate: [ AuthGuardDoctor ] },
+  { path: 'homeManager', component: HomeManagerComponent },
+  { path: 'homeDoctor', component: HomeDoctorComponent },
+  { path: 'forbidden-access', component: ForbiddenAccessComponent },
 ];
 
 @NgModule({
   declarations: [
     HomeDoctorComponent,
     HomeManagerComponent,
+    ForbiddenAccessComponent,
   ],
   imports: [
     CommonModule,

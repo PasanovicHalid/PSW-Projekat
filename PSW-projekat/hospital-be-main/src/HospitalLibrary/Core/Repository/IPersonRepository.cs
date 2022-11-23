@@ -15,5 +15,6 @@ namespace HospitalLibrary.Core.Repository
         public int GetByAgeAndGender(DateTime to, DateTime from, Gender gender);
         Person RegisterUser(Person person);
         IEnumerable<Person> GetAllDoctorsForPatientRegistration(List<int> allDoctorsIds);
+
     }
 }

@@ -132,6 +132,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+
         [HttpGet("GetAllergiesAndDoctors")]
         public ActionResult GetAllergiesAndDoctors()
         {

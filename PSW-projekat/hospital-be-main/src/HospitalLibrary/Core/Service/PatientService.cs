@@ -8,6 +8,7 @@ namespace HospitalLibrary.Core.Service
 {
     public class PatientService : IPatientService
     {
+
         private readonly IPatientRepository _patientRepository;
         private readonly IBedRepository _bedRepository;
 
@@ -16,6 +17,7 @@ namespace HospitalLibrary.Core.Service
         {
             _patientRepository = patientRepository;
             _bedRepository = bedRepository;
+
 
         }
 

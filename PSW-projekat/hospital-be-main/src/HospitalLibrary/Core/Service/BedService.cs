@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 
@@ -26,7 +27,7 @@ namespace HospitalLibrary.Core.Service
 
         public IEnumerable<Bed> GetAll()
         {
-            throw new NotImplementedException();
+            return _bedRepository.GetAll();
         }
 
         public Bed GetById(int id)
@@ -41,5 +42,11 @@ namespace HospitalLibrary.Core.Service
             _bedRepository.Update(bed);
 
         }
+
+        public Bed GetByPatientId(int id)
+        {
+            return _bedRepository.GetByPatientId(id);
+        }
+        
     }
 }

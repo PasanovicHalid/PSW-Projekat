@@ -49,11 +49,19 @@ namespace HospitalAPI.Controllers.PublicApp
                 return BadRequest();
             }
 
+            bedDto.BedState = HospitalLibrary.Core.Model.Enums.BedState.taken;
+            Patient patient = _patientService.GetById(bedDto.PatientDto.Id);
+
+            bedDto.PatientDto = new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname,
+                patient.Person.Email, patient.Person.Role);
+
+            
             Bed bed = _bedService.GetById(bedDto.Id);
             bed.Name = bedDto.Name;
             bed.BedState = HospitalLibrary.Core.Model.Enums.BedState.taken;
             bed.Quantity = bedDto.Quantity;
             bed.Patient = _patientService.GetById(bedDto.PatientDto.Id);
+            
 
             try
             {
@@ -65,7 +73,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
             }
 
-            return Ok(bed);
+            return Ok();
         }
 
 

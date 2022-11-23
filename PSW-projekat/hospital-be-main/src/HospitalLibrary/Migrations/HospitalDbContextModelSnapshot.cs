@@ -67,84 +67,85 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Allergies");
 
                     b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Deleted = false,
-                            Name = "Polen"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Deleted = false,
-                            Name = "Prasina"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Deleted = false,
-                            Name = "Pas"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Deleted = false,
-                            Name = "Macka"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Deleted = false,
-                            Name = "Pcela"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Deleted = false,
-                            Name = "Ambrozija"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Deleted = false,
-                            Name = "Kikiriki"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Deleted = false,
-                            Name = "Gluten"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Deleted = false,
-                            Name = "Laktoza"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Deleted = false,
-                            Name = "Alergija10"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Deleted = false,
-                            Name = "Alergija11"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Deleted = false,
-                            Name = "Alergija12"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Deleted = false,
-                            Name = "Alergija13"
-                        });
+                      new
+                      {
+                          Id = 1,
+                          Deleted = false,
+                          Name = "Polen"
+                      },
+                      new
+                      {
+                          Id = 2,
+                          Deleted = false,
+                          Name = "Prasina"
+                      },
+                      new
+                      {
+                          Id = 3,
+                          Deleted = false,
+                          Name = "Pas"
+                      },
+                      new
+                      {
+                          Id = 4,
+                          Deleted = false,
+                          Name = "Macka"
+                      },
+                      new
+                      {
+                          Id = 5,
+                          Deleted = false,
+                          Name = "Pcela"
+                      },
+                      new
+                      {
+                          Id = 6,
+                          Deleted = false,
+                          Name = "Ambrozija"
+                      },
+                      new
+                      {
+                          Id = 7,
+                          Deleted = false,
+                          Name = "Kikiriki"
+                      },
+                      new
+                      {
+                          Id = 8,
+                          Deleted = false,
+                          Name = "Gluten"
+                      },
+                      new
+                      {
+                          Id = 9,
+                          Deleted = false,
+                          Name = "Laktoza"
+                      },
+                      new
+                      {
+                          Id = 10,
+                          Deleted = false,
+                          Name = "Alergija10"
+                      },
+                      new
+                      {
+                          Id = 11,
+                          Deleted = false,
+                          Name = "Alergija11"
+                      },
+                      new
+                      {
+                          Id = 12,
+                          Deleted = false,
+                          Name = "Alergija12"
+                      },
+                      new
+                      {
+                          Id = 13,
+                          Deleted = false,
+                          Name = "Alergija13"
+                      });
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -445,6 +446,7 @@ namespace HospitalLibrary.Migrations
 
                     b.ToTable("Rooms");
 
+
                     b.HasData(
                         new
                         {
@@ -470,6 +472,7 @@ namespace HospitalLibrary.Migrations
                             Number = "305B",
                             RoomType = 0
                         });
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>

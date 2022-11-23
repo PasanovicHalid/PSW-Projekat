@@ -13,7 +13,7 @@
         
         <mat-form-field appearance="fill">
             <mat-label>Room</mat-label>
-            <mat-select [(ngModel)]="treatment.room" (ngModelChange)="handleOptionChangeRoom()">
+            <mat-select [(ngModel)]="treatment.roomDto" (ngModelChange)="handleOptionChangeRoom()">
                 <mat-option *ngFor="let room of rooms" [value]="room">{{room.number}}, Floor: {{room.floor}}</mat-option>
             </mat-select>
         </mat-form-field>
