@@ -11,7 +11,7 @@ import { BloodConsumptionService } from '../services/blood-consumption.service';
   styleUrls: ['./blood-consumption.component.css']
 })
 export class BloodConsumptionComponent implements OnInit {
-  public bloodConsumption: BloodConsumption = new BloodConsumption(0,new Blood(0,false,'',''),'',1)
+  public bloodConsumption: BloodConsumption = new BloodConsumption(0,new Blood(0,false,'',''),'', localStorage.getItem("currentUserId"))
   public bloodType: String = ''
   constructor(private bloodConsumptionService: BloodConsumptionService, private router: Router) { }
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class BloodConsumptionComponent implements OnInit {
 
   public createRoom() {
     this.bloodConsumption.blood.bloodType = this.ConvertFromString(this.bloodType );
-   // console.log(this.ConvertFromString(this.bloodType ))
+    console.log(this.bloodConsumption )
     if (!this.isValidInput()) return;
     this.bloodConsumptionService.createBloodConsumption(this.bloodConsumption).subscribe(res => {
       this.router.navigate(['/appointments']);
