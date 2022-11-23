@@ -179,10 +179,10 @@ namespace HospitalAPI.Controllers.PublicApp
 
             byte[] file = _treatmentService.GeneratePdf(treatment);
             Guid uniqueSuffix = Guid.NewGuid();
-            System.IO.File.WriteAllBytes("report" + treatment.Patient.Person.Name + treatment.Patient.Person.Surname 
-                                          + "_" +uniqueSuffix + ".pdf", file);
-            return Ok();
+            System.IO.File.WriteAllBytes("report" + ".pdf", file);
+            //return Ok();
             //return Ok(treatment);
+            return File(file, "application/pdf", "report"  + ".pdf");
         }
 
 
