@@ -12,6 +12,8 @@ namespace HospitalLibrary.Core.Service
     {
         //private readonly IRepository<Room> _roomRepository;
         private readonly IRoomRepository _roomRepository;
+        private readonly IBloodRepository _bloodRepository;
+
 
         /*
         public RoomService(IRepository<Room> roomRepository)
@@ -19,9 +21,10 @@ namespace HospitalLibrary.Core.Service
             _roomRepository = roomRepository;
         }
         */
-        public RoomService(IRoomRepository roomRepository)
+        public RoomService(IRoomRepository roomRepository,IBloodRepository bloodRepository)
         {
             _roomRepository = roomRepository;
+            _bloodRepository = bloodRepository;
         }
 
         public IEnumerable<Room> GetAll()
@@ -86,6 +89,26 @@ namespace HospitalLibrary.Core.Service
             }
 
             return beds;
+        }
+        public bool ReduceBloodCount(Blood blood) {
+            Blood storageBlood = this.GetBlood(blood);
+
+            if (storageBlood.Quantity < blood.Quantity) return false;
+            storageBlood.Quantity = storageBlood.Quantity - blood.Quantity;
+
+            _bloodRepository.ReduceBloodCount(storageBlood, storageBlood.Id);
+            return true;
+        }
+
+        public Blood GetBlood(Blood blood) {
+            foreach (Blood b in _roomRepository.GetBloods()) {
+                if (b != null) {
+                    if (b.BloodType == blood.BloodType) {
+                        return b;
+                    }
+                }
+            }
+            return new Blood();
         }
 
         public IEnumerable<Medicine> GetAllStorageMedicnes()

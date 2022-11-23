@@ -52,5 +52,12 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
+        public ICollection<Blood> GetBloods()
+        {
+            return this.GetById(4).Bloods;
+        }
+
+        public void ReduceBloodCount(Blood blood, int id) { 
+        }
     }
 }

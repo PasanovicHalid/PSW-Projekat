@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +11,6 @@ namespace HospitalLibrary.Core.Repository
 {
     public class BloodRepository : IBloodRepository
     {
-
         private readonly HospitalDbContext _context;
 
         public BloodRepository(HospitalDbContext context)
@@ -37,6 +36,22 @@ namespace HospitalLibrary.Core.Repository
         public Blood GetById(int id)
         {
             return _context.Bloods.Find(id);
+        }
+
+
+        public void ReduceBloodCount(Blood blood, int id)
+        {
+            _context.Entry(blood).State = EntityState.Modified;
+
+            try
+            {
+                _context.Update(blood);
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
 
         public void Update(Blood blood)

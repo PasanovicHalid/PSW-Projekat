@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Blood } from '../model/blood';
 import { BloodConsumption } from '../model/blood-consumption';
 import { BloodType } from '../model/bloodType';
+import { ToastrService } from 'ngx-toastr';
 import { BloodConsumptionService } from '../services/blood-consumption.service';
 
 @Component({
@@ -13,31 +14,35 @@ import { BloodConsumptionService } from '../services/blood-consumption.service';
 export class BloodConsumptionComponent implements OnInit {
   public bloodConsumption: BloodConsumption = new BloodConsumption(0,new Blood(0,false,'',''),'', localStorage.getItem("currentUserId"))
   public bloodType: String = ''
-  constructor(private bloodConsumptionService: BloodConsumptionService, private router: Router) { }
+  constructor(private bloodConsumptionService: BloodConsumptionService, private router: Router,private toastr: ToastrService) { }
   ngOnInit(): void {
     
   }
 
   public ConvertFromString(obj: any): any{
     switch(obj){
-      case '0': return 0;
-      case '1': return 1;
-      case '2': return 2;
-      case '3': return 3;
-      case '4': return 4;
-      case '5': return 5;
-      case '6': return 6;
-      case '7': return 7;
-      
+      case '0': return BloodType.APlus;
+      case '1': return BloodType.BPlus;
+      case '2': return BloodType.ABPlus;
+      case '3': return BloodType.OPlus;
+      case '4': return BloodType.AMinus;
+      case '5': return BloodType.BMinus;
+      case '6': return BloodType.ABMinus;
+      case '7': return BloodType.OMinus;      
     }
   }
 
   public createRoom() {
     this.bloodConsumption.blood.bloodType = this.ConvertFromString(this.bloodType );
-    console.log(this.bloodConsumption )
-    if (!this.isValidInput()) return;
+    console.log( localStorage.getItem("currentUserId") )
+    if (!this.isValidInput())  {
+      this.toastr.show("Fill in all fields correctly");
+      return;
+    }
     this.bloodConsumptionService.createBloodConsumption(this.bloodConsumption).subscribe(res => {
-      this.router.navigate(['/appointments']);
+      this.router.navigate(['/homeDoctor']);
+    },(error) => {
+      this.toastr.show("There are not enough units of blood in the system. Please enter a smaller number.");
     });
   }
 

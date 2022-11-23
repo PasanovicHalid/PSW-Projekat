@@ -118,6 +118,7 @@ namespace HospitalAPI
             services.AddScoped<IBedRepository, BedRepository>();
             services.AddScoped<IBloodConsumptionService, BloodConsumptionService>();
             services.AddScoped<IBloodConsumptionRepository, BloodConsumptionRepository>();
+            services.AddScoped<IBloodRepository, BloodRepository>();
 
             services.AddScoped<ITherapyService, TherapyService>();
             services.AddScoped<ITherapyRepository, TherapyRepository>();

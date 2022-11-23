@@ -18,7 +18,7 @@ namespace HospitalAPI.Adapters
                 Date = DateTime.Today,
                 Purpose = entity.Purpose,
                 Deleted = false,
-                Doctor = new Doctor()
+                Doctor = null
     };
         }
 

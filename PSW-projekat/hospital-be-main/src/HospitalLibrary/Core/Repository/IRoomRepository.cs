@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.Repository
 {
     public interface IRoomRepository : IRepository<Room>
     {
-
+        ICollection<Blood> GetBloods();
+        void ReduceBloodCount(Blood blood, int id);
     }
 }

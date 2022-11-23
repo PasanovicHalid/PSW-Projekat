@@ -20,12 +20,13 @@ namespace HospitalAPI.Controllers.PrivateApp
     {
         private readonly IBloodConsumptionService _bloodConsumptionService;
         private readonly IDoctorService _doctorService;
+        private readonly IRoomService _roomService;
 
-
-        public BloodConsumptionController(IBloodConsumptionService bloodConsumptionService, IDoctorService doctorService)
+        public BloodConsumptionController(IBloodConsumptionService bloodConsumptionService, IDoctorService doctorService, IRoomService roomService)
         {
             this._bloodConsumptionService = bloodConsumptionService;
             this._doctorService = doctorService;
+            this._roomService = roomService;
         }
 
         [HttpPost]
@@ -39,14 +40,15 @@ namespace HospitalAPI.Controllers.PrivateApp
             try
             {
                 bloodConsumption.Doctor = _doctorService.GetById(bloodConsumptionDTO.DoctorId);
-              
+                if (!_roomService.ReduceBloodCount(bloodConsumption.Blood)) return BadRequest();
                 _bloodConsumptionService.Create(bloodConsumption);
-                return Ok(bloodConsumption);
+                return Ok(bloodConsumptionDTO);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }
