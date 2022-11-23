@@ -120,7 +120,6 @@ INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (1,
 INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (2, N'204', 5, 2, 0)
 INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (3, N'305B', 5, 3, 0)
 INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (4, N'STORAGE', 0, 3, 0)
-
 SET IDENTITY_INSERT [dbo].[Rooms] OFF
 GO
 SET IDENTITY_INSERT [dbo].[WorkingDays] ON 
@@ -144,10 +143,21 @@ SET IDENTITY_INSERT [dbo].[Medicines] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Bloods] ON 
 
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (1, 0, 2, 4, 0)
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (2, 2, 3, 4, 0)
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (3, 1, 10, 4, 0)
-INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (4, 3, 5, 4, 0)
+
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (1, 0, 11, 1, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (2, 2, 3, 1, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (3, 1, 10, 2, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (4, 3, 5, 3, 0)
+
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (5, 0, 1000, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (6, 1, 1000, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (7, 2, 1000, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (8, 3, 1000, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (9, 4, 1000, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (10, 5, 1000, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (11, 6, 1000, 4, 0)
+INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (12, 7, 1000, 4, 0)
+
 SET IDENTITY_INSERT [dbo].[Bloods] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Therapys] ON 

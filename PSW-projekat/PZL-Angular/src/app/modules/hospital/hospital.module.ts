@@ -25,7 +25,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AuthGuardDoctor } from '../hospital/services/authDoctor.guard';
 import { AuthGuardManager } from '../hospital/services/authManager.guard';
 import { CreateBloodRequestComponent } from './create-blood-request/create-blood-request.component';
-
+import { BloodConsumptionComponent } from "./blood-consumption/blood-consumption.component";
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent, canActivate: [ AuthGuardManager ] },
@@ -40,8 +40,10 @@ const routes: Routes = [
   { path: 'statistics', component: StatisticsComponent },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'bloodRequest/add', component: CreateBloodRequestComponent }
+  { path: 'login', component: LoginComponent },  
+  { path: 'bloodRequest/add', component: CreateBloodRequestComponent },
+  { path: 'bloodConsumption/add', component: BloodConsumptionComponent}
+
 ];
 
 @NgModule({
@@ -58,7 +60,9 @@ const routes: Routes = [
     AdmissionPatientTreatmentComponent,
     DischargePatientComponent,
     LoginComponent,
-    CreateBloodRequestComponent
+    CreateBloodRequestComponent,
+    BloodConsumptionComponent
+
   ],
   imports: [
     CommonModule,

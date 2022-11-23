@@ -29,7 +29,7 @@ export class CreateBloodRequestComponent {
     }
     this.bloodRequest.bloodType = this.ConvertToNumber(this.bloodType)
     this.bloodRequestService.createBloodRequest(this.bloodRequest).subscribe(res => {
-      this.router.navigate(['/appointments']);
+      this.router.navigate(['/homeDoctor']);
     });
   }
 

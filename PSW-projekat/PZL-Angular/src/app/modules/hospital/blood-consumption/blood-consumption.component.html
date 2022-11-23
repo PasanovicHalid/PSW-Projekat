@@ -1,0 +1,33 @@
+<div class="container">
+    
+    <div>
+        <h1>Register blood consumption</h1>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Purpose</mat-label>
+
+            <textarea matInput [(ngModel)]="bloodConsumption.purpose" placeholder="" name="reason"></textarea>
+        </mat-form-field><br>
+        <mat-form-field appearance="fill">
+            <mat-label>Blood Type</mat-label>
+            <mat-select name="bloodTypes" id="bloodTypes" [(ngModel)]="bloodType" matInput>
+                <mat-option value="0">A+</mat-option>
+                <mat-option value="4">A-</mat-option>
+                <mat-option value="1">B+</mat-option>
+                <mat-option value="5">B-</mat-option>
+                <mat-option value="2">AB+</mat-option>
+                <mat-option value="6">AB-</mat-option>
+                <mat-option value="3">O+</mat-option>
+                <mat-option value="7">O-</mat-option>
+              </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Quantity</mat-label>
+            <input type="number" min="0" max="10000" matInput [(ngModel)]="bloodConsumption.blood.quantity">
+        </mat-form-field><br>
+        <button mat-stroked-button (click)="createRoom()">
+            Submit
+        </button>
+    </div>
+</div>
+  

@@ -4,14 +4,16 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221122150548_BloodConsumption")]
+    partial class BloodConsumption
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -534,7 +536,7 @@ namespace HospitalLibrary.Migrations
                             Deleted = false,
                             Floor = 1,
                             Number = "101A",
-                            RoomType = 5
+                            RoomType = 0
                         },
                         new
                         {
@@ -542,7 +544,7 @@ namespace HospitalLibrary.Migrations
                             Deleted = false,
                             Floor = 2,
                             Number = "204",
-                            RoomType = 5
+                            RoomType = 0
                         },
                         new
                         {
@@ -550,14 +552,6 @@ namespace HospitalLibrary.Migrations
                             Deleted = false,
                             Floor = 3,
                             Number = "305B",
-                            RoomType = 5
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Deleted = false,
-                            Floor = 3,
-                            Number = "STORAGE",
                             RoomType = 0
                         });
                 });
@@ -576,12 +570,6 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int?>("MedicineId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuantityBlood")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuantitytMedicine")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -842,22 +830,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Navigation("User");
                 });
-
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
-                {
-                    b.Navigation("Patients");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>
-                {
-                    b.Navigation("Beds");
-
-                    b.Navigation("Bloods");
-
-                    b.Navigation("Medicines");
-                });
-
 #pragma warning restore 612, 618
         }
     }

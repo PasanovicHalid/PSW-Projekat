@@ -12,6 +12,7 @@ namespace HospitalLibrary.Core.Model
         public Specialization Specialization { get; set; }
 
         public virtual Person Person { get; set; }
+        public int PersonId { get; set; }
 
         public virtual ICollection<Patient> Patients { get; set; }
     }
