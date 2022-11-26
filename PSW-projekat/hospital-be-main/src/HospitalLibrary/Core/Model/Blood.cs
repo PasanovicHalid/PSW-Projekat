@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalLibrary.Core.Model.Enums;
+﻿using HospitalLibrary.Core.Model.Enums;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -19,5 +14,7 @@ namespace HospitalLibrary.Core.Model
             BloodType = bloodType;
             Quantity = quantity;
         }
+
+        public Blood() { }
     }
 }

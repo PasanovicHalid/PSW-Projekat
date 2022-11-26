@@ -1,8 +1,6 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Repository.BloodConsumption;
 using HospitalLibrary.Core.Service;
-using HospitalLibrary.Core.Service.BloodConsumption;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -80,8 +78,8 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
 
-            //services.AddScoped<IService<Room>, RoomService>();
-            //services.AddScoped<IRepository<Room>, RoomRepository>();
+            services.AddScoped<IService<Room>, RoomService>();
+            services.AddScoped<IRepository<Room>, RoomRepository>();
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();

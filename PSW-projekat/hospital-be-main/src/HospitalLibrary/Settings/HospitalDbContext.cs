@@ -1,7 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace HospitalLibrary.Settings
 {

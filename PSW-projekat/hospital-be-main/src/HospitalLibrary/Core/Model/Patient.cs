@@ -1,6 +1,4 @@
 ﻿using HospitalLibrary.Core.Model.Enums;
-using System;
-using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Model
 {

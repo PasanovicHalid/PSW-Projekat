@@ -1,7 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
 
-namespace HospitalLibrary.Core.Service.BloodConsumption
+namespace HospitalLibrary.Core.Service
 {
     public interface IBloodConsumptionService : IService<DoctorBloodConsumption>
     {

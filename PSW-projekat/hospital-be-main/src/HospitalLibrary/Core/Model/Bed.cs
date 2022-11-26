@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalLibrary.Core.DTOs;
-using HospitalLibrary.Core.Model.Enums;
+﻿using HospitalLibrary.Core.Model.Enums;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -14,7 +8,5 @@ namespace HospitalLibrary.Core.Model
         public BedState BedState { get; set; }
         public virtual Patient Patient { get; set; }
         public int Quantity { get; set; }
-
-
     }
 }

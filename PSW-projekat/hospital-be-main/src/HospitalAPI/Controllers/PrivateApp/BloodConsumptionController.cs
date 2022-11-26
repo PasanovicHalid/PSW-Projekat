@@ -3,7 +3,6 @@ using HospitalAPI.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
-using HospitalLibrary.Core.Service.BloodConsumption;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
