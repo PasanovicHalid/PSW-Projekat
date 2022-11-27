@@ -7,6 +7,7 @@ namespace HospitalLibrary.Core.Model
         public BloodType BloodType { get; set; }
         public int Quantity { get; set; }
 
+        public Blood() { }
         public Blood(int id, bool deleted, BloodType bloodType, int quantity)
         {
             Id = id;
