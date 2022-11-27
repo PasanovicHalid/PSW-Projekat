@@ -61,5 +61,10 @@ namespace HospitalLibrary.Core.Repository
             _context.Appointments.Remove(room);
             _context.SaveChanges();
         }
+
+        public IEnumerable<Appointment> GetAllForPatient(int patientId)
+        {
+            return _context.Appointments.Where(p => p.Patient.Id == patientId).ToList();
+        }
     }
 }

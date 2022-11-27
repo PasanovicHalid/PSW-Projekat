@@ -143,5 +143,10 @@ namespace HospitalLibrary.Core.Service
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Appointment> GetAllAppointmentsForPatient(int patientId)
+        {
+            return _appointmentRepository.GetAllForPatient(patientId);
+        }
     }
 }
