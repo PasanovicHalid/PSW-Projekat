@@ -1,31 +1,26 @@
 ﻿using IntegrationLibrary.Core.Model.Tender;
-using IntegrationLibrary.Core.Repository.Tenders;
+using IntegrationLibrary.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Tenders
+namespace IntegrationLibrary.Core.Repository.Tenders
 {
-    public class TenderService : ITenderService
+    public class TenderRepository : ITenderRepository
     {
-        private readonly ITenderRepository _tenderRepository;
-        public TenderService(ITenderRepository tenderRepository)
+        private readonly IntegrationDbContext _context;
+
+        public TenderRepository(IntegrationDbContext context)
         {
-            _tenderRepository = tenderRepository;
+            _context = context;
         }
 
         public void Create(Tender entity)
         {
-            try
-            {
-                _tenderRepository.Create(entity);
-            }
-            catch
-            {
-                throw;
-            }
+            _context.Tenders.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Delete(Tender entity)

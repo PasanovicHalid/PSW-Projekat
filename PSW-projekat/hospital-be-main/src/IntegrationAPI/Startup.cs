@@ -19,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using IntegrationLibrary.Core.Service.Newses;
 using IntegrationLibrary.Core.Repository.Newses;
+using IntegrationLibrary.Core.Service.Tenders;
+using IntegrationLibrary.Core.Repository.Tenders;
 
 namespace IntegrationAPI
 {
@@ -79,6 +81,8 @@ namespace IntegrationAPI
             services.AddScoped<IReportSendingService, ReportSendingService>();
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

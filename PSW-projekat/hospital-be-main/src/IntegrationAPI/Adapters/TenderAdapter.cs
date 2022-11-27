@@ -16,7 +16,8 @@ namespace IntegrationAPI.Adapters
             return new Tender()
             { 
                 DueDate = entity.DueDate,
-                Demands = demands
+                Demands = demands,
+                IsActive = true
             };
         }
 

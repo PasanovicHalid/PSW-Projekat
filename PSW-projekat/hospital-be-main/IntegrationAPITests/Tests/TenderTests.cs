@@ -1,8 +1,12 @@
 ﻿using IntegrationAPI;
+using IntegrationAPI.Controllers;
+using IntegrationAPI.DTO;
 using IntegrationAPITests.Setup;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service.Tenders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,11 +38,9 @@ namespace IntegrationAPITests.Tests
             {
                 DueDate = DateTime.Now,
                 Demands = demands
-
             };
 
             var result = ((OkObjectResult)controller.Create(testCase))?.Value as TenderDTO;
-            result.Id = 0;
             result.ShouldBe(testCase);
         }
 
@@ -49,9 +51,15 @@ namespace IntegrationAPITests.Tests
             DemandDTO testCase = new DemandDTO()
             {
                 BloodType = BloodType.ABN,
-                Quantity = 3
+                BloodQuantity = 3
+            };
+            DemandDTO testCase1 = new DemandDTO()
+            {
+                BloodType = BloodType.AN,
+                BloodQuantity = 7
             };
             demands.Add(testCase);
+            demands.Add(testCase1);
             return demands;
         }
     }

@@ -115,6 +115,7 @@ namespace IntegrationLibrary.Migrations
                         principalTable: "Tenders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                        
                 });
 
             migrationBuilder.CreateIndex(

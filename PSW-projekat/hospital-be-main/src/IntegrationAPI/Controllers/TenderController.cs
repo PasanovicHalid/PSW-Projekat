@@ -9,7 +9,7 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -33,7 +33,7 @@ namespace IntegrationAPI.Controllers
             try
             {
                 _tenderService.Create(tender);
-                return CreatedAtAction("GetById", new { id = tender.Id }, tender);
+                return Ok(entity);
             }
             catch (Exception ex)
             {
