@@ -40,5 +40,23 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            try
+            {
+                Tender tender = _tenderService.GetById(id);
+                if (tender == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(tender);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

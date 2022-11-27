@@ -40,7 +40,7 @@ namespace IntegrationLibrary.Core.Service.Tenders
 
         public Tender GetById(int id)
         {
-            throw new NotImplementedException();
+            return _tenderRepository.GetById(id);
         }
 
         public void Update(Tender entity)

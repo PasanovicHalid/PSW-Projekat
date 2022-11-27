@@ -35,7 +35,7 @@ namespace IntegrationLibrary.Core.Repository.Tenders
 
         public Tender GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Tenders.Find(id);
         }
 
         public void Update(Tender entity)
