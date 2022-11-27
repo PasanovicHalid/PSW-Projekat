@@ -110,11 +110,10 @@ namespace HospitalTests.Integration
                 Patient = patientDto,
                 ReasonForDischarge = "",
                 ReasonForAdmission = "Glavobolja",
-                DateAdmission = new DateTime(2022, 11, 23, 20, 22, 0, 0),
-                DateDischarge = new DateTime(2022, 11, 23, 21, 22, 29, 277),
+                DateAdmission = new DateTime(2022, 11, 24, 08, 01, 0, 0),
+                DateDischarge = new DateTime(2022, 11, 24, 01, 02, 23, 678),
                 RoomDto = roomDto,
                 Therapy = therapy
-
             };
             testCase.DateDischarge = new DateTime();
             testCase.ReasonForDischarge = "Laksse mu je sad";
