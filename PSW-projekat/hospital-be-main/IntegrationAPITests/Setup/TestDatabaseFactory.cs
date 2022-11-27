@@ -44,8 +44,11 @@ namespace IntegrationAPITests.Setup
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
-
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Tenders\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Demands\";");
+
 
             context.BloodBanks.Add(new BloodBank {
                 Name = "asdsadsda",
