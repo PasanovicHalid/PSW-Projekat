@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace IntegrationLibrary.Core.Model.Tender
         public int Quantity { get; set; }
         [Required]
         public virtual Tender Tender { get; set; }
+        public Demand() { }
     }
 }

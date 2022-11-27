@@ -40,7 +40,8 @@ namespace IntegrationLibrary.Core.Service.Tenders
 
         public Tender GetById(int id)
         {
-            return _tenderRepository.GetById(id);
+            Tender t = _tenderRepository.GetById(id);
+            return t;
         }
 
         public void Update(Tender entity)
