@@ -48,6 +48,7 @@ namespace HospitalLibrary.Core.Service
                  _appointmentRepository.Create(entity);
              }
              */
+            entity.CancelationDate = DateTime.MinValue;
             entity.Deleted = false;
             _appointmentRepository.Create(entity);
         }
@@ -126,18 +127,6 @@ namespace HospitalLibrary.Core.Service
                 doctorDto.Name = appointment.Doctor.Person.Name;
                 doctorDto.Surname = appointment.Doctor.Person.Surname;
 
-
-                /*
-                Patient patient = new Patient();
-                Doctor doctor = new Doctor();
-                patient.Id = appointment.Patient.Id;
-                patient.Person.Name = appointment.Patient.Person.Name;
-                patient.Person.Surname = appointment.Patient.Person.Surname;
-                doctor.Id = appointment.Doctor.Id;
-                doctor.Person.Name = appointment.Doctor.Person.Name;
-                doctor.Person.Surname = appointment.Doctor.Person.Surname;
-                */
-
                 appointmentDto.Patient = patientDto;
                 appointmentDto.Doctor = doctorDto;
                 appointmentDto.DateTime = appointment.DateTime;
@@ -145,7 +134,6 @@ namespace HospitalLibrary.Core.Service
                 appointmentDto.AppointmentId = appointment.Id;
 
                 appointmentsDtos.Add(appointmentDto);
-
             }
             return appointmentsDtos;
             

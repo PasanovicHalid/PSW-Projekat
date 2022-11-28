@@ -16,6 +16,7 @@ import { AccountActivationThanks } from "./account-activation/account-activation
 import { AccountActivationInfo } from "./account-activation-info/account-activation-info.component";
 import { PatientInfoComponent } from './patient-info/patient-info.component';
 import { AuthGuard } from "./services/auth.guard";
+import { ScheduleAppointmentComponent } from './schedule-appointment/schedule-appointment.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -28,7 +29,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'account-activation', component: AccountActivationThanks },
   { path: 'account-activation-info', component: AccountActivationInfo },
-  { path: 'patientInfo', component: PatientInfoComponent, canActivate: [ AuthGuard ] }
+  { path: 'patientInfo', component: PatientInfoComponent, canActivate: [ AuthGuard ] },
+  { path: 'scheduleAppointment', component: ScheduleAppointmentComponent, canActivate: [ AuthGuard ] }
+
 ]
 
 @NgModule({
@@ -42,7 +45,8 @@ const routes: Routes = [
     WelcomeComponent,
     LoginComponent,
     RegisterComponent,
-    PatientInfoComponent
+    PatientInfoComponent,
+    ScheduleAppointmentComponent
   ],
   imports: [
     CommonModule,
