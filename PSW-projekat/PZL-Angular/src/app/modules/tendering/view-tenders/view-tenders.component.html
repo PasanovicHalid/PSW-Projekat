@@ -3,6 +3,7 @@
     <div class="table-header" *ngIf="!errorMessage">
         <p class="table-title">Tenders</p>
     </div>
+    <button (click)="createTender()">Add new tender</button>
     <table mat-table [dataSource]="dataSource" *ngIf="!errorMessage">
         <ng-container matColumnDef="Open Until">
             <th mat-header-cell *matHeaderCellDef class="cell-center">Open Until</th>

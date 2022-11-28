@@ -16,14 +16,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material.module';
 import { ToastrModule } from 'ngx-toastr';
+import { ViewSingleTenderComponent } from './view-single-tender/view-single-tender.component';
+import { CreateTenderComponent } from './create-tender/create-tender.component';
 
 const routes: Routes = [
-  { path: 'view-tenders', component: ViewTendersComponent }
+  { path: 'view-tenders', component: ViewTendersComponent },
+  { path: 'view-tender/:id', component: ViewSingleTenderComponent },
+  { path: 'create-tender', component: CreateTenderComponent },
 ];
 
 @NgModule({
   declarations: [
-    ViewTendersComponent
+    ViewTendersComponent,
+    ViewSingleTenderComponent,
+    CreateTenderComponent
   ],
   imports: [
     CommonModule,

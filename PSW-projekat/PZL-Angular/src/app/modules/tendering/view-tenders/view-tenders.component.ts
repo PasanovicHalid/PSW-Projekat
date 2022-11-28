@@ -36,9 +36,13 @@ export class ViewTendersComponent implements OnInit {
       });
   }
   public chooseTender(id:number){
-    // this.router.navigate(['/update-request', id]);
+    this.router.navigate(['/view-tender', id]);
   }
   getStateByValue(value: number) {
     return Object.values(TenderState)[value]
+  }
+
+  public createTender(){
+    this.router.navigate(['/create-tender']);
   }
 }
