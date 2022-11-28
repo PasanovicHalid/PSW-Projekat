@@ -26,13 +26,13 @@ namespace HospitalAPI.Controllers.PublicApp
             _patientService = patientService;
         }
 
-        [HttpGet("/GetPatientAppointments/{personId}")]
+        [HttpGet("GetPatientAppointments/{personId}")]
         public ActionResult GetPatientAppointments(int personId)
         {
             Patient patient = _patientService.getPatientByPersonId(personId);
             
             var patientAppointments = _appointmentService.GetAllAppointmentsForPatient(patient.Id);
-            List<PatientAppointmentsDto> patientAppointmentsList = null;
+            List<PatientAppointmentsDto> patientAppointmentsList = new List<PatientAppointmentsDto>();
             PatientAppointmentsDto patientAppointmentsDto = new PatientAppointmentsDto();
 
             foreach (var app in patientAppointments)

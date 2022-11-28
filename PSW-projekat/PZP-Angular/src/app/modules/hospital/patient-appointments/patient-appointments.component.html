@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="table-header">
+      <h2 class="table-title">All appointments</h2>
+  </div>
+  <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="AppointmentTime">
+          <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Appointment Time </th>
+          <td mat-cell *matCellDef="let appointment" class="cell-center">{{appointment.appointmentTime | date:'short'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Doctor">
+          <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Doctor </th>
+          <td mat-cell *matCellDef="let appointment" class="cell-center">{{appointment.doctorFullName}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Status">
+          <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Status </th>
+          <td mat-cell *matCellDef="let appointment" class="cell-center">{{appointment.appointmentStatus}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
