@@ -3,6 +3,7 @@ using IntegrationAPI.Controllers;
 using IntegrationAPI.DTO;
 using IntegrationAPITests.Setup;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.Tender;
 using IntegrationLibrary.Core.Service.Tenders;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,7 +38,8 @@ namespace IntegrationAPITests.Tests
             TenderDTO testCase = new TenderDTO()
             {
                 DueDate = DateTime.Now,
-                Demands = demands
+                Demands = demands,
+                State = TenderState.OPEN
             };
 
             var result = ((OkObjectResult)controller.Create(testCase))?.Value as TenderDTO;

@@ -89,7 +89,7 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                    State = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,7 +115,6 @@ namespace IntegrationLibrary.Migrations
                         principalTable: "Tenders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                        
                 });
 
             migrationBuilder.CreateIndex(

@@ -17,7 +17,7 @@ namespace IntegrationAPI.Adapters
             { 
                 DueDate = entity.DueDate,
                 Demands = demands,
-                IsActive = true
+                State = entity.State,
             };
         }
 
@@ -32,6 +32,7 @@ namespace IntegrationAPI.Adapters
             {
                 DueDate = entity.DueDate,
                 Demands = demands,
+                State = entity.State,
             };
         }
     }

@@ -30,7 +30,7 @@ SET IDENTITY_INSERT [dbo].[Newses] OFF
 
 GO
 SET IDENTITY_INSERT [dbo].[Tenders] ON 
-INSERT [dbo].[Tenders] ([Id], [DueDate], [IsActive]) VALUES (1, '2022-12-12 12:00:00', 1)
+INSERT [dbo].[Tenders] ([Id], [DueDate], [State]) VALUES (1, '2022-12-12 12:00:00', 0)
 SET IDENTITY_INSERT [dbo].[Tenders] OFF
 
 GO

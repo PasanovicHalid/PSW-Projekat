@@ -12,7 +12,7 @@ namespace IntegrationLibrary.Core.Model.Tender
     {
         public DateTime DueDate { get; set; }
         [Required]
-        public bool IsActive { get; set; }
+        public TenderState State { get; set; }
         public virtual List<Demand> Demands { get; set; }
         public Tender() { }
     }
