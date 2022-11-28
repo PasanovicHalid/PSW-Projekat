@@ -18,6 +18,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.module';
 import { JwtInterceptorService } from './helpers/jwt.interceptor.service';
+import { TenderingModule } from './modules/tendering/tendering.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { JwtInterceptorService } from './helpers/jwt.interceptor.service';
     HospitalModule,
     BloodBanksModule,
     DoctorRequestsModule,
+    TenderingModule,
     CommonModule,
     ToastrModule.forRoot(),
     DatePipe

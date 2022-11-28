@@ -81,6 +81,46 @@ namespace IntegrationLibrary.Migrations
                 {
                     table.PrimaryKey("PK_ReportSettings", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Tenders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Demands",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BloodType = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    TenderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Demands", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Demands_Tenders_TenderId",
+                        column: x => x.TenderId,
+                        principalTable: "Tenders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Demands_TenderId",
+                table: "Demands",
+                column: "TenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -92,10 +132,16 @@ namespace IntegrationLibrary.Migrations
                 name: "BloodRequests");
 
             migrationBuilder.DropTable(
+                name: "Demands");
+
+            migrationBuilder.DropTable(
                 name: "Newses");
 
             migrationBuilder.DropTable(
                 name: "ReportSettings");
+
+            migrationBuilder.DropTable(
+                name: "Tenders");
         }
     }
 }
