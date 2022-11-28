@@ -1,55 +1,121 @@
-<div class="d-flex justify-content-center vw-100 vh-100 text-white">
+<!--<div class="d-flex justify-content-center vw-100 vh-100 text-white">
     <form class="bg-dark p-4 rounded-3 m-auto shadow-lg" [formGroup]="appointmentForm" style="min-width: 25rem; min-height: 27.5rem;">
-       
-        <div [style.display]="step[0]" class="d-flex flex-column p-2" style="min-width: 23.5rem; min-height: 26rem;">
-            <h2>Choose a date for your appointment</h2>
-            <div class="my-auto">
-                <label for="date" class="form-label">Date</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="calendarPng">        
-                        <img src="../../../../assets/images/calendar.png" width="24" height="24"/>
-                    </span>
-                    <input type="date" class="form-control" id="date" aria-describedby="calendarPng" formControlName="date">
+        <mat-stepper #stepper class="bg-dark">
+            <mat-step [stepControl]="appointmentForm.get('dateForm')" label="Choose date">
+                <div  class="d-flex flex-column p-2" style="min-width: 23.5rem; min-height: 26rem;">
+                    <div class="my-auto">
+                        <label for="date" class="form-label">Date</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="calendarPng">        
+                                <img src="../../../../assets/images/calendar.png" width="24" height="24"/>
+                            </span>
+                            <input type="date" class="form-control" id="date" aria-describedby="calendarPng" formControlName="date">
+                        </div>
+                        <div *ngIf="appointmentForm.get('dateForm').invalid && (appointmentForm.get('dateForm').dirty || appointmentForm.get('dateForm').touched)" class="text-danger mt-1">
+                            Please choose a date for your appointment.
+                        </div>
+                    </div>
                 </div>
-                <div *ngIf="appointmentForm.get('date').invalid && (appointmentForm.get('date').dirty || appointmentForm.get('date').touched)" class="text-danger mt-1">
-                    Please choose a date for your appointment.
+                <div class="d-flex">
+                    <button type="button" matStepperNext class="btn btn-primary ms-auto">Next</button>
                 </div>
-            </div>
-            <div class="d-flex justify-content-end mt-auto">
-                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
-            </div>
-        </div>
+            </mat-step>
 
-        <div [style.display]="step[1]" class="d-flex flex-column p-2" style="min-width: 23.5rem; min-height: 26rem;">
-            <h2>Choose a date for your appointment</h2>
-            <div class="my-auto">
-                <label for="date" class="form-label">Date</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="calendarPng">        
-                        <img src="../../../../assets/images/calendar.png" width="24" height="24"/>
-                    </span>
-                    <input type="date" class="form-control" id="date" aria-describedby="calendarPng" formControlName="date">
+            <mat-step [stepControl]="appointmentForm.get('dateForm')">
+                <div  class="d-flex flex-column p-2" style="min-width: 23.5rem; min-height: 26rem;">
+                    <h2>Choose doctor's specialization for your appointment</h2>
+                    <div class="my-auto">
+                        <label for="date" class="form-label">Date</label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="calendarPng">        
+                                <img src="../../../../assets/images/calendar.png" width="24" height="24"/>
+                            </span>
+                            <input type="date" class="form-control" id="date" aria-describedby="calendarPng" formControlName="date">
+                        </div>
+                        <div *ngIf="appointmentForm.get('dateForm').invalid && (appointmentForm.get('dateForm').dirty || appointmentForm.get('dateForm').touched)" class="text-danger mt-1">
+                            Please choose a date for your appointment.
+                        </div>
+                    </div>
                 </div>
-                <div *ngIf="appointmentForm.get('date').invalid && (appointmentForm.get('date').dirty || appointmentForm.get('date').touched)" class="text-danger mt-1">
-                    Please choose a date for your appointment.
+                <div>
+                  <button mat-button matStepperNext type="button">Next</button>
                 </div>
-            </div>
-            <div class="d-flex justify-content-end mt-auto">
-                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
-            </div>
-        </div>
-
-        <div [style.display]="step[2]">ee
-
-        </div>
-
-        <div [style.display]="step[3]">ee
-
-        </div>
-
-        <div [style.display]="step[4]">ee
-
-        </div>
-    
+            </mat-step>
+        </mat-stepper>
     </form>
+</div>-->
+<div class="d-flex justify-content-center m-5">
+  <mat-stepper [orientation]="(stepperOrientation | async)!" linear="true">
+    <mat-step [stepControl]="dateForm" label="Choose a date">
+      <form [formGroup]="dateForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" required>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="specializationForm" label="Choose a specialization">
+      <form [formGroup]="specializationForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Specialization</mat-label>
+          <mat-select formControlName="specialization" required>
+            <mat-option>--</mat-option>
+            <mat-option value="0">General</mat-option>
+            <mat-option value="1">Dermatology</mat-option>
+            <mat-option value="2">Neurology</mat-option>
+            <mat-option value="3">Urology</mat-option>
+            <mat-option value="4">Gynecology</mat-option>
+            <mat-option value="5">Cardiology</mat-option>
+            <mat-option value="6">Dentistry</mat-option>
+            <mat-option value="7">Otorhinolaryngology</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext (click)="getDoctors()">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="doctorForm" label="Choose your doctor">
+      <form [formGroup]="doctorForm">
+        <mat-form-field appearance="fill">
+          <mat-label>Doctor</mat-label>
+          <mat-select formControlName="doctor" required>
+            <mat-option *ngFor="let doctor of doctors" [value]="doctor">{{doctor.fullName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext (click)="getFreeAppointmentTimes()">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="timeForm" label="Choose time for appointment">
+        <form [formGroup]="timeForm">
+          <mat-form-field appearance="fill">
+            <mat-label>Time</mat-label>
+            <mat-select formControlName="time" required>
+              <mat-option *ngFor="let appointment of freeAppointments" [value]="appointment">{{appointment}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Review</ng-template>
+      <p>Appointment information</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
 </div>

@@ -15,6 +15,11 @@ export class RegisterPatientDto {
   }
   export enum Specialization {
     general,
-    neurologist,
-    cardiologist
+    dermatology,
+    neurology,
+    urology,
+    gynecology,
+    cardiology,
+    dentistry,
+    otorhinolaryngology
   }

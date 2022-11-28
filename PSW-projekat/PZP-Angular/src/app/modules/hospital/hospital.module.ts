@@ -17,6 +17,8 @@ import { AccountActivationInfo } from "./account-activation-info/account-activat
 import { PatientInfoComponent } from './patient-info/patient-info.component';
 import { AuthGuard } from "./services/auth.guard";
 import { ScheduleAppointmentComponent } from './schedule-appointment/schedule-appointment.component';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -53,6 +55,7 @@ const routes: Routes = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
     RouterModule.forChild(routes)
   ],
   exports: [ RouterModule ],
