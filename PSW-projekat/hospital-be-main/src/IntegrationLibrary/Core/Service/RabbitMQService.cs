@@ -60,11 +60,11 @@ namespace IntegrationLibrary.Core.Service
                 try
                 {
                     News n = new News();
-                    n.Title = stuff._title;
-                    n.Text = stuff._text;
+                    n.Title = stuff.title;
+                    n.Text = stuff.text;
                     n.Status = NewsStatus.PENDING;
-                    if (checkBloodBankExists((string)stuff._bloodBankEmail, bloodBanks) &&
-                    checkBloodBankApiKey((string)stuff._bloodBankEmail, (string)stuff._apiKey, bloodBanks))
+                    if (checkBloodBankExists((string)stuff.bloodBank.email, bloodBanks) &&
+                    checkBloodBankApiKey((string)stuff.bloodBank.email, (string)stuff.bloodBank.apikey, bloodBanks))
                     {
                         newses.Add(n);
                     }
