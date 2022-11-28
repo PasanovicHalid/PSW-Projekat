@@ -5,7 +5,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
-using HospitalLibrary.Core.Service.BloodConsumption;
+//using HospitalLibrary.Core.Service.BloodConsumption;
 using HospitalTests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
