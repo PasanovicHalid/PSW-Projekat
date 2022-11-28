@@ -35,7 +35,14 @@ namespace IntegrationLibrary.Core.Service.Tenders
 
         public IEnumerable<Tender> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+               return _tenderRepository.GetAll();
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public Tender GetById(int id)

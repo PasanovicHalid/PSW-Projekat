@@ -18,6 +18,7 @@ namespace IntegrationAPI.Adapters
                 DueDate = entity.DueDate,
                 Demands = demands,
                 State = entity.State,
+                Id = entity.Id,
             };
         }
 
@@ -33,6 +34,7 @@ namespace IntegrationAPI.Adapters
                 DueDate = entity.DueDate,
                 Demands = demands,
                 State = entity.State,
+                Id = entity.Id,
             };
         }
     }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { TenderState } from '../model/tender-state.enum';
 import { Tender } from '../model/tender.model';
 import { TenderService } from '../services/tender.service';
 // import { BloodType } from '../model/blood-type';
@@ -29,9 +30,15 @@ export class ViewTendersComponent implements OnInit {
   public getTenders(){
     this.tenderService.getTenders().subscribe(res => {
         this.dataSource.data = res;
+        console.log(res)
       }, (error) => {
         this.errorMessage = error;
       });
   }
-
+  public chooseTender(id:number){
+    // this.router.navigate(['/update-request', id]);
+  }
+  getStateByValue(value: number) {
+    return Object.values(TenderState)[value]
+  }
 }

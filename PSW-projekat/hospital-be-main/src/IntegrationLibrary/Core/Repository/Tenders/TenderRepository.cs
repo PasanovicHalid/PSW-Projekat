@@ -30,7 +30,7 @@ namespace IntegrationLibrary.Core.Repository.Tenders
 
         public IEnumerable<Tender> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Tenders.ToList();
         }
 
         public Tender GetById(int id)

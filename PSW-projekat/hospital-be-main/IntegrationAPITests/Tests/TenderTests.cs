@@ -39,7 +39,8 @@ namespace IntegrationAPITests.Tests
             {
                 DueDate = DateTime.Now,
                 Demands = demands,
-                State = TenderState.OPEN
+                State = TenderState.OPEN,
+                Id = 0
             };
 
             var result = ((OkObjectResult)controller.Create(testCase))?.Value as TenderDTO;

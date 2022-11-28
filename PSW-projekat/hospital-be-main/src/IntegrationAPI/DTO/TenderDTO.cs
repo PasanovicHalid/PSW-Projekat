@@ -7,6 +7,7 @@ namespace IntegrationAPI.DTO
 {
     public class TenderDTO : BaseModelDTO
     {
+        public int Id { get; set; }
         public DateTime DueDate { get; set; }
         [Required]
         public List<DemandDTO> Demands { get; set; }
