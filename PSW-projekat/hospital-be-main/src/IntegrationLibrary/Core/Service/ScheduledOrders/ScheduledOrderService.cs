@@ -20,7 +20,7 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
         {
             try
             {
-                _sheduledOrderRepository.Delete(_sheduledOrderRepository.GetByBloodBankEmail(entity.BankEmail));
+                //_sheduledOrderRepository.Delete(_sheduledOrderRepository.GetByBloodBankEmail(entity.BankEmail));
                 _sheduledOrderRepository.Create(entity);
             }
             catch

@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Core.Service.ScheduledOrders;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service.ScheduledOrders;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,6 +24,19 @@ namespace IntegrationAPI.Controllers
                 return Ok(_scheduledOrderService.GetAll());
             }
             catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost]
+        public ActionResult Create(ScheduledOrder entity)
+        {
+            try
+            {
+                _scheduledOrderService.Create(entity);
+                return Ok();
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
