@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+	<PackageReference Include="Google.Protobuf" Version="3.21.9" />
+	<PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
+	<PackageReference Include="Grpc.AspNetCore.Server" Version="2.50.0" />
+	<PackageReference Include="Grpc.Core" Version="2.46.5" />
+	<PackageReference Include="Grpc.Tools" Version="2.50.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
     <PackageReference Include="IronPdf" Version="2022.11.10347" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.17" />
@@ -22,7 +30,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
-  </ItemGroup>
+    <Protobuf Include="Protos\EmergencyBloodRequests\emergencyRequest.proto" GrpcServices="None" />
+	<Protobuf Include="Protos\EmergencyBloodRequests\emergencyRequestService.proto" GrpcServices="Client" />
+   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1development_1json__JsonSchema="https://citation-file-format.github.io/1.2.0/schema.json" /></VisualStudio></ProjectExtensions>
 

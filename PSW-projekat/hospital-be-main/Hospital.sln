@@ -15,8 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationLibrary", "src\I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F157DB75-0E66-4043-B66E-5652FD196B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalTests", "HospitalTests\HospitalTests.csproj", "{D06E23C2-D009-4F67-86C7-650920500233}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationAPITests", "IntegrationAPITests\IntegrationAPITests.csproj", "{644E5F32-278C-4F83-9823-71A801CD2FCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalTests", "HospitalTests\HospitalTests.csproj", "{D06E23C2-D009-4F67-86C7-650920500233}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationAPITests", "IntegrationAPITests\IntegrationAPITests.csproj", "{644E5F32-278C-4F83-9823-71A801CD2FCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
