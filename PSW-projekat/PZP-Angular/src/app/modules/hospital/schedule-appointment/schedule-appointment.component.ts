@@ -48,10 +48,14 @@ export class ScheduleAppointmentComponent implements OnInit {
   }
 
   getDoctors(){
-    this.doctors = [new DoctorForPatientRegistrationDto({id:0,fullName:'Marko Markovic'})]
+    this.doctors = [new DoctorForPatientRegistrationDto({id:1,fullName:'Marko Markovic'})]
   }
 
   getFreeAppointmentTimes(){
     this.freeAppointments = ['12:00', '12:20', '12:40']
+  }
+
+  schedule(){
+    
   }
 }

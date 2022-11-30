@@ -112,9 +112,14 @@
     </mat-step>
     <mat-step>
       <ng-template matStepLabel>Review</ng-template>
-      <p>Appointment information</p>
+      <h2>Appointment information</h2>
+      <p>Date: {{dateForm.value.date}}</p>
+      <p>Specialization: {{specializationForm.value.specialization}}</p>
+      <p>Doctor: {{doctorForm.value.doctor.fullName}</p>
+      <p>Time: {{timeForm.value.time}}</p>
       <div>
         <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="schedule()">Schedule</button>
       </div>
     </mat-step>
   </mat-stepper>

@@ -25,13 +25,12 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpGet]
         public ActionResult GetAll()
         {
-            List<DoctorDto> doctorDtp = new List<DoctorDto>();
+            List<DoctorDto> doctorDto = new List<DoctorDto>();
             foreach (var doctor in _doctorService.GetAll())
             {
-                doctorDtp.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email, doctor.Person.Role));
-
+                doctorDto.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email, doctor.Person.Role));
             }
-            return Ok(doctorDtp);
+            return Ok(doctorDto);
         }
     }
 }
