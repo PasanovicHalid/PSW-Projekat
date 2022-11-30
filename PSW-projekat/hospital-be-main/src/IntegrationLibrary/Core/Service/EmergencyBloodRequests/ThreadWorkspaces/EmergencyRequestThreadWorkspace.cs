@@ -59,7 +59,7 @@ namespace IntegrationLibrary.Core.Service.EmergencyBloodRequests.ThreadWorkspace
         }
 
 
-        public void RequestEmergencyBlood(string bloodBankServerAddress)
+        private void RequestEmergencyBlood(string bloodBankServerAddress)
         {
             try
             {
