@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,11 @@ namespace HospitalLibrary.Core.Model
     public class DoctorsCouncil : BaseModel
     {
 
-
-
+        public String Topic { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public float Dration { get; set; }
+        public virtual ICollection<Doctor> Doctors { get; set; }
+        public virtual ICollection<Specialization> Specializations { get; set; }
     }
 }
