@@ -24,6 +24,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Therapy> Therapys { get; set; }
         public DbSet<DoctorBloodConsumption> BloodConsumptions { get; set; }
 
+        public DbSet<DoctorsCouncil> DoctorsCouncils { get; set; }
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
