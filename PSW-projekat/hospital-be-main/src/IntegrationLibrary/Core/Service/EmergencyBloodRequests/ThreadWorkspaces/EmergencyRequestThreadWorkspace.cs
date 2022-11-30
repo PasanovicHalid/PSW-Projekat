@@ -67,24 +67,30 @@ namespace IntegrationLibrary.Core.Service.EmergencyBloodRequests.ThreadWorkspace
                 new EmergencyRequestGrpcService.EmergencyRequestGrpcServiceClient(
                     CreateChannelForBankConnection(bloodBankServerAddress));
                 CheckResponse checkResponse = client.CheckIfBloodIsAvailable(new CheckRequest(), deadline: DateTime.Now.AddSeconds(5));
+
                 if (checkResponse.Availability == BloodAvailability.Available)
                 {
-                    if (!Available)
-                    {
-                        lock (Key)
-                        {
-                            if (!Available)
-                            {
-                                Available = true;
-                                EmergencyResponse emergencyResponse = client.RequestBlood(new EmergencyRequest(), deadline: DateTime.Now.AddSeconds(5));
-                            }
-                        }
-                    }
+                    RequestBlood(client);
                 }
             } 
             finally
             {
                 ChannelAggregator.DecreaseChannelUsage(bloodBankServerAddress);
+            }
+        }
+
+        private void RequestBlood(EmergencyRequestGrpcService.EmergencyRequestGrpcServiceClient client)
+        {
+            if (!Available)
+            {
+                lock (Key)
+                {
+                    if (!Available)
+                    {
+                        Available = true;
+                        EmergencyResponse emergencyResponse = client.RequestBlood(new EmergencyRequest(), deadline: DateTime.Now.AddSeconds(5));
+                    }
+                }
             }
         }
 
