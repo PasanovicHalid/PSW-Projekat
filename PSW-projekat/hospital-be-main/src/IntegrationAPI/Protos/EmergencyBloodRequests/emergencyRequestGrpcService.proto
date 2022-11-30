@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-option csharp_namespace = "IntegrationAPI.Protos.EmergencyBloodRequests";
-import "Protos/EmergencyBloodRequests/emergencyRequest.proto";
-
-service EmergencyRequestGrpcService {
-	rpc request (EmergencyRequest) returns (EmergencyResponse);
-}

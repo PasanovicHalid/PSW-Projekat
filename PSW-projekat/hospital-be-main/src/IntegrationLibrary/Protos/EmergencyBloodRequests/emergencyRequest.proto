@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "IntegrationAPI.Protos.EmergencyBloodRequests";
+option csharp_namespace = "IntegrationLibrary.Protos.EmergencyBloodRequests";
 
 message EmergencyRequest {
   string message = 1;
