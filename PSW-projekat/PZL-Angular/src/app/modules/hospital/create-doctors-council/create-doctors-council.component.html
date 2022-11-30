@@ -1,0 +1,66 @@
+<div class="container">
+    <h1>Schedule a council</h1>
+    <mat-form-field appearance="fill">
+        <mat-label>Topic</mat-label>
+        <textarea matInput [(ngModel)]="councilDTO.topic" placeholder="" name="topic"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Start Date</mat-label>
+        <input type="date" matInput [(ngModel)]="councilDTO.start" name="start">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+        <mat-label>End Date</mat-label>
+        <input type="date" matInput [(ngModel)]="councilDTO.end" name="end">
+    </mat-form-field><br>
+    <mat-form-field appearance="fill">
+        <mat-label>Duration</mat-label>
+        <input type="number" min="1" matInput [(ngModel)]="councilDTO.duration"  name="duration">
+    </mat-form-field><br>
+
+    <button mat-stroked-button (click)="showDoctors()">
+        Choose a doctor
+    </button> <button mat-stroked-button (click)="showSpecializations()">
+        Choose specializations
+    </button><br><br>
+
+    <div *ngIf="chooseSpecializations">
+        <mat-form-field appearance="fill">
+            <mat-label>Specializations</mat-label>
+            <mat-select [formControl]="toppings" [(ngModel)]="specialization" multiple>
+              <mat-select-trigger>
+                <span *ngIf="(toppings.value?.length || 0) > 0" class="example-additional-selection">
+                  (+{{(toppings.value?.length || 0) }} {{toppings.value?.length === 2 ? 'selected' : 'selected'}})
+                </span>
+              </mat-select-trigger>
+              <mat-option value=0>General</mat-option>
+              <mat-option value=1>Neurologist</mat-option>
+              <mat-option value=2>Cardiologist</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+        <div *ngIf="chooseDoctors">
+           <mat-form-field appearance="fill">
+            <mat-label>Doctoras</mat-label>
+            <mat-select [formControl]="toppings" [(ngModel)]="doctorsCouncil" multiple>
+              <mat-select-trigger>
+                
+                <span *ngIf="(toppings.value?.length || 0) > 0" class="example-additional-selection">
+                  (+{{(toppings.value?.length || 0) }} {{toppings.value?.length === 2 ? 'selected' : 'selected'}})
+                </span>
+              </mat-select-trigger>
+              <mat-option *ngFor="let topping of doctors" [value]="topping">{{topping.name}} {{topping.surname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+
+    <div>
+    
+<br><br>
+        <button mat-stroked-button (click)="submit()">
+            Submit
+        </button>
+   
+    </div>
+</div>

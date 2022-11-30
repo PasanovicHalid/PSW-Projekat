@@ -4,35 +4,22 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221130175150_DoctorCouncil")]
+    partial class DoctorCouncil
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DoctorDoctorsCouncil", b =>
-                {
-                    b.Property<int>("CouncilsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CouncilsId", "DoctorsId");
-
-                    b.HasIndex("DoctorsId");
-
-                    b.ToTable("DoctorDoctorsCouncil");
-                });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Address", b =>
                 {
@@ -242,9 +229,11 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-
-                    b.Property<int>("Duration")
+                    b.Property<int?>("DoctorId")
                         .HasColumnType("int");
+
+                    b.Property<float>("Duration")
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
@@ -256,6 +245,8 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
 
                     b.ToTable("DoctorsCouncils");
                 });
@@ -585,21 +576,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("WorkingDays");
-                });
-
-            modelBuilder.Entity("DoctorDoctorsCouncil", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.DoctorsCouncil", null)
-                        .WithMany()
-                        .HasForeignKey("CouncilsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", null)
-                        .WithMany()
-                        .HasForeignKey("DoctorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>

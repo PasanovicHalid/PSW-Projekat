@@ -28,6 +28,7 @@ import { CreateBloodRequestComponent } from './create-blood-request/create-blood
 import { BloodConsumptionComponent } from "./blood-consumption/blood-consumption.component";
 import { CouncilsComponent } from './councils/councils.component';
 import { ShowDoctorsPipe } from './councils/show-doctors.pipe';
+import { CreateDoctorsCouncilComponent } from './create-doctors-council/create-doctors-council.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent, canActivate: [ AuthGuardManager ] },
@@ -45,8 +46,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },  
   { path: 'bloodRequest/add', component: CreateBloodRequestComponent },
   { path: 'bloodConsumption/add', component: BloodConsumptionComponent},
-  { path: 'councilOfDoctors', component: CouncilsComponent}
-
+  { path: 'councilOfDoctors', component: CouncilsComponent},
+  { path: 'council/add', component: CreateDoctorsCouncilComponent}
 ];
 
 @NgModule({
@@ -65,8 +66,10 @@ const routes: Routes = [
     LoginComponent,
     CreateBloodRequestComponent,
     BloodConsumptionComponent,
+
     CouncilsComponent,
-    ShowDoctorsPipe
+    ShowDoctorsPipe,
+    CreateDoctorsCouncilComponent
 
   ],
   imports: [

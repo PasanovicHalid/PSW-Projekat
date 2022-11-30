@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Model
 {
     public class DoctorsCouncil : BaseModel
     {
-
+        public virtual Doctor Doctor { get; set; }
         public String Topic { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
