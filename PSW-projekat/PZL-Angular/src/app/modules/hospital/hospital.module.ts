@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: 'appointments/doctor/:id', component: AppointmentsComponent, canActivate: [ AuthGuardDoctor ] },
   { path: 'appointments/add', component: CreateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
-  { path: 'statistics', component: StatisticsComponent },
+  { path: 'statistics', component: StatisticsComponent, canActivate: [ AuthGuardManager ] },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent },
   { path: 'login', component: LoginComponent },  

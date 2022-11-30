@@ -14,6 +14,10 @@ export class AppointmentsService {
   constructor(private http: HttpClient) { }
 
   getAppointmentsForPatient(personId: number): Observable<any> {
-    return this.http.get<PatientAppointment[]>(this.apiHost + 'api/publicAppointment/GetPatientAppointments/' + personId, {headers: this.headers});
+    return this.http.get<PatientAppointment[]>('api/publicAppointment/GetPatientAppointments/' + personId, {headers: this.headers});
+  }
+
+  cancelAppointment(appointmentId: number): Observable<any> {
+    return this.http.put<Observable<any>>('api/publicAppointment/CancelAppointment/' + appointmentId, {headers: this.headers});
   }
 }

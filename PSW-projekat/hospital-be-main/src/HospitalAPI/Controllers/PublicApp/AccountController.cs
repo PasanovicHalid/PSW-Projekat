@@ -63,6 +63,10 @@ namespace HospitalAPI.Controllers.PublicApp
             {
                 return BadRequest("Username or password is incorrect.");
             }
+            if (secUser.IsBlocked)
+            {
+                return BadRequest("This user is blocked");
+            }
             var statement = await _userManager.IsEmailConfirmedAsync(secUser);
             if (statement == true)
             {
@@ -232,13 +236,14 @@ namespace HospitalAPI.Controllers.PublicApp
 
         
             _patientService.AddAllergyToPatient(patient, regUser.Allergies);
-            
+
 
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
                 Email = regUser.Email,
                 UserName = regUser.Username,
+                IsBlocked = false,
             };
             var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
             if (registerUser != null)

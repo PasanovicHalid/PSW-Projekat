@@ -74,7 +74,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CancelationDate")
+                    b.Property<DateTime?>("CancelationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateTime")

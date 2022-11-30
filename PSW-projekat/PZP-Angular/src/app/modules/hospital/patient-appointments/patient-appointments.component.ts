@@ -12,13 +12,13 @@ import { AppointmentsService } from '../services/appointments.service';
 export class PatientAppointmentsComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<PatientAppointment>();
-  displayedColumns: string[] = ['AppointmentTime', 'Doctor', 'Status'];
+  displayedColumns: string[] = ['AppointmentTime', 'Doctor', 'Status', 'Cancel'];
   public appointments: PatientAppointment[] = [];
 
   constructor(private appointmentService: AppointmentsService, private router: Router) { }
 
   ngOnInit(): void {
-    this.appointmentService.getAppointmentsForPatient(9).subscribe(res => {
+    this.appointmentService.getAppointmentsForPatient(10).subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
           this.appointments = []
           result.forEach((element: any) => {
@@ -30,8 +30,19 @@ export class PatientAppointmentsComponent implements OnInit {
     })
   }
 
-  public cancellAppointment(id : number){
-
+  public cancelAppointment(id : number){
+    this.appointmentService.cancelAppointment(id).subscribe(res => {
+      this.ngOnInit();
+    })
   }
 
+  public checkDate(dateString :any){
+    let comparisonDate = new Date();
+    comparisonDate.setDate(comparisonDate.getDate()+1)
+    let date = new Date(dateString.substring(0,10))
+    if(date > comparisonDate)
+      return true
+    return false
+  }
 }
+

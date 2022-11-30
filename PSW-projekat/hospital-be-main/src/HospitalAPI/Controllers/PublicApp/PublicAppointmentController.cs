@@ -37,7 +37,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
             foreach (var app in patientAppointments)
             {
-                if(app.CancelationDate == DateTime.MinValue)
+                if(app.CancelationDate == null)
                 {
                     if(app.DateTime.CompareTo(DateTime.Now) < 0)
                     {
@@ -60,7 +60,7 @@ namespace HospitalAPI.Controllers.PublicApp
                         };
                     }
                     
-                }else if (app.CancelationDate != DateTime.MinValue)
+                }else if (app.CancelationDate != null)
                 {
                     patientAppointmentsDto = new PatientAppointmentsDto()
                     {
@@ -73,6 +73,19 @@ namespace HospitalAPI.Controllers.PublicApp
                 patientAppointmentsList.Add(patientAppointmentsDto);
             }
             return Ok(patientAppointmentsList);
+        }
+
+        [HttpPut("CancelAppointment/{appointmentId}")]
+        public ActionResult CancelAppointment(int appointmentId)
+        {
+            var appointment = _appointmentService.GetById(appointmentId);
+            if(appointment == null || appointment.CancelationDate != null || appointment.DateTime<DateTime.Now.AddDays(1))
+            {
+                return BadRequest();
+            }
+            appointment.CancelationDate = DateTime.Now;
+            _appointmentService.Update(appointment);
+            return Ok();
         }
     }
 }

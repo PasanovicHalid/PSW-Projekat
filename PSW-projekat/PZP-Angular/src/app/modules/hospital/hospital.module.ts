@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'account-activation-info', component: AccountActivationInfo },
   { path: 'patientInfo', component: PatientInfoComponent, canActivate: [ AuthGuard ] },
   { path: 'scheduleAppointment', component: ScheduleAppointmentComponent, canActivate: [ AuthGuard ] },
-  { path: 'appointments', component: PatientAppointmentsComponent },
+  { path: 'appointments', component: PatientAppointmentsComponent, canActivate: [ AuthGuard ] },
 
 ]
 
