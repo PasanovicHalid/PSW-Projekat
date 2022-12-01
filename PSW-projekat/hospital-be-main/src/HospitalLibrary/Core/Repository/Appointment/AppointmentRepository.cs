@@ -1,5 +1,4 @@
 ﻿
-
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +64,12 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<Appointment> GetAllForPatient(int patientId)
         {
             return _context.Appointments.Where(p => p.Patient.Id == patientId).ToList();
+        }
+
+        public IEnumerable<Patient> GetAllMaliciousPatients()
+        {
+            return _context.Appointments.FromSqlRaw("SELECT TOP (1000) PatientId FROM[HospitalDb].[dbo].[Appointments] WHERE CancelationDate > DATEADD(day, -30, GETDATE()) GROUP BY PatientId HAVING COUNT(*) > 2").Select(a=>a.Patient).ToList();
+            //return (_context.Appointments.Where(a => a.DateTime > System.DateTime.Now.AddDays(-30)).GroupBy(a => a.Patient.Id)).Where(g => g.Count() > 2).Select(g => g.First().Patient).ToArray();
         }
     }
 }

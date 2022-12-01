@@ -7,5 +7,6 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<Appointment> GetAllByDoctor(int doctorId);
         IEnumerable<Appointment> GetAllForPatient(int patientId);
+        IEnumerable<Patient> GetAllMaliciousPatients();
     }
 }

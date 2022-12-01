@@ -148,5 +148,10 @@ namespace HospitalLibrary.Core.Service
         {
             return _appointmentRepository.GetAllForPatient(patientId);
         }
+
+        public IEnumerable<Patient> GetAllMaliciousPatients()
+        {
+            return _appointmentRepository.GetAllMaliciousPatients();
+        }
     }
 }
