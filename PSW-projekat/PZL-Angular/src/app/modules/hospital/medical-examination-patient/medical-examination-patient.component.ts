@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Appointment } from '../model/appointment.model';
 import { Examination } from '../model/examination';
 import { Medicine } from '../model/medicine';
@@ -9,6 +9,7 @@ import { PatientDto } from '../model/patientDto';
 import { Prescription } from '../model/prescription';
 import { Role } from '../model/role';
 import { Symptom } from '../model/symptom';
+import { AppointmentService } from '../services/appointment.service';
 import { MedicineService } from '../services/medicine.service';
 import { PatientService } from '../services/patient.service';
 import { RoomService } from '../services/room.service';
@@ -23,23 +24,28 @@ export class MedicalExaminationPatientComponent implements OnInit{
 
   public dataSourceSymptoms = new MatTableDataSource<Symptom>();
 
-  public patient: PatientDto = new PatientDto(2, '', '', '', '', Role)
+  //public patient: PatientDto = new PatientDto(2, '', '', '', '', Role)
   public symptoms: Symptom[] = [];
   public simptomi: Symptom[] = [];
   public prescriptions: Prescription[] = [];
-
+  public patient: PatientDto = new PatientDto(0, '','','','', 0);
+  public appointment: Appointment = new Appointment(0, false, '', '', Date());
   public examination: Examination = new Examination(0, false, Appointment, this.prescriptions, this.simptomi,'');
 
-
   constructor(private patientService: PatientService, private symptomService: SymptomService,
-     private medicineService: MedicineService, private router: Router) { }
+     private medicineService: MedicineService, private route: ActivatedRoute, 
+     private appointmentService: AppointmentService, private router: Router) { }
 
   ngOnInit(): void {
-    this.patientService.getPatient(2).subscribe(res => {
-      let result = Object.values(JSON.parse(JSON.stringify(res)));
-      var app = new PatientDto(res.id, res.name, res.surname, res.email, res.username, res.role);
-      this.patient = app;
-    })
+
+    this.route.params.subscribe((params: Params) => {
+      this.appointmentService.getAppointment(params['id']).subscribe(res => {
+        console.log(params['id']);
+        console.log(res);
+        this.patient = res.patient;
+        this.appointment = res;
+      })
+    });
 
     this.symptomService.getSymptoms().subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));

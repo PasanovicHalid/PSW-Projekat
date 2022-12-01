@@ -14,23 +14,18 @@ import { User } from '../model/user';
 export class AppointmentsComponent implements OnInit {
 
   public dataSource = new MatTableDataSource<Appointment>();
-  displayedColumns: string[] = ['dateTime', 'patientName', 'patientSurname', 'update','delete'];
+  displayedColumns: string[] = ['dateTime', 'patientName', 'patientSurname', 'update','delete', 'examination'];
   public appointments: Appointment[] = [];
   public patient1: User = new User(0, '', '', 0);
-
   
-
-  //constructor() { }
-
   constructor(private appointmentService: AppointmentService, private router: Router) { }
 
-  
   ngOnInit(): void {
-    this.appointmentService.GetAllByDoctor(2).subscribe(res => {
+    this.appointmentService.GetAllByDoctor(Number(localStorage.getItem("currentUserId"))).subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
       result.forEach((element: any) => {
-        var app = new Appointment(element.appointmentId, element.deleted, element.patinet, element.doctor, element.dateTime);
-        this.patient1 = element.patinet;
+        var app = new Appointment(element.appointmentId, element.deleted, element.patient, element.doctor, element.dateTime);
+        this.patient1 = element.patient;
         this.appointments.push(app);
       });
       this.dataSource.data = this.appointments;
@@ -43,6 +38,11 @@ export class AppointmentsComponent implements OnInit {
 
   public updateAppointment(id: number) {
     this.router.navigate(['/appointments/' + id + '/update']);
+  }
+
+  //sta sa id da se radi
+  public examinationPatient(id: number) {
+    this.router.navigate(['/examinations/add/' + id]);
   }
 
   public deleteAppointment(id: number) {

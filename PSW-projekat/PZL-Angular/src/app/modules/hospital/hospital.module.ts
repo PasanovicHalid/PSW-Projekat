@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },  
   { path: 'bloodRequest/add', component: CreateBloodRequestComponent },
   { path: 'bloodConsumption/add', component: BloodConsumptionComponent},
-  { path: 'examinations/add', component: MedicalExaminationPatientComponent},
+  { path: 'examinations/add/:id', component: MedicalExaminationPatientComponent},
   { path: 'examinations/report', component: MedicalReportComponent},
   { path: 'examinations/prescription', component: MedicalPrescriptionComponent},
   { path: 'examinations/finish', component: MedicalExaminationFinish}

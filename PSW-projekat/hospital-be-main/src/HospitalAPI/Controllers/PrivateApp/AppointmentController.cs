@@ -124,10 +124,10 @@ namespace HospitalAPI.Controllers.PrivateApp
             return NoContent();
         }
 
-        [HttpGet("doctor/{doctorId}")]
-        public ActionResult GetAllByDoctor(int doctorId)
+        [HttpGet("doctor/{personId}")]
+        public ActionResult GetAllByDoctor(int personId)
         {
-            return Ok(_appointmentService.GetAllByDoctor(doctorId));
+            return Ok(_appointmentService.GetAllByDoctor(personId));
         }  
     }
 }
