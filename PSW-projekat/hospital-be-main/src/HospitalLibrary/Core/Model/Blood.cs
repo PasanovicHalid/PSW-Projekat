@@ -16,6 +16,5 @@ namespace HospitalLibrary.Core.Model
             Quantity = quantity;
         }
 
-        public Blood() { }
     }
 }

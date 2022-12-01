@@ -19,4 +19,10 @@ export class PatientService {
   GetPatientsNoTreatment(): Observable<PatientDto[]> {
     return this.http.get<PatientDto[]>(this.apiHost + 'api/patient/patientsNoTreatment', {headers: this.headers});
   }
+
+  getPatient(id: number): Observable<PatientDto> {
+    return this.http.get<PatientDto>(this.apiHost + 'api/patient/patientDto/' + id, {headers: this.headers});
+  }
+
+
 }

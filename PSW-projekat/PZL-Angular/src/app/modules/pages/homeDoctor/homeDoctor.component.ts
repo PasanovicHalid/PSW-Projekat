@@ -20,4 +20,5 @@ export class HomeDoctorComponent implements OnInit {
       
     })
   }
+
 }

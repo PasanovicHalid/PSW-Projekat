@@ -1,0 +1,30 @@
+.nextDugme {
+    color: black;
+    border-radius: 3px;
+    border-color: black;
+    margin-left: 137px;
+
+}
+
+.nextDugme1 {
+    color: black;
+    border-radius: 3px;
+    border-color: black;
+    margin-left: 72px;
+
+}
+
+.comboSimptomi{
+    height: 150px;
+}
+
+.comboSelect{
+    height: 100px;
+    text-align: left;
+}
+
+.backDugme {
+    color: black;
+    border-radius: 3px;
+    border-color: black;
+}

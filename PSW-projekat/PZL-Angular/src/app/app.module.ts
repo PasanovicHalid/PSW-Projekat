@@ -20,6 +20,7 @@ import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.
 import { JwtInterceptorService } from './helpers/jwt.interceptor.service';
 import { TenderingModule } from './modules/tendering/tendering.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,

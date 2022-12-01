@@ -124,22 +124,13 @@ SET IDENTITY_INSERT [dbo].[Rooms] OFF
 GO
 SET IDENTITY_INSERT [dbo].[WorkingDays] ON 
 
-INSERT [dbo].[WorkingDays] ([Id], [DayOfWeek], [Day], [StartTime], [EndTime], [UserId], [Deleted]) VALUES (1, 10, 0, '2022-11-16 11:00:00', '2022-11-16 11:00:00', 3, 0)
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (1, 0, '2022-11-16 11:00:00', '2022-11-16 11:00:00', 1, 0)
 SET IDENTITY_INSERT [dbo].[WorkingDays] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Appointments] ON 
 
-INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [Deleted]) VALUES (1, 3, 2, '2022-11-16 11:30:00', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (1, 2, 2, '2022-11-16 11:30:00', '2022-11-16 11:30:00', 0)
 SET IDENTITY_INSERT [dbo].[Appointments] OFF
-GO
-SET IDENTITY_INSERT [dbo].[Medicines] ON 
-
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (1, 'Brufen', 12, 4, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (2, 'Aspirin', 20, 4, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (3, 'Dexomen', 10, 4, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (4, 'Robenan', 5, 4, 0)
-INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [RoomId], [Deleted]) VALUES (5, 'Fervex', 1, 4, 0)
-SET IDENTITY_INSERT [dbo].[Medicines] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Bloods] ON 
 
@@ -160,11 +151,6 @@ INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUE
 
 SET IDENTITY_INSERT [dbo].[Bloods] OFF
 GO
-SET IDENTITY_INSERT [dbo].[Therapys] ON 
-
-INSERT [dbo].[Therapys] ([Id], [MedicineId], [BloodId], [QuantitytMedicine], [QuantityBlood], [Deleted]) VALUES (1, 2, 3, 2, 1, 0)
-SET IDENTITY_INSERT [dbo].[Therapys] OFF
-GO
 SET IDENTITY_INSERT [dbo].[Beds] ON 
 
 INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (1, 'Dekubitalni', 1, NULL, 10, 1, 0)
@@ -179,6 +165,51 @@ INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId]
 INSERT [dbo].[Beds] ([Id], [Name], [BedState], [PatientId], [Quantity], [RoomId], [Deleted]) VALUES (10, 'Invalidski', 1, NULL, 8, 3, 0)
 
 SET IDENTITY_INSERT [dbo].[Beds] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Examinations] ON 
+
+INSERT [dbo].[Examinations] ([Id], [AppointmentId], [Report], [Deleted]) VALUES (1, 1, 'Pacijent je stigao u vrlo losem stanju. Otvoreni prelom butne kosti sa pojacanim krvarenjem.', 0)
+SET IDENTITY_INSERT [dbo].[Examinations] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Symptoms] ON 
+
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (1, 'Headache', 1, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (2, 'Low pressure', 1, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (3, 'Nausea', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (4, 'Stomach pain', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (5, 'Decreased appetite', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (6, 'Diarrhea', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (7, 'Muscle spasms', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (8, 'Dizziness', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (9, 'Visual impairment', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (10, 'Tingling of the extremities', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (11, 'Stifling', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (12, 'Tightness in the chest', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (13, 'Tachycardia', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (14, 'Tiring', NULL, 0)
+INSERT [dbo].[Symptoms] ([Id], [Name], [ExaminationId], [Deleted]) VALUES (15, 'Night sweats', NULL, 0)
+
+SET IDENTITY_INSERT [dbo].[Symptoms] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Prescriptions] ON 
+
+INSERT [dbo].[Prescriptions] ([Id], [Description], [ExaminationId], [Deleted]) VALUES (1, 'Svaki dan 3x na svakih osam sati, posle obroka.', 1, 0)
+INSERT [dbo].[Prescriptions] ([Id], [Description], [ExaminationId], [Deleted]) VALUES (2, 'Svaki drugi dan 1x na prazan stomak.', 1, 0)
+SET IDENTITY_INSERT [dbo].[Prescriptions] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Medicines] ON 
+
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [PrescriptionId], [RoomId], [Deleted]) VALUES (1, 'Brufen', 12, 1, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [PrescriptionId], [RoomId], [Deleted]) VALUES (2, 'Aspirin', 20, 1, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [PrescriptionId], [RoomId], [Deleted]) VALUES (3, 'Dexomen', 10, 1, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [PrescriptionId], [RoomId], [Deleted]) VALUES (4, 'Robenan', 5, 1, 4, 0)
+INSERT [dbo].[Medicines] ([Id], [Name], [Quantity], [PrescriptionId], [RoomId], [Deleted]) VALUES (5, 'Fervex', 1, 1, 4, 0)
+SET IDENTITY_INSERT [dbo].[Medicines] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Therapys] ON 
+
+INSERT [dbo].[Therapys] ([Id], [MedicineId], [BloodId], [QuantitytMedicine], [QuantityBlood], [Deleted]) VALUES (1, 2, 3, 2, 1, 0)
+SET IDENTITY_INSERT [dbo].[Therapys] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Treatments] ON 
 

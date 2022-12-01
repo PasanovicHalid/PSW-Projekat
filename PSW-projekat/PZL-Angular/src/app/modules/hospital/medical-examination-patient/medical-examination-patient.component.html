@@ -1,0 +1,31 @@
+
+<div class="container">
+    <div>
+
+        <h1>Medical examination patient</h1>
+ 
+        <mat-form-field appearance="fill">
+            <mat-label>Patient name</mat-label>
+            <input matInput [(ngModel)]="patient.name" disabled>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Patient surname</mat-label>
+            <input matInput [(ngModel)]="patient.surname" disabled>
+        </mat-form-field><br>
+        
+        <mat-form-field appearance="fill" class="comboSimptomi">
+            <mat-label>Symptoms</mat-label>
+            <mat-select class="comboSelect" [(ngModel)]="examination.symptoms" (ngModelChange)="handleOptionChangeSymptoms()" multiple>
+                <mat-option *ngFor="let symptom of symptoms" [value]="symptom">{{symptom.name}}</mat-option>
+            </mat-select>
+        </mat-form-field><br>
+
+        <a href="/examinations/report">
+            <button class="nextDugme" mat-stroked-button>
+                 Next 
+            </button>
+        </a>
+       
+    </div>
+</div>
