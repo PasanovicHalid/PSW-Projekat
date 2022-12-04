@@ -28,7 +28,7 @@ namespace HospitalAPI.Controllers.PublicApp
             List<DoctorDto> doctorDtp = new List<DoctorDto>();
             foreach (var doctor in _doctorService.GetAll())
             {
-                doctorDtp.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email, doctor.Person.Role));
+                doctorDtp.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email.ToString(), doctor.Person.Role));
 
             }
             return Ok(doctorDtp);

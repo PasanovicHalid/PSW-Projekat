@@ -37,6 +37,9 @@ namespace HospitalLibrary.Settings
 
             );
 
+            modelBuilder.ApplyConfiguration(new EmailConfigMap());
+
+
             base.OnModelCreating(modelBuilder);
         }
     }
