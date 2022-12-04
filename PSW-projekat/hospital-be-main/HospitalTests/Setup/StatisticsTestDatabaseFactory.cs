@@ -8,6 +8,7 @@ using System.Linq;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Core.Model.Enums;
+using System;
 
 namespace HospitalTests.Setup
 {
@@ -79,6 +80,9 @@ namespace HospitalTests.Setup
 
             context.Patients.Add(patient1);
             context.Patients.Add(patient2);
+
+            context.Appointments.Add(new Appointment() { Doctor = doctor1, Patient = patient1, Deleted = false, CancelationDate = new System.DateTime(2022, 10, 8), DateTime = new System.DateTime(2022, 10, 10) });
+            context.Appointments.Add(new Appointment() { Doctor = doctor1, Patient = patient2, Deleted = false, CancelationDate = null, DateTime = new System.DateTime(2023, 2, 2) });
 
             context.PatientAllergies.Add(patientAllergy);
 
