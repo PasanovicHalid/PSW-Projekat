@@ -61,7 +61,13 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
         public void ReadOrederedBlood()
         {
             List<FilledOrder> filledOrders = _rabbitMQService.ReciveSheduledOrders(_bloodBankRepository.GetAll().ToList());
-            Console.WriteLine(filledOrders);
+            Console.WriteLine("saved orders:");
+            foreach (FilledOrder filledOrder in filledOrders)
+            {
+                Console.WriteLine("in loop");
+                Console.WriteLine(filledOrder.BankEmail);
+                Console.WriteLine(filledOrder.APlus);
+            }
             //send post request to hospital api with filled orders
                 //if isSent -> save sent blood to blood database
                 //else -> notify menager that his order wont be delivered

@@ -117,6 +117,7 @@ namespace IntegrationLibrary.Core.Service
             {
                 var body = e.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                Console.WriteLine("message:");
                 Console.WriteLine(message);
                 dynamic stuff = JsonConvert.DeserializeObject(message);
                 try
