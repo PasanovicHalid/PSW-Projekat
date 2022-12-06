@@ -34,10 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
-	<Protobuf Include="Protos\EmergencyBloodRequests\emergencyRequest.proto" GrpcServices="None" />
-	<Protobuf Include="Protos\EmergencyBloodRequests\checkAvailable.proto" GrpcServices="None" />
-	<Protobuf Include="Protos\EmergencyBloodRequests\emergencyRequestGrpcService.proto" GrpcServices="Client" />
+	<Protobuf Include="Protos\emergencyRequest.proto" GrpcServices="None" />
+	<Protobuf Include="Protos\checkAvailable.proto" GrpcServices="None" />
+	<Protobuf Include="Protos\emergencyRequestGrpcService.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

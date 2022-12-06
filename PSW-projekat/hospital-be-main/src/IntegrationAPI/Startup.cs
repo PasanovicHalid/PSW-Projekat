@@ -23,6 +23,7 @@ using IntegrationLibrary.Core.Service.Tenders;
 using IntegrationLibrary.Core.Repository.Tenders;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using IntegrationLibrary.Core.Service.EmergencyBloodRequests;
+using IntegrationAPI.Adapters;
 
 namespace IntegrationAPI
 {
@@ -39,6 +40,7 @@ namespace IntegrationAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddAutoMapper(typeof(EmergencyBloodRequestAdapter));
             services.AddDbContext<IntegrationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IntegrationDb"))
                                                                             .UseLazyLoadingProxies());
 

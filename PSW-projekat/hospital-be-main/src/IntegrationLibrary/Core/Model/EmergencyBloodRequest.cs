@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationLibrary.Protos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace IntegrationLibrary.Core.Model
     {
         public int BloodQuantity { get; set; }
 
-        public BloodType BloodType { get; set; }
+        public BloodTypeProto BloodType { get; set; }
+
+        public int BloodBankID { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,26 @@ namespace HospitalAPI.Controllers.PublicApp
             try
             {
                 _bloodService.updateQuantityBlood(bloodId, quantity, blood);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+
+            return Ok();
+        }
+
+        [HttpGet("emergency/{bloodType}/{amount}")]
+        public ActionResult UpdateQuantity(BloodType bloodType, int amount)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _bloodService.updateEmergency(amount, bloodType);
             }
             catch (Exception ex)
             {
