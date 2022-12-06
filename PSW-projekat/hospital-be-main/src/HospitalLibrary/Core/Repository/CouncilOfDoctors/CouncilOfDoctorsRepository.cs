@@ -1,5 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +31,7 @@ namespace HospitalLibrary.Core.Repository.CouncilOfDoctors
 
         public IEnumerable<DoctorsCouncil> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.DoctorsCouncils.ToList();
         }
 
         public DoctorsCouncil GetById(int id)
@@ -41,5 +43,6 @@ namespace HospitalLibrary.Core.Repository.CouncilOfDoctors
         {
             throw new NotImplementedException();
         }
+
     }
 }

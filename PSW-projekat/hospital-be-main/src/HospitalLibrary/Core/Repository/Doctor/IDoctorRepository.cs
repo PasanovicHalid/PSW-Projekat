@@ -8,5 +8,6 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<Doctor> GetAllDoctorsForPatientRegistration();
         public Person getPersonByDoctorId(int id);
         Doctor RegisterDoctor(Doctor doctor);
+        IEnumerable<DoctorsCouncil> GetAllCouncilByDoctor(int doctorId);
     }
 }

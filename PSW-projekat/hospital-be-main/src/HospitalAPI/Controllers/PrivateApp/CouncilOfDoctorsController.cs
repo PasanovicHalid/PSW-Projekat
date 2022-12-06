@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service.CouncilOfDoctors;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,31 @@ namespace HospitalAPI.Controllers.PrivateApp
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+
+            List<DoctorsCouncilDto> councilsDto = new List<DoctorsCouncilDto>();
+
+            foreach (var council in _councilOfDoctorsService.GetAll())
+            {
+                ICollection<DoctorDto> doctorDtos = new List<DoctorDto>();
+
+                foreach (var doctor in council.Doctors)
+                {
+
+                    doctorDtos.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email,
+                                                 doctor.Person.Role));
+                    
+                }
+
+                councilsDto.Add(new DoctorsCouncilDto(council.Id, council.Topic, council.Start, council.Duration, doctorDtos));
+            }
+
+            return Ok(councilsDto);
+        }
+
 
     }
 }

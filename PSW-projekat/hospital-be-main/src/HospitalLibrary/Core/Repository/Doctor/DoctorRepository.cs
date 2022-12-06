@@ -62,5 +62,11 @@ namespace HospitalLibrary.Core.Repository
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<DoctorsCouncil> GetAllCouncilByDoctor(int doctorId)
+        {
+            return this.GetById(doctorId).Councils;
+
+        }
     }
 }

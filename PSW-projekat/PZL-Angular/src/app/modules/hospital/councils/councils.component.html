@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="table-header">
+        <p class="table-title">All councils</p>
+    </div>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="Topic">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Topic </th>
+            <td mat-cell *matCellDef="let council" class="cell-center">{{council.topic}}</td>
+        </ng-container>
+        <ng-container matColumnDef="DateTime">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Date and time </th>
+            <td mat-cell *matCellDef="let council" class="cell-center">{{council.start | date:'short'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Duration">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Duration </th>
+            <td mat-cell *matCellDef="let council" class="cell-center">{{council.duration}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Doctors">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"> Doctors </th>
+            <td mat-cell *matCellDef="let council" class="cell-center">{{council.doctors | showDoctors}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div> 

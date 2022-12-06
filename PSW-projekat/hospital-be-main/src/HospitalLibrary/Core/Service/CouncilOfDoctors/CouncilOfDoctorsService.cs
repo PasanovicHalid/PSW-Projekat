@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository.CouncilOfDoctors;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace HospitalLibrary.Core.Service.CouncilOfDoctors
 
         public IEnumerable<DoctorsCouncil> GetAll()
         {
-            throw new NotImplementedException();
+            return _councilOfDoctorsRepository.GetAll();
         }
 
         public DoctorsCouncil GetById(int id)
@@ -43,5 +44,7 @@ namespace HospitalLibrary.Core.Service.CouncilOfDoctors
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

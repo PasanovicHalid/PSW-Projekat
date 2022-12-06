@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,6 @@ namespace HospitalLibrary.Core.Service.CouncilOfDoctors
 {
     public interface ICouncilOfDoctorsService : IService<DoctorsCouncil>
     {
+        
     }
 }

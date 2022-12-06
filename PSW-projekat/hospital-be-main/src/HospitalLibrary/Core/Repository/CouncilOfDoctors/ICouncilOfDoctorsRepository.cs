@@ -9,5 +9,6 @@ namespace HospitalLibrary.Core.Repository.CouncilOfDoctors
 {
     public interface ICouncilOfDoctorsRepository : IRepository<DoctorsCouncil>
     {
+     
     }
 }

@@ -4,35 +4,22 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221130215750_CreateDoctorsCouncil")]
+    partial class CreateDoctorsCouncil
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("DoctorDoctorsCouncil", b =>
-                {
-                    b.Property<int>("CouncilsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DoctorsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CouncilsId", "DoctorsId");
-
-                    b.HasIndex("DoctorsId");
-
-                    b.ToTable("DoctorDoctorsCouncil");
-                });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Address", b =>
                 {
@@ -183,6 +170,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("DoctorsCouncilId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
@@ -190,6 +180,8 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DoctorsCouncilId");
 
                     b.HasIndex("PersonId");
 
@@ -237,8 +229,8 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
+                    b.Property<float>("Duration")
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
@@ -581,21 +573,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("WorkingDays");
                 });
 
-            modelBuilder.Entity("DoctorDoctorsCouncil", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.DoctorsCouncil", null)
-                        .WithMany()
-                        .HasForeignKey("CouncilsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", null)
-                        .WithMany()
-                        .HasForeignKey("DoctorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
@@ -633,6 +610,10 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
+                    b.HasOne("HospitalLibrary.Core.Model.DoctorsCouncil", null)
+                        .WithMany("Doctors")
+                        .HasForeignKey("DoctorsCouncilId");
+
                     b.HasOne("HospitalLibrary.Core.Model.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId");
@@ -743,6 +724,11 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
                 {
                     b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorsCouncil", b =>
+                {
+                    b.Navigation("Doctors");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Room", b =>

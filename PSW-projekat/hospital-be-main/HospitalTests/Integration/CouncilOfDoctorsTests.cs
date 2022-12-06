@@ -1,5 +1,6 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.PrivateApp;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service.CouncilOfDoctors;
 using HospitalTests.Setup;
@@ -42,6 +43,25 @@ namespace HospitalTests.Integration
             var result = ((OkObjectResult)controller.Create(testCase))?.Value as DoctorsCouncil;
             Assert.NotNull(result);
             result.ShouldBe(testCase);
+        }
+
+        [Fact]
+        public void Get_all_consiliums()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            //Act
+            var result = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<DoctorsCouncilDto>;
+
+            
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+           
+            
         }
 
     }
