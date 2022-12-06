@@ -13,6 +13,7 @@ namespace IntegrationLibrary.Core.Model
         private int _bPlus;
         //ostale krvne grupe
         private string _bankEmail;
+        private string _bankApiKey;
         private string _hospitalEmail;
 
         public ScheduledOrder() { }
@@ -21,6 +22,7 @@ namespace IntegrationLibrary.Core.Model
         public int APlus { get => _aPlus; set => _aPlus = value; }
         public int BPlus { get => _bPlus; set => _bPlus = value; }
         public string BankEmail { get => _bankEmail; set => _bankEmail = value; }
+        public string BankApiKey { get => _bankApiKey; set => _bankApiKey = value; }
         public string HospitalEmail { get => _hospitalEmail; set => _hospitalEmail = value; }
     }
 }

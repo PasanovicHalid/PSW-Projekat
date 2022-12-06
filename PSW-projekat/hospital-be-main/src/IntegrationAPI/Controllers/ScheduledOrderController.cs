@@ -41,5 +41,18 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("/testGetOrder")]
+        public ActionResult TestGetOrder()
+        {
+            try
+            {
+                _scheduledOrderService.ReadOrederedBlood();
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
     }
 }

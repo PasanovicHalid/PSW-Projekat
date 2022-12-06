@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.BloodBanks;
 using IntegrationLibrary.Core.Repository.ScheduledOrder;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,13 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
     public class ScheduledOrderService : IScheduledOrderService
     {
         private readonly ISheduledOrderRepository _sheduledOrderRepository;
-        public ScheduledOrderService(ISheduledOrderRepository sheduledOrderRepository)
+        private readonly IRabbitMQService _rabbitMQService;
+        private readonly IBloodBankRepository _bloodBankRepository;
+        public ScheduledOrderService(ISheduledOrderRepository sheduledOrderRepository, IRabbitMQService rabbitMQService, IBloodBankRepository bloodBankRepository)
         {
             _sheduledOrderRepository = sheduledOrderRepository;
+            _rabbitMQService = rabbitMQService;
+            _bloodBankRepository = bloodBankRepository;
         }
 
         public void Create(ScheduledOrder entity)
@@ -26,6 +31,7 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
                     _sheduledOrderRepository.Delete(readOrder);
                 }
                 _sheduledOrderRepository.Create(entity);
+                _rabbitMQService.SendScheduledOrder(entity);
             }
             catch
             {
@@ -51,6 +57,15 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
         public void Update(ScheduledOrder entity)
         {
             _sheduledOrderRepository.Update(entity);
+        }
+        public void ReadOrederedBlood()
+        {
+            List<FilledOrder> filledOrders = _rabbitMQService.ReciveSheduledOrders(_bloodBankRepository.GetAll().ToList());
+            Console.WriteLine(filledOrders);
+            //send post request to hospital api with filled orders
+                //if isSent -> save sent blood to blood database
+                //else -> notify menager that his order wont be delivered
+
         }
     }
 }
