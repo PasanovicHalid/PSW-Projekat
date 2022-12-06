@@ -139,7 +139,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
 
-        [Authorize(Roles = "Manager")]
+        //[Authorize(Roles = "Manager")]
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
         {
@@ -331,59 +331,51 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpPost("LoginBank")]
-        public void LoginBankAsync(LoginUserDto loginUserDto)
-        {
-            SecUser secUser = new SecUser();
-            //secUser = await _userManager.FindByNameAsync(loginUserDto.Username);
-            //if (secUser == null)
-            //{
-            //    return BadRequest("Username or password is incorrect.");
-            //}
-            //var statement = await _userManager.IsEmailConfirmedAsync(secUser);
-            //if (statement == true)
-            //{
-            //    var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, true, false);
-            //    if (result.Succeeded)
-            //    {
-            //        var user = await _userManager.FindByNameAsync(loginUserDto.Username);
-            //        if (user != null && await _userManager.CheckPasswordAsync(user, loginUserDto.Password))
-            //        {
-            //            //var id = user.Claims.GetUserId();
-            //            var claims = await _userManager.GetClaimsAsync(user);
-            //            var userRoles = await _userManager.GetRolesAsync(user);
+        public async Task<ActionResult> LoginBankAsync(LoginUserDto loginUserDto)
+        {    
+            var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, true, false);
+            if (result.Succeeded)
+            {
+                var user = await _userManager.FindByNameAsync(loginUserDto.Username);
+                if (user != null && await _userManager.CheckPasswordAsync(user, loginUserDto.Password))
+                {
+                    //var id = user.Claims.GetUserId();
+                    var claims = await _userManager.GetClaimsAsync(user);
+                    var userRoles = await _userManager.GetRolesAsync(user);
 
-            //            if (!((userRoles[0] == "Manager" && loginUserDto.Flag == "PZL") ||
-            //               (userRoles[0] == "Doctor" && loginUserDto.Flag == "PZL") ||
-            //               (userRoles[0] == "Patient" && loginUserDto.Flag == "PZP")))
-            //            {
-            //                return BadRequest("Wrong application.");
-            //            }
+                    if (!((userRoles[0] == "Manager" && loginUserDto.Flag == "PZL") ||
+                        (userRoles[0] == "Doctor" && loginUserDto.Flag == "PZL") ||
+                        (userRoles[0] == "Patient" && loginUserDto.Flag == "PZP") ||
+                        (userRoles[0] == "BloodBank" && loginUserDto.Flag == "PZP")))
+                    {
+                        return BadRequest("Wrong application.");
+                    }
 
-            //            var authClaims = new List<Claim>
-            //            {
-            //                new Claim("Id", claims[0].Value),
-            //                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    var authClaims = new List<Claim>
+                    {
+                        new Claim("Id", claims[0].Value),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
 
-            //            };
+                    };
 
-            //            foreach (var userRole in userRoles)
-            //            {
-            //                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            //                authClaims.Add(new Claim("Role", userRole));
-            //            }
+                    foreach (var userRole in userRoles)
+                    {
+                        authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                        authClaims.Add(new Claim("Role", userRole));
+                    }
 
-            //            var token = GetToken(authClaims);
+                    var token = GetToken(authClaims);
 
-            //            return Ok(new
-            //            {
-            //                token = new JwtSecurityTokenHandler().WriteToken(token),
-            //                expiration = token.ValidTo
-            //            });
-            //        }
-            //    }
-            //    return BadRequest("Username or password is incorrect.");
-            //}
-            //return BadRequest("Email not confirmed");
+                    return Ok(new
+                    {
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        expiration = token.ValidTo
+                    });
+                }
+            }
+            else
+                return BadRequest("Username or password is incorrect.");
+            return BadRequest("Username or password is incorrect.");
         }
     }
 }

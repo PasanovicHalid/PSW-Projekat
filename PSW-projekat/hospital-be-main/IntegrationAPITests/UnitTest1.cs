@@ -11,6 +11,7 @@ using Moq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using IntegrationLibrary.Core.HospitalConnection;
 
 namespace IntegrationAPITests
 {
@@ -48,7 +49,7 @@ namespace IntegrationAPITests
             stubRepo.Setup(m => m.GetById(1)).Returns(b1);
 
 
-            BloodBankService bloodBankService = new BloodBankService(stubRepo.Object, new EmailService(), new BloodBankHTTPConnection(), new RabbitMQService() );
+            BloodBankService bloodBankService = new BloodBankService(stubRepo.Object, new EmailService(), new BloodBankHTTPConnection(), new RabbitMQService(), new HospitalHTTPConnection());
 
             BloodBank t =  bloodBankService.GetById(2);
             Assert.Null(t);

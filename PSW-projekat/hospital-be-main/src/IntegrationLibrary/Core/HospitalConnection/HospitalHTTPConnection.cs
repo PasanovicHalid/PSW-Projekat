@@ -25,7 +25,7 @@ namespace IntegrationLibrary.Core.HospitalConnection
             PostAsync(client).Wait();
         }
 
-        static async Task PostAsync(HttpClient httpClient)
+        static async Task<String> PostAsync(HttpClient httpClient)
         {
             string isSuccessful = "false";
             client.Timeout = TimeSpan.FromSeconds(120);
@@ -35,6 +35,7 @@ namespace IntegrationLibrary.Core.HospitalConnection
             response.EnsureSuccessStatusCode();
 
             isSuccessful = await response.Content.ReadAsStringAsync();
+            return isSuccessful;
         }
     }
 }
