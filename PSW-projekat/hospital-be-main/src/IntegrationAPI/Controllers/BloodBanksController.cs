@@ -12,8 +12,8 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
-    [Authorize(Roles ="Manager, Doctor")]
-    [EnableCors]
+    //[Authorize(Roles ="Manager, Doctor")]
+    //[EnableCors]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodBanksController : ControllerBase
@@ -194,11 +194,10 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            BloodBank bank = BloodBankAdapter.FromDTO(entity);
             try
             {
-                _bloodBankService.Create(bank);
-                return CreatedAtAction("GetById", new { id = bank.Id }, bank);
+                _bloodBankService.LoginBank(loginUserDto);
+                return Ok();
             }
             catch (Exception ex)
             {

@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.HospitalConnection;
+using HospitalLibrary.Core.DTOs;
 
 namespace IntegrationLibrary.Core.Service.BloodBanks
 {
@@ -22,16 +24,19 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         private readonly PasswordGenerator _passwordGenerator = new PasswordGenerator();
         private readonly IBloodBankConnection _bloodBankConnection;
         private readonly IRabbitMQService _rabbitMQService;
+        private readonly IHospitalConnection _hospitalConnection;
 
         public BloodBankService(IBloodBankRepository bloodBankRepository,
             IEmailService emailService,
             IBloodBankConnection bloodBankConnection,
-            IRabbitMQService rabbitMQService)
+            IRabbitMQService rabbitMQService,
+            IHospitalConnection hospitalConnection)
         {
             _bloodBankRepository = bloodBankRepository;
             _emailService = emailService;
             _bloodBankConnection = bloodBankConnection;
             _rabbitMQService = rabbitMQService;
+            _hospitalConnection = hospitalConnection;
         }
 
         public void Create(BloodBank entity)
@@ -145,5 +150,31 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
             return true;
         }
 
+        public void LoginBank(LoginUserDto loginUserDto)
+        {
+            BloodBank bank = CheckIfBankExists(loginUserDto.Username, loginUserDto.Password);
+            if (bank != null)
+                CreateJWT(loginUserDto);
+            else
+                throw new Exception("Bank doesnt exist");
+
+        }
+
+        private BloodBank CheckIfBankExists(string email, string password)
+        {
+            foreach(BloodBank bank in GetAll())
+            {
+                if (bank.Password.Equals(password) && bank.Email.Equals(email) && bank.AccountStatus.Equals(AccountStatus.ACTIVE))
+                    return bank;
+            }
+            return null;
+
+        }
+
+        private void CreateJWT(LoginUserDto loginUserDto)
+        {
+            _hospitalConnection.GenereteJWT(loginUserDto);
+
+        }
     }
 }
