@@ -45,6 +45,19 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok();
         }
+        [HttpPost("takeOrder")]
+        public ActionResult TakeOrder(List<BloodOrderDto> entity)
+        {
+            try
+            {
+                Console.WriteLine("in post takeOrder!!");
+                return Ok(entity);
+            }
+            catch
+            {
+                return BadRequest(entity);
+            }
+        }
 
     }
 }

@@ -1,10 +1,13 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodBanks;
 using IntegrationLibrary.Core.Repository.ScheduledOrder;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Service.ScheduledOrders
@@ -14,6 +17,7 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
         private readonly ISheduledOrderRepository _sheduledOrderRepository;
         private readonly IRabbitMQService _rabbitMQService;
         private readonly IBloodBankRepository _bloodBankRepository;
+        private static readonly HttpClient client = new HttpClient();
         public ScheduledOrderService(ISheduledOrderRepository sheduledOrderRepository, IRabbitMQService rabbitMQService, IBloodBankRepository bloodBankRepository)
         {
             _sheduledOrderRepository = sheduledOrderRepository;
@@ -69,9 +73,24 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
                 Console.WriteLine(filledOrder.APlus);
             }
             //send post request to hospital api with filled orders
-                //if isSent -> save sent blood to blood database
-                //else -> notify menager that his order wont be delivered
+            //if isSent -> save sent blood to blood database
+            //else -> notify menager that his order wont be delivered
+            sendReq(filledOrders);
+            
 
+
+        }
+        private async void sendReq(List<FilledOrder> filledOrders)
+        {
+            var values = new Dictionary<string, string>
+              {
+                  { "filledOrders", JsonConvert.SerializeObject(filledOrders)}
+              };
+            Console.WriteLine("values: ");
+            Console.WriteLine(values);
+            var content = new FormUrlEncodedContent(values);
+            var response = await client.PostAsync("http://localhost:16177/api/Blood/takeOrder", content);
+            var responseString = await response.Content.ReadAsStringAsync();
         }
     }
 }
