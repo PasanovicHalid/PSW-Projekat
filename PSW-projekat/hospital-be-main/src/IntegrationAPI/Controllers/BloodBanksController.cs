@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Adapters;
+﻿using HospitalLibrary.Core.DTOs;
+using IntegrationAPI.Adapters;
 using IntegrationAPI.Controllers.Interfaces;
 using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Exceptions;
@@ -184,6 +185,25 @@ namespace IntegrationAPI.Controllers
                 return BadRequest();
             }
             return Ok(entity);
+        }
+
+        [HttpPost("Login")]
+        public ActionResult LoginBank(LoginUserDto loginUserDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            BloodBank bank = BloodBankAdapter.FromDTO(entity);
+            try
+            {
+                _bloodBankService.Create(bank);
+                return CreatedAtAction("GetById", new { id = bank.Id }, bank);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
