@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class Email : ValueObject
+    [Owned]
+    public class Email
     {
-        private string email;
+        public string Adress { get; set; }
 
         private Email()
         {
@@ -20,20 +22,21 @@ namespace HospitalLibrary.Core.Model
 
         public Email(String email)
         {
-            this.email = email;
+            //this.email = email;
             //this.email = Create(email).ToString();
         }
 
         static public Email Create(string email)
         {
-            if (ValidateEmail(email))
+            /*if (ValidateEmail(email))
             {
                 return new Email(email);
             }
-            throw new ArgumentException("email");
+            throw new ArgumentException("email");*/
+            return new Email(email);
         }
 
-        static public Boolean ValidateEmail(string email)
+        /*static public Boolean ValidateEmail(string email)
         {
             string patternStrict = @"^(([^<>()[\]\\.,;:\s@\""]+"
 
@@ -62,6 +65,6 @@ namespace HospitalLibrary.Core.Model
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return email;
-        }
+        }*/
     }
 }
