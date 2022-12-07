@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -33,7 +34,9 @@ namespace HospitalLibrary.Core.Model
                 return new Email(email);
             }
             throw new ArgumentException("email");*/
-            return new Email(email);
+            Email email2 = new Email();
+            email2.Adress = email;
+            return email2;
         }
 
         /*static public Boolean ValidateEmail(string email)

@@ -143,7 +143,8 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
 
-        [Authorize(Roles = "Manager")]
+        //[Authorize(Roles = "Manager")]
+        [AllowAnonymous]
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
         {
