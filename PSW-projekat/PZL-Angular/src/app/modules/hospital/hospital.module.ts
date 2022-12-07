@@ -26,6 +26,7 @@ import { AuthGuardDoctor } from '../hospital/services/authDoctor.guard';
 import { AuthGuardManager } from '../hospital/services/authManager.guard';
 import { CreateBloodRequestComponent } from './create-blood-request/create-blood-request.component';
 import { BloodConsumptionComponent } from "./blood-consumption/blood-consumption.component";
+import { MaliciousPatientsComponent } from './malicious-patients/malicious-patients.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent, canActivate: [ AuthGuardManager ] },
@@ -42,7 +43,8 @@ const routes: Routes = [
   { path: 'treatments/:id/update', component: DischargePatientComponent },
   { path: 'login', component: LoginComponent },  
   { path: 'bloodRequest/add', component: CreateBloodRequestComponent },
-  { path: 'bloodConsumption/add', component: BloodConsumptionComponent}
+  { path: 'bloodConsumption/add', component: BloodConsumptionComponent},
+  { path: 'malicious-patients', component: MaliciousPatientsComponent, canActivate: [ AuthGuardManager ]}
 
 ];
 
@@ -61,7 +63,8 @@ const routes: Routes = [
     DischargePatientComponent,
     LoginComponent,
     CreateBloodRequestComponent,
-    BloodConsumptionComponent
+    BloodConsumptionComponent,
+    MaliciousPatientsComponent
 
   ],
   imports: [

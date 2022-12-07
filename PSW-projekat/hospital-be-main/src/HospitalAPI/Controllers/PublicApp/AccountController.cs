@@ -338,11 +338,12 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPut("BlockUser/{personId}")]
         public async Task<ActionResult> BlockUserAsync(int personId)
         {
             var email = _personService.GetById(personId).Email;
-            var secUser = await _userManager.FindByEmailAsync(email);
+            var secUser = await _userManager.FindByEmailAsync(email.Adress);
             if (secUser == null || secUser.IsBlocked)
                 return BadRequest("User doesn't exist or is already blocked");
             secUser.BlockUser();
@@ -350,11 +351,12 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPut("UnblockUser/{personId}")]
         public async Task<ActionResult> UnblockUserAsync(int personId)
         {
             var email = _personService.GetById(personId).Email;
-            var secUser = await _userManager.FindByEmailAsync(email);
+            var secUser = await _userManager.FindByEmailAsync(email.Adress);
             if (secUser == null || !secUser.IsBlocked)
                 return BadRequest("User doesn't exist or is already unblocked");
             secUser.UnblockUser();

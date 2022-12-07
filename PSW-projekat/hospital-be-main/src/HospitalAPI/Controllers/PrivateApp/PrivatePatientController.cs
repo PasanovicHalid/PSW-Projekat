@@ -1,15 +1,18 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers.PrivateApp
 {
-    
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -17,23 +20,24 @@ namespace HospitalAPI.Controllers.PrivateApp
     public class PrivatePatientController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        private readonly IDoctorService _doctorService;
-        private readonly IPatientService _patientService;
+        private readonly UserManager<SecUser> _userManager;
 
 
-        public PrivatePatientController(IAppointmentService appointmentService)
+        public PrivatePatientController(IAppointmentService appointmentService, UserManager<SecUser> userManager)
         {
             _appointmentService = appointmentService;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public ActionResult GetAllMaliciousPatients()
+        public async Task<ActionResult> GetAllMaliciousPatientsAsync()
         {
             var maliciousPatients = _appointmentService.GetAllMaliciousPatients();
-            List<PatientDto> maliciousPatientsDto = new List<PatientDto>();
+            List<MaliciousPatientDto> maliciousPatientsDto = new List<MaliciousPatientDto>();
             foreach(Patient mp in maliciousPatients)
             {
-                PatientDto patientDto = new PatientDto(mp.Person.Id, mp.Person.Name, mp.Person.Surname, mp.Person.Email, mp.Person.Role);
+                var secUser = await _userManager.FindByEmailAsync(mp.Person.Email.Adress);
+                MaliciousPatientDto patientDto = new MaliciousPatientDto(mp.Person.Id, mp.Person.Name + " " + mp.Person.Surname, secUser.UserName, secUser.IsBlocked?"Blocked":"Not blocked");
                 maliciousPatientsDto.Add(patientDto);
             }
 
