@@ -12,8 +12,7 @@ namespace HospitalAPI.Adapters
     { 
         public static DoctorsCouncil FromDTO(DoctorCouncilDTO testCase)
         {
-            Doctor d = new Doctor();
-            d.Id = testCase.DoctorId;
+          
             ICollection<Doctor> doctors = new List<Doctor>();
             foreach (DoctorDto doctor in testCase.Doctors) {
                 Doctor newDoctor  = new Doctor();
@@ -24,7 +23,6 @@ namespace HospitalAPI.Adapters
             return new DoctorsCouncil()
             {
                 Id = 0,
-                Doctor = d,
                 Topic = testCase.Topic,
                 Start = testCase.Start,
                 End = testCase.End,

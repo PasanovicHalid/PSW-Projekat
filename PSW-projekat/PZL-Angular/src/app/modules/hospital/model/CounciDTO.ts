@@ -12,7 +12,7 @@ export class CouncilDTO {
     start:Data;
     end:Data;
     duration:number;
-
+ 
     public constructor(id: any, doctorId:any, start: any, end: any, topic: any, duration: any) {
         this.id = id;
         this.start = start;
