@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.Core.DTOs;
+﻿using HospitalAPI.Adapters;
+using HospitalAPI.DTO;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service.CouncilOfDoctors;
 using Microsoft.AspNetCore.Cors;
@@ -23,7 +25,7 @@ namespace HospitalAPI.Controllers.PrivateApp
         }
 
         [HttpPost]
-        public ActionResult Create(DoctorsCouncil testCase)
+        public ActionResult Create(DoctorCouncilDTO testCase)
         {
             if (!ModelState.IsValid)
             {
@@ -31,7 +33,9 @@ namespace HospitalAPI.Controllers.PrivateApp
             }
             try
             {
-                _councilOfDoctorsService.Create(testCase);
+                DoctorsCouncil council = DoctorsCouncilAdapter.FromDTO(testCase);
+
+                _councilOfDoctorsService.Create(council);
                 return Ok(testCase);
             }
             catch (Exception ex)

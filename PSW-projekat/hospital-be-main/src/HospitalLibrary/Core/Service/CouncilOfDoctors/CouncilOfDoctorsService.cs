@@ -22,6 +22,11 @@ namespace HospitalLibrary.Core.Service.CouncilOfDoctors
 
         public void Create(DoctorsCouncil entity)
         {
+            if (entity.Doctors.Count > 0) {
+                return;
+            }
+
+
             _councilOfDoctorsRepository.Create(entity);
         }
 
