@@ -18,7 +18,7 @@ export class PatientAppointmentsComponent implements OnInit {
   constructor(private appointmentService: AppointmentsService, private router: Router) { }
 
   ngOnInit(): void {
-    this.appointmentService.getAppointmentsForPatient(10).subscribe(res => {
+    this.appointmentService.getAppointmentsForPatient(9).subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
           this.appointments = []
           result.forEach((element: any) => {

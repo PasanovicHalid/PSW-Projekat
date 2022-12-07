@@ -37,6 +37,11 @@ namespace HospitalLibrary.Settings
 
             );
 
+            //modelBuilder.ApplyConfiguration(new EmailConfigMap());
+
+            modelBuilder.Entity<Person>().OwnsOne(e => e.Email);
+
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -163,7 +163,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = createManagerDto.Name,
                 Surname = createManagerDto.Surname,
                 Role = Role.manager,
-                Email = createManagerDto.Email,
+                Email = Email.Create(createManagerDto.Email),
                 Gender = createManagerDto.Gender,
                 BirthDate = Convert.ToDateTime(createManagerDto.BirthDate),
                 Address = new Address()
@@ -212,7 +212,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = regUser.Name,
                 Surname = regUser.Surname,
                 Role = Role.patient,
-                Email = regUser.Email,
+                Email = Email.Create(regUser.Email),
                 Gender = regUser.Gender,
                 BirthDate = Convert.ToDateTime(regUser.BirthDate),
                 Address = new Address()
@@ -279,7 +279,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = createDoctorDto.Name,
                 Surname = createDoctorDto.Surname,
                 Role = Role.doctor,
-                Email = createDoctorDto.Email,
+                Email = Email.Create(createDoctorDto.Email),
                 Gender = createDoctorDto.Gender,
                 BirthDate = Convert.ToDateTime(createDoctorDto.BirthDate),
                 Address = new Address()

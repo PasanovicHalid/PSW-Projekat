@@ -71,7 +71,7 @@ namespace HospitalLibrary.Core.Service
             MailMessage message = new MailMessage();
             message.From = new MailAddress(fromMail);
             message.Subject = "Termin za pregled";
-            message.To.Add(appointment.Patient.Person.Email);
+            message.To.Add(appointment.Patient.Person.Email.ToString());
             message.Body = "<html><body> Vas termin: " + appointment.DateTime.ToString() + " za pregled je obrisan.</body></html>";
             message.IsBodyHtml = true;
 

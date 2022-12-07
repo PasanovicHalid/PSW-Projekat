@@ -49,7 +49,7 @@ namespace HospitalAPI.Controllers
                     } 
 
                     PatientDto patientDto = new PatientDto(bed.Patient.Id, bed.Patient.Person.Name,
-                    bed.Patient.Person.Surname, bed.Patient.Person.Email, bed.Patient.Person.Role);
+                    bed.Patient.Person.Surname, bed.Patient.Person.Email.ToString(), bed.Patient.Person.Role);
 
                     BedDto bedDto = new BedDto(bed.Id, bed.Name, bed.BedState, patientDto, bed.Quantity);
 

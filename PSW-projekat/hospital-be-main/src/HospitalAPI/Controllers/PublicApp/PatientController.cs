@@ -35,7 +35,7 @@ namespace HospitalAPI.Controllers.PublicApp
             List<PatientDto> patientDto = new List<PatientDto>();
             foreach (var patient in _patientService.GetAll()) 
             {
-                patientDto.Add(new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname, patient.Person.Email, patient.Person.Role));
+                patientDto.Add(new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname, patient.Person.Email.ToString(), patient.Person.Role));
 
             }
 
@@ -62,7 +62,7 @@ namespace HospitalAPI.Controllers.PublicApp
             List<PatientDto> patientDto = new List<PatientDto>();
             foreach (var patient in _patientService.GetPatientsNoTreatment())
             {
-                patientDto.Add(new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname, patient.Person.Email, patient.Person.Role));
+                patientDto.Add(new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname, patient.Person.Email.ToString(), patient.Person.Role));
 
             }
             return Ok(patientDto);
@@ -73,12 +73,12 @@ namespace HospitalAPI.Controllers.PublicApp
         public async Task<ActionResult> GetByPersonId(int id)
         {
             Patient patient = _patientService.getPatientByPersonId(id);
-            var secUser = await _userManager.FindByEmailAsync(patient.Person.Email);
+            var secUser = await _userManager.FindByEmailAsync(patient.Person.Email.ToString());
             List<Allergy> allergies = _patientService.GetAllAllergiesForPatient(patient.Id).ToList();
             RegisterPatientDto patientDto = new RegisterPatientDto()
             {
                 BirthDate = patient.Person.BirthDate.ToString(),
-                Email = patient.Person.Email,
+                Email = patient.Person.Email.ToString(),
                 Surname = patient.Person.Surname,
                 Name = patient.Person.Name,
                 Gender = patient.Person.Gender,
