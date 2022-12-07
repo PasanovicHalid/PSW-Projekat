@@ -16,7 +16,7 @@ namespace HospitalLibrary.Core.Model
     {
         public string Adress { get; private set; }
 
-        private Email() {}
+        public Email() {}
 
         static public Email Create(string email)
         {
