@@ -55,7 +55,7 @@ namespace HospitalAPI.Controllers.PublicApp
             }
             catch
             {
-                return BadRequest(entity);
+                return BadRequest("bad");
             }
         }
 
