@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HospitalLibrary.Settings
 {
@@ -37,7 +38,28 @@ namespace HospitalLibrary.Settings
 
             );
 
-            modelBuilder.Entity<Doctor>().OwnsMany(p => p.DoctorSchedules);
+            modelBuilder.Entity<Doctor>().OwnsMany(
+                d => d.DoctorSchedules, ds =>
+                {
+                    ds.Property<Day>("Day");
+                    ds.OwnsOne(ds => ds.Shift, tr =>
+                    {
+                        tr.OwnsOne(tr => tr.StartTime, st => {
+                            st.Property(p => p.Hour);
+                            st.Property(p => p.Minute);
+                        });
+                        tr.OwnsOne(tr => tr.EndTime, et => {
+                            et.Property(p => p.Hour);
+                            et.Property(p => p.Minute);
+                        });
+                    });
+                    ds.Navigation(tr => tr.Shift);
+                });
+            modelBuilder.Entity<Doctor>(d => d.Navigation(d => d.DoctorSchedules));
+            /*modelBuilder.Entity<Doctor>().OwnsOne(
+                ds => ds.DoctorSchedules, ownedType => {
+                    ownedType.ToJson();
+                });*/
 
             base.OnModelCreating(modelBuilder);
         }
