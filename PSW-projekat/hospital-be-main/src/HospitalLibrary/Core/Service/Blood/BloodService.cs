@@ -53,7 +53,7 @@ namespace HospitalLibrary.Core.Service
 
             _bloodRepository.Update(blood1);
         }
-        public void handleBloodRequest(List<BloodOrderDto> orders)
+        private void addBlood(Blood inBlood)
         {
             //APlus => id = 5
             //BPlus => id = 6
@@ -63,6 +63,43 @@ namespace HospitalLibrary.Core.Service
             //BMinus => id = 10
             //ABMinus => id = 11
             //OMinus  => id = 12
+            Blood outBlood = new Blood();
+            switch (inBlood.BloodType)
+            {
+                case BloodType.APlus:
+                    outBlood = _bloodRepository.GetById(5);
+                    break;
+                case BloodType.BPlus:
+                    outBlood = _bloodRepository.GetById(6);
+                    break;
+                case BloodType.ABPlus:
+                    outBlood = _bloodRepository.GetById(7);
+                    break;
+                case BloodType.OPlus:
+                    outBlood = _bloodRepository.GetById(8);
+                    break;
+                case BloodType.AMinus:
+                    outBlood = _bloodRepository.GetById(9);
+                    break;
+                case BloodType.BMinus:
+                    outBlood = _bloodRepository.GetById(10);
+                    break;
+                case BloodType.ABMinus:
+                    outBlood = _bloodRepository.GetById(11);
+                    break;
+                case BloodType.OMinus:
+                    outBlood = _bloodRepository.GetById(12);
+                    break;
+                default:
+                    //
+                    break;
+            }
+            outBlood.Quantity += inBlood.Quantity;
+            _bloodRepository.Update(outBlood);
+        }
+        public void handleBloodRequest(List<BloodOrderDto> orders)
+        {
+            
             foreach(BloodOrderDto order in orders)
             {
                 if (order.IsSent)
@@ -70,19 +107,17 @@ namespace HospitalLibrary.Core.Service
                     //update blood
                     if (order.APlus > 0)
                     {
-                        //id is 5 for aplus
                         Blood blood = new Blood();
                         blood.BloodType = BloodType.APlus;
-                        blood.Quantity = GetById(5).Quantity + order.APlus;
-                        updateQuantityBlood(5, blood.Quantity, blood);
+                        blood.Quantity = order.APlus;
+                        addBlood(blood);
                     }
                     if (order.BPlus > 0)
                     {
-                        //id is 6 for bplus
                         Blood blood = new Blood();
                         blood.BloodType = BloodType.BPlus;
-                        blood.Quantity = GetById(6).Quantity + order.BPlus;
-                        updateQuantityBlood(6, blood.Quantity, blood);
+                        blood.Quantity = order.APlus;
+                        addBlood(blood);
                     }
                 }
                 else
