@@ -37,6 +37,8 @@ namespace HospitalLibrary.Settings
 
             );
 
+            modelBuilder.Entity<Doctor>().OwnsMany(p => p.DoctorSchedules);
+
             base.OnModelCreating(modelBuilder);
         }
     }

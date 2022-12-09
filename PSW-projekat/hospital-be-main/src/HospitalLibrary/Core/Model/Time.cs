@@ -10,6 +10,8 @@ namespace HospitalLibrary.Core.Model
         public int Hour { get; }
         public int Minute { get; }
 
+        public Time() { }
+
         public Time(int hour, int minute)
         {
             if(Validate(hour, minute))

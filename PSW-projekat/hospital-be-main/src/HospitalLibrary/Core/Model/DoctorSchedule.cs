@@ -8,8 +8,10 @@ namespace HospitalLibrary.Core.Model
     [Owned]
     public class DoctorSchedule : ValueObject
     {
-        public Day Day { get; }
-        public TimeRange Shift { get; }
+        public Day Day { get; set; }
+        public TimeRange Shift { get; set; }
+
+        public DoctorSchedule() { }
 
         public DoctorSchedule(Day day, TimeRange shift)
         {

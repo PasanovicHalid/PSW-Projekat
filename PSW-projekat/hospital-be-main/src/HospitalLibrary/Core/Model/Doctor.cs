@@ -13,6 +13,6 @@ namespace HospitalLibrary.Core.Model
         public virtual ICollection<Patient> Patients { get; set; }
 
         [Column(TypeName = "jsonb")]
-        public ICollection<DoctorSchedule> DoctorSchedules;
+        public ICollection<DoctorSchedule> DoctorSchedules { get; set; }
     }
 }

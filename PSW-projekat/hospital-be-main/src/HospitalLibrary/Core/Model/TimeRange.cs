@@ -13,6 +13,8 @@ namespace HospitalLibrary.Core.Model
         public Time StartTime { get; }
         public Time EndTime { get; }
 
+        public TimeRange() { }
+
         public TimeRange(Time startTime, Time endTime)
         {
             if(Validation(startTime, endTime))
