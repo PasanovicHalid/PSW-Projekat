@@ -116,7 +116,7 @@ namespace HospitalLibrary.Core.Service
                     {
                         Blood blood = new Blood();
                         blood.BloodType = BloodType.BPlus;
-                        blood.Quantity = order.APlus;
+                        blood.Quantity = order.BPlus;
                         addBlood(blood);
                     }
                 }
