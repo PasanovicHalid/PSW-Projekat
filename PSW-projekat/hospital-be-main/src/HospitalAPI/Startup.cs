@@ -1,6 +1,8 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.Notification;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Notification;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -110,6 +112,9 @@ namespace HospitalAPI
 
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
+
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
 
 
             services.AddScoped<IBedService, BedService>();
