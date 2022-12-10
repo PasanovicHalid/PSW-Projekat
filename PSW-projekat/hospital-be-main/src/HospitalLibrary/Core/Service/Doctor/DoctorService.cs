@@ -52,13 +52,13 @@ namespace HospitalLibrary.Core.Service
         {
             AllergiesAndDoctorsForPatientRegistrationDto allergiesAndDoctors = new AllergiesAndDoctorsForPatientRegistrationDto();
             allergiesAndDoctors.Allergies = _allergyRepository.GetAll().ToList();
-            allergiesAndDoctors.Doctors = new List<DoctorForPatientRegistrationDto>();
+            allergiesAndDoctors.Doctors = new List<SimpleDoctorDto>();
 
             List<Doctor> allDoctors = _idoctorRepository.GetAllDoctorsForPatientRegistration().ToList();
 
             foreach (var doctorPersonalInformation in allDoctors)
             { 
-                DoctorForPatientRegistrationDto dto = new DoctorForPatientRegistrationDto()
+                SimpleDoctorDto dto = new SimpleDoctorDto()
                 {
                     Id = doctorPersonalInformation.Id,
                     FullName = doctorPersonalInformation.Person.Name + " " + doctorPersonalInformation.Person.Surname

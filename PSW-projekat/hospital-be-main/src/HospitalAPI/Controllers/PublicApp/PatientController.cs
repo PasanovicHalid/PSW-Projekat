@@ -85,7 +85,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
                 Allergies = allergies,
                 BloodType = patient.BloodType,
-                DoctorName = new DoctorForPatientRegistrationDto() { 
+                DoctorName = new SimpleDoctorDto() { 
                     FullName = patient.Doctor.Person.Name + " " + patient.Doctor.Person.Surname, 
                     Id=patient.Doctor.Id
                 },

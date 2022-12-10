@@ -1,9 +1,9 @@
 import { DoctorForPatientRegistrationDto } from "./doctorForPatientRegistrationDto.model";
 
-export class RegisterPatientDto {
+export class ScheduleAppointment {
     scheduledDate: Date = new Date();
     doctorDto: DoctorForPatientRegistrationDto = new DoctorForPatientRegistrationDto();
-    patientId: number = 0;
+    patientId: string|null = '0';
   
     public constructor(obj?: any) {
         if (obj) {

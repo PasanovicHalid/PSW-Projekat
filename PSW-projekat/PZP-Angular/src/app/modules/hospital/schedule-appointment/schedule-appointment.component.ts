@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DoctorForPatientRegistrationDto } from '../model/doctorForPatientRegistrationDto.model';
-import { Specialization } from '../model/scheduleAppointment.model';
+import { ScheduleAppointment, Specialization } from '../model/scheduleAppointment.model';
 import { StepperOrientation } from '@angular/material/stepper';
 import { Observable, map } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { AppointmentService } from '../services/appointment.service';
 
 @Component({
   selector: 'app-schedule-appointment',
@@ -26,7 +27,7 @@ export class ScheduleAppointmentComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation> | undefined;
 
-  constructor(private router: Router, private fb: FormBuilder, private breakpointObserver: BreakpointObserver) { }
+  constructor(private router: Router, private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appointmentService: AppointmentService) { }
 
   ngOnInit(): void {
     this.stepperOrientation = this.breakpointObserver
@@ -56,6 +57,15 @@ export class ScheduleAppointmentComponent implements OnInit {
   }
 
   schedule(){
-    
+    let appointmentInfo: ScheduleAppointment = new ScheduleAppointment();
+    appointmentInfo.doctorDto = this.doctorForm.value.doctor;
+    appointmentInfo.patientId = localStorage.getItem("currentUserId");
+    appointmentInfo.scheduledDate = this.dateForm.value.date;
+    appointmentInfo.scheduledDate.setHours(this.timeForm.value.time.split(':')[0]);
+    appointmentInfo.scheduledDate.setMinutes(this.timeForm.value.time.split(':')[1]);
+
+    this.appointmentService.scheduleAppointment(appointmentInfo).subscribe(res => {
+      this.router.navigate(['/homePatient']);
+    });
   }
 }

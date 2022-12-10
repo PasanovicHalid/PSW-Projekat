@@ -593,7 +593,7 @@ namespace HospitalLibrary.Migrations
                             b1.Property<int>("Day")
                                 .HasColumnType("int");
 
-                            b1.HasKey("DoctorId", "Id");
+                            b1.HasKey("Id", "DoctorId");
 
                             b1.ToTable("DoctorSchedule");
 

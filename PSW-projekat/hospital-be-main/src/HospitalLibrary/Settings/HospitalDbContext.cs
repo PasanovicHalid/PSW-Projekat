@@ -56,10 +56,6 @@ namespace HospitalLibrary.Settings
                     ds.Navigation(tr => tr.Shift);
                 });
             modelBuilder.Entity<Doctor>(d => d.Navigation(d => d.DoctorSchedules));
-            /*modelBuilder.Entity<Doctor>().OwnsOne(
-                ds => ds.DoctorSchedules, ownedType => {
-                    ownedType.ToJson();
-                });*/
 
             base.OnModelCreating(modelBuilder);
         }
