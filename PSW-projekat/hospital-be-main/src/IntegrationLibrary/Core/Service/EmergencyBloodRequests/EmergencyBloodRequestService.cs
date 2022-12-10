@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,9 +29,9 @@ namespace IntegrationLibrary.Core.Service.EmergencyBloodRequests
                 throw new Exception("BloodBank doesnt exist");
             }
             Channel channel = new Channel(bloodBank.GRPCServerAddress, ChannelCredentials.Insecure);
+            HttpClient hospitalApiClient = new HttpClient();
             try
             {
-
                 EmergencyRequestGrpcService.EmergencyRequestGrpcServiceClient client =
                 new EmergencyRequestGrpcService.EmergencyRequestGrpcServiceClient(channel);
                 CheckRequest checkRequest = new CheckRequest()
@@ -44,15 +45,23 @@ namespace IntegrationLibrary.Core.Service.EmergencyBloodRequests
                 if (checkResponse.Availability == BloodAvailability.Available)
                 {
                     RequestEmergencyBlood(client, checkRequest);
+                    hospitalApiClient = new HttpClient()
+                    {
+                        BaseAddress = new Uri("http://localhost:16177/")
+                    };
+                    int temp = ((int)request.BloodType);
+                    using HttpResponseMessage response = hospitalApiClient.GetAsync("/api/Blood/emergency/" + ((int)request.BloodType)+ "/" + request.BloodQuantity).GetAwaiter().GetResult();
+                    response.EnsureSuccessStatusCode();
                 }
                 else
                 {
                     throw new Exception("Blood is not available");
                 }
-            }
+            } 
             finally
             {
                 channel.ShutdownAsync();
+                hospitalApiClient.Dispose();
             }
         }
 

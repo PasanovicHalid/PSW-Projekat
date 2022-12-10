@@ -42,7 +42,7 @@ export class RequestBloodComponent implements OnInit {
 
   public accept() {
     this.emergencyService.askForBlood(this.request).subscribe( res => {
-        this.emergencyService.updateBloodCount(this.request.bloodType, this.request.bloodQuantity).subscribe();
+        
     },(error) => {
       this.errorMessage = error;
     })
