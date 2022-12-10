@@ -36,9 +36,6 @@ export class StatisticsComponent implements OnInit {
   public displayedColumns = ['Doctor','0-18','18-30','30-45','45-60','60-80','80+'];
   
   ngOnInit(): void {
-
-    if(localStorage.getItem("currentUserRole")!="Manager")
-      this.router.navigate([''])
     this.statisticsService.getStatistics().subscribe( res =>{
       let stats = Object.values(JSON.parse(JSON.stringify(res)));
       this.setFields(stats);

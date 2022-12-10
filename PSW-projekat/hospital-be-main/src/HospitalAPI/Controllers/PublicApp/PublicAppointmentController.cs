@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
@@ -45,5 +43,68 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+
+        [HttpGet("GetPatientAppointments/{personId}")]
+        public ActionResult GetPatientAppointments(int personId)
+        {
+            Patient patient = _patientService.getPatientByPersonId(personId);
+
+            var patientAppointments = _appointmentService.GetAllAppointmentsForPatient(patient.Id);
+            List<PatientAppointmentsDto> patientAppointmentsList = new List<PatientAppointmentsDto>();
+            PatientAppointmentsDto patientAppointmentsDto = new PatientAppointmentsDto();
+
+            foreach (var app in patientAppointments)
+            {
+                if (app.CancelationDate == null)
+                {
+                    if (app.DateTime.CompareTo(DateTime.Now) < 0)
+                    {
+                        patientAppointmentsDto = new PatientAppointmentsDto()
+                        {
+                            AppointmentId = app.Id,
+                            DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
+                            AppointmentTime = app.DateTime.Date,
+                            AppointmentStatus = "Finished"
+                        };
+                    }
+                    else
+                    {
+                        patientAppointmentsDto = new PatientAppointmentsDto()
+                        {
+                            AppointmentId = app.Id,
+                            DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
+                            AppointmentTime = app.DateTime,
+                            AppointmentStatus = "Upcoming"
+                        };
+                    }
+
+                }
+                else if (app.CancelationDate != null)
+                {
+                    patientAppointmentsDto = new PatientAppointmentsDto()
+                    {
+                        AppointmentId = app.Id,
+                        DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
+                        AppointmentTime = app.DateTime,
+                        AppointmentStatus = "Cancelled"
+                    };
+                }
+                patientAppointmentsList.Add(patientAppointmentsDto);
+            }
+            return Ok(patientAppointmentsList);
+        }
+
+        [HttpPut("CancelAppointment/{appointmentId}")]
+        public ActionResult CancelAppointment(int appointmentId)
+        {
+            var appointment = _appointmentService.GetById(appointmentId);
+            if (appointment == null || appointment.CancelationDate != null || appointment.DateTime < DateTime.Now.AddDays(1))
+            {
+                return BadRequest();
+            }
+            appointment.CancelationDate = DateTime.Now;
+            _appointmentService.Update(appointment);
+            return Ok();
+        }
     }
 }

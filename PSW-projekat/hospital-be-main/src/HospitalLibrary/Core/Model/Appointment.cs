@@ -7,6 +7,6 @@ namespace HospitalLibrary.Core.Model
         public virtual Patient Patient { get; set; }
         public virtual Doctor Doctor { get; set; }
         public DateTime DateTime { get; set; }
-        public DateTime CancelationDate { get; set; }
+        public DateTime? CancelationDate { get; set; }
     }
 }

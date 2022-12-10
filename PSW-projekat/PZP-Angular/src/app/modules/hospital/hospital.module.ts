@@ -18,7 +18,7 @@ import { PatientInfoComponent } from './patient-info/patient-info.component';
 import { AuthGuard } from "./services/auth.guard";
 import { ScheduleAppointmentComponent } from './schedule-appointment/schedule-appointment.component';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { PatientAppointmentsComponent } from './patient-appointments/patient-appointments.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -32,7 +32,8 @@ const routes: Routes = [
   { path: 'account-activation', component: AccountActivationThanks },
   { path: 'account-activation-info', component: AccountActivationInfo },
   { path: 'patientInfo', component: PatientInfoComponent, canActivate: [ AuthGuard ] },
-  { path: 'scheduleAppointment', component: ScheduleAppointmentComponent, canActivate: [ AuthGuard ] }
+  { path: 'scheduleAppointment', component: ScheduleAppointmentComponent, canActivate: [ AuthGuard ] },
+  { path: 'appointments', component: PatientAppointmentsComponent, canActivate: [ AuthGuard ] },
 
 ]
 
@@ -48,7 +49,8 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     PatientInfoComponent,
-    ScheduleAppointmentComponent
+    ScheduleAppointmentComponent,
+    PatientAppointmentsComponent
   ],
   imports: [
     CommonModule,

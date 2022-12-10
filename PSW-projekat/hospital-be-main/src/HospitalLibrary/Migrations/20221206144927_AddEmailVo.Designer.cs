@@ -4,14 +4,16 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206144927_AddEmailVo")]
+    partial class AddEmailVo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -576,49 +578,6 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.Person", "Person")
                         .WithMany()
                         .HasForeignKey("PersonId");
-
-                    b.OwnsMany("HospitalLibrary.Core.Model.DoctorSchedule", "DoctorSchedules", b1 =>
-                        {
-                            b1.Property<int>("DoctorId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<int>("Day")
-                                .HasColumnType("int");
-
-                            b1.HasKey("Id", "DoctorId");
-
-                            b1.ToTable("DoctorSchedule");
-
-                            b1.WithOwner()
-                                .HasForeignKey("DoctorId");
-
-                            b1.OwnsOne("HospitalLibrary.Core.Model.TimeRange", "Shift", b2 =>
-                                {
-                                    b2.Property<int>("DoctorScheduleDoctorId")
-                                        .HasColumnType("int");
-
-                                    b2.Property<int>("DoctorScheduleId")
-                                        .ValueGeneratedOnAdd()
-                                        .HasColumnType("int")
-                                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                                    b2.HasKey("DoctorScheduleDoctorId", "DoctorScheduleId");
-
-                                    b2.ToTable("DoctorSchedule");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("DoctorScheduleDoctorId", "DoctorScheduleId");
-                                });
-
-                            b1.Navigation("Shift");
-                        });
-
-                    b.Navigation("DoctorSchedules");
 
                     b.Navigation("Person");
                 });

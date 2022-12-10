@@ -53,7 +53,7 @@ namespace HospitalAPI.Controllers.PublicApp
             Patient patient = _patientService.GetById(bedDto.PatientDto.Id);
 
             bedDto.PatientDto = new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname,
-                patient.Person.Email, patient.Person.Role);
+                patient.Person.Email.ToString(), patient.Person.Role);
 
             
             Bed bed = _bedService.GetById(bedDto.Id);

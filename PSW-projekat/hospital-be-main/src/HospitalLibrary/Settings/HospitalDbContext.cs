@@ -57,6 +57,8 @@ namespace HospitalLibrary.Settings
                 });
             modelBuilder.Entity<Doctor>(d => d.Navigation(d => d.DoctorSchedules));
 
+            modelBuilder.Entity<Person>().OwnsOne(e => e.Email);
+
             base.OnModelCreating(modelBuilder);
         }
     }

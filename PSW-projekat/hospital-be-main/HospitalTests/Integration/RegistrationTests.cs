@@ -24,7 +24,8 @@ namespace HospitalTests.Integration
             return new AccountController(scope.ServiceProvider.GetRequiredService<UserManager<SecUser>>(), scope.ServiceProvider.GetRequiredService<SignInManager<SecUser>>(),
                                          scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<IEmailService>(),
                                          scope.ServiceProvider.GetRequiredService<IConfiguration>(), scope.ServiceProvider.GetRequiredService<IPersonService>(),
-                                         scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>()
+                                         scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>(),
+                                         scope.ServiceProvider.GetRequiredService<AuthenticationDbContext>()
                                          );
         }
 

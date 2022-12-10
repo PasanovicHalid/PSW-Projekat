@@ -33,6 +33,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IConfiguration _configuration;
         private readonly IDoctorService _doctorService;
         private readonly IPatientService _patientService;
+        private readonly AuthenticationDbContext _context;
 
         public AccountController(
                 UserManager<SecUser> userManager,
@@ -42,7 +43,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 IConfiguration configuration,
                 IPersonService personService,
                 IDoctorService doctorService,
-                IPatientService patientService)
+                IPatientService patientService,
+                AuthenticationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -52,6 +54,7 @@ namespace HospitalAPI.Controllers.PublicApp
             _patientService = patientService;
             _emailService = emailService;
             _configuration = configuration;
+            _context = context;
         }
 
         [HttpPost("Login")]
@@ -62,6 +65,10 @@ namespace HospitalAPI.Controllers.PublicApp
             if (secUser == null)
             {
                 return BadRequest("Username or password is incorrect.");
+            }
+            if (secUser.IsBlocked)
+            {
+                return BadRequest("This user is blocked");
             }
             var statement = await _userManager.IsEmailConfirmedAsync(secUser);
             if (statement == true)
@@ -156,7 +163,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = createManagerDto.Name,
                 Surname = createManagerDto.Surname,
                 Role = Role.manager,
-                Email = createManagerDto.Email,
+                Email = Email.Create(createManagerDto.Email),
                 Gender = createManagerDto.Gender,
                 BirthDate = Convert.ToDateTime(createManagerDto.BirthDate),
                 Address = new Address()
@@ -205,7 +212,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = regUser.Name,
                 Surname = regUser.Surname,
                 Role = Role.patient,
-                Email = regUser.Email,
+                Email = Email.Create(regUser.Email),
                 Gender = regUser.Gender,
                 BirthDate = Convert.ToDateTime(regUser.BirthDate),
                 Address = new Address()
@@ -232,13 +239,14 @@ namespace HospitalAPI.Controllers.PublicApp
 
         
             _patientService.AddAllergyToPatient(patient, regUser.Allergies);
-            
+
 
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
                 Email = regUser.Email,
                 UserName = regUser.Username,
+                IsBlocked = false,
             };
             var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
             if (registerUser != null)
@@ -271,7 +279,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = createDoctorDto.Name,
                 Surname = createDoctorDto.Surname,
                 Role = Role.doctor,
-                Email = createDoctorDto.Email,
+                Email = Email.Create(createDoctorDto.Email),
                 Gender = createDoctorDto.Gender,
                 BirthDate = Convert.ToDateTime(createDoctorDto.BirthDate),
                 Address = new Address()
@@ -327,6 +335,32 @@ namespace HospitalAPI.Controllers.PublicApp
 
             var a = await _userManager.ConfirmEmailAsync(secUser, code);
 
+            return Ok();
+        }
+
+        [Authorize(Roles = "Manager")]
+        [HttpPut("BlockUser/{personId}")]
+        public async Task<ActionResult> BlockUserAsync(int personId)
+        {
+            var email = _personService.GetById(personId).Email;
+            var secUser = await _userManager.FindByEmailAsync(email.Adress);
+            if (secUser == null || secUser.IsBlocked)
+                return BadRequest("User doesn't exist or is already blocked");
+            secUser.BlockUser();
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [Authorize(Roles = "Manager")]
+        [HttpPut("UnblockUser/{personId}")]
+        public async Task<ActionResult> UnblockUserAsync(int personId)
+        {
+            var email = _personService.GetById(personId).Email;
+            var secUser = await _userManager.FindByEmailAsync(email.Adress);
+            if (secUser == null || !secUser.IsBlocked)
+                return BadRequest("User doesn't exist or is already unblocked");
+            secUser.UnblockUser();
+            _context.SaveChanges();
             return Ok();
         }
     }
