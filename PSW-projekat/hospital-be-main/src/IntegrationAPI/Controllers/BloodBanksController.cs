@@ -12,8 +12,8 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
-    //[Authorize(Roles ="Manager, Doctor")]
-    //[EnableCors]
+
+    [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodBanksController : ControllerBase
@@ -26,6 +26,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="Manager, Doctor")]
         public ActionResult Create(BloodBankCreationDTO entity)
         {
             if (!ModelState.IsValid)
@@ -45,6 +46,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Manager, Doctor")]
         public ActionResult Delete(int id)
         {
             try
@@ -81,6 +83,7 @@ namespace IntegrationAPI.Controllers
 
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Manager, Doctor")]
         public ActionResult GetById(int id)
         {
             try
@@ -100,6 +103,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet("reset/{key}")]
+        [Authorize(Roles = "Manager, Doctor")]
         public ActionResult CheckIfResetKeyExists(string key)
         {
             try
@@ -117,6 +121,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPut("reset/{key}")]
+        [Authorize(Roles = "Manager, Doctor")]
         public ActionResult ActivatePassword(string key, PasswordResetDTO password)
         {
             try
@@ -144,6 +149,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet("{id}/{bloodType}/{quantity}")]
+        [Authorize(Roles = "Manager, Doctor")]
         public ActionResult SendBloodRequest(int id, String bloodType, int quantity)
         {
             try
@@ -166,6 +172,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Manager, Doctor")]
         public ActionResult Update(int id ,BloodBankDTO entity)
         {
             if (!ModelState.IsValid)
