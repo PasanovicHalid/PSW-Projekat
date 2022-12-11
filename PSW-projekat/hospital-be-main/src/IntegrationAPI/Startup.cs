@@ -23,6 +23,8 @@ using IntegrationLibrary.Core.Service.Tenders;
 using IntegrationLibrary.Core.Repository.Tenders;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using IntegrationLibrary.Core.HospitalConnection;
+using IntegrationLibrary.Core.Service.EmergencyBloodRequests;
+using IntegrationAPI.Adapters;
 
 namespace IntegrationAPI
 {
@@ -39,6 +41,7 @@ namespace IntegrationAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddAutoMapper(typeof(EmergencyBloodRequestAdapter));
             services.AddDbContext<IntegrationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IntegrationDb"))
                                                                             .UseLazyLoadingProxies());
 
@@ -87,6 +90,7 @@ namespace IntegrationAPI
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IHospitalConnection, HospitalHTTPConnection>();
+            services.AddScoped<IEmergencyBloodRequestService, EmergencyBloodRequestService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

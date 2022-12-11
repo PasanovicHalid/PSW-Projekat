@@ -19,6 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.module';
 import { JwtInterceptorService } from './helpers/jwt.interceptor.service';
 import { TenderingModule } from './modules/tendering/tendering.module';
+import { EmergencyBloodRequestsModule } from './modules/emergency-blood-requests/emergency-blood-requests.module';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { TenderingModule } from './modules/tendering/tendering.module';
     DoctorRequestsModule,
     TenderingModule,
     CommonModule,
+    EmergencyBloodRequestsModule,
     ToastrModule.forRoot(),
     DatePipe
   ],

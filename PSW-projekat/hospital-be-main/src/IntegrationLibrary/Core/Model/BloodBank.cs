@@ -19,6 +19,8 @@ namespace IntegrationLibrary.Core.Model
 
         private string _serverAddress;
 
+        private string _gRPCServerAddress;
+
         private string _apiKey;
 
         private string _passwordResetKey;
@@ -82,5 +84,6 @@ namespace IntegrationLibrary.Core.Model
 
         [Required]
         public AccountStatus AccountStatus { get => _accountStatus; set => _accountStatus = value; }
+        public string GRPCServerAddress { get => _gRPCServerAddress; set => _gRPCServerAddress = value; }
     }
 }

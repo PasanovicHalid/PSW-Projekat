@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "IntegrationLibrary.Protos";
+package proto.emergencyBloodRequests;
+
+enum BloodTypeProto {
+	ON = 0;
+    AN = 1;
+    BN = 2;
+    ABN = 3;
+    OP = 4;
+    AP = 5;
+    BP = 6;
+    ABP = 7;
+}
+
+enum BloodAvailability {
+	AVAILABLE = 0;
+    UNAVAILABLE = 1;
+}
+
+message CheckRequest {
+  int32 bloodQuantity = 1;
+  BloodTypeProto bloodType = 2;
+}
+
+message CheckResponse { 
+  CheckRequest request = 1;
+  BloodAvailability availability = 2;
+}
