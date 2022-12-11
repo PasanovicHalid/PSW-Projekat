@@ -15,6 +15,6 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey);
         Boolean SendBloodRequest(int bloodBankID, String BloodType, int quantity);
         void CheckBloodRequest(int bloodBankID, String BloodType, int quantity);
-        void LoginBank(LoginUserDto loginUserDto);
+        Boolean CheckIfExists(String username, String password);
     }
 }

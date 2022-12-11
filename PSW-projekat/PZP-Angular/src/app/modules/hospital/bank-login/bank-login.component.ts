@@ -35,8 +35,8 @@ export class BankLoginComponent implements OnInit {
       localStorage.setItem('currentUserRole', tokenInfo.Role);
       localStorage.setItem('currentUserId', tokenInfo.Id);
 
-      if(localStorage.getItem('currentUserRole') == 'Patient')
-        this.router.navigate(['/homePatient']);
+      if(localStorage.getItem('currentUserRole') == 'BloodBank')
+        this.router.navigate(['/bank-home']);
     },
     (err) => {
       if(err.error == "Username or password is incorrect.")

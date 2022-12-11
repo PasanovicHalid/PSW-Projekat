@@ -196,8 +196,7 @@ namespace IntegrationAPI.Controllers
             }
             try
             {
-                _bloodBankService.LoginBank(loginUserDto);
-                return Ok();
+                return Ok(_bloodBankService.CheckIfExists(loginUserDto.Username, loginUserDto.Password));
             }
             catch (Exception ex)
             {

@@ -150,30 +150,14 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
             return true;
         }
 
-        public void LoginBank(LoginUserDto loginUserDto)
+        public Boolean CheckIfExists(string email, string password)
         {
-            BloodBank bank = CheckIfBankExists(loginUserDto.Username, loginUserDto.Password);
-            if (bank != null)
-                CreateJWT(loginUserDto);
-            else
-                throw new Exception("Bank doesnt exist");
-
-        }
-
-        private BloodBank CheckIfBankExists(string email, string password)
-        {
-            foreach(BloodBank bank in GetAll())
+            foreach (BloodBank bank in GetAll())
             {
                 if (bank.Password.Equals(password) && bank.Email.Equals(email) && bank.AccountStatus.Equals(AccountStatus.ACTIVE))
-                    return bank;
+                    return true;
             }
-            return null;
-
-        }
-
-        private void CreateJWT(LoginUserDto loginUserDto)
-        {
-            _hospitalConnection.GenereteJWT(loginUserDto);
+            return false;
 
         }
     }
