@@ -39,4 +39,8 @@
 	<Protobuf Include="Protos\emergencyRequestGrpcService.proto" GrpcServices="Client" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

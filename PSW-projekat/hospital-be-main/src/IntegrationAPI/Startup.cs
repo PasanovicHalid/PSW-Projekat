@@ -22,6 +22,7 @@ using IntegrationLibrary.Core.Repository.Newses;
 using IntegrationLibrary.Core.Service.Tenders;
 using IntegrationLibrary.Core.Repository.Tenders;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using IntegrationLibrary.Core.HospitalConnection;
 using IntegrationLibrary.Core.Service.EmergencyBloodRequests;
 using IntegrationAPI.Adapters;
 
@@ -88,6 +89,7 @@ namespace IntegrationAPI
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IHospitalConnection, HospitalHTTPConnection>();
             services.AddScoped<IEmergencyBloodRequestService, EmergencyBloodRequestService>();
         }
 
