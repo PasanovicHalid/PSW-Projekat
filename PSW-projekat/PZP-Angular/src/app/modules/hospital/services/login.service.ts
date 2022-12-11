@@ -19,7 +19,7 @@ export class LoginService {
   }
 
   bankLogin(LoginDto: LoginUserDto): Observable<any> {
-    return this.http.post<any>(this.integrationHost + 'api/BloodBanks/Login', LoginDto, {headers: this.headers});
+    return this.http.post<any>(this.apiHost + 'api/Account/LoginBank', LoginDto, {headers: this.headers});
   }
 
   logout(){

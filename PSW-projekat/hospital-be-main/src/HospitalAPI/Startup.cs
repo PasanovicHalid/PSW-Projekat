@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
+using HospitalLibrary.Core.IntegrationConnection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -127,6 +128,7 @@ namespace HospitalAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
 
+            services.AddScoped<IIntegrationConnection, IntegrationHTTPConnection>();
 
         }
 

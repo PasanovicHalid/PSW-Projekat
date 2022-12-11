@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.IntegrationConnection;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Model.MailRequests;
@@ -33,6 +34,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IConfiguration _configuration;
         private readonly IDoctorService _doctorService;
         private readonly IPatientService _patientService;
+        private readonly IIntegrationConnection _integrationConnection;
 
         public AccountController(
                 UserManager<SecUser> userManager,
@@ -42,7 +44,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 IConfiguration configuration,
                 IPersonService personService,
                 IDoctorService doctorService,
-                IPatientService patientService)
+                IPatientService patientService,
+                IIntegrationConnection integrationConnection)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -52,6 +55,7 @@ namespace HospitalAPI.Controllers.PublicApp
             _patientService = patientService;
             _emailService = emailService;
             _configuration = configuration;
+            _integrationConnection = integrationConnection;
         }
 
         [HttpPost("Login")]
@@ -332,7 +336,24 @@ namespace HospitalAPI.Controllers.PublicApp
 
         [HttpPost("LoginBank")]
         public async Task<ActionResult> LoginBankAsync(LoginUserDto loginUserDto)
-        {    
+        {
+            try
+            {
+                if (_integrationConnection.CheckIfExists(loginUserDto))
+                {
+
+                }
+                else
+                    return NotFound("Bank with these creditentials doesn't exist.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+
+
+
             var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, true, false);
             if (result.Succeeded)
             {
