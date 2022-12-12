@@ -1,7 +1,9 @@
 ﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.DTOs.CreatingAppointmentsDTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,7 +11,6 @@ namespace HospitalLibrary.Core.Service
 {
     public class DoctorService : IDoctorService
     {
-
 
         private readonly IDoctorRepository _idoctorRepository;
         private readonly IPersonRepository _personRepository;
@@ -76,6 +77,17 @@ namespace HospitalLibrary.Core.Service
         public Doctor RegisterDoctor(Doctor doctor)
         {
             return _idoctorRepository.RegisterDoctor(doctor);
+        }
+
+        public List<DoctorForCreatingAppointmentDto> GetAllDoctorsForCreatingAppointment()
+        {
+            List<DoctorForCreatingAppointmentDto> doctorsDtos = new List<DoctorForCreatingAppointmentDto>();
+            List<Doctor> allDoctors = _idoctorRepository.GetAll().ToList();
+            foreach(var doctor in allDoctors)
+            {
+                doctorsDtos.Add(new DoctorForCreatingAppointmentDto(doctor));
+            }
+            return doctorsDtos;
         }
     }
 }

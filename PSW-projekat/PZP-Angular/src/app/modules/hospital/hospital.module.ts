@@ -1,4 +1,4 @@
-import { CreateAppontment } from './create-appontment/create-appontment.component';
+import { CreateAppointment } from './create-appointment/create-appointment.component';
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -32,7 +32,7 @@ const routes: Routes = [
   { path: 'account-activation-info', component: AccountActivationInfo },
   { path: 'patientInfo', component: PatientInfoComponent, canActivate: [ AuthGuard ] },
   { path: 'scheduleAppointment', component: ScheduleAppointmentComponent, canActivate: [ AuthGuard ] },
-  { path: 'createAppontment', component: CreateAppontment}, //za sad nema authgurad
+  { path: 'createAppointment', component: CreateAppointment}, //za sad nema authgurad
 
 ]
 
@@ -49,7 +49,7 @@ const routes: Routes = [
     RegisterComponent,
     PatientInfoComponent,
     ScheduleAppointmentComponent,
-    CreateAppontment
+    CreateAppointment
   ],
   imports: [
     CommonModule,

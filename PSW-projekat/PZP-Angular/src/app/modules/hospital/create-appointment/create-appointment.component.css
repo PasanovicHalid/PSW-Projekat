@@ -1,7 +1,17 @@
 /**********W**********/
+.w-80{
+    position: inherit;
+	width: 80%;
+}
+
 .w-40{
     position: inherit;
 	width: 40%;
+}
+
+.w-45{
+    position: inherit;
+	width: 45%;
 }
 
 .w-30{
@@ -17,6 +27,11 @@
 .w-20{
     position: inherit;
 	width: 20%;
+}
+
+.w-10{
+    position: inherit;
+	width: 10%;
 }
 
 /**********SCROLLBAR**********/ /*Ako nesto zajebava otkomentarizacija*/

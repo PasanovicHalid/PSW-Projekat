@@ -3,8 +3,10 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -60,6 +62,26 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.Appointments.Remove(room);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Appointment> GetAllByDoctorInDateRange(
+            int doctorId,
+            DateTime fromDate,
+            DateTime toDate
+        )
+        {
+            return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
+                .Where(x => x.Doctor.Id == doctorId && !x.Deleted && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
+        }
+
+        public IEnumerable<Appointment> GetAllByPatientInDateRange(
+            int patientId,
+            DateTime fromDate,
+            DateTime toDate
+        )
+        {
+            return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
+                .Where(x => x.Patient.Id == patientId && !x.Deleted && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
         }
     }
 }

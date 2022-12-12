@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.DTOs.CreatingAppointmentsDTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
@@ -11,12 +12,21 @@ namespace HospitalLibrary.Core.Service
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
-        public IWorkingDayRepository workingDayRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IWorkingDayRepository _workingDayRepository;
+        private readonly IPatientRepository _patientRepository;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository, IWorkingDayRepository workingDayRepository)
+        public AppointmentService(
+            IAppointmentRepository appointmentRepository, 
+            IWorkingDayRepository workingDayRepository,
+            IDoctorRepository doctorRepository,
+            IPatientRepository patientRepository
+        )
         {
             _appointmentRepository = appointmentRepository;
-            this.workingDayRepository = workingDayRepository;
+            _workingDayRepository = workingDayRepository;
+            _doctorRepository = doctorRepository;
+            _patientRepository = patientRepository;
         }
 
         public bool InWorkingTime(Appointment entity, IEnumerable<WorkingDay> workingDays)
@@ -142,6 +152,238 @@ namespace HospitalLibrary.Core.Service
         public void Update(AppointmentDto appointmentDto)
         {
             throw new NotImplementedException();
+        }
+
+        public List<AppointmentsAvailableForCreatingAppointment> GetAllAvailableAppointmentsForCreatingAppointment(
+            CheckAvailableAppontmentDto checkAvailableAppontment
+        )
+        {
+            DateTime fromDate;
+            DateTime toDate;
+            DateTime fromTime;
+            DateTime toTime;
+
+            if (!DateTime.TryParse(checkAvailableAppontment.fromDate, out fromDate)) return null;
+            if (!DateTime.TryParse(checkAvailableAppontment.toDate, out toDate)) return null;
+            if (!DateTime.TryParse(checkAvailableAppontment.fromTime, out fromTime)) return null;
+            if (!DateTime.TryParse(checkAvailableAppontment.toTime, out toTime)) return null;
+
+            if (!(fromDate < toDate)) return null;
+            if (!(fromTime < toTime)) return null;
+
+            string prefer;
+            if (!(checkAvailableAppontment.prefer == "doctor" || checkAvailableAppontment.prefer == "time")) return null;
+            else prefer = checkAvailableAppontment.prefer;
+
+            if (_doctorRepository.getPersonByDoctorId(checkAvailableAppontment.selectedDoctorID) == null) return null;
+            if (_patientRepository.getPatientByPersonId(checkAvailableAppontment.personID) == null) return null;
+
+            int doctorID = checkAvailableAppontment.selectedDoctorID;
+            int patientID = _patientRepository.getPatientByPersonId(checkAvailableAppontment.personID).Id;
+
+            IEnumerable<Appointment> allDoctorAppointments = _appointmentRepository.GetAllByDoctorInDateRange(doctorID, fromDate, toDate);
+            IEnumerable<Appointment> allPatientAppointments = _appointmentRepository.GetAllByPatientInDateRange(patientID, fromDate, toDate);
+
+            Doctor doctor = _doctorRepository.GetById(doctorID);
+            Patient patient = _patientRepository.GetById(patientID);
+
+            IEnumerable<WorkingDay> workingDays = _workingDayRepository.GetAllWorkingDaysByUser(doctor.Person.Id);
+
+            List<AppointmentsAvailableForCreatingAppointment> availableAppointments = new List<AppointmentsAvailableForCreatingAppointment>();
+
+            //IMPLEMENTIRATI LOGIKU
+
+            //currCheckDate
+            for (DateTime currCheckDate = fromDate; currCheckDate < toDate; currCheckDate = currCheckDate.AddDays(1))
+            {
+                //currDayInWeek
+                foreach (WorkingDay workingDay in workingDays)
+                {
+                    if ((int)workingDay.Day == (int)currCheckDate.DayOfWeek)
+                    {
+                        //currCheckTime
+                        for (DateTime currCheckTime = fromTime; currCheckTime < toTime; currCheckTime = currCheckTime.AddMinutes(20))
+                        {
+                            if (workingDay.StartTime.TimeOfDay <= currCheckTime.TimeOfDay &&
+                                workingDay.EndTime.TimeOfDay > currCheckTime.TimeOfDay)
+                            {
+                                DateTime currCheck = DateTime.Parse(currCheckDate.ToShortDateString() + " " + currCheckTime.ToShortTimeString());
+                                bool patientIsFree = true;
+                                bool doctorIsFree = true;
+
+                                //Patient free?
+                                foreach (Appointment aPatient in allPatientAppointments)
+                                {
+                                    //Patient has appointment in that time
+                                    if (aPatient.DateTime.Equals(currCheck)) 
+                                    {
+                                        patientIsFree = false;
+                                        break;
+                                    }; 
+                                    patientIsFree = true;
+                                }
+
+                                //Doctor free?
+                                foreach (Appointment aDoctor in allDoctorAppointments)
+                                {   
+                                    //Doctor has appointment in that time
+                                    if (aDoctor.DateTime.Equals(currCheck))
+                                    {
+                                        doctorIsFree = false;
+                                        break;
+                                    };
+                                    doctorIsFree = true;
+                                }
+
+                                //Both are free
+                                if(patientIsFree && doctorIsFree)
+                                    availableAppointments.Add(new AppointmentsAvailableForCreatingAppointment(
+                                        currCheck.DayOfWeek.ToString(),
+                                        currCheck.ToShortDateString(),
+                                        currCheck.ToShortTimeString(),
+                                        doctor.Person.Name + " " + doctor.Person.Surname,
+                                        doctor.Specialization.ToString()
+                                    ));
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(availableAppointments.Count == 0)
+                if (prefer.Equals("time"))
+                {
+                    //Time is priority
+                    IEnumerable<Doctor> similarDoctors = _doctorRepository.GetAllBySpecialization(doctor.Specialization);
+
+                    foreach(Doctor currDoctor in similarDoctors)
+                    {
+                        allDoctorAppointments = _appointmentRepository.GetAllByDoctorInDateRange(currDoctor.Id, fromDate, toDate);
+
+                        //currCheckDate
+                        for (DateTime currCheckDate = fromDate; currCheckDate < toDate; currCheckDate = currCheckDate.AddDays(1))
+                        {
+                            //currDayInWeek
+                            foreach (WorkingDay workingDay in workingDays)
+                            {
+                                if ((int)workingDay.Day == (int)currCheckDate.DayOfWeek)
+                                {
+                                    //currCheckTime
+                                    for (DateTime currCheckTime = fromTime; currCheckTime < toTime; currCheckTime = currCheckTime.AddMinutes(20))
+                                    {
+                                        if (workingDay.StartTime.TimeOfDay <= currCheckTime.TimeOfDay &&
+                                            workingDay.EndTime.TimeOfDay > currCheckTime.TimeOfDay)
+                                        {
+                                            DateTime currCheck = DateTime.Parse(currCheckDate.ToShortDateString() + " " + currCheckTime.ToShortTimeString());
+                                            bool patientIsFree = true;
+                                            bool doctorIsFree = true;
+
+                                            //Patient free?
+                                            foreach (Appointment aPatient in allPatientAppointments)
+                                            {
+                                                //Patient has appointment in that time
+                                                if (aPatient.DateTime.Equals(currCheck))
+                                                {
+                                                    patientIsFree = false;
+                                                    break;
+                                                };
+                                                patientIsFree = true;
+                                            }
+
+                                            //Doctor free?
+                                            foreach (Appointment aDoctor in allDoctorAppointments)
+                                            {
+                                                //Doctor has appointment in that time
+                                                if (aDoctor.DateTime.Equals(currCheck))
+                                                {
+                                                    doctorIsFree = false;
+                                                    break;
+                                                };
+                                                doctorIsFree = true;
+                                            }
+
+                                            //Both are free
+                                            if (patientIsFree && doctorIsFree)
+                                                availableAppointments.Add(new AppointmentsAvailableForCreatingAppointment(
+                                                    currCheck.DayOfWeek.ToString(),
+                                                    currCheck.ToShortDateString(),
+                                                    currCheck.ToShortTimeString(),
+                                                    currDoctor.Person.Name + " " + currDoctor.Person.Surname,
+                                                    currDoctor.Specialization.ToString()
+                                                ));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                        
+                }
+                else
+                {
+                    //New times
+                    fromDate = fromDate.AddDays(-5);
+                    toDate = toDate.AddDays(5);
+
+                    //Doctor is priority
+                    for (DateTime currCheckDate = fromDate; currCheckDate < toDate; currCheckDate = currCheckDate.AddDays(1))
+                    {
+                        //currDayInWeek
+                        foreach (WorkingDay workingDay in workingDays)
+                        {
+                            if ((int)workingDay.Day == (int)currCheckDate.DayOfWeek)
+                            {
+                                //currCheckTime
+                                for (DateTime currCheckTime = fromTime; currCheckTime < toTime; currCheckTime = currCheckTime.AddMinutes(20))
+                                {
+                                    if (workingDay.StartTime.TimeOfDay <= currCheckTime.TimeOfDay &&
+                                        workingDay.EndTime.TimeOfDay > currCheckTime.TimeOfDay)
+                                    {
+                                        DateTime currCheck = DateTime.Parse(currCheckDate.ToShortDateString() + " " + currCheckTime.ToShortTimeString());
+                                        bool patientIsFree = true;
+                                        bool doctorIsFree = true;
+
+                                        //Patient free?
+                                        foreach (Appointment aPatient in allPatientAppointments)
+                                        {
+                                            //Patient has appointment in that time
+                                            if (aPatient.DateTime.Equals(currCheck))
+                                            {
+                                                patientIsFree = false;
+                                                break;
+                                            };
+                                            patientIsFree = true;
+                                        }
+
+                                        //Doctor free?
+                                        foreach (Appointment aDoctor in allDoctorAppointments)
+                                        {
+                                            //Doctor has appointment in that time
+                                            if (aDoctor.DateTime.Equals(currCheck))
+                                            {
+                                                doctorIsFree = false;
+                                                break;
+                                            };
+                                            doctorIsFree = true;
+                                        }
+
+                                        //Both are free
+                                        if (patientIsFree && doctorIsFree)
+                                            availableAppointments.Add(new AppointmentsAvailableForCreatingAppointment(
+                                                currCheck.DayOfWeek.ToString(),
+                                                currCheck.ToShortDateString(),
+                                                currCheck.ToShortTimeString(),
+                                                doctor.Person.Name + " " + doctor.Person.Surname,
+                                                doctor.Specialization.ToString()
+                                            ));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            return availableAppointments;
         }
     }
 }
