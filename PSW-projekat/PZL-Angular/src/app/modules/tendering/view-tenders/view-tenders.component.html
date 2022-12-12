@@ -14,9 +14,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let ten of tenders, let i = index">
-            <td *ngIf="checkDate(ten.dueDate) == true" >{{ten.dueDate | date:'medium'}}</td>
-            <td *ngIf="checkDate(ten.dueDate) == false">Open until closed</td>
-            <td>{{getStateByValue(ten.state)}}</td>
+            <td *ngIf="checkDate(ten.dueDate) == true" 
+            class="clickable cell-center" (click)="chooseTender(ten.id)">{{ten.dueDate | date:'medium'}}</td>
+            <td *ngIf="checkDate(ten.dueDate) == false"
+            class="clickable cell-center" (click)="chooseTender(ten.id)">Open until closed</td>
+            <td
+            class="clickable cell-center" (click)="chooseTender(ten.id)">{{getStateByValue(ten.state)}}</td>
           </tr>
         </tbody>
       </table>
