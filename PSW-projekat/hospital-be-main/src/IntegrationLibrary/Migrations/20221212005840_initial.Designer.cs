@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221205225323_ExtendingBloodBankWithGRPC")]
-    partial class ExtendingBloodBankWithGRPC
+    [Migration("20221212005840_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,11 +32,6 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApiKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GRPCServerAddress")
@@ -52,7 +47,6 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServerAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -196,6 +190,32 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBank", b =>
+                {
+                    b.OwnsOne("IntegrationLibrary.Core.Model.Email", "Email", b1 =>
+                        {
+                            b1.Property<int>("BloodBankId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<string>("DomainName")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("LocalPart")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("BloodBankId");
+
+                            b1.ToTable("BloodBanks");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BloodBankId");
+                        });
+
+                    b.Navigation("Email");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>

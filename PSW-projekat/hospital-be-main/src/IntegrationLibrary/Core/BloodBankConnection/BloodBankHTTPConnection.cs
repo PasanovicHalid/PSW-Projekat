@@ -26,7 +26,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             };  
             bloodType = bType;
             quantity = quant;
-            bankEmail = bank.Email;
+            bankEmail = bank.Email.EmailAddress;
             bankAPI = bank.ApiKey;
 
             GetAsync(client).Wait();
@@ -54,7 +54,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
                 BaseAddress = new Uri(bank.ServerAddress)
             };
             pdfFile = pdf;
-            bankEmail = bank.Email;
+            bankEmail = bank.Email.EmailAddress;
             bankAPI = bank.ApiKey;
 
             PostAsync(client).Wait();

@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Adapters;
+﻿using AutoMapper;
+using IntegrationAPI.Adapters;
 using IntegrationAPI.Controllers.Interfaces;
 using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Exceptions;
@@ -18,10 +19,12 @@ namespace IntegrationAPI.Controllers
     public class BloodBanksController : ControllerBase
     {
         private readonly IBloodBankService _bloodBankService;
+        private readonly IMapper _mapper;
 
-        public BloodBanksController(IBloodBankService bloodBankService)
+        public BloodBanksController(IBloodBankService bloodBankService, IMapper mapper)
         {
             _bloodBankService = bloodBankService;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -31,7 +34,7 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            BloodBank bank = BloodBankAdapter.FromDTO(entity);
+            BloodBank bank = _mapper.Map<BloodBank>(entity);
             try
             {
                 _bloodBankService.Create(bank);
@@ -177,7 +180,7 @@ namespace IntegrationAPI.Controllers
             }
             try
             {
-                _bloodBankService.Update(BloodBankAdapter.FromDTO(entity));
+                _bloodBankService.Update(_mapper.Map<BloodBank>(entity));
             }
             catch
             {

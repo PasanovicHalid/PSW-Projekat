@@ -1,8 +1,10 @@
-﻿using IntegrationAPI;
+﻿using AutoMapper;
+using IntegrationAPI;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.DTO;
 using IntegrationAPITests.Setup;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service.BloodBanks;
 using IntegrationLibrary.Core.Service.BloodRequests;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;

@@ -39,4 +39,8 @@
 	<Protobuf Include="Protos\emergencyRequestGrpcService.proto" GrpcServices="Client" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Settings\ValueObjectConverters\" />
+  </ItemGroup>
+
 </Project>

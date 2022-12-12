@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model.Tender
 {
-    public class Demand : BaseModel
+    public class Demand : EntityClass
     {
         [Required]
         public BloodType BloodType { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model.Tender
 {
-    public class Tender : BaseModel
+    public class Tender : EntityClass
     {
         public DateTime DueDate { get; set; }
         [Required]

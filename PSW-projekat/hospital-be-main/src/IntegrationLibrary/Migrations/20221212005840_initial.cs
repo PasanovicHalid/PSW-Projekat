@@ -14,12 +14,14 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email_LocalPart = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email_DomainName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ServerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApiKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServerAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApiKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordResetKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountStatus = table.Column<int>(type: "int", nullable: false)
+                    AccountStatus = table.Column<int>(type: "int", nullable: false),
+                    GRPCServerAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
