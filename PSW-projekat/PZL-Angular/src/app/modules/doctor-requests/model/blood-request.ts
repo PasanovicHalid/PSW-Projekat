@@ -9,4 +9,5 @@ export class BloodRequest {
     doctorId: number;
     requestState: RequestState;
     bloodType: BloodType;
+    bloodBankId: number;
 }

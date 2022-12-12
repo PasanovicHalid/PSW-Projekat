@@ -1,5 +1,4 @@
-<h5>{{errorMessage}}</h5>
-<div class="table-header" *ngIf="!errorMessage">
+<div class="table-header" >
     <div class="container">
         <p class="table-title">Request</p>
             <mat-form-field appearance="fill">
@@ -22,9 +21,26 @@
                 <mat-label>Request state:</mat-label>
                 <input readonly matInput value="{{getStateByValue(request.requestState)}}">
             </mat-form-field><br>
-            <div *ngIf="request.requestState != 3" [hidden]="isBankOptionVisible">
-                <button class="m-1" mat-stroked-button (click)="accept()" >
+
+            <div *ngIf="request.requestState != 3" [hidden]="!isBankOptionVisible">
+                <mat-form-field appearance="fill">
+                    <mat-label>*Select a blood bank</mat-label>
+                    <mat-select name="bloodRequest.bloodBankID" matInput [(ngModel)]="request.bloodBankId"
+                         (selectionChange)="checkIfBankHasBlood()">
+                        <mat-option *ngFor="let item of bloodBanks"
+                         [value]="item.id">{{item.name}}</mat-option>
+                    </mat-select>
+                    <mat-spinner [diameter]="30" matSuffix style="display: inline-flex"
+                        *ngIf="request.bloodBankId != -1"></mat-spinner>
+                </mat-form-field >
+            </div><br>
+
+            <div *ngIf="request.requestState != 3" >
+                <button [hidden]="isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" >
                     Accept
+                </button>
+                <button [hidden]="!isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" >
+                    Send request
                 </button>
                 <button class="m-1" mat-stroked-button (click)="decline()">
                     Decline
@@ -34,14 +50,6 @@
                 </button>
             </div>
             <br>
-            <div *ngIf="request.requestState != 3" [hidden]="!isBankOptionVisible">
-                <mat-form-field appearance="fill">
-                    <mat-label>*Select a blood bank</mat-label>
-                    <mat-select name="bloodRequest.bloodBankID" matInput>
-                        <mat-option *ngFor="let item of bloodBanks" [value]="item.id">{{item.name}}</mat-option>
-                    </mat-select>
-                </mat-form-field ><mat-spinner [diameter]="30"></mat-spinner>
-            </div>
             <div *ngIf="returnBack || request.requestState == 2">
                 <mat-form-field appearance="fill">
                     <mat-label>Reason why it is going back:</mat-label>
