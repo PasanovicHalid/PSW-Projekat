@@ -32,6 +32,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("ApiKey")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("GRPCServerAddress")
                         .HasColumnType("nvarchar(max)");
 
@@ -188,32 +191,6 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBank", b =>
-                {
-                    b.OwnsOne("IntegrationLibrary.Core.Model.Email", "Email", b1 =>
-                        {
-                            b1.Property<int>("BloodBankId")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int")
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                            b1.Property<string>("DomainName")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("LocalPart")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("BloodBankId");
-
-                            b1.ToTable("BloodBanks");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BloodBankId");
-                        });
-
-                    b.Navigation("Email");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>

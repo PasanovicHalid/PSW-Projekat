@@ -30,12 +30,9 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BloodBank>().OwnsOne(e => e.Email,
-                email =>
-                {
-                    email.Property(local => local.LocalPart);
-                    email.Property(host => host.DomainName);
-                });
+            modelBuilder.Entity<BloodBank>()
+                .Property(b => b.Email)
+                .HasConversion((save) => JsonConvert.SerializeObject(save), read => JsonConvert.DeserializeObject<Email>(read));
 
             base.OnModelCreating(modelBuilder);
         }

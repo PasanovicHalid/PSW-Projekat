@@ -24,13 +24,15 @@ namespace IntegrationLibrary.Core.Model
         {
         }
 
-        
-        public string LocalPart { get; }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
+        public string LocalPart { get; private set; }
 
-        public string DomainName { get; }
+        [JsonProperty(DefaultValueHandling = DefaultValueHandling.Include)]
+        public string DomainName { get; private set; }
 
         [NotMapped]
         [JsonIgnore]
+        [JsonProperty(Required = Required.Default)]
         public string EmailAddress 
         { 
             get 

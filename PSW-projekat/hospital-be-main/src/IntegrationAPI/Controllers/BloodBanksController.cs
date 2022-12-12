@@ -69,7 +69,6 @@ namespace IntegrationAPI.Controllers
             
         }
 
-        [Authorize(Roles ="Manager")]
         [HttpGet]
         public ActionResult GetAll()
         {
