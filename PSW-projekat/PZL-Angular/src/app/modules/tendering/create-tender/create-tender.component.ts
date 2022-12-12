@@ -6,6 +6,7 @@ import { Tender } from '../model/tender.model';
 import { TenderService } from '../services/tender.service';
 import { BloodType } from '../../doctor-requests/model/blood-type';
 import { Demand } from '../model/demand.model';
+import { faTheRedYeti } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-create-tender',
@@ -37,7 +38,7 @@ export class CreateTenderComponent implements OnInit {
   }
 
   isDemandValid(){
-    if(this.demand.quantity <= 0 || this.demand.quantity > 10 || this.demand.quantity == undefined){
+    if(this.demand.bloodQuantity <= 0 || this.demand.bloodQuantity > 10 || this.demand.bloodQuantity == undefined){
         return false;
     }
     return true;
