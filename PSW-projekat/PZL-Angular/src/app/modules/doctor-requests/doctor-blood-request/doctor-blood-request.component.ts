@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BloodBank } from '../../blood-banks/model/blood-bank.model';
 import { BloodType } from '../model/blood-type';
 import { Doctor } from '../model/doctor';
 import { DoctorBloodRequest } from '../model/doctor-blood-request';
 import { RequestState } from '../model/request-state';
 import { BloodRequestService } from '../services/blood-request.service';
+import { BloodBankService } from '../../blood-banks/services/blood-bank.service';
 
 @Component({
   selector: 'app-doctor-blood-request',
@@ -16,8 +18,11 @@ export class DoctorBloodRequestComponent implements OnInit {
   public request: DoctorBloodRequest;
   public errorMessage: any;
   public returnBack : boolean = false;
+  public isBankOptionVisible: boolean = false;
+  bloodBanks : BloodBank[] = [];
 
-  constructor(private bloodRequestService: BloodRequestService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private bloodRequestService: BloodRequestService, private router: Router, private route: ActivatedRoute,
+            private bloodBankService: BloodBankService) { }
 
   ngOnInit(): void {
     if(localStorage.getItem("currentUserRole") == 'Manager'){
@@ -53,8 +58,12 @@ export class DoctorBloodRequestComponent implements OnInit {
   }
 
   accept() {
-    this.bloodRequestService.acceptRequest(this.request.id).subscribe(res => {
-      this.router.navigate(['/doctor-blood-requests']);})
+    this.isBankOptionVisible = true;
+    // this.bloodRequestService.acceptRequest(this.request.id).subscribe(res => {
+    //   this.router.navigate(['/doctor-blood-requests']);})
+    this.bloodBankService.getBloodBanks().subscribe(res =>{
+      this.bloodBanks = res;
+    });
   }
 
   decline() {

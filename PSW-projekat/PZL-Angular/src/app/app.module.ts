@@ -1,6 +1,7 @@
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput, MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { MatSelectModule} from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -50,7 +51,8 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
     EmergencyBloodRequestsModule,
     ToastrModule.forRoot(),
     DatePipe,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },

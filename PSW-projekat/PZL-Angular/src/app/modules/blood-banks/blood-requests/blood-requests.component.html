@@ -4,7 +4,7 @@
             <mat-label>*Select a blood bank</mat-label>
             <mat-select name="bloodRequest.bloodBankID" [(ngModel)]="this.bloodRequest.bloodBankID" matInput>
                 <mat-option *ngFor="let item of bloodBanks" [value]="item.id">{{item.name}}</mat-option>
-              </mat-select>
+            </mat-select>
         </mat-form-field ><br>
         <mat-form-field appearance="fill">
             <mat-label>*Select blood type</mat-label>
