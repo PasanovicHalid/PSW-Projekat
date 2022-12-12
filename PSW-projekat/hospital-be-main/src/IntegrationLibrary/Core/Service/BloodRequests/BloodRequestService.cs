@@ -1,5 +1,7 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.BloodBankConnection;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodRequests;
+using IntegrationLibrary.Core.Service.BloodBanks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +13,21 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
     public class BloodRequestService : IBloodRequestService
     {
         private readonly IBloodRequestRepository _bloodRequestRepository;
-        public BloodRequestService(IBloodRequestRepository bloodRequestRepository)
+        private readonly IBloodBankService _bloodBankService;
+        public BloodRequestService(IBloodRequestRepository bloodRequestRepository, IBloodBankService bloodBankService)
         {
             _bloodRequestRepository = bloodRequestRepository;
+            _bloodBankService = bloodBankService;
         }
 
-        public void AcceptRequest(int id)
+        public void AcceptRequest(BloodRequest request)
         {
-            BloodRequest request = _bloodRequestRepository.GetById(id);
-            request.RequestState = RequestState.Accepted;
-            _bloodRequestRepository.Update(request);
+            Update(request);
+            if(request.RequiredForDate.Date <= DateTime.Now.Date)
+            {
+                SendRequest(request);
+            }
+
         }
 
         public void Create(BloodRequest entity)
@@ -95,6 +102,11 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         {
             request.RequestState = RequestState.Pending;
             _bloodRequestRepository.Update(request);
+        }
+
+        private void SendRequest(BloodRequest request)
+        {
+            _bloodBankService.GetBlood(_bloodBankService.GetById(request.BloodBankId), request.BloodType, request.BloodQuantity);
         }
     }
 }

@@ -80,6 +80,11 @@ export class DoctorBloodRequestComponent implements OnInit {
       this.router.navigate(['/doctor-blood-requests']);})
   }
 
+  sendRequest(){
+    this.bloodRequestService.acceptRequest(this.request).subscribe(res => {
+      this.router.navigate(['/doctor-blood-requests']);})
+  }
+
   findDoctorForRequest(doctors: Doctor[], request: DoctorBloodRequest, doctorId : number) : DoctorBloodRequest{
     for (let doctor of doctors) {
       if(doctor.id == doctorId){

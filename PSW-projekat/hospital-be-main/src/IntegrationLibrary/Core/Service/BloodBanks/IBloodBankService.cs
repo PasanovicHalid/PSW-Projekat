@@ -16,5 +16,6 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         Boolean SendBloodRequest(int bloodBankID, String BloodType, int quantity);
         void CheckBloodRequest(int bloodBankID, String BloodType, int quantity);
         Boolean CheckIfExists(String username, String password);
+        void GetBlood(BloodBank bank, BloodType bloodType, int quantity);
     }
 }

@@ -39,7 +39,7 @@
                 <button [hidden]="isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" >
                     Accept
                 </button>
-                <button [hidden]="!isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" [disabled]="!canOrder" >
+                <button [hidden]="!isBankOptionVisible" class="m-1" mat-stroked-button (click)="sendRequest()" [disabled]="!canOrder" >
                     Send request
                 </button>
                 <button class="m-1" mat-stroked-button (click)="decline()" [disabled]="isLoading">

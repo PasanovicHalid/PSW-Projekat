@@ -77,5 +77,31 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             return bankResponse;
 
         }
+
+        public async Task<bool> GetBlood(BloodBank bank, string bType, int quant)
+        {
+            client = new()
+            {
+                BaseAddress = new Uri(bank.ServerAddress)
+            };
+
+            GetAsync(client, bank, bType, quant).Wait();
+
+            return bankResponse;
+        }
+
+        static async Task<bool> GetAsync(HttpClient httpClient, BloodBank bank, string bType, int quant)
+        {
+            client.Timeout = TimeSpan.FromSeconds(15);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bank.ApiKey);
+            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/get" + bank.Email + "/" + bType + "/" + quant);
+
+            response.EnsureSuccessStatusCode();
+
+            string hasBlood = await response.Content.ReadAsStringAsync();
+            bankResponse = Boolean.Parse(hasBlood);
+            return bankResponse;
+
+        }
     }
 }
