@@ -32,7 +32,6 @@ export class BloodBankService {
   }
 
   sendBloodRequest(bloodRequest: any): Observable<any>{
-    console.log(bloodRequest)
     return this.http.get<any>(this.apiHost + 'api/BloodBanks/' + bloodRequest.bloodBankId + '/' + bloodRequest.bloodType + '/' + bloodRequest.bloodQuantity, {headers: this.headers}).pipe(catchError(this.handleError));
   }
 

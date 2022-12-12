@@ -31,7 +31,7 @@
                          [value]="item.id">{{item.name}}</mat-option>
                     </mat-select>
                     <mat-spinner [diameter]="30" matSuffix style="display: inline-flex"
-                        *ngIf="request.bloodBankId != -1"></mat-spinner>
+                        [hidden]="!isLoading"></mat-spinner>
                 </mat-form-field >
             </div><br>
 
@@ -39,13 +39,13 @@
                 <button [hidden]="isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" >
                     Accept
                 </button>
-                <button [hidden]="!isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" >
+                <button [hidden]="!isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" [disabled]="!canOrder" >
                     Send request
                 </button>
-                <button class="m-1" mat-stroked-button (click)="decline()">
+                <button class="m-1" mat-stroked-button (click)="decline()" [disabled]="isLoading">
                     Decline
                 </button>
-                <button class="m-1" mat-stroked-button (click)="returnBack = !returnBack">
+                <button class="m-1" mat-stroked-button (click)="returnBack = !returnBack" [disabled]="isLoading">
                     Return Back
                 </button>
             </div>

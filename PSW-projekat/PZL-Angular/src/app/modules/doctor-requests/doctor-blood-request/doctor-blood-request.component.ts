@@ -22,6 +22,7 @@ export class DoctorBloodRequestComponent implements OnInit {
   public returnBack : boolean = false;
   public isBankOptionVisible: boolean = false;
   public canOrder: boolean = false;
+  public isLoading: boolean = false;
   bloodBanks : BloodBank[] = [];
 
   constructor(private bloodRequestService: BloodRequestService, private router: Router, private route: ActivatedRoute,
@@ -90,20 +91,24 @@ export class DoctorBloodRequestComponent implements OnInit {
   }
 
   checkIfBankHasBlood(){
-    console.log(this.request.bloodBankId)
+    this.canOrder = false;
+    this.isLoading = true;
     var req = this.convertToBloodRequest()
     this.bloodBankService.sendBloodRequest(req).subscribe(res => {
 
       if(res == true){
         this.toastr.success("Bank currently has wanted blood type!");
+        this.canOrder = true;
       }
       else{
         this.toastr.info("Bank currently has no wanted blood type!");
       }
+      this.isLoading = false;
       
     }, (error) => {
       this.errorMessage = error;
       this.toastError();
+      this.isLoading = false;
     });
   }
 
