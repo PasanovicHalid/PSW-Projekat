@@ -2,6 +2,8 @@
 using IntegrationLibrary.Core.Model.Tender;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using MimeKit;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -28,6 +30,13 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BloodBank>().OwnsOne(e => e.Email,
+                email =>
+                {
+                    email.Property(local => local.LocalPart);
+                    email.Property(host => host.DomainName);
+                });
+
             base.OnModelCreating(modelBuilder);
         }
     }
