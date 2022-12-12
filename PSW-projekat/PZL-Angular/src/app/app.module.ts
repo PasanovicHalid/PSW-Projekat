@@ -20,6 +20,10 @@ import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.
 import { JwtInterceptorService } from './helpers/jwt.interceptor.service';
 import { TenderingModule } from './modules/tendering/tendering.module';
 import { EmergencyBloodRequestsModule } from './modules/emergency-blood-requests/emergency-blood-requests.module';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,8 @@ import { EmergencyBloodRequestsModule } from './modules/emergency-blood-requests
     CommonModule,
     EmergencyBloodRequestsModule,
     ToastrModule.forRoot(),
-    DatePipe
+    DatePipe,
+    FontAwesomeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
@@ -53,4 +58,8 @@ import { EmergencyBloodRequestsModule } from './modules/emergency-blood-requests
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, far, fab);
+  }
+ }
