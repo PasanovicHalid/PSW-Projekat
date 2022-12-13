@@ -25,7 +25,7 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             Update(request);
             if(request.RequiredForDate.Date <= DateTime.Now.Date)
             {
-                SendRequest(request);
+                GetBloodFromBloodBank(request);
             }
 
         }
@@ -104,9 +104,24 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             _bloodRequestRepository.Update(request);
         }
 
-        private void SendRequest(BloodRequest request)
+        private async void GetBloodFromBloodBank(BloodRequest request)
         {
-            _bloodBankService.GetBlood(_bloodBankService.GetById(request.BloodBankId), request.BloodType, request.BloodQuantity);
+            int blood = await SendRequest(request);
+            StoreBlood(blood, request);
+            request.RequestState = RequestState.Fulfilled;
+        }
+
+        private async Task<int> SendRequest(BloodRequest request)
+        {
+            return await _bloodBankService.GetBlood(_bloodBankService.GetById(request.BloodBankId), request.BloodType, request.BloodQuantity);
+        }
+
+        private void StoreBlood(int blood, BloodRequest request)
+        {
+            if (request.BloodQuantity == blood)
+                //IncreaseBloodQuantity(blood, request.BloodType);
+            else
+                throw new Exception("Blood quantity from response not valid!");
         }
     }
 }

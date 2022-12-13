@@ -161,9 +161,9 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
 
         }
 
-        public void GetBlood(BloodBank bank, BloodType bloodType, int quantity)
+        public async Task<int> GetBlood(BloodBank bank, BloodType bloodType, int quantity)
         {
-            _bloodBankConnection.GetBlood(bank, getBloodTypeAsString(bloodType), quantity);
+            return await _bloodBankConnection.GetBlood(bank, getBloodTypeAsString(bloodType), quantity);
         }
 
         private String getBloodTypeAsString(BloodType blood)
