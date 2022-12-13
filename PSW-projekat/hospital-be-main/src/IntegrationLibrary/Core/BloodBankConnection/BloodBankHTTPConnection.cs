@@ -82,6 +82,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
 
         static async Task<int> GetAsync(HttpClient httpClient, BloodBank bank, string bType, int quant)
         {
+            int blood = -1;
             client.Timeout = TimeSpan.FromSeconds(15);
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bank.ApiKey);
             using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/get/" + bank.Email + "/" + bType + "/" + quant);
@@ -89,7 +90,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             response.EnsureSuccessStatusCode();
 
             string hasBlood = await response.Content.ReadAsStringAsync();
-            int blood = Int32.Parse(hasBlood);
+            blood = Int32.Parse(hasBlood);
             return blood;
         }
     }

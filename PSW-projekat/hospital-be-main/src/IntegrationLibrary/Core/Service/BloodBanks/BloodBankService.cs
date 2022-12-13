@@ -163,7 +163,14 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
 
         public async Task<int> GetBlood(BloodBank bank, BloodType bloodType, int quantity)
         {
-            return await _bloodBankConnection.GetBlood(bank, getBloodTypeAsString(bloodType), quantity);
+            try
+            {
+                return await _bloodBankConnection.GetBlood(bank, getBloodTypeAsString(bloodType), quantity);
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
         }
 
         private String getBloodTypeAsString(BloodType blood)

@@ -114,18 +114,34 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
 
         public async void GetBloodFromBloodBank(BloodRequest request)
         {
-            int blood = await SendRequest(request);
-            bool isSuccessful = StoreBlood(blood, request);
-            if (isSuccessful)
+            try
             {
-                request.RequestState = RequestState.Fulfilled;
-                Update(request);
+                int blood = await SendRequest(request);
+                bool isSuccessful = StoreBlood(blood, request);
+                if (isSuccessful)
+                {
+                    request.RequestState = RequestState.Fulfilled;
+                    Update(request);
+                }
             }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            
+            
         }
 
         private async Task<int> SendRequest(BloodRequest request)
         {
-            return await _bloodBankService.GetBlood(_bloodBankService.GetById(request.BloodBankId), request.BloodType, request.BloodQuantity);
+            try
+            {
+                return await _bloodBankService.GetBlood(_bloodBankService.GetById(request.BloodBankId), request.BloodType, request.BloodQuantity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         private bool StoreBlood(int bloodQuanitity, BloodRequest request)

@@ -44,19 +44,19 @@ namespace IntegrationAPITests.Tests
             var generator = SetupSettingsService(scope);
 
             var result = generator.GeneratePDFs();
-            String path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\net5.0\BloodReportForasdsadsda_" + DateTime.Now.ToString("ddMMyyyy") + ".pdf";
+            String path = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\net5.0\BloodReportForprva_" + DateTime.Now.ToString("ddMMyyyy") + ".pdf";
             Assert.True(File.Exists(path));
         }
 
 
         [Fact]
-        public void Find_accepted_requests_for_bank()
+        public void Find_fulfilled_requests_for_bank()
         {
             using var scope = Factory.Services.CreateScope();
             BloodRequestService service = new BloodRequestService(CreateStubRepository(), scope.ServiceProvider.GetRequiredService<IBloodBankService>(), 
                 scope.ServiceProvider.GetRequiredService<IHospitalConnection>());
 
-            List<BloodRequest> requests = (List<BloodRequest>)service.GetAcceptedRequests(7);
+            List<BloodRequest> requests = (List<BloodRequest>)service.GetFulfilledRequests(7);
             Assert.Equal(CreateRequestList().Count(), requests.Count());
         }
 
@@ -64,9 +64,9 @@ namespace IntegrationAPITests.Tests
             var stubRepository = new Mock<IBloodRequestRepository>();
             var requests = new List<BloodRequest>();
 
-            BloodRequest req1 = new BloodRequest(new DateTime(2022, 12, 1), 2, "for operation", 1, RequestState.Accepted, BloodType.BP, 7, null);
-            BloodRequest req2 = new BloodRequest(new DateTime(2022, 12, 3), 3, "for operation", 1, RequestState.Accepted, BloodType.BN, 7, null);
-            BloodRequest req3 = new BloodRequest(new DateTime(2022, 12, 12), 1, "for operation", 1, RequestState.Accepted, BloodType.AP, 8, null);
+            BloodRequest req1 = new BloodRequest(new DateTime(2022, 12, 1), 2, "for operation", 1, RequestState.Fulfilled, BloodType.BP, 7, null);
+            BloodRequest req2 = new BloodRequest(new DateTime(2022, 12, 3), 3, "for operation", 1, RequestState.Fulfilled, BloodType.BN, 7, null);
+            BloodRequest req3 = new BloodRequest(new DateTime(2022, 12, 12), 1, "for operation", 1, RequestState.Fulfilled, BloodType.AP, 8, null);
             BloodRequest req4 = new BloodRequest(new DateTime(2022, 12, 22), 4, "for operation", 1, RequestState.Pending, BloodType.ABN, 8, null);
 
             requests.Add(req1);
@@ -79,8 +79,8 @@ namespace IntegrationAPITests.Tests
         }
         private static List<BloodRequest> CreateRequestList(){
             var requestList = new List<BloodRequest>();
-            BloodRequest req1 = new BloodRequest(new DateTime(2022, 12, 1), 2, "for operation", 1, RequestState.Accepted, BloodType.BP, 7, null);
-            BloodRequest req2 = new BloodRequest(new DateTime(2022, 12, 3), 3, "for operation", 1, RequestState.Accepted, BloodType.BN, 7, null);
+            BloodRequest req1 = new BloodRequest(new DateTime(2022, 12, 1), 2, "for operation", 1, RequestState.Fulfilled, BloodType.BP, 7, null);
+            BloodRequest req2 = new BloodRequest(new DateTime(2022, 12, 3), 3, "for operation", 1, RequestState.Fulfilled, BloodType.BN, 7, null);
             requestList.Add(req1);
             requestList.Add(req2);
             return requestList;

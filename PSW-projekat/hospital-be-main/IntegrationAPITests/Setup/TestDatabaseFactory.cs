@@ -173,6 +173,28 @@ namespace IntegrationAPITests.Setup
                 RequiredForDate = System.DateTime.MaxValue,
                 Comment = ""
             });
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 2,
+                BloodType = BloodType.ON,
+                DoctorId = 2,
+                Reason = "asdasddas",
+                RequestState = RequestState.Fulfilled,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = "",
+                BloodBankId = 1,
+            });
+            context.BloodRequests.Add(new BloodRequest
+            {
+                BloodQuantity = 2,
+                BloodType = BloodType.OP,
+                DoctorId = 2,
+                Reason = "asdasddas",
+                RequestState = RequestState.Fulfilled,
+                RequiredForDate = System.DateTime.MaxValue,
+                Comment = "",
+                BloodBankId = 1,
+            });
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Newses\";");
             context.Newses.Add(new News
             {
