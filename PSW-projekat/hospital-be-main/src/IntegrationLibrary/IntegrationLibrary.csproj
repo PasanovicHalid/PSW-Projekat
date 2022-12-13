@@ -41,6 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
+    <Folder Include="Settings\ValueObjectConverters\" />
   </ItemGroup>
 
 </Project>

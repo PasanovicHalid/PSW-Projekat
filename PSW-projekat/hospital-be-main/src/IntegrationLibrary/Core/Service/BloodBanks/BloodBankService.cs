@@ -53,30 +53,6 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
             }
         }
 
-        private void SetupBloodBank(BloodBank entity)
-        {
-            do
-            {
-                entity.ApiKey = _apiKeyGenerator.GenerateKey();
-            } while (_bloodBankRepository.CheckIfAPIKeyExists(entity.ApiKey));
-
-            entity.Password = _passwordGenerator.GeneratePassword();
-
-            do
-            {
-                entity.PasswordResetKey = _passwordGenerator.GeneratePasswordResetKey();
-            } while (_bloodBankRepository.CheckIfPasswordResetKeyExists(entity.PasswordResetKey));
-        }
-
-
-        private void CheckIfBankCanBeCreated(BloodBank entity)
-        {
-            if (_bloodBankRepository.CheckIfEmailExists(entity.Email))
-            {
-                throw new EmailAlreadyExistsException();
-            }
-        }
-
         public void Delete(BloodBank entity)
         {
             _bloodBankRepository.Delete(entity);
@@ -96,22 +72,6 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         {
             CheckIfBankIsUpdatable(entity);
             _bloodBankRepository.Update(entity);
-        }
-
-        private void CheckIfBankIsUpdatable(BloodBank entity)
-        {
-            if (_bloodBankRepository.CheckIfAPIKeyIsUpdatable(entity))
-            {
-                throw new APIKeyExistsException();
-            }
-            if (_bloodBankRepository.CheckIfEmailIsUpdatable(entity))
-            {
-                throw new EmailAlreadyExistsException();
-            }
-            if (_bloodBankRepository.CheckIfPasswordResetKeyIsUpdatable(entity))
-            {
-                throw new PasswordKeyExistsException();
-            }
         }
 
         public bool CheckIfPasswordResetKeyExists(string passwordResetKey)
@@ -160,7 +120,6 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
             return false;
 
         }
-
         public async Task<int> GetBlood(BloodBank bank, BloodType bloodType, int quantity)
         {
             try
@@ -187,6 +146,43 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
                 case BloodType.ABP: return "ABplus";
             }
             throw new Exception("BloodType is in forbidden state!");
+        }
+
+        private void SetupBloodBank(BloodBank entity)
+        {
+            do
+            {
+                entity.ApiKey = _apiKeyGenerator.GenerateKey();
+            } while (_bloodBankRepository.CheckIfAPIKeyExists(entity.ApiKey));
+            do
+            {
+                entity.PasswordResetKey = _passwordGenerator.GeneratePasswordResetKey();
+            } while (_bloodBankRepository.CheckIfPasswordResetKeyExists(entity.PasswordResetKey));
+        }
+
+
+        private void CheckIfBankCanBeCreated(BloodBank entity)
+        {
+            if (_bloodBankRepository.CheckIfEmailExists(entity.Email.EmailAddress))
+            {
+                throw new EmailAlreadyExistsException();
+            }
+        }
+
+        private void CheckIfBankIsUpdatable(BloodBank entity)
+        {
+            if (_bloodBankRepository.CheckIfAPIKeyIsUpdatable(entity))
+            {
+                throw new APIKeyExistsException();
+            }
+            if (_bloodBankRepository.CheckIfEmailIsUpdatable(entity))
+            {
+                throw new EmailAlreadyExistsException();
+            }
+            if (_bloodBankRepository.CheckIfPasswordResetKeyIsUpdatable(entity))
+            {
+                throw new PasswordKeyExistsException();
+            }
         }
     }
 }

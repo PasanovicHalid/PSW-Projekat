@@ -49,42 +49,48 @@ namespace IntegrationAPITests.Setup
             context.Database.ExecuteSqlRaw("DELETE FROM \"Tenders\";");
 
 
-            context.BloodBanks.Add(new BloodBank {
-                Name = "prva",
-                Email = "prva@gmail.com",
-                Password = "prva",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE,
-                GRPCServerAddress = "aaa"
-            });
-            context.BloodBanks.Add(new BloodBank {
-                Name = "druga",
-                Email = "druga@gmail.com",
-                Password = "druga",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE,
-                GRPCServerAddress = "aaa"
-            });
-            context.BloodBanks.Add(new BloodBank {
-                Name = "treca",
-                Email = "treca@gmail.com",
-                Password = "treca",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE,
-                GRPCServerAddress = "aaa"
-            });
-            context.BloodBanks.Add(new BloodBank {
-                Name = "cetrvta",
-                Email = "cetrvta@gmail.com",
-                Password = "cetrvta",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE,
-                GRPCServerAddress = "aaa"
-            });
+
+            //context.BloodBanks.Add(new BloodBank {
+            //    Name = "prva",
+            //    Email = "prva@gmail.com",
+            //    Password = "prva",
+            //    ApiKey = "sadfasdads",
+            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
+            //    AccountStatus = AccountStatus.ACTIVE,
+            //    GRPCServerAddress = "aaa"
+            //});
+            //context.BloodBanks.Add(new BloodBank {
+            //    Name = "druga",
+            //    Email = "druga@gmail.com",
+            //    Password = "druga",
+            //    ApiKey = "sadfasdads",
+            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
+            //    AccountStatus = AccountStatus.ACTIVE,
+            //    GRPCServerAddress = "aaa"
+            //});
+            //context.BloodBanks.Add(new BloodBank {
+            //    Name = "treca",
+            //    Email = "treca@gmail.com",
+            //    Password = "treca",
+            //    ApiKey = "sadfasdads",
+            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
+            //    AccountStatus = AccountStatus.ACTIVE,
+            //    GRPCServerAddress = "aaa"
+            //});
+            //context.BloodBanks.Add(new BloodBank {
+            //    Name = "cetrvta",
+            //    Email = "cetrvta@gmail.com",
+            //    Password = "cetrvta",
+            //    ApiKey = "sadfasdads",
+            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
+            //    AccountStatus = AccountStatus.ACTIVE,
+            //    GRPCServerAddress = "aaa"
+            //});
+
+            context.BloodBanks.Add(new BloodBank("prva", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
+            context.BloodBanks.Add(new BloodBank("aa", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
+            context.BloodBanks.Add(new BloodBank("bb", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
+            context.BloodBanks.Add(new BloodBank("rr", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
 
             context.ReportSettings.Add(new ReportSettings
             {

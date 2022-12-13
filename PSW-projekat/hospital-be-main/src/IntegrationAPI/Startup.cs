@@ -42,7 +42,7 @@ namespace IntegrationAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddAutoMapper(typeof(EmergencyBloodRequestAdapter));
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<IntegrationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IntegrationDb"))
                                                                             .UseLazyLoadingProxies());
 

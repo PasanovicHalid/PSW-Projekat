@@ -1,4 +1,5 @@
-﻿using IntegrationAPI;
+﻿using AutoMapper;
+using IntegrationAPI;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.DTO;
 using IntegrationAPITests.Setup;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { BloodBank } from '../model/blood-bank.model';
 import { BloodType } from '../model/blood-type';
 import { EmergencyBloodRequest } from '../model/emergency-blood-request';
@@ -16,13 +17,14 @@ export class RequestBloodComponent implements OnInit {
   public bloodTypes : BloodType[] = [BloodType.ON,BloodType.AN, BloodType.BN, BloodType.ABN, BloodType.OP, BloodType.AP, BloodType.BP, BloodType.ABP];
   public bloodBanks : BloodBank[] = [];
 
-  constructor(private emergencyService : EmergencyBloodRequestService) { }
+  constructor(private emergencyService : EmergencyBloodRequestService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.emergencyService.getBloodBanks().subscribe( res => {
       this.bloodBanks = res;
     },(error) => {
       this.errorMessage = error;
+      this.toastr.error(error)
     })
   }
 
@@ -42,9 +44,10 @@ export class RequestBloodComponent implements OnInit {
 
   public accept() {
     this.emergencyService.askForBlood(this.request).subscribe( res => {
-        
+        this.toastr.success("Requested blood")
     },(error) => {
       this.errorMessage = error;
+      this.toastr.error(error)
     })
   }
 

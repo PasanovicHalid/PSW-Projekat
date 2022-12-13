@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class News : BaseModel
+    public class News : EntityClass
     {
         private string _title { get; set; }
         private string _text { get; set; }

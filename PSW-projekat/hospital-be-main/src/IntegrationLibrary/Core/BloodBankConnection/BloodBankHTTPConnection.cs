@@ -25,7 +25,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             };  
             bloodType = bType;
             quantity = quant;
-            bankEmail = bank.Email;
+            bankEmail = bank.Email.EmailAddress;
             bankAPI = bank.ApiKey;
 
             return GetAsync(client).Result;
@@ -49,7 +49,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
                 BaseAddress = new Uri(bank.ServerAddress)
             };
             pdfFile = pdf;
-            bankEmail = bank.Email;
+            bankEmail = bank.Email.EmailAddress;
             bankAPI = bank.ApiKey;
 
             return PostAsync(client).Result;
@@ -85,7 +85,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             int blood = -1;
             client.Timeout = TimeSpan.FromSeconds(15);
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bank.ApiKey);
-            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/get/" + bank.Email + "/" + bType + "/" + quant);
+            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/get/" + bank.Email.EmailAddress + "/" + bType + "/" + quant);
 
             response.EnsureSuccessStatusCode();
 

@@ -11,7 +11,7 @@ namespace IntegrationLibrary.Core.Model.MailRequests
     {
         public BloodBankCreationMailRequest(BloodBank bank)
         {
-            ToEmail = new MailAddress(bank.Email);
+            ToEmail = new MailAddress(bank.Email.EmailAddress);
             Subject = "Welcome " + bank.Name;
             Body = "Welcome to our intranet system <br>" +
                 "Your password is: " + bank.Password + "<br>" +
