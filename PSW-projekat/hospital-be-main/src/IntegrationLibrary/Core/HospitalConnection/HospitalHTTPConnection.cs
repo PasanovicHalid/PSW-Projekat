@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
 using Newtonsoft.Json;
 using System;
@@ -13,29 +14,26 @@ namespace IntegrationLibrary.Core.HospitalConnection
     public class HospitalHTTPConnection : IHospitalConnection
     {
         private static HttpClient client;
-        private static LoginUserDto user;
-        public void GenereteJWT(LoginUserDto _user)
+        public bool StoreBlood(Blood blood)
         {
             client = new()
             {
                 BaseAddress = new Uri("http://localhost:16177/")
             };
-            user = _user;
 
-            PostAsync(client).Wait();
+            return PutAsync(client, blood).Result;
         }
 
-        static async Task<String> PostAsync(HttpClient httpClient)
+        static async Task<bool> PutAsync(HttpClient httpClient, Blood blood)
         {
-            string isSuccessful = "false";
             client.Timeout = TimeSpan.FromSeconds(120);
-            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await httpClient.PostAsync("api/Account/LoginBank", stringContent);
+            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(blood), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await httpClient.PutAsync("api/Blood/Store", stringContent);
 
             response.EnsureSuccessStatusCode();
 
-            isSuccessful = await response.Content.ReadAsStringAsync();
-            return isSuccessful;
+            string isSuccessful = await response.Content.ReadAsStringAsync();
+            return Boolean.Parse(isSuccessful);
         }
     }
 }

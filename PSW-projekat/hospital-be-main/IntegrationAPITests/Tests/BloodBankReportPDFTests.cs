@@ -1,6 +1,7 @@
 ﻿using IntegrationAPI;
 using IntegrationAPITests.Setup;
 using IntegrationLibrary.Core.BloodBankConnection;
+using IntegrationLibrary.Core.HospitalConnection;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodRequests;
 using IntegrationLibrary.Core.Service;
@@ -52,7 +53,8 @@ namespace IntegrationAPITests.Tests
         public void Find_accepted_requests_for_bank()
         {
             using var scope = Factory.Services.CreateScope();
-            BloodRequestService service = new BloodRequestService(CreateStubRepository(), scope.ServiceProvider.GetRequiredService<IBloodBankService>());
+            BloodRequestService service = new BloodRequestService(CreateStubRepository(), scope.ServiceProvider.GetRequiredService<IBloodBankService>(), 
+                scope.ServiceProvider.GetRequiredService<IHospitalConnection>());
 
             List<BloodRequest> requests = (List<BloodRequest>)service.GetAcceptedRequests(7);
             Assert.Equal(CreateRequestList().Count(), requests.Count());

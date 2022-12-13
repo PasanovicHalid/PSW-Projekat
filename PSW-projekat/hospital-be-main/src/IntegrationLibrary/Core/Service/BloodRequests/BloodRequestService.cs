@@ -1,4 +1,6 @@
-﻿using IntegrationLibrary.Core.BloodBankConnection;
+﻿using HospitalLibrary.Core.Model;
+using IntegrationLibrary.Core.BloodBankConnection;
+using IntegrationLibrary.Core.HospitalConnection;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.BloodRequests;
 using IntegrationLibrary.Core.Service.BloodBanks;
@@ -14,14 +16,18 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
     {
         private readonly IBloodRequestRepository _bloodRequestRepository;
         private readonly IBloodBankService _bloodBankService;
-        public BloodRequestService(IBloodRequestRepository bloodRequestRepository, IBloodBankService bloodBankService)
+        private readonly IHospitalConnection _hospitalConnection;
+        public BloodRequestService(IBloodRequestRepository bloodRequestRepository, IBloodBankService bloodBankService,
+                                    IHospitalConnection hospitalConnection)
         {
             _bloodRequestRepository = bloodRequestRepository;
             _bloodBankService = bloodBankService;
+            _hospitalConnection = hospitalConnection;
         }
 
         public void AcceptRequest(BloodRequest request)
         {
+            request.RequestState = RequestState.Accepted;
             Update(request);
             if(request.RequiredForDate.Date <= DateTime.Now.Date)
             {
@@ -107,8 +113,12 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         private async void GetBloodFromBloodBank(BloodRequest request)
         {
             int blood = await SendRequest(request);
-            StoreBlood(blood, request);
-            request.RequestState = RequestState.Fulfilled;
+            bool isSuccessful = StoreBlood(blood, request);
+            if (isSuccessful)
+            {
+                request.RequestState = RequestState.Fulfilled;
+                Update(request);
+            }
         }
 
         private async Task<int> SendRequest(BloodRequest request)
@@ -116,12 +126,39 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             return await _bloodBankService.GetBlood(_bloodBankService.GetById(request.BloodBankId), request.BloodType, request.BloodQuantity);
         }
 
-        private void StoreBlood(int blood, BloodRequest request)
+        private bool StoreBlood(int bloodQuanitity, BloodRequest request)
         {
-            if (request.BloodQuantity == blood)
-                //IncreaseBloodQuantity(blood, request.BloodType);
+            if (request.BloodQuantity == bloodQuanitity)
+            {
+                Blood blood = new Blood(-1,getHospitalBloodType(request.BloodType), bloodQuanitity);
+                return _hospitalConnection.StoreBlood(blood);
+            }   
             else
                 throw new Exception("Blood quantity from response not valid!");
+        }
+
+        private HospitalLibrary.Core.Model.Enums.BloodType getHospitalBloodType(BloodType type)
+        {
+            switch (type)
+            {
+                case BloodType.BN:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.BMinus;
+                case BloodType.AN:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.AMinus;
+                case BloodType.ABN:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.ABMinus;
+                case BloodType.ON:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.OMinus;
+                case BloodType.BP:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.BPlus;
+                case BloodType.AP:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.APlus;
+                case BloodType.ABP:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.ABPlus;
+                case BloodType.OP:
+                    return HospitalLibrary.Core.Model.Enums.BloodType.OPlus;
+            }
+            throw new Exception("Blood type isn't valid.");
         }
     }
 }

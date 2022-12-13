@@ -35,7 +35,7 @@
                 </mat-form-field >
             </div><br>
 
-            <div *ngIf="request.requestState != 3" >
+            <div *ngIf="request.requestState != 3 && request.requestState != 4" >
                 <button [hidden]="isBankOptionVisible" class="m-1" mat-stroked-button (click)="accept()" >
                     Accept
                 </button>

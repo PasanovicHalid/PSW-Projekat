@@ -78,7 +78,7 @@ namespace IntegrationAPI.Controllers
             try
             {
                 _bloodRequestService.AcceptRequest(bloodRequest);
-                return Ok(entity);
+                return Ok();
             }
             catch (Exception ex)
             {

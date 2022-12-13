@@ -28,8 +28,6 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             bankEmail = bank.Email;
             bankAPI = bank.ApiKey;
 
-            GetAsync(client).Wait();
-
             return GetAsync(client).Result;
         }
         static async Task<bool> GetAsync(HttpClient httpClient)
@@ -53,8 +51,6 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             pdfFile = pdf;
             bankEmail = bank.Email;
             bankAPI = bank.ApiKey;
-
-            PostAsync(client).Wait();
 
             return PostAsync(client).Result;
         }
@@ -80,8 +76,6 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             {
                 BaseAddress = new Uri(bank.ServerAddress)
             };
-
-            GetAsync(client, bank, bType, quant).Wait();
 
             return GetAsync(client, bank, bType, quant).Result;
         }
