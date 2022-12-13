@@ -38,10 +38,11 @@ namespace IntegrationAPITests.E2E_tests
             loginPage.InsertUsername("pera");
             loginPage.InsertPassword("123");
             loginPage.SubmitForm();
-            System.Threading.Thread.Sleep(2000);
+            Thread.Sleep(3000);
             loginPage.ErrorDivDisplayed().ShouldBe(false);
             reportSettingsPage = new Pages.ReportSettingsPage(driver);
             reportSettingsPage.Navigate();
+            Thread.Sleep(3000);
         }
 
         public void Dispose()
@@ -53,7 +54,6 @@ namespace IntegrationAPITests.E2E_tests
         [Fact]
         public void Select_6_months_period_successfully()
         {
-            System.Threading.Thread.Sleep(3000);
             reportSettingsPage.Select6MonthsDeliveryPeriod();
             reportSettingsPage.Select6MonthsCalculationPeriod();
             reportSettingsPage.SubmitForm();
@@ -66,7 +66,6 @@ namespace IntegrationAPITests.E2E_tests
         [Fact]
         public void Select_custom_period_successfully()
         {
-            System.Threading.Thread.Sleep(3000);
             reportSettingsPage.SelectCustomCalculationPeriod();
             reportSettingsPage.SelectCustomDeliveryPeriod();
             reportSettingsPage.InsertCustomDeliveryPeriod(DateTime.Today, "5", "3", "1");
@@ -83,7 +82,6 @@ namespace IntegrationAPITests.E2E_tests
         [Fact]
         public void Select_custom_period_failiure()
         {
-            System.Threading.Thread.Sleep(3000);
             reportSettingsPage.SelectCustomCalculationPeriod();
             reportSettingsPage.SelectCustomDeliveryPeriod();
             reportSettingsPage.InsertCustomDeliveryPeriod(DateTime.Today, "40", "3", "1");
