@@ -52,7 +52,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_all()
+        public void Appointments_validation_success_all()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -75,7 +75,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_some()
+        public void Appointments_validation_success_some()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -98,7 +98,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_fromdate()
+        public void Appointments_validation_success_fromdate()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -121,7 +121,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_todate()
+        public void Appointments_validation_success_todate()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -144,7 +144,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_fromtime()
+        public void Appointments_validation_success_fromtime()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -167,7 +167,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_totime()
+        public void Appointments_validation_success_totime()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -190,7 +190,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_prefer()
+        public void Appointments_validation_success_prefer()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -213,7 +213,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_personid()
+        public void Appointments_validation_success_personid()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -236,7 +236,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_selecteddoctorid()
+        public void Appointments_validation_success_selecteddoctorid()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -259,7 +259,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_input_error()
+        public void Appointments_validation_success_input_error()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -282,7 +282,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_succes_none()
+        public void Appointments_validation_success_none()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
