@@ -18,6 +18,7 @@ import { MaterialModule } from 'src/app/material/material.module';
 import { ToastrModule } from 'ngx-toastr';
 import { ViewSingleTenderComponent } from './view-single-tender/view-single-tender.component';
 import { CreateTenderComponent } from './create-tender/create-tender.component';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   { path: 'view-tenders', component: ViewTendersComponent },
@@ -47,7 +48,8 @@ const routes: Routes = [
     FormsModule,
     MaterialModule,
     RouterModule.forChild(routes),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FontAwesomeModule
   ],
   exports: [ RouterModule ]
 })

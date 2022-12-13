@@ -21,6 +21,11 @@ export class TenderService {
   getTender(id : number): Observable<Tender> {
     return this.http.get<Tender>(this.integrationApiHost + 'api/Tender/' + id, {headers: this.headers}).pipe(catchError(this.handleError))
   }
+
+  createTender(tender : Tender): Observable<any>{
+    return this.http.post<any>(this.integrationApiHost + 'api/Tender/',tender, {headers: this.headers}).pipe(catchError(this.handleError))
+  }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(error.status +'\n'+ error.error))
   }

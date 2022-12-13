@@ -19,6 +19,7 @@ import { AuthGuard } from "./services/auth.guard";
 import { ScheduleAppointmentComponent } from './schedule-appointment/schedule-appointment.component';
 import { ViewAllOpenTendersComponent } from './blood-bank-tenders/view-all-open-tenders/view-all-open-tenders.component';
 import { TenderDetailsComponent } from './blood-bank-tenders/tender-details/tender-details.component';
+import { BankLoginComponent } from './bank-login/bank-login.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -34,7 +35,8 @@ const routes: Routes = [
   { path: 'patientInfo', component: PatientInfoComponent, canActivate: [ AuthGuard ] },
   { path: 'scheduleAppointment', component: ScheduleAppointmentComponent, canActivate: [ AuthGuard ] },
   { path: 'view-all-open-tenders', component:ViewAllOpenTendersComponent},
-  { path: 'tenders-details/:id', component:TenderDetailsComponent}
+  { path: 'tenders-details/:id', component:TenderDetailsComponent},
+  { path: 'bank-login', component: BankLoginComponent}
 
 ]
 
@@ -52,7 +54,8 @@ const routes: Routes = [
     PatientInfoComponent,
     ScheduleAppointmentComponent,
     ViewAllOpenTendersComponent,
-    TenderDetailsComponent
+    TenderDetailsComponent,
+    BankLoginComponent,
   ],
   imports: [
     CommonModule,

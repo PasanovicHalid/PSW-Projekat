@@ -15,7 +15,5 @@ namespace HospitalLibrary.Core.Model
             BloodType = bloodType;
             Quantity = quantity;
         }
-
-       
     }
 }

@@ -82,7 +82,7 @@ namespace IntegrationLibrary.Core.Service
         {
             foreach (BloodBank entity in bloodBanks)
             {
-                if (entity.Email.Equals(bankEmail))
+                if (entity.Email.EmailAddress.Equals(bankEmail))
                 {
                     if (!entity.ApiKey.Equals(bankApiKey)){
                         return false;
@@ -95,7 +95,7 @@ namespace IntegrationLibrary.Core.Service
         {
             foreach (BloodBank entity in bloodBanks)
             {
-                if (entity.Email.Equals(bankEmail))
+                if (entity.Email.EmailAddress.Equals(bankEmail))
                 {
                     return true;
                 }

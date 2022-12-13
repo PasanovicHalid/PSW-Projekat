@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Repository;
 
 namespace HospitalLibrary.Core.Service
@@ -39,6 +40,20 @@ namespace HospitalLibrary.Core.Service
             blood.Deleted = false;
             _bloodRepository.Update(blood);
         }
+
+        public void updateEmergency(int quantity, BloodType bloodType)
+        {
+            List<Blood> bloods = (List<Blood>)_bloodRepository.GetAll();
+            foreach (Blood blood in bloods) { 
+                if(blood.BloodType == bloodType)
+                {
+                    blood.Quantity += quantity;
+                    _bloodRepository.Update(blood);
+                    break;
+                }
+            }
+        }
+
         public void updateQuantityBlood(int bloodId, int quantity, Blood blood)
         {
             Blood blood1 = _bloodRepository.GetById(bloodId);

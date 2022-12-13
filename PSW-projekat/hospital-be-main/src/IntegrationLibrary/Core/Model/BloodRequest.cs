@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class BloodRequest : BaseModel
+    public class BloodRequest : EntityClass
     {
         
         [Required]

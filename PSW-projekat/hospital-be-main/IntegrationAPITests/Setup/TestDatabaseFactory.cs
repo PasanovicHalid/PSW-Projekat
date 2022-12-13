@@ -50,46 +50,10 @@ namespace IntegrationAPITests.Setup
             context.Database.ExecuteSqlRaw("DELETE FROM \"Tenders\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Bids\"; ");
 
-            
-            context.Bids.Add(new Bid{
-                DeliveryDate = System.DateTime.Now.AddDays(-1),
-                Price = 2000,
-                TenderOfBidId = 1,
-                BloodBankId = 1,
-                Status = BidStatus.WAITING
-            });
-            context.BloodBanks.Add(new BloodBank {
-                Name = "asdsadsda",
-                Email = "asdasd@gmail.com",
-                Password = "asdsadsdadas",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE
-            });
-            context.BloodBanks.Add(new BloodBank {
-                Name = "aa",
-                Email = "asdasd@gmail.com",
-                Password = "asdsadsdadas",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE
-            });
-            context.BloodBanks.Add(new BloodBank {
-                Name = "bb",
-                Email = "asdasd@gmail.com",
-                Password = "asdsadsdadas",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE
-            });
-            context.BloodBanks.Add(new BloodBank {
-                Name = "rr",
-                Email = "asdasd@gmail.com",
-                Password = "asdsadsdadas",
-                ApiKey = "sadfasdads",
-                ServerAddress = "https://www.messenger.com/t/100001603572170",
-                AccountStatus = AccountStatus.ACTIVE
-            });
+            context.BloodBanks.Add(new BloodBank("asdsadsda", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
+            context.BloodBanks.Add(new BloodBank("aa", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
+            context.BloodBanks.Add(new BloodBank("bb", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
+            context.BloodBanks.Add(new BloodBank("rr", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
 
             context.ReportSettings.Add(new ReportSettings
             {

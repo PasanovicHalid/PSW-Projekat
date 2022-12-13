@@ -17,6 +17,7 @@ export class ViewTendersComponent implements OnInit {
   public displayedColumns = ['Open Until', 'State'];
   public tenders: Tender[] = [];
   public errorMessage: any;
+
   constructor(private tenderService: TenderService, private router: Router) { }
 
   ngOnInit(): void {
@@ -45,5 +46,12 @@ export class ViewTendersComponent implements OnInit {
 
   public createTender(){
     this.router.navigate(['/create-tender']);
+  }
+
+  public checkDate(date: Date){
+    const year = new Date(date).getFullYear();
+    if(year == 1)
+      return false;
+    return true;
   }
 }
