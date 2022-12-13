@@ -44,15 +44,16 @@ namespace IntegrationLibrary.Core.Service
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            channel.QueueDeclare("ScheduledOrders_From_hospital@gmail.com",
-                durable: false,
+            channel.QueueDeclare("scheduledOrdersQueue",
+                durable: true,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
-            var message = new { Name = "Producer", Message = JsonConvert.SerializeObject(scheduledOrder) };
+            var message = scheduledOrder;
+            //var message = new {Message = JsonConvert.SerializeObject(scheduledOrder)};
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
-            channel.BasicPublish("", "ScheduledOrders_From_hospital@gmail.com", null, body);
+            channel.BasicPublish("", "scheduledOrdersQueue", null, body);
         }
 
         public List<News> Recive(List<BloodBank> bloodBanks)
@@ -64,8 +65,8 @@ namespace IntegrationLibrary.Core.Service
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            channel.QueueDeclare("News",
-                durable: false,
+            channel.QueueDeclare("newsQueue",
+                durable: true,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
@@ -92,7 +93,7 @@ namespace IntegrationLibrary.Core.Service
                     throw;
                 }
             };
-            channel.BasicConsume("News", true, consumer);
+            channel.BasicConsume("newsQueue", true, consumer);
 
             return newses;
 
@@ -108,7 +109,7 @@ namespace IntegrationLibrary.Core.Service
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
             channel.QueueDeclare("SentOrders_To_hospital@gmail.com",
-                durable: false,
+                durable: true,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
