@@ -57,6 +57,7 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok();
         }
+        
         [HttpPost("takeOrder")]
         public ActionResult TakeOrder(List<BloodOrderDto> entity)
         {

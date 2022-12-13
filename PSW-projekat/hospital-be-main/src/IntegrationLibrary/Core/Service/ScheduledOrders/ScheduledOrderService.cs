@@ -69,9 +69,6 @@ namespace IntegrationLibrary.Core.Service.ScheduledOrders
                 Console.WriteLine(filledOrder.APlus);
             }
             sendReq(filledOrders);
-            
-
-
         }
         private void sendReq(List<FilledOrder> filledOrders)
         {

@@ -104,7 +104,7 @@ namespace HospitalLibrary.Core.Service
             {
                 if (order.IsSent)
                 {
-                    //update blood
+                    //take sent blood
                     if (order.APlus > 0)
                     {
                         Blood blood = new Blood();
@@ -122,7 +122,7 @@ namespace HospitalLibrary.Core.Service
                 }
                 else
                 {
-                    //notify menager
+                    //notify menager that order is not sent
                     Model.Notification notification = new Model.Notification();
                     notification.NotificationFor = Role.manager;
                     notification.Title = "Order not sent";
@@ -131,8 +131,6 @@ namespace HospitalLibrary.Core.Service
                     _notificationRepository.Create(notification);
                 }
             }
-            
-
         }
     }
 }
