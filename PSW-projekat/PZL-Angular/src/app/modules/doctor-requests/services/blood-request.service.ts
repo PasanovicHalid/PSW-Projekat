@@ -33,8 +33,6 @@ export class BloodRequestService {
   }
 
   acceptRequest(request : BloodRequest) : Observable<BloodRequest> {
-    console.log("rrrr")
-    console.log(request)
     return this.http.put<BloodRequest>(this.integrationApiHost + 'api/BloodRequest/accept/', request, {headers: this.headers}).pipe(catchError(this.handleError));
   }
 

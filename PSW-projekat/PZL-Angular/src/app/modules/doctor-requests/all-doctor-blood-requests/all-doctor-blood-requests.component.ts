@@ -23,7 +23,6 @@ export class AllDoctorBloodRequestsComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem("currentUserRole") == 'Manager'){
       this.bloodRequestService.getBloodRequests().subscribe(requests => {
-        console.log(requests)
         this.bloodRequestService.getDoctors().subscribe(doctors => {
           this.requests = this.bloodRequestService.combineDoctorsWithRequests(requests, doctors);
           this.dataSource.data = this.requests;
