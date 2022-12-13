@@ -6,6 +6,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatTableModule } from '@angular/material/table';
 import { DoctorBloodRequestComponent } from './doctor-blood-request/doctor-blood-request.component';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -51,7 +52,8 @@ const routes: Routes = [
     FormsModule,
     MaterialModule,
     RouterModule.forChild(routes),
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatProgressSpinnerModule
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 

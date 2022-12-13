@@ -10,11 +10,15 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
 {
     public interface IBloodRequestService : ICRUDService<BloodRequest>
     {
-        void AcceptRequest(int id);
+        void AcceptRequest(BloodRequest request);
         void DeclineRequest(int id);
         void SendBackRequest(int id, string reason);
         List<BloodRequest> GetReturnedRequestsForDoctor(int id);
         void UpdateFromDoctor(BloodRequest request);
-        IEnumerable<BloodRequest> GetAcceptedRequests(int id);
+        IEnumerable<BloodRequest> GetFulfilledRequests(int id);
+        Boolean RequestShouldBeSent();
+        List<BloodRequest> GetAcceptedRequests();
+        List<BloodRequest> GetRequestsThatShouldBeSent();
+        public void GetBloodFromBloodBank(BloodRequest request);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace IntegrationLibrary.Core.HospitalConnection
 {
     public interface IHospitalConnection
     {
-        void GenereteJWT(LoginUserDto user);
+        bool StoreBlood(Blood blood);
     }
 }

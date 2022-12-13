@@ -1,4 +1,4 @@
-export class BloodRequest {
+export class CheckableRequest {
     bloodType: string = '';
     bloodQuantity: number = 0;
     bloodBankId: string = '';

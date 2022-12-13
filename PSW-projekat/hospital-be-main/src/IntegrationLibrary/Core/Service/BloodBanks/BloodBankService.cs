@@ -120,6 +120,34 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
             return false;
 
         }
+        public async Task<int> GetBlood(BloodBank bank, BloodType bloodType, int quantity)
+        {
+            try
+            {
+                return await _bloodBankConnection.GetBlood(bank, getBloodTypeAsString(bloodType), quantity);
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        private String getBloodTypeAsString(BloodType blood)
+        {
+            switch (blood)
+            {
+                case BloodType.ON: return "Ominus";
+                case BloodType.AN: return "Aminus";
+                case BloodType.BN: return "Bminus";
+                case BloodType.ABN: return "ABminus";
+                case BloodType.OP: return "Oplus";
+                case BloodType.AP: return "Aplus";
+                case BloodType.BP: return "Bplus";
+                case BloodType.ABP: return "ABplus";
+            }
+            throw new Exception("BloodType is in forbidden state!");
+        }
+
         private void SetupBloodBank(BloodBank entity)
         {
             do
@@ -156,6 +184,5 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
                 throw new PasswordKeyExistsException();
             }
         }
-
     }
 }

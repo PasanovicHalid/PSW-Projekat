@@ -1,19 +1,19 @@
 ﻿USE [IntegrationDb]
 GO
 SET IDENTITY_INSERT [dbo].[BloodRequests] ON 
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (1, '2022-11-16 11:30:00', 5, 'Need it for operation', 5, 0, 0, null, 0)
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (2, '2022-11-17 11:30:00', 1, 'Need it for operation', 3, 0, 1, null, 0)
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (3, '2022-11-11 11:30:00', 2, 'Need it for operation', 3, 1, 2, null, 1)
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (4, '2022-11-16 11:30:00', 3, 'Need it for operation', 4, 1, 3, null, 2)
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (5, '2022-11-18 11:30:00', 4, 'Need it for operation', 3, 1, 4, null, 3)
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (6, '2022-11-19 11:30:00', 5, 'Need it for operation', 4, 1, 5, null, 1)
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (7, '2022-11-21 11:30:00', 6, 'Need it for operation', 4, 1, 0, null, 2)
-INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (8, '2022-11-16 11:30:00', 7, 'Need it for operation', 4, 1, 4, null, 2)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (1, '2022-12-16 11:30:00', 5, 'Need it for operation', 5, 0, 0, null, 0)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (2, '2022-12-17 11:30:00', 1, 'Need it for operation', 3, 0, 1, null, 0)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (3, '2022-12-11 11:30:00', 2, 'Need it for operation', 3, 0, 2, null, 0)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (4, '2023-01-16 11:30:00', 3, 'Need it for operation', 4, 1, 3, null, 2)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (5, '2022-12-18 11:30:00', 4, 'Need it for operation', 3, 1, 4, null, 3)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (6, '2022-12-19 11:30:00', 5, 'Need it for operation', 4, 1, 5, null, 1)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (7, '2022-12-21 11:30:00', 6, 'Need it for operation', 4, 1, 0, null, 2)
+INSERT [dbo].[BloodRequests] ([Id], [RequiredForDate], [BloodQuantity], [Reason], [DoctorId], [RequestState], [BloodType], [Comment], [BloodBankId]) VALUES (8, '2022-12-12 11:30:00', 7, 'Need it for operation', 4, 0, 4, null, 0)
 SET IDENTITY_INSERT [dbo].[BloodRequests] OFF
 
 GO
 SET IDENTITY_INSERT [dbo].[ReportSettings] ON 
-INSERT [dbo].[ReportSettings] ([Id], [StartDeliveryDate], [CalculationDays], [CalculationMonths], [CalculationYears], [DeliveryDays], [DeliveryMonths], [DeliveryYears]) VALUES (1, '2022-11-16 11:30:00', 0, 1, 0, 1, 0, 0)
+INSERT [dbo].[ReportSettings] ([Id], [StartDeliveryDate], [CalculationDays], [CalculationMonths], [CalculationYears], [DeliveryDays], [DeliveryMonths], [DeliveryYears]) VALUES (1, '2022-11-16 11:30:00', 0, 1, 0, 0, 1, 0)
 SET IDENTITY_INSERT [dbo].[ReportSettings] OFF
 
 GO

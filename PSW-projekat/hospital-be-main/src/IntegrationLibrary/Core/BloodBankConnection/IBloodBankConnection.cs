@@ -11,5 +11,6 @@ namespace IntegrationLibrary.Core.BloodBankConnection
     {
         Boolean SendBloodRequest(BloodBank bank, String bloodType, int quantity);
         Task<bool> SendBloodReports(BloodBank bank, byte[] pdf);
+        Task<int> GetBlood(BloodBank bank, String bloodType, int quantity);
     }
 }
