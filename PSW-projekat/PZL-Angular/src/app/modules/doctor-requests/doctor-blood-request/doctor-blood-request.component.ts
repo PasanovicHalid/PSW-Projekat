@@ -8,7 +8,9 @@ import { RequestState } from '../model/request-state';
 import { BloodRequestService } from '../services/blood-request.service';
 import { BloodBankService } from '../../blood-banks/services/blood-bank.service';
 import { ToastrService } from 'ngx-toastr';
-import { BloodRequest } from '../../blood-banks/model/blood-request.model';
+import { CheckableRequest } from '../model/checkable-request.model';
+import { BloodRequest } from '../model/blood-request';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-doctor-blood-request',
@@ -17,7 +19,10 @@ import { BloodRequest } from '../../blood-banks/model/blood-request.model';
 })
 export class DoctorBloodRequestComponent implements OnInit {
 
-  public request: DoctorBloodRequest;
+  //public request: DoctorBloodRequest;
+  public bloodRequest: BloodRequest = new BloodRequest();
+  public doctorName : string = '';
+  private routeSub: Subscription;
   public errorMessage: any;
   public returnBack : boolean = false;
   public isBankOptionVisible: boolean = false;
@@ -30,29 +35,52 @@ export class DoctorBloodRequestComponent implements OnInit {
 
   ngOnInit(): void {
     if(localStorage.getItem("currentUserRole") == 'Manager'){
-      this.route.paramMap.subscribe(paramMap => {
-        let id : any = this.route.snapshot.paramMap.get('id') ;
-        this.bloodRequestService.getBloodRequest(parseFloat(id)).subscribe(request => {
-          this.bloodRequestService.getDoctors().subscribe(doctors => {
-            this.request = new DoctorBloodRequest();
-            this.request.combineWithBloodRequest(request);
-            this.request = this.findDoctorForRequest(doctors, this.request, request.doctorId)
-          }, (error) => {
-            this.errorMessage = error;
-          })
+      // this.route.paramMap.subscribe(paramMap => {
+      //   let id : any = this.route.snapshot.paramMap.get('id') ;
+      //   this.bloodRequestService.getBloodRequest(parseFloat(id)).subscribe(request => {
+      //     this.bloodRequestService.getDoctors().subscribe(doctors => {
+      //       this.request = new DoctorBloodRequest();
+      //       this.request.combineWithBloodRequest(request);
+      //       console.log(this.request)
+      //       this.request = this.findDoctorForRequest(doctors, this.request, request.doctorId)
+      //     }, (error) => {
+      //       this.errorMessage = error;
+      //     })
     
-        }, (error) => {
-            this.errorMessage = error;
-        })
-      } , (error) => {
+      //   }, (error) => {
+      //       this.errorMessage = error;
+      //   })
+      // } , (error) => {
+      //   this.errorMessage = error;
+      // })
+      this.routeSub = this.route.params.subscribe(params => {
+        this.getRequest(params['id']);
+      }, (error) => {
         this.errorMessage = error;
-      })
+      });
     }
     else{
       this.router.navigate(['/forbidden-access']);
     }  
   }
 
+  public getRequest(id: number){
+    this.bloodRequestService.getBloodRequest(id).subscribe(res => {
+        this.bloodRequest = res;
+        console.log(this.bloodRequest)
+        this.getDoctorsName()
+      }, (error) => {
+        this.errorMessage = error;
+      });
+  }
+  getDoctorsName(){
+    this.bloodRequestService.getDoctor(this.bloodRequest.doctorId).subscribe(res => {
+      this.doctorName = res.name + " " + res.surname;
+      console.log(this.doctorName)
+    }, (error) => {
+      this.errorMessage = error;
+    });
+  }
   getBloodByValue(value: number) {
     return Object.values(BloodType)[value]
   }
@@ -63,31 +91,44 @@ export class DoctorBloodRequestComponent implements OnInit {
 
   accept() {
     this.isBankOptionVisible = true;
-    // this.bloodRequestService.acceptRequest(this.request.id).subscribe(res => {
-    //   this.router.navigate(['/doctor-blood-requests']);})
     this.bloodBankService.getBloodBanks().subscribe(res =>{
       this.bloodBanks = res;
     });
   }
 
   decline() {
-    this.bloodRequestService.declineRequest(this.request.id).subscribe(res => {
+    this.bloodRequestService.declineRequest(this.bloodRequest.id).subscribe(res => {
       this.router.navigate(['/doctor-blood-requests']);})
   }
 
   sendBack() {
-    this.bloodRequestService.sendBackRequest(this.request.id, this.request.comment).subscribe(res => {
+    this.bloodRequestService.sendBackRequest(this.bloodRequest.id, this.bloodRequest.comment).subscribe(res => {
       this.router.navigate(['/doctor-blood-requests']);})
   }
 
   sendRequest(){
-    this.bloodRequestService.acceptRequest(this.request).subscribe(res => {
+    this.bloodRequestService.acceptRequest(this.bloodRequest).subscribe(res => {
       this.router.navigate(['/doctor-blood-requests']);})
   }
 
+  // convertToRequest(){
+  //   // console.log(this.request.doctor)
+  //   // console.log(this.request.id)
+  //   var req = new BloodRequest({id : this.bloodRequest.id,
+  //                     requiredForDate : this.bloodRequest.requiredForDate,
+  //                     bloodQuantity : this.request.bloodQuantity,
+  //                     reason : this.request.reason,
+  //                     requestState : this.request.requestState,
+  //                     bloodType : this.request.bloodType,
+  //                     bloodBankId : this.request.bloodBankId,
+  //                     doctorId : this.request.doctor.id})
+  //   console.log(req)
+  //   return req;
+  // }
   findDoctorForRequest(doctors: Doctor[], request: DoctorBloodRequest, doctorId : number) : DoctorBloodRequest{
     for (let doctor of doctors) {
       if(doctor.id == doctorId){
+        console.log(doctor.name + doctor.id)
         request.doctor = doctor;
         break;
       }
@@ -118,12 +159,13 @@ export class DoctorBloodRequestComponent implements OnInit {
   }
 
   convertToBloodRequest(){
-    var request = new BloodRequest({bloodType : this.getBloodType(), bloodQuantity: this.request.bloodQuantity, bloodBankId: this.request.bloodBankId})
+    var request = new CheckableRequest({bloodType : this.getBloodType(), 
+      bloodQuantity: this.bloodRequest.bloodQuantity, bloodBankId: this.bloodRequest.bloodBankId})
     return request;
   }
 
   getBloodType(){
-    switch(this.request.bloodType){
+    switch(this.bloodRequest.bloodType){
       case BloodType.ON: return 'Ominus';
       case BloodType.AN: return 'Aminus';
       case BloodType.BN: return 'Bminus';
@@ -153,6 +195,10 @@ export class DoctorBloodRequestComponent implements OnInit {
     else {
       this.toastr.error('Can\'t connect to blood bank server!');
     }
+  }
+  
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
   
 }

@@ -52,6 +52,7 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         {
             BloodRequest request = _bloodRequestRepository.GetById(id);
             request.RequestState = RequestState.Declined;
+            request.BloodBankId = 0;
             _bloodRequestRepository.Update(request);
         }
 
@@ -65,15 +66,15 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             return _bloodRequestRepository.GetAll();
         }
         
-        public IEnumerable<BloodRequest> GetAcceptedRequests(int id)
+        public IEnumerable<BloodRequest> GetFulfilledRequests(int id)
         {
-            List<BloodRequest> acceptedRequests = new List<BloodRequest>();
+            List<BloodRequest> fulfilledRequests = new List<BloodRequest>();
             foreach (BloodRequest bloodRequest in _bloodRequestRepository.GetAll())
             {
-                if (bloodRequest.BloodBankId == id && bloodRequest.RequestState == RequestState.Accepted)
-                    acceptedRequests.Add(bloodRequest);
+                if (bloodRequest.BloodBankId == id && bloodRequest.RequestState == RequestState.Fulfilled)
+                    fulfilledRequests.Add(bloodRequest);
             }
-            return acceptedRequests;
+            return fulfilledRequests;
         }
 
         public BloodRequest GetById(int id)
@@ -85,6 +86,7 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         {
             BloodRequest request = _bloodRequestRepository.GetById(id);
             request.RequestState = RequestState.Returned;
+            request.BloodBankId = 0;
             request.Comment = reason;
             _bloodRequestRepository.Update(request);
         }
