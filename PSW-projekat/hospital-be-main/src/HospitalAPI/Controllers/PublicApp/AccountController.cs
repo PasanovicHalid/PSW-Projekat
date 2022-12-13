@@ -174,7 +174,8 @@ namespace HospitalAPI.Controllers.PublicApp
                     Number = createManagerDto.Number,
                     PostCode = createManagerDto.PostCode,
                     Township = createManagerDto.Township,
-                }
+                },
+                Jmbg = new Jmbg(createManagerDto.Jmbg)
             };
             user = _personService.RegisterPerson(user);
             SecUser secUser = new SecUser()
@@ -206,25 +207,16 @@ namespace HospitalAPI.Controllers.PublicApp
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
-            
-            Person user = new Person()
-            {
-                Id = 0,
-                Name = regUser.Name,
-                Surname = regUser.Surname,
-                Role = Role.patient,
-                Email = Email.Create(regUser.Email),
-                Gender = regUser.Gender,
-                BirthDate = Convert.ToDateTime(regUser.BirthDate),
-                Address = new Address()
-                {
-                    Street = regUser.Street,
-                    City = regUser.City,
-                    Number = regUser.Number,
-                    PostCode = regUser.PostCode,
-                    Township = regUser.Township,
-                }
-            };
+
+            Person user = new Person(regUser.Name, regUser.Surname, Email.Create(regUser.Email),
+                            new Address(){
+                                Street = regUser.Street,
+                                City = regUser.City,
+                                Number = regUser.Number,
+                                PostCode = regUser.PostCode,
+                                Township = regUser.Township
+                            }, 
+                            regUser.Gender, Convert.ToDateTime(regUser.BirthDate), Role.patient, new Jmbg(regUser.Jmbg));
 
             user = _personService.RegisterPerson(user);
             Doctor doctor = _doctorService.GetById(regUser.DoctorName.Id);
@@ -290,7 +282,8 @@ namespace HospitalAPI.Controllers.PublicApp
                     Number = createDoctorDto.Number,
                     PostCode = createDoctorDto.PostCode,
                     Township = createDoctorDto.Township,
-                }
+                },
+                Jmbg = new Jmbg(createDoctorDto.Jmbg)
             };
             user = _personService.RegisterPerson(user);
 

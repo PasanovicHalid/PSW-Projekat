@@ -37,6 +37,8 @@ namespace HospitalLibrary.Core.DTOs
         public List<Allergy> Allergies { get; set; }
         [Required]
         public SimpleDoctorDto DoctorName { get; set; }
+        [Required][StringLength(13)]
+        public String Jmbg { get; set; }
 
     }
 }

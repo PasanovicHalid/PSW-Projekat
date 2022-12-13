@@ -19,6 +19,8 @@ namespace HospitalLibrary.Core.Model
             yield return Value;
         }
 
+        public Jmbg() { }
+
         public Jmbg(String value)
         {
             if (Validate(value))
@@ -59,7 +61,6 @@ namespace HospitalLibrary.Core.Model
 
         private bool TestRegex(String value)
         {
-
             Regex regex = new Regex(@"^\d+$");
             return regex.IsMatch(value);
         }
