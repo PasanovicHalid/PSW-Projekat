@@ -11,7 +11,6 @@ namespace HospitalLibrary.Settings
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Person> Persons { get; set; }
-        public DbSet<Address> Addresses { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<WorkingDay> WorkingDays { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
@@ -58,6 +57,8 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<Doctor>(d => d.Navigation(d => d.DoctorSchedules));
 
             modelBuilder.Entity<Person>().OwnsOne(e => e.Email);
+
+            modelBuilder.Entity<Person>().OwnsOne(e => e.Address);
 
             base.OnModelCreating(modelBuilder);
         }

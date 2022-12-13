@@ -53,7 +53,7 @@ namespace HospitalTests.Setup
             context.Allergies.Add(new Allergy() {  Name = "Pas", Deleted = false });
             context.Allergies.Add(new Allergy() {  Name = "Macka", Deleted = false });
 
-            var address = new Address(){City = "a", Deleted = false, Number = "1", PostCode = "13", Street = "ulica", Township = "asdasd"};
+            var address = new Address(){City = "a", Number = "1", PostCode = "13", Street = "ulica", Township = "asdasd"};
 
             var person1 = new Person(){Address = address, Deleted = false, BirthDate = System.DateTime.Now, Email = Email.Create("milan@gmail.com"), Gender = 0, Name = "Milan", Role = HospitalLibrary.Core.Model.Enums.Role.doctor, Surname = "Milovanovic"};
             var person2 = new Person(){Address = address, Deleted = false, BirthDate = System.DateTime.Now, Email = Email.Create("milos@gmail.com"), Gender = 0, Name = "Milos", Role = HospitalLibrary.Core.Model.Enums.Role.doctor, Surname = "Milosevic" };
