@@ -26,7 +26,6 @@ export class RegisterService {
     const params = new HttpParams()
       .set('username', username)
       .set('code', code);
-    console.log(params)
     return this.http.get(this.apiHost + 'api/Account/AccountConfirmation', { params, headers: this.headers});
   }
 }

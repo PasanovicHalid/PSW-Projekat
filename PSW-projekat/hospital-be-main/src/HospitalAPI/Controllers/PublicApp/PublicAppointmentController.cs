@@ -1,9 +1,11 @@
 ﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.DTOs.CreatingAppointmentsDTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Bcpg.Sig;
 using System;
 using System.Collections.Generic;
 
@@ -105,6 +107,24 @@ namespace HospitalAPI.Controllers.PublicApp
             appointment.CancelationDate = DateTime.Now;
             _appointmentService.Update(appointment);
             return Ok();
+        }
+
+        [Authorize(Roles = "Patient")]
+        [HttpGet("GetAllDoctorsForCreatingAppointment")]
+        public ActionResult GetAllDoctorsForCreatingAppointment()
+        {
+            return Ok(_doctorService.GetAllDoctorsForCreatingAppointment());
+        }
+
+        [Authorize(Roles = "Patient")]
+        [HttpPost("GetAllAvailableAppointmentsForCreatingAppointment")]
+        public ActionResult GetAllAvailableAppointmentsForCreatingAppointment(
+            CheckAvailableAppontmentDto checkAvailableAppontment
+        )
+        {
+            if (_appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment) == null)
+                return BadRequest();
+            return Ok(_appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment));
         }
     }
 }

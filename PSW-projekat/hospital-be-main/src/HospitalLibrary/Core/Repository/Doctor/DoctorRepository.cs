@@ -47,6 +47,7 @@ namespace HospitalLibrary.Core.Repository
         public Person getPersonByDoctorId(int id)
         {
             var doctor = _context.Doctors.FirstOrDefault(d => d.Id == id);
+            if (doctor == null) return null;
             var person = _context.Persons.FirstOrDefault(d => d.Id == doctor.Person.Id);
             return person;
         }
@@ -61,6 +62,11 @@ namespace HospitalLibrary.Core.Repository
         public void Update(Doctor entity)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Doctor> GetAllBySpecialization(Specialization specialization)
+        {
+            return _context.Doctors.Where(d => d.Specialization == specialization).ToList();
         }
     }
 }

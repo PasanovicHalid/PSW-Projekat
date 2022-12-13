@@ -11,7 +11,6 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
     public interface IBloodBankService : ICRUDService<BloodBank>
     {
         bool CheckIfPasswordResetKeyExists(string passwordResetKey);
-
         BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey);
         Boolean SendBloodRequest(int bloodBankID, String BloodType, int quantity);
         void CheckBloodRequest(int bloodBankID, String BloodType, int quantity);
