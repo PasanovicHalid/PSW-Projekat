@@ -28,6 +28,12 @@ SET IDENTITY_INSERT [dbo].[Newses] ON
 INSERT [dbo].[Newses] ([Id], [Title], [Text], [Status], [DateTime], [BloodBankId]) VALUES (1, 'sadfasddas', 'sadsdasdasdasda', 0, '2022-11-16 11:30:00', 1)
 SET IDENTITY_INSERT [dbo].[Newses] OFF
 
+
+GO
+SET IDENTITY_INSERT [dbo].[Bids] ON 
+INSERT [dbo].[Bids] ([Id], [DeliveryDate], [Price], [TenderOfBidId], [BloodBankId], [Status]) VALUES(1, '2023-12-12 12:00:00', 2000, 1, 3, 0)
+SET IDENTITY_INSERT [dbo].[Bids] OFF
+
 GO
 SET IDENTITY_INSERT [dbo].[Tenders] ON 
 INSERT [dbo].[Tenders] ([Id], [DueDate], [State]) VALUES (1, '2022-12-12 12:00:00', 0)

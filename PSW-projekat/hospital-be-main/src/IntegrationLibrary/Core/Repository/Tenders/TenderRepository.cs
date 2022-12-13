@@ -37,6 +37,12 @@ namespace IntegrationLibrary.Core.Repository.Tenders
         {
             return _context.Tenders.Find(id);
         }
+        public IEnumerable<Tender> GetAllOpen()
+        {
+            return (from tenders in _context.Tenders
+                    where tenders.State == TenderState.OPEN
+                    select tenders).ToList();
+        }
 
         public void Update(Tender entity)
         {

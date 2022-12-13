@@ -30,13 +30,14 @@ export class ViewTendersComponent implements OnInit {
   public getTenders(){
     this.tenderService.getTenders().subscribe(res => {
         this.dataSource.data = res;
-        console.log(res)
+        //console.log(res)
       }, (error) => {
         this.errorMessage = error;
       });
   }
-  public chooseTender(id:number){
-    this.router.navigate(['/view-tender', id]);
+  public chooseTender(selcetedTender:Tender){
+    this.tenderService.selectedTender = selcetedTender;
+    this.router.navigate(['/view-tender', selcetedTender.id]);
   }
   getStateByValue(value: number) {
     return Object.values(TenderState)[value]

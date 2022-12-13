@@ -22,6 +22,8 @@ using IntegrationLibrary.Core.Repository.Newses;
 using IntegrationLibrary.Core.Service.Tenders;
 using IntegrationLibrary.Core.Repository.Tenders;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using IntegrationLibrary.Core.Service.Bids;
+using IntegrationLibrary.Core.Repository.Bids;
 
 namespace IntegrationAPI
 {
@@ -85,6 +87,8 @@ namespace IntegrationAPI
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IBidRepository, BidRepository>();
+            services.AddScoped<IBidService, BidService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
