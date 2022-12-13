@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Service
@@ -11,5 +12,7 @@ namespace HospitalLibrary.Core.Service
         void SentEmail(Appointment appointment);
         IEnumerable<Appointment> GetAllAppointmentsForPatient(int patientId);
         IEnumerable<Patient> GetAllMaliciousPatients();
+        void ScheduleAppointment(Appointment appointment);
+        List<string> GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate);
     }
 }

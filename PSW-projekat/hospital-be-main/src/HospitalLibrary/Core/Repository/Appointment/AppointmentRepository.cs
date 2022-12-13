@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,9 +34,9 @@ namespace HospitalLibrary.Core.Repository
             return _context.Appointments.Find(id);
         }
 
-        public void Create(Appointment room)
+        public void Create(Appointment appointment)
         {
-            _context.Appointments.Add(room);
+            _context.Appointments.Add(appointment);
             _context.SaveChanges();
         }
 
@@ -70,6 +71,11 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.Appointments.FromSqlRaw("SELECT TOP (1000) PatientId FROM[HospitalDb].[dbo].[Appointments] WHERE CancelationDate > DATEADD(day, -30, GETDATE()) GROUP BY PatientId HAVING COUNT(*) > 2").Select(a=>a.Patient).ToList();
             //return (_context.Appointments.Where(a => a.DateTime > System.DateTime.Now.AddDays(-30)).GroupBy(a => a.Patient.Id)).Where(g => g.Count() > 2).Select(g => g.First().Patient).ToArray();
+        }
+
+        public IEnumerable<Appointment> GetAllForDoctorByDate(int doctorId, DateTime scheduledDate)
+        {
+            return _context.Appointments.Where(a => a.Doctor.Id == doctorId && a.DateTime.Date == scheduledDate.Date).ToList();
         }
     }
 }

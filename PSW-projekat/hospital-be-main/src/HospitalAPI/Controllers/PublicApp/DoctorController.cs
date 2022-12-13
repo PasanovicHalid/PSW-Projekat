@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -22,7 +23,7 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public ActionResult GetAll()
         {
             List<DoctorDto> doctorDto = new List<DoctorDto>();
@@ -31,6 +32,21 @@ namespace HospitalAPI.Controllers.PublicApp
                 doctorDto.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email.ToString(), doctor.Person.Role));
             }
             return Ok(doctorDto);
+        }
+
+        [HttpGet("GetAllBySpecialization/{specialization}")]
+        public ActionResult GetAllBySpecialization(Specialization specialization)
+        {
+            List<Doctor> doctors = (List<Doctor>)_doctorService.GetAllBySpecialization(specialization);
+            List<SimpleDoctorDto> doctorsDto = new List<SimpleDoctorDto>();
+            foreach (Doctor doctor in doctors)
+            {
+                doctorsDto.Add(new SimpleDoctorDto() { 
+                    FullName = doctor.Person.Name + " " + doctor.Person.Surname,
+                    Id = doctor.Id
+                });
+            }
+            return Ok(doctorsDto);
         }
     }
 }

@@ -11,12 +11,14 @@ namespace HospitalLibrary.Core.Service
     public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository _appointmentRepository;
-        public IWorkingDayRepository workingDayRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        public IWorkingDayRepository _workingDayRepository;
 
-        public AppointmentService(IAppointmentRepository appointmentRepository, IWorkingDayRepository workingDayRepository)
+        public AppointmentService(IAppointmentRepository appointmentRepository, IWorkingDayRepository workingDayRepository, IDoctorRepository doctorRepository)
         {
             _appointmentRepository = appointmentRepository;
-            this.workingDayRepository = workingDayRepository;
+            _workingDayRepository = workingDayRepository;
+            _doctorRepository = doctorRepository;
         }
 
         public bool InWorkingTime(Appointment entity, IEnumerable<WorkingDay> workingDays)
@@ -48,7 +50,7 @@ namespace HospitalLibrary.Core.Service
                  _appointmentRepository.Create(entity);
              }
              */
-            entity.CancelationDate = DateTime.MinValue;
+            entity.CancelationDate = null;
             entity.Deleted = false;
             _appointmentRepository.Create(entity);
         }
@@ -152,6 +154,19 @@ namespace HospitalLibrary.Core.Service
         public IEnumerable<Patient> GetAllMaliciousPatients()
         {
             return _appointmentRepository.GetAllMaliciousPatients();
+        }
+
+        public void ScheduleAppointment(Appointment appointment)
+        {
+            _appointmentRepository.Create(appointment);
+        }
+
+        public List<string> GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate)
+        {
+            DoctorSchedule doctorSchedule = _doctorRepository.GetDoctorSchedule(doctorId, (int)scheduledDate.DayOfWeek);
+            List<Appointment> scheduledAppointments = (List<Appointment>)_appointmentRepository.GetAllForDoctorByDate(doctorId, scheduledDate);
+
+            return null;
         }
     }
 }

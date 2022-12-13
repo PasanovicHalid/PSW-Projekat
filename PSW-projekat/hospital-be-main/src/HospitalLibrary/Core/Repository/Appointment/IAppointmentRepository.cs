@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Core.Repository
@@ -8,5 +9,6 @@ namespace HospitalLibrary.Core.Repository
         IEnumerable<Appointment> GetAllByDoctor(int doctorId);
         IEnumerable<Appointment> GetAllForPatient(int patientId);
         IEnumerable<Patient> GetAllMaliciousPatients();
+        IEnumerable<Appointment> GetAllForDoctorByDate(int doctorId, DateTime scheduledDate);
     }
 }

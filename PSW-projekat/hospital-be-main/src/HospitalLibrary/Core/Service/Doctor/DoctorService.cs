@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,11 @@ namespace HospitalLibrary.Core.Service
         public Doctor RegisterDoctor(Doctor doctor)
         {
             return _idoctorRepository.RegisterDoctor(doctor);
+        }
+
+        public IEnumerable<Doctor> GetAllBySpecialization(Specialization specialization)
+        {
+            return _idoctorRepository.GetAllBySpecialization(specialization);
         }
     }
 }

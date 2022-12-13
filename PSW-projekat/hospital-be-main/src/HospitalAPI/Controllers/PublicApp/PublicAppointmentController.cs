@@ -28,21 +28,35 @@ namespace HospitalAPI.Controllers.PublicApp
             _patientService = patientService;
         }
 
-        [HttpPost]
-        public ActionResult Create(Appointment appointment)
+        [HttpPost("ScheduleAppointment")]
+        public ActionResult ScheduleAppointment(ScheduleAppointmentDto appointmentDto)
         {
-            appointment.Doctor = _doctorService.GetById(appointment.Doctor.Id);
-            appointment.Patient = _patientService.GetById(appointment.Patient.Id);
+            Doctor doctor = _doctorService.GetById(appointmentDto.DoctorDto.Id);
+            Patient patient = _patientService.getPatientByPersonId(appointmentDto.PersonId);
+            //get appointment by date and time for doctor for extra validation
 
-            if (!ModelState.IsValid)
+            if (doctor == null || patient == null)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
 
-            _appointmentService.Create(appointment);
+            Appointment appointment = new Appointment() { 
+                Doctor = doctor,
+                Patient = patient,
+                DateTime = appointmentDto.ScheduledDate,
+                CancelationDate = null
+            };
+
+            _appointmentService.ScheduleAppointment(appointment);
             return Ok();
         }
-
+        
+        [HttpGet("GetFreeAppointmentsForDoctorByDate/{doctorId}/{scheduledDate}")]
+        public ActionResult GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate)
+        {
+            List<string> appointmentTimes = _appointmentService.GetFreeAppointmentsForDoctor(doctorId, scheduledDate);
+            return Ok(appointmentTimes);
+        }
 
         [HttpGet("GetPatientAppointments/{personId}")]
         public ActionResult GetPatientAppointments(int personId)
