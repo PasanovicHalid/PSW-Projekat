@@ -55,8 +55,21 @@ namespace IntegrationAPITests.Tests
             using var scope = Factory.Services.CreateScope();
             var controller = SetupSettingsController(scope);
 
-            var result = ((OkResult)controller.AcceptRequest(1));
-            Assert.IsType<OkResult>(result);
+            BloodRequestDTO testCase = new BloodRequestDTO()
+            {
+                BloodQuantity = 1,
+                BloodType = BloodType.BP,
+                DoctorId = 4,
+                Reason = "sadasddas",
+                RequestState = RequestState.Pending,
+                RequiredForDate = System.DateTime.Now,
+                Comment = "",
+                BloodBankId = 1,
+                Id = 2
+            };
+
+            var result = ((OkObjectResult)controller.AcceptRequest(testCase));
+            Assert.IsType<OkObjectResult>(result);
         }
 
         [Fact]

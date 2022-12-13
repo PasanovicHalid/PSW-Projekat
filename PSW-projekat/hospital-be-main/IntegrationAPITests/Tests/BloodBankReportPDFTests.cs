@@ -51,7 +51,8 @@ namespace IntegrationAPITests.Tests
         [Fact]
         public void Find_accepted_requests_for_bank()
         {
-            BloodRequestService service = new BloodRequestService(CreateStubRepository());
+            using var scope = Factory.Services.CreateScope();
+            BloodRequestService service = new BloodRequestService(CreateStubRepository(), scope.ServiceProvider.GetRequiredService<IBloodBankService>());
 
             List<BloodRequest> requests = (List<BloodRequest>)service.GetAcceptedRequests(7);
             Assert.Equal(CreateRequestList().Count(), requests.Count());

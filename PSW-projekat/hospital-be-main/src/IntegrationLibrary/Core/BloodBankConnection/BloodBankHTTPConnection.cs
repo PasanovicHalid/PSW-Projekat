@@ -94,7 +94,7 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         {
             client.Timeout = TimeSpan.FromSeconds(15);
             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bank.ApiKey);
-            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/get" + bank.Email + "/" + bType + "/" + quant);
+            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/get/" + bank.Email + "/" + bType + "/" + quant);
 
             response.EnsureSuccessStatusCode();
 

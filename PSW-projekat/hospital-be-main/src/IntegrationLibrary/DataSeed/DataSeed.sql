@@ -13,7 +13,7 @@ SET IDENTITY_INSERT [dbo].[BloodRequests] OFF
 
 GO
 SET IDENTITY_INSERT [dbo].[ReportSettings] ON 
-INSERT [dbo].[ReportSettings] ([Id], [StartDeliveryDate], [CalculationDays], [CalculationMonths], [CalculationYears], [DeliveryDays], [DeliveryMonths], [DeliveryYears]) VALUES (1, '2022-11-16 11:30:00', 0, 1, 0, 1, 0, 0)
+INSERT [dbo].[ReportSettings] ([Id], [StartDeliveryDate], [CalculationDays], [CalculationMonths], [CalculationYears], [DeliveryDays], [DeliveryMonths], [DeliveryYears]) VALUES (1, '2022-11-16 11:30:00', 0, 1, 0, 0, 1, 0)
 SET IDENTITY_INSERT [dbo].[ReportSettings] OFF
 
 GO
