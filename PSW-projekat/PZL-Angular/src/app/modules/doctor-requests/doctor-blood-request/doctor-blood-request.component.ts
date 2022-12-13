@@ -19,7 +19,6 @@ import { Subscription } from 'rxjs';
 })
 export class DoctorBloodRequestComponent implements OnInit {
 
-  //public request: DoctorBloodRequest;
   public bloodRequest: BloodRequest = new BloodRequest();
   public doctorName : string = '';
   private routeSub: Subscription;
@@ -35,24 +34,7 @@ export class DoctorBloodRequestComponent implements OnInit {
 
   ngOnInit(): void {
     if(localStorage.getItem("currentUserRole") == 'Manager'){
-      // this.route.paramMap.subscribe(paramMap => {
-      //   let id : any = this.route.snapshot.paramMap.get('id') ;
-      //   this.bloodRequestService.getBloodRequest(parseFloat(id)).subscribe(request => {
-      //     this.bloodRequestService.getDoctors().subscribe(doctors => {
-      //       this.request = new DoctorBloodRequest();
-      //       this.request.combineWithBloodRequest(request);
-      //       console.log(this.request)
-      //       this.request = this.findDoctorForRequest(doctors, this.request, request.doctorId)
-      //     }, (error) => {
-      //       this.errorMessage = error;
-      //     })
-    
-      //   }, (error) => {
-      //       this.errorMessage = error;
-      //   })
-      // } , (error) => {
-      //   this.errorMessage = error;
-      // })
+      
       this.routeSub = this.route.params.subscribe(params => {
         this.getRequest(params['id']);
       }, (error) => {
@@ -67,7 +49,6 @@ export class DoctorBloodRequestComponent implements OnInit {
   public getRequest(id: number){
     this.bloodRequestService.getBloodRequest(id).subscribe(res => {
         this.bloodRequest = res;
-        console.log(this.bloodRequest)
         this.getDoctorsName()
       }, (error) => {
         this.errorMessage = error;
@@ -76,7 +57,6 @@ export class DoctorBloodRequestComponent implements OnInit {
   getDoctorsName(){
     this.bloodRequestService.getDoctor(this.bloodRequest.doctorId).subscribe(res => {
       this.doctorName = res.name + " " + res.surname;
-      console.log(this.doctorName)
     }, (error) => {
       this.errorMessage = error;
     });
@@ -111,20 +91,6 @@ export class DoctorBloodRequestComponent implements OnInit {
       this.router.navigate(['/doctor-blood-requests']);})
   }
 
-  // convertToRequest(){
-  //   // console.log(this.request.doctor)
-  //   // console.log(this.request.id)
-  //   var req = new BloodRequest({id : this.bloodRequest.id,
-  //                     requiredForDate : this.bloodRequest.requiredForDate,
-  //                     bloodQuantity : this.request.bloodQuantity,
-  //                     reason : this.request.reason,
-  //                     requestState : this.request.requestState,
-  //                     bloodType : this.request.bloodType,
-  //                     bloodBankId : this.request.bloodBankId,
-  //                     doctorId : this.request.doctor.id})
-  //   console.log(req)
-  //   return req;
-  // }
   findDoctorForRequest(doctors: Doctor[], request: DoctorBloodRequest, doctorId : number) : DoctorBloodRequest{
     for (let doctor of doctors) {
       if(doctor.id == doctorId){
