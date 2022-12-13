@@ -112,7 +112,7 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
             _bloodRequestRepository.Update(request);
         }
 
-        private async void GetBloodFromBloodBank(BloodRequest request)
+        public async void GetBloodFromBloodBank(BloodRequest request)
         {
             int blood = await SendRequest(request);
             bool isSuccessful = StoreBlood(blood, request);
@@ -161,6 +161,41 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
                     return HospitalLibrary.Core.Model.Enums.BloodType.OPlus;
             }
             throw new Exception("Blood type isn't valid.");
+        }
+
+        public Boolean RequestShouldBeSent()
+        {
+            foreach(BloodRequest request in GetAcceptedRequests())
+            {
+                if(request.RequiredForDate.Date <= DateTime.Now.Date)
+                    return true;
+            }
+            return false;
+        }
+
+        public List<BloodRequest> GetAcceptedRequests()
+        {
+            List<BloodRequest> requests = new List<BloodRequest>();
+            foreach(BloodRequest req in GetAll())
+            {
+                if(req.RequestState.Equals(RequestState.Accepted))
+                    requests.Add(req);
+            }
+            if (requests.Count == 0)
+                throw new ArgumentOutOfRangeException("There are no accepted requests!");
+            else
+                return requests;
+        }
+
+        public List<BloodRequest> GetRequestsThatShouldBeSent()
+        {
+            List<BloodRequest> requests = new List<BloodRequest>();
+            foreach (BloodRequest req in GetAcceptedRequests())
+            {
+                if (req.RequiredForDate.Date <= DateTime.Now.Date)
+                    requests.Add(req);
+            }
+            return requests;
         }
     }
 }

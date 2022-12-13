@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
-    [Authorize(Roles = "Manager, Doctor")]
+    //[Authorize(Roles = "Manager, Doctor")]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]

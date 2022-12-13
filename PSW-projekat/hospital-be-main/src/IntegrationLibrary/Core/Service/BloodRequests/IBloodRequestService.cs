@@ -16,5 +16,9 @@ namespace IntegrationLibrary.Core.Service.BloodRequests
         List<BloodRequest> GetReturnedRequestsForDoctor(int id);
         void UpdateFromDoctor(BloodRequest request);
         IEnumerable<BloodRequest> GetFulfilledRequests(int id);
+        Boolean RequestShouldBeSent();
+        List<BloodRequest> GetAcceptedRequests();
+        List<BloodRequest> GetRequestsThatShouldBeSent();
+        public void GetBloodFromBloodBank(BloodRequest request);
     }
 }
