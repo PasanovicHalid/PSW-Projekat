@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model.Tender
 {
-    public class Bid : BaseModel
+    public class Bid : EntityClass
     {
         [Required]
         public DateTime DeliveryDate { get; set; }
