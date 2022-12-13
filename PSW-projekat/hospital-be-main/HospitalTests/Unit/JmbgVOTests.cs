@@ -1,4 +1,5 @@
 ﻿using HospitalAPI;
+using HospitalLibrary.Core.Model;
 using HospitalTests.Setup;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace HospitalTests.Unit
         public void Valid_Jmbg()
         {
             // Arrange
-            String value = "2708000800023";
+            String value = "2503000800030";
 
             // Act
             Jmbg jmbg = new Jmbg(value);
