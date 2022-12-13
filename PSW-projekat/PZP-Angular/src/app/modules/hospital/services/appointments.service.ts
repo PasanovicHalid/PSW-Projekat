@@ -7,8 +7,6 @@ import { PatientAppointment } from '../model/patientAppointmentsDto.model';
   providedIn: 'root'
 })
 export class AppointmentsService {
-
-  apiHost: string = 'http://localhost:16177/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }

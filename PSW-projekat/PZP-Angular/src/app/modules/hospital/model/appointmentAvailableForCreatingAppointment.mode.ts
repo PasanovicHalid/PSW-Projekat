@@ -4,6 +4,7 @@ export class AppointmentAvailableForCreatingAppointment{
     time: string = '';
     doctorFullName: string = '';
     specialtization: string = '';
+    doctorID: number = 0;
 
     public constructor(obj?: any) {
         this.dayInWeek = obj.dayInWeek;
@@ -11,5 +12,6 @@ export class AppointmentAvailableForCreatingAppointment{
         this.time = obj.time;
         this.doctorFullName = obj.doctorFullName;
         this.specialtization = obj.specialtization;
+        this.doctorID = obj.doctorID;
     }
 }

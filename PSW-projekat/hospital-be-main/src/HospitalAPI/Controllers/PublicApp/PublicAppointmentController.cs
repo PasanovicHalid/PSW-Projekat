@@ -126,5 +126,15 @@ namespace HospitalAPI.Controllers.PublicApp
                 return BadRequest();
             return Ok(_appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment));
         }
+
+        [Authorize(Roles = "Patient")]
+        [HttpPut("CreateCustomAppointment")]
+        public ActionResult CreateCustomAppointment(
+            CustomAppointmentForCreatingDto customAppointment
+        )
+        {
+
+            return Ok();
+        }
     }
 }

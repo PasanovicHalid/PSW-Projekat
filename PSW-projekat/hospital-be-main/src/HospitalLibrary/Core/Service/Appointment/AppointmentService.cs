@@ -246,13 +246,14 @@ namespace HospitalLibrary.Core.Service
                                 }
 
                                 //Both are free
-                                if(patientIsFree && doctorIsFree)
+                                if (patientIsFree && doctorIsFree)
                                     availableAppointments.Add(new AppointmentsAvailableForCreatingAppointment(
                                         currCheck.DayOfWeek.ToString(),
                                         currCheck.ToShortDateString(),
                                         currCheck.ToShortTimeString(),
                                         doctor.Person.Name + " " + doctor.Person.Surname,
-                                        doctor.Specialization.ToString()
+                                        doctor.Specialization.ToString(),
+                                        doctor.Id
                                     ));
                             }
                         }
@@ -319,7 +320,8 @@ namespace HospitalLibrary.Core.Service
                                                     currCheck.ToShortDateString(),
                                                     currCheck.ToShortTimeString(),
                                                     currDoctor.Person.Name + " " + currDoctor.Person.Surname,
-                                                    currDoctor.Specialization.ToString()
+                                                    currDoctor.Specialization.ToString(),
+                                                    currDoctor.Id
                                                 ));
                                         }
                                     }
@@ -384,7 +386,8 @@ namespace HospitalLibrary.Core.Service
                                                 currCheck.ToShortDateString(),
                                                 currCheck.ToShortTimeString(),
                                                 doctor.Person.Name + " " + doctor.Person.Surname,
-                                                doctor.Specialization.ToString()
+                                                doctor.Specialization.ToString(),
+                                                doctor.Id
                                             ));
                                     }
                                 }
