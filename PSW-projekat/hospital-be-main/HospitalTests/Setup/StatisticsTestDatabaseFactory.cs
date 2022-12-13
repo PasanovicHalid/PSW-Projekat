@@ -68,8 +68,6 @@ namespace HospitalTests.Setup
 
             var patientAllergy = new PatientAllergies() { AllergyId = 1, PatientId = 1 };
 
-            context.Addresses.Add(address);
-
             context.Persons.Add(person1);
             context.Persons.Add(person2);
             context.Persons.Add(person3);
