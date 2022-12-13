@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,30 +14,23 @@ namespace HospitalLibrary.Core.Model
     [Owned]
     public class Email
     {
-        public string Adress { get; set; }
+        public string Adress { get; private set; }
 
-        public Email()
-        {
+        public Email() {}
 
-        }
-
-        public Email(String email)
-        {
-            //this.email = email;
-            //this.email = Create(email).ToString();
-        }
 
         static public Email Create(string email)
         {
-            /*if (ValidateEmail(email))
+            if (ValidateEmail(email))
             {
-                return new Email(email);
+                Email email2 = new Email();
+                email2.Adress = email;
+                return email2;
             }
-            throw new ArgumentException("email");*/
-            return new Email(email);
+            throw new ArgumentException("email");
         }
 
-        /*static public Boolean ValidateEmail(string email)
+        static public Boolean ValidateEmail(string email)
         {
             string patternStrict = @"^(([^<>()[\]\\.,;:\s@\""]+"
 
@@ -51,20 +45,5 @@ namespace HospitalLibrary.Core.Model
             Regex regexStrict = new Regex(patternStrict);
             return regexStrict.IsMatch(email);
         }
-
-        public int CompareTo(Email other)
-        {
-            return String.Compare(this.email, other.email, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        public bool Equals(Email other)
-        {
-            return CompareTo(other) == 0;
-        }
-
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return email;
-        }*/
     }
 }

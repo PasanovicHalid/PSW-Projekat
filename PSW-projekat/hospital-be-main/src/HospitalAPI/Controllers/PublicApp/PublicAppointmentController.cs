@@ -73,7 +73,7 @@ namespace HospitalAPI.Controllers.PublicApp
                         {
                             AppointmentId = app.Id,
                             DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
-                            AppointmentTime = app.DateTime,
+                            AppointmentTime = app.DateTime.Date,
                             AppointmentStatus = "Upcoming"
                         };
                     }
@@ -85,7 +85,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     {
                         AppointmentId = app.Id,
                         DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
-                        AppointmentTime = app.DateTime,
+                        AppointmentTime = app.DateTime.Date,
                         AppointmentStatus = "Cancelled"
                     };
                 }

@@ -8,6 +8,7 @@ using System.Linq;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Core.Model.Enums;
+using System;
 
 namespace HospitalTests.Setup
 {
@@ -54,10 +55,10 @@ namespace HospitalTests.Setup
 
             var address = new Address(){City = "a", Deleted = false, Number = "1", PostCode = "13", Street = "ulica", Township = "asdasd"};
 
-            /*var person1 = new Person(){Address = address, Deleted = false, BirthDate = System.DateTime.Now, Email = "milan@gmail.com", Gender = 0, Name = "Milan", Role = HospitalLibrary.Core.Model.Enums.Role.doctor, Surname = "Milovanovic"};
-            var person2 = new Person(){Address = address, Deleted = false, BirthDate = System.DateTime.Now, Email = "milos@gmail.com", Gender = 0, Name = "Milos", Role = HospitalLibrary.Core.Model.Enums.Role.doctor, Surname = "Milosevic" };
-            var person3 = new Person(){Address = address, Deleted = false, BirthDate = new System.DateTime(2000,12,12), Email = "jovana@gmail.com", Gender = Gender.female, Name = "Jovana", Role = HospitalLibrary.Core.Model.Enums.Role.patient, Surname = "Jovanovic" };
-            var person4 = new Person(){Address = address, Deleted = false, BirthDate = new System.DateTime(1990,12,12), Email = "nikola@gmail.com", Gender = 0, Name = "Nikola", Role = HospitalLibrary.Core.Model.Enums.Role.patient, Surname = "Nikolic" };
+            var person1 = new Person(){Address = address, Deleted = false, BirthDate = System.DateTime.Now, Email = Email.Create("milan@gmail.com"), Gender = 0, Name = "Milan", Role = HospitalLibrary.Core.Model.Enums.Role.doctor, Surname = "Milovanovic"};
+            var person2 = new Person(){Address = address, Deleted = false, BirthDate = System.DateTime.Now, Email = Email.Create("milos@gmail.com"), Gender = 0, Name = "Milos", Role = HospitalLibrary.Core.Model.Enums.Role.doctor, Surname = "Milosevic" };
+            var person3 = new Person(){Address = address, Deleted = false, BirthDate = new System.DateTime(2000,12,12), Email = Email.Create("jovana@gmail.com"), Gender = Gender.female, Name = "Jovana", Role = HospitalLibrary.Core.Model.Enums.Role.patient, Surname = "Jovanovic" };
+            var person4 = new Person(){Address = address, Deleted = false, BirthDate = new System.DateTime(1990,12,12), Email = Email.Create("nikola@gmail.com"), Gender = 0, Name = "Nikola", Role = HospitalLibrary.Core.Model.Enums.Role.patient, Surname = "Nikolic" };
             
             var doctor1 = new Doctor() { Specialization = 0, Person = person1, Deleted = false, Patients = null };
             var doctor2 = new Doctor() { Specialization = 0, Person = person2, Deleted = false, Patients = null };
@@ -79,8 +80,13 @@ namespace HospitalTests.Setup
 
             context.Patients.Add(patient1);
             context.Patients.Add(patient2);
+            context.PatientAllergies.Add(patientAllergy);
 
-            context.PatientAllergies.Add(patientAllergy);*/
+
+            context.Appointments.Add(new Appointment() { Doctor = doctor1, Patient = patient1, Deleted = false, CancelationDate = new System.DateTime(2022, 10, 8), DateTime = new System.DateTime(2022, 10, 10) });
+            context.Appointments.Add(new Appointment() { Doctor = doctor1, Patient = patient2, Deleted = false, CancelationDate = null, DateTime = new System.DateTime(2023, 2, 2) });
+
+            context.PatientAllergies.Add(patientAllergy);
 
             context.SaveChanges();
         }
