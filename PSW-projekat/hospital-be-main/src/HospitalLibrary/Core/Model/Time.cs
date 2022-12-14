@@ -21,7 +21,7 @@ namespace HospitalLibrary.Core.Model
             }
             else
             {
-                throw new Exception("Invalid data.");
+                throw new Exception("Invalid data - TimeVO");
             }
         }
 
@@ -65,7 +65,7 @@ namespace HospitalLibrary.Core.Model
             return false;
         }
 
-        public static bool operator <(Time a, Time b)
+        public static bool operator < (Time a, Time b)
         {
             if (b.Hour > a.Hour)
             {
@@ -78,7 +78,7 @@ namespace HospitalLibrary.Core.Model
             return false;
         }
 
-        public static bool operator >(Time a, Time b)
+        public static bool operator > (Time a, Time b)
         {
             if (b.Hour < a.Hour)
             {
@@ -114,6 +114,12 @@ namespace HospitalLibrary.Core.Model
             if (Hour < 10)
             {
                 s = "0" + s;
+            }
+            if (Minute >= 1 && Minute <= 9)
+            {
+                string hour = s.Substring(0, 3);
+                string minute = "0" + s.Substring(3, 1);
+                s = hour + minute;
             }
             return s; 
         }

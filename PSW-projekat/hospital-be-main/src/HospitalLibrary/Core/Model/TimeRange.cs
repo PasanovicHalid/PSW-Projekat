@@ -22,12 +22,12 @@ namespace HospitalLibrary.Core.Model
                 StartTime = startTime;
                 EndTime = endTime;
             }
-            else throw new Exception("Invalid data.");
+            else throw new Exception("Invalid data - TimeRangeVO");
         }
 
         private bool Validation(Time startTime, Time endTime)
         {
-            return StartTime < endTime && EndTime > startTime;
+            return startTime < endTime && endTime > startTime;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
