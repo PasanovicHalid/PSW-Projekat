@@ -2,11 +2,13 @@
 using HospitalLibrary.Core.DTOs.CreatingAppointmentsDTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using iTextSharp.text.pdf.parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using static iTextSharp.text.pdf.events.IndexEvents;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -44,7 +46,6 @@ namespace HospitalLibrary.Core.Service
             return false;
         }
 
-
         public void Create(Appointment entity)
         {
             /*
@@ -69,6 +70,7 @@ namespace HospitalLibrary.Core.Service
             }
             catch (Exception e) { }
         }
+
         public void SentEmail(Appointment appointment)
         {
             string fromMail = "hospitalpswisa@gmail.com";
@@ -176,6 +178,14 @@ namespace HospitalLibrary.Core.Service
 
             if (!(fromDate < toDate)) return null;
             if (!(fromTime < toTime)) return null;
+
+            // Clamp time
+            if (fromTime.Second % 60 != 0) fromTime = fromTime.AddSeconds(-(fromTime.Second % 60));
+            if (fromTime.Minute % 20 != 0) fromTime = fromTime.AddMinutes(-(fromTime.Minute % 20));
+            if (toTime.Second % 60 != 0) toTime = toTime.AddSeconds(60 - toTime.Second % 60);
+            if (toTime.Minute % 20 != 0) toTime = toTime.AddMinutes(20 - toTime.Minute % 20);
+
+            if (DateTime.Parse(fromDate.ToShortDateString()+" "+fromTime.ToShortTimeString()) < DateTime.Now) return null;
 
             string prefer;
             if (!(checkAvailableAppontment.prefer == "doctor" || checkAvailableAppontment.prefer == "time")) return null;
@@ -419,13 +429,43 @@ namespace HospitalLibrary.Core.Service
                     List<string> scheduledAppointmentTimes = new List<string>();
                     foreach (Appointment appointment in scheduledAppointments)
                     {
-                        scheduledAppointmentTimes.Add(appointment.DateTime.TimeOfDay.ToString().Substring(0,5));
+                        scheduledAppointmentTimes.Add(appointment.DateTime.TimeOfDay.ToString().Substring(0, 5));
                     }
 
                     return allAppointmentTimes.Except(scheduledAppointmentTimes).ToList();
                 }
             }
             return null;
+        }
+
+        public bool CreateCustomAppointment(CustomAppointmentForCreatingDto checkAppointment)
+        {
+            Appointment appointment = new Appointment();
+
+            Patient patient = _patientRepository.getPatientByPersonId(int.Parse(checkAppointment.PersonID));
+            if (patient == null) return false;
+            appointment.Patient = patient;
+
+            Doctor doctor = _doctorRepository.GetById(int.Parse(checkAppointment.DoctorID));
+            if (doctor == null) return false;
+            appointment.Doctor = doctor;
+
+            DateTime dateTime;
+            if (!(DateTime.TryParse(checkAppointment.CreateDate, out dateTime))) return false;
+            if (dateTime.Second % 60 != 0) dateTime = dateTime.AddSeconds(60 - dateTime.Second % 60);
+            if (dateTime.Minute % 20 != 0) dateTime = dateTime.AddMinutes(20 - dateTime.Minute % 20);
+            if (dateTime < DateTime.Now) return false;
+            appointment.DateTime = dateTime;
+
+            appointment.CancelationDate = null;
+            appointment.Deleted = false;
+
+            if (!_appointmentRepository.CheckIfExists(appointment))
+            {
+                _appointmentRepository.Create(appointment);
+                return true;
+            }
+            return false;
         }
     }
 }

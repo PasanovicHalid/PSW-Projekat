@@ -9,8 +9,8 @@ namespace HospitalLibrary.Core.DTOs.CreatingAppointmentsDTOs
 {
     public class CustomAppointmentForCreatingDto
     {
-        string DoctorID;
-        string PersonID;
-        DateTime CreateDate;
+        public string DoctorID { get; set; }
+        public string PersonID { get; set; }
+        public string CreateDate { get; set; }
     }
 }

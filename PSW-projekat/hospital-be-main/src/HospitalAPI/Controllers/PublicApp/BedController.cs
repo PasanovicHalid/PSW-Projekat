@@ -17,7 +17,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IBedService _bedService;
         private readonly IPatientService _patientService;
 
-
+        
         public BedController(IBedService bedService, IPatientService patientService)
         {
             _bedService = bedService;

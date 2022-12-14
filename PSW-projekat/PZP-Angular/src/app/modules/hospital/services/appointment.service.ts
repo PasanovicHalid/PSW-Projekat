@@ -5,6 +5,7 @@ import { CheckAvailableAppontmentDto } from '../model/checkAvailableAppointments
 import { DoctorForCreatingAppointmentDto } from '../model/doctorForCreatingAppointmentDto.model';
 import { AppointmentAvailableForCreatingAppointment } from '../model/appointmentAvailableForCreatingAppointment.mode';
 import { ScheduleAppointment } from '../model/scheduleAppointment.model';
+import { CustomAppointmentForCreatingDto } from '../model/customAppointmentForCreatingDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +23,28 @@ export class AppointmentService {
     return this.http.get<DoctorForCreatingAppointmentDto[]>('api/publicAppointment/GetAllDoctorsForCreatingAppointment', { headers: this.headers });
   }
 
-  getAllAvailableAppointmentsForCreatingAppointment(
+  postAllAvailableAppointmentsForCreatingAppointment(
     checkAvailableAppontment: CheckAvailableAppontmentDto
   ): Observable<AppointmentAvailableForCreatingAppointment[]> {
+
     return this.http.post<AppointmentAvailableForCreatingAppointment[]>(
       'api/publicAppointment/GetAllAvailableAppointmentsForCreatingAppointment', 
       checkAvailableAppontment,
       { headers: this.headers }
     );
+
   }
+
+  postCreateCustomAppointment(
+    checkAppointment: CustomAppointmentForCreatingDto
+  ): Observable<CustomAppointmentForCreatingDto[]> {
+
+    return this.http.post<CustomAppointmentForCreatingDto[]>(
+      'api/publicAppointment/CreateCustomAppointment', 
+      checkAppointment,
+      { headers: this.headers }
+    );
+
+  }
+
 }

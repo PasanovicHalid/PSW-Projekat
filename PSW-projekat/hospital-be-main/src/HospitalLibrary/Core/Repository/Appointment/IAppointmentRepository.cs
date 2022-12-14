@@ -20,5 +20,6 @@ namespace HospitalLibrary.Core.Repository
             DateTime toDate
         );
         IEnumerable<Appointment> GetAllForDoctorByDate(int doctorId, DateTime scheduledDate);
+        bool CheckIfExists(Appointment appointment);
     }
 }

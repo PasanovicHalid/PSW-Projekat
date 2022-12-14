@@ -75,7 +75,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_some()
+        public void Appointments_available_validation_success_some()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -98,7 +98,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_fromdate()
+        public void Appointments_available_validation_success_fromDate()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -121,7 +121,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_todate()
+        public void Appointments_available_validation_success_toDate()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -144,7 +144,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_fromtime()
+        public void Appointments_available_validation_success_fromTime()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -167,7 +167,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_totime()
+        public void Appointments_available_validation_success_toTime()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -190,7 +190,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_prefer()
+        public void Appointments_available_validation_success_prefer()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -213,7 +213,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_personid()
+        public void Appointments_available_validation_success_personID()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -236,7 +236,7 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_selecteddoctorid()
+        public void Appointments_available_validation_success_selectedDoctorID()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -259,7 +259,99 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_input_error()
+        public void Appointments_available_validation_success_fromDate_parse()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+            CheckAvailableAppontmentDto checkAvailableAppontmentDto = new CheckAvailableAppontmentDto();
+            checkAvailableAppontmentDto.fromDate = "adsvdsdfv";
+            checkAvailableAppontmentDto.toDate = "2023-12-13";
+            checkAvailableAppontmentDto.fromTime = "23:19";
+            checkAvailableAppontmentDto.toTime = "23:40";
+            checkAvailableAppontmentDto.prefer = "doctor";
+            checkAvailableAppontmentDto.selectedDoctorID = 1;
+            checkAvailableAppontmentDto.personID = 9;
+
+            //Act
+            List<AppointmentsAvailableForCreatingAppointment> result = appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontmentDto);
+
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void Appointments_available_validation_success_toDate_parse()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+            CheckAvailableAppontmentDto checkAvailableAppontmentDto = new CheckAvailableAppontmentDto();
+            checkAvailableAppontmentDto.fromDate = "2023-12-12";
+            checkAvailableAppontmentDto.toDate = "adsvdsdfv";
+            checkAvailableAppontmentDto.fromTime = "23:19";
+            checkAvailableAppontmentDto.toTime = "23:40";
+            checkAvailableAppontmentDto.prefer = "doctor";
+            checkAvailableAppontmentDto.selectedDoctorID = 1;
+            checkAvailableAppontmentDto.personID = 9;
+
+            //Act
+            List<AppointmentsAvailableForCreatingAppointment> result = appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontmentDto);
+
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void Appointments_available_validation_success_fromTime_parse()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+            CheckAvailableAppontmentDto checkAvailableAppontmentDto = new CheckAvailableAppontmentDto();
+            checkAvailableAppontmentDto.fromDate = "2023-12-12";
+            checkAvailableAppontmentDto.toDate = "2023-12-13";
+            checkAvailableAppontmentDto.fromTime = "asdfasdf";
+            checkAvailableAppontmentDto.toTime = "23:40";
+            checkAvailableAppontmentDto.prefer = "doctor";
+            checkAvailableAppontmentDto.selectedDoctorID = 1;
+            checkAvailableAppontmentDto.personID = 9;
+
+            //Act
+            List<AppointmentsAvailableForCreatingAppointment> result = appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontmentDto);
+
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void Appointments_available_validation_success_toTime_parse()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+            CheckAvailableAppontmentDto checkAvailableAppontmentDto = new CheckAvailableAppontmentDto();
+            checkAvailableAppontmentDto.fromDate = "2023-12-12";
+            checkAvailableAppontmentDto.toDate = "2023-12-13";
+            checkAvailableAppontmentDto.fromTime = "23:19";
+            checkAvailableAppontmentDto.toTime = "sdafdf";
+            checkAvailableAppontmentDto.prefer = "doctor";
+            checkAvailableAppontmentDto.selectedDoctorID = 1;
+            checkAvailableAppontmentDto.personID = 9;
+
+            //Act
+            List<AppointmentsAvailableForCreatingAppointment> result = appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontmentDto);
+
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void Appointments_available_validation_success_from_to_date()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -282,7 +374,30 @@ namespace HospitalTests.Integration
         }
 
         [Fact]
-        public void Appointments_validation_success_none()
+        public void Appointments_available_validation_success_past_from_date()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+            CheckAvailableAppontmentDto checkAvailableAppontmentDto = new CheckAvailableAppontmentDto();
+            checkAvailableAppontmentDto.fromDate = "2020-12-15";
+            checkAvailableAppontmentDto.toDate = "2020-12-17";
+            checkAvailableAppontmentDto.fromTime = "23:19";
+            checkAvailableAppontmentDto.toTime = "23:40";
+            checkAvailableAppontmentDto.prefer = "doctor";
+            checkAvailableAppontmentDto.selectedDoctorID = 1;
+            checkAvailableAppontmentDto.personID = 9;
+
+            //Act
+            List<AppointmentsAvailableForCreatingAppointment> result = appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontmentDto);
+
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void Appointments_available_validation_success_none()
         {
             //Arrange
             using var scope = Factory.Services.CreateScope();
@@ -302,6 +417,120 @@ namespace HospitalTests.Integration
 
             //Assert
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void Appointments_creating_validation_success_none()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+
+            CustomAppointmentForCreatingDto checkAppointment = new CustomAppointmentForCreatingDto();
+            checkAppointment.DoctorID = "1";
+            checkAppointment.PersonID = "14";
+            checkAppointment.CreateDate = "2023-12-13 08:00";
+
+            //Act
+            bool made = appointmentService.CreateCustomAppointment(checkAppointment);
+
+            //Assert
+            Assert.True(made);
+        }
+
+        [Fact]
+        public void Appointments_creating_validation_success_exists()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+
+            CustomAppointmentForCreatingDto checkAppointment = new CustomAppointmentForCreatingDto();
+            checkAppointment.DoctorID = "1";
+            checkAppointment.PersonID = "14";
+            checkAppointment.CreateDate = "2030-12-13 07:59";
+
+            //Act
+            bool made = appointmentService.CreateCustomAppointment(checkAppointment);
+
+            //Assert
+            Assert.False(made);
+        }
+
+        [Fact]
+        public void Appointments_creating_validation_success_doctorID()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+
+            CustomAppointmentForCreatingDto checkAppointment = new CustomAppointmentForCreatingDto();
+            checkAppointment.DoctorID = "-1";
+            checkAppointment.PersonID = "14";
+            checkAppointment.CreateDate = "2023-12-13 08:00";
+
+            //Act
+            bool made = appointmentService.CreateCustomAppointment(checkAppointment);
+
+            //Assert
+            Assert.False(made);
+        }
+
+        [Fact]
+        public void Appointments_creating_validation_success_personID()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+
+            CustomAppointmentForCreatingDto checkAppointment = new CustomAppointmentForCreatingDto();
+            checkAppointment.DoctorID = "1";
+            checkAppointment.PersonID = "101";
+            checkAppointment.CreateDate = "2023-12-13 08:00";
+
+            //Act
+            bool made = appointmentService.CreateCustomAppointment(checkAppointment);
+
+            //Assert
+            Assert.False(made);
+        }
+
+        [Fact]
+        public void Appointments_creating_validation_success_createDate_parse()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+
+            CustomAppointmentForCreatingDto checkAppointment = new CustomAppointmentForCreatingDto();
+            checkAppointment.DoctorID = "1";
+            checkAppointment.PersonID = "101";
+            checkAppointment.CreateDate = "2022-12-13 08:00asdfsd";
+
+            //Act
+            bool made = appointmentService.CreateCustomAppointment(checkAppointment);
+
+            //Assert
+            Assert.False(made);
+        }
+
+        [Fact]
+        public void Appointments_creating_validation_success_createDate_past()
+        {
+            //Arrange
+            using var scope = Factory.Services.CreateScope();
+            AppointmentService appointmentService = SetupSettingsPublicAppointmentService(scope);
+
+            CustomAppointmentForCreatingDto checkAppointment = new CustomAppointmentForCreatingDto();
+            checkAppointment.DoctorID = "1";
+            checkAppointment.PersonID = "101";
+            checkAppointment.CreateDate = "2020-12-13 08:00";
+
+            //Act
+            bool made = appointmentService.CreateCustomAppointment(checkAppointment);
+
+            //Assert
+            Assert.False(made);
         }
     }
 }

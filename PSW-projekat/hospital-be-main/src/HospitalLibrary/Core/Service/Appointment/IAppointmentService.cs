@@ -19,5 +19,6 @@ namespace HospitalLibrary.Core.Service
             );
         void ScheduleAppointment(Appointment appointment);
         List<string> GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate);
+        bool CreateCustomAppointment(CustomAppointmentForCreatingDto checkAppointment);
     }
 }
