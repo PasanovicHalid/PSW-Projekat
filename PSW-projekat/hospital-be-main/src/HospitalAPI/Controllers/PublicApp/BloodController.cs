@@ -1,5 +1,8 @@
-﻿using HospitalLibrary.Core.DTOs;
+﻿using HospitalAPI.Adapters;
+using HospitalAPI.DTO;
+using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +47,45 @@ namespace HospitalAPI.Controllers.PublicApp
             }
 
             return Ok();
+        }
+
+        [HttpGet("emergency/{bloodType}/{amount}")]
+        public ActionResult UpdateQuantity(BloodType bloodType, int amount)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _bloodService.updateEmergency(amount, bloodType);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+
+            return Ok();
+        }
+
+        [HttpPut("Store")]
+        public ActionResult StoreBlood(BloodForStoringDTO entity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                Blood blood = BloodForStoringAdapter.FromDTO(entity);
+                return Ok(_bloodService.StoreBlood(blood));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
         }
 
     }

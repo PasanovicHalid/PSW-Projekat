@@ -53,9 +53,9 @@ export class BloodRequestsComponent implements OnInit {
   }
 
   private isValidInput(): boolean {
-    if(this.bloodRequest.quantity == null)
-      this.bloodRequest.quantity = 0;
-    if(this.bloodRequest.quantity <0 || this.bloodRequest.quantity > 10 || this.bloodRequest.bloodType == '' || this.bloodRequest.bloodBankID == '')
+    if(this.bloodRequest.bloodQuantity == null)
+      this.bloodRequest.bloodQuantity = 0;
+    if(this.bloodRequest.bloodQuantity <0 || this.bloodRequest.bloodQuantity > 10 || this.bloodRequest.bloodType == '' || this.bloodRequest.bloodBankId == '')
       return false;
   
     return true;

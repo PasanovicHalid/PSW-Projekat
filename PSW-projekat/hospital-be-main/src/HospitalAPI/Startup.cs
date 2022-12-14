@@ -5,6 +5,7 @@ using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.CouncilOfDoctors;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
+using HospitalLibrary.Core.IntegrationConnection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -129,8 +130,18 @@ namespace HospitalAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
 
+
             services.AddScoped<ICouncilOfDoctorsService, CouncilOfDoctorsService>();
             services.AddScoped<ICouncilOfDoctorsRepository, CouncilOfDoctorsRepository>();
+
+            services.AddScoped<ISymptomService, SymptomService>();
+            services.AddScoped<ISymptomRepository, SymptomRepository>();
+            
+            services.AddScoped<IExaminationService, ExaminationService>();
+            services.AddScoped<IExaminationRepository, ExaminationRepository>();
+
+            services.AddScoped<IIntegrationConnection, IntegrationHTTPConnection>();
+
 
         }
 

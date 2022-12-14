@@ -167,6 +167,11 @@ namespace HospitalLibrary.Migrations.AuthenticationDb
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[] { "58f7fb5f-09dc-4bee-813f-4e47940650c4", "76feb459-393f-45d5-be10-46df582dd946", "Manager", "MANAGER" });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "A8E3A800-3B37-4891-96E0-60664BF0167B", "55AD6AD6-0AAD-4917-8F61-1B5599E50EAD", "BloodBank", "BLOODBANK" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",

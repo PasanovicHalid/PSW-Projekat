@@ -67,7 +67,7 @@ namespace IntegrationLibrary.Core.Service.Generators
         {
             html += "<body><h1>Blood usage report</h1><div>" +
                 "<p>Blood bank: " + bank.Name + "</p>" +
-                "<p>Bank email: " + bank.Email + "</p><table class=\"GeneratedTable\"><thead><tr>" +
+                "<p>Bank email: " + bank.Email.EmailAddress + "</p><table class=\"GeneratedTable\"><thead><tr>" +
                                      " <th> Request Date </th>" +
                                      " <th> Blood type </th> " +
                                     "  <th> Quantity (units)</th></tr></thead><tbody>";

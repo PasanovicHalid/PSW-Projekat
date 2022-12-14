@@ -25,10 +25,10 @@ namespace HospitalLibrary.Core.Repository
             return _context.Appointments.ToList();          
         }
 
-        public IEnumerable<Appointment> GetAllByDoctor(int doctorId)
+        public IEnumerable<Appointment> GetAllByDoctor(int personId)
         {
             return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
-                .Where(x => x.Doctor.Id == doctorId && !x.Deleted).ToList();
+                .Where(x => x.Doctor.Person.Id == personId && !x.Deleted).ToList();
         }
 
         public IEnumerable<DateTime> GetAllFreeByDoctor(int doctorId,DateTime start,DateTime end)

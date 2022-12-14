@@ -1,0 +1,26 @@
+
+<div class="container">
+    <div>
+
+            <h1>Prescription</h1>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Medicines</mat-label>
+            <mat-select class="comboSelect" [(ngModel)]="recept.medicines" (ngModelChange)="handleOptionChangeMedicines()" multiple>
+                <mat-option *ngFor="let medicine of medicines" [value]="medicine">{{medicine.name}}</mat-option>
+            </mat-select>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea wrap="soft" cols="60" rows="5" matInput [(ngModel)]="recept.description" > </textarea>
+        </mat-form-field><br>
+
+        <a>
+            <button (click)="addNewItem()" class="nextDugme1" mat-stroked-button>
+                 Add 
+            </button>
+        </a>
+       
+    </div>
+</div>

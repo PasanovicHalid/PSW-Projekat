@@ -23,5 +23,6 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
         bool CheckIfPasswordResetKeyIsUpdatable(BloodBank bank);
 
         BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey);
+        BloodBank getByEmail(string email);
     }
 }

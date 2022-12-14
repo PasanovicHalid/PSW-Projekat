@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Service.CRUD
 {
-    public interface ICRUDService<TEntity> where TEntity : BaseModel
+    public interface ICRUDService<TEntity> where TEntity : EntityClass
     {
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int id);

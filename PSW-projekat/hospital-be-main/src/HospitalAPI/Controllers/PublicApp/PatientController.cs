@@ -47,6 +47,9 @@ namespace HospitalAPI.Controllers.PublicApp
         public ActionResult GetById(int id)
         {
             var patient = _patientService.GetById(id);
+            PatientDto patientDto= new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname, patient.Person.Email,
+                patient.Person.Role);
+
             if (patient == null)
             {
                 return NotFound();
@@ -55,6 +58,22 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(patient);
         }
         */
+
+        [HttpGet("patientDto/{id}")]
+        public ActionResult GetById(int id)
+        {
+            var patient = _patientService.GetById(id);
+            PatientDto patientDto = new PatientDto(patient.Id, patient.Person.Name, patient.Person.Surname, patient.Person.Email,
+                patient.Person.Role);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patientDto);
+        }
+
 
         [HttpGet("patientsNoTreatment")]
         public ActionResult GetPatientsNoTreatment()

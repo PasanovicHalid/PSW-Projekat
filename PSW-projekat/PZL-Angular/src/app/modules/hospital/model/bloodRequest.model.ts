@@ -13,7 +13,7 @@ export class BloodRequest {
     requestState: RequestState;
     bloodType: BloodType;
     comment: string='';
-    BloodBankId: number = 1;
+    BloodBankId: number = -1;
 
     public constructor(id: any, deleted: any, requiredForDate: any, doctorId: any, bloodQuantity: any, reason: any, requestState: any, bloodType: any) {
         this.id = id;

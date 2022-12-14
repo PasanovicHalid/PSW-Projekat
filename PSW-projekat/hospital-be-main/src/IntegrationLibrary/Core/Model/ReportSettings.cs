@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class ReportSettings : BaseModel
+    public class ReportSettings : EntityClass
     {
         private DateTime _startDeliveryDate;
         private int _deliveryYears;
