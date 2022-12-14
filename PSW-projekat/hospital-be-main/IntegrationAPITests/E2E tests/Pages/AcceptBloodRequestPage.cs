@@ -19,6 +19,7 @@ namespace IntegrationAPITests.E2E_tests.Pages
         private IWebElement SendRequestButton => driver.FindElement(By.Id("send-request-button"));
         private IWebElement DeclineRequestButton => driver.FindElement(By.Id("decline-request-button"));
         private IWebElement ReturnBackRequestButton => driver.FindElement(By.Id("return-back-request-button"));
+        private IWebElement SubmitReturnButton => driver.FindElement(By.Id("submit-return-button"));
         private IWebElement SelectBloodBank => driver.FindElement(By.Id("bank-0"));
         private IWebElement FirstBloodBank => driver.FindElement(By.Id(""));
         private IWebElement ReasonReturnBackText => driver.FindElement(By.Id("reason-return-back-text"));
@@ -30,6 +31,15 @@ namespace IntegrationAPITests.E2E_tests.Pages
         public void Decline()
         {
             DeclineRequestButton.Click();
+        }
+        public void Return_back()
+        {
+            ReturnBackRequestButton.Click();
+            ReasonReturnBackText.SendKeys("Test123");
+            //Thread.Sleep(500);
+            //driver.FindElement(By.Id("submit-return-button")).Click();
+            SubmitReturnButton.Click();
+
         }
     }
 }

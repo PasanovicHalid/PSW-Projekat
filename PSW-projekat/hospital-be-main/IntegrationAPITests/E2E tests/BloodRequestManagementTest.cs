@@ -41,6 +41,7 @@ namespace IntegrationAPITests.E2E_tests
             Thread.Sleep(3000);
             loginPage.ErrorDivDisplayed().ShouldBe(false);
             bloodRequestPage = new Pages.BloodRequestPage(driver);
+            acceptBloodRequestPage = new Pages.AcceptBloodRequestPage(driver);
             bloodRequestPage.Navigate();
             Thread.Sleep(1000);
             bloodRequestPage.ErrorDivDisplayed().ShouldBe(false);
@@ -52,13 +53,19 @@ namespace IntegrationAPITests.E2E_tests
             driver.Quit();
             driver.Dispose();
         }
+        //[Fact]
+        //public void Decline_request()
+        //{
+        //    Thread.Sleep(1000);
+        //    bloodRequestPage.SelectReq2();
+        //    acceptBloodRequestPage.Decline();
+        //}
         [Fact]
-        public void Decline_request()
+        public void Return_back()
         {
             Thread.Sleep(1000);
-            bloodRequestPage.SelectReq2();
-            acceptBloodRequestPage = new Pages.AcceptBloodRequestPage(driver);
-            acceptBloodRequestPage.Decline();
+            bloodRequestPage.SelectReq3();
+            acceptBloodRequestPage.Return_back();
         }
     }
 }
