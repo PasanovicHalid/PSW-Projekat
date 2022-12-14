@@ -114,7 +114,9 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         {
             foreach (BloodBank bank in GetAll())
             {
-                if (bank.Password.Equals(password) && bank.Email.Equals(email) && bank.AccountStatus.Equals(AccountStatus.ACTIVE))
+                string pas = bank.Password;
+                string em = bank.Email.EmailAddress;
+                if (bank.Password.Equals(password) && bank.Email.EmailAddress.Equals(email) && bank.AccountStatus.Equals(AccountStatus.ACTIVE))
                     return true;
             }
             return false;
