@@ -77,5 +77,41 @@ namespace HospitalLibrary.Core.Service
         {
             return _idoctorRepository.RegisterDoctor(doctor);
         }
+
+        public IEnumerable<DoctorsCouncilDto> GetAllCouncilByDoctor(int doctorId)
+        {
+            IEnumerable<DoctorsCouncil> allCouncils = _idoctorRepository.GetAllCouncilByDoctor(doctorId);
+
+            List<DoctorsCouncilDto> councilsDtos = new();
+
+            foreach (DoctorsCouncil council in allCouncils)
+            {
+
+                DoctorsCouncilDto councilsDto = new DoctorsCouncilDto();
+
+
+                councilsDto.Topic = council.Topic;
+                councilsDto.Start = council.Start;
+                councilsDto.Duration = council.Duration;
+
+                ICollection<DoctorDto> doctorDtos = new List<DoctorDto>();
+
+                foreach (var doctor in council.Doctors)
+                {
+
+                    doctorDtos.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email,
+                                                 doctor.Person.Role));
+
+                }
+
+                councilsDto.Doctors = doctorDtos;
+                councilsDto.Id = council.Id;
+
+
+                councilsDtos.Add(councilsDto);
+            }
+            return councilsDtos;
+
+        }
     }
 }
