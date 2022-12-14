@@ -74,7 +74,7 @@ namespace IntegrationLibrary.Core.Service.Reports
             List<BloodRequest> reportRequests = new List<BloodRequest>();
             DateTime today = DateTime.Now;
 
-            foreach(BloodRequest request in (List<BloodRequest>)_bloodRequestService.GetAcceptedRequests(id))
+            foreach(BloodRequest request in (List<BloodRequest>)_bloodRequestService.GetFulfilledRequests(id))
             {
                 if (setting.CalculationYears > 0 && (request.RequiredForDate >= DateTime.Today.AddYears(-setting.CalculationYears)))        // da li je prosla godina
                     reportRequests.Add(request);

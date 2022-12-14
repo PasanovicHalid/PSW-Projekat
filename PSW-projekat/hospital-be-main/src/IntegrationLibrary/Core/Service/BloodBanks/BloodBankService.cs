@@ -114,13 +114,39 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         {
             foreach (BloodBank bank in GetAll())
             {
-                string pass = bank.Password;
-                string em = bank.Email.EmailAddress;
                 if (bank.Password.Equals(password) && bank.Email.EmailAddress.Equals(email) && bank.AccountStatus.Equals(AccountStatus.ACTIVE))
                     return true;
             }
             return false;
         }
+        public async Task<int> GetBlood(BloodBank bank, BloodType bloodType, int quantity)
+        {
+            try
+            {
+                return await _bloodBankConnection.GetBlood(bank, getBloodTypeAsString(bloodType), quantity);
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        private String getBloodTypeAsString(BloodType blood)
+        {
+            switch (blood)
+            {
+                case BloodType.ON: return "Ominus";
+                case BloodType.AN: return "Aminus";
+                case BloodType.BN: return "Bminus";
+                case BloodType.ABN: return "ABminus";
+                case BloodType.OP: return "Oplus";
+                case BloodType.AP: return "Aplus";
+                case BloodType.BP: return "Bplus";
+                case BloodType.ABP: return "ABplus";
+            }
+            throw new Exception("BloodType is in forbidden state!");
+        }
+
         private void SetupBloodBank(BloodBank entity)
         {
             do

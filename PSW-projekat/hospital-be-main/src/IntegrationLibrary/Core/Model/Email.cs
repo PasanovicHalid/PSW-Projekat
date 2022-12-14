@@ -66,7 +66,7 @@ namespace IntegrationLibrary.Core.Model
         private static string[] ExtractEmailParts(string EmailAddress)
         {
             string[] EmailParts = EmailAddress.Split('@');
-            if (EmailParts.Length < 2) throw new ArgumentException("Email provided doesn't contain symbol @");
+            if (EmailParts.Length != 2) throw new ArgumentException("Email provided cant be sperated to two parts");
             return EmailParts;
         }
 

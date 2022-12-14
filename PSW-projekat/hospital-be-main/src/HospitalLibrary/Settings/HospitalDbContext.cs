@@ -23,6 +23,9 @@ namespace HospitalLibrary.Settings
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Therapy> Therapys { get; set; }
         public DbSet<DoctorBloodConsumption> BloodConsumptions { get; set; }
+        public DbSet<Symptom> Symptoms { get; set; }
+        public DbSet<Prescription> Prescriptions { get; set; }
+        public DbSet<Examination> Examinations { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 

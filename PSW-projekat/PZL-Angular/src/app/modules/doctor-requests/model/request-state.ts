@@ -2,5 +2,6 @@ export enum RequestState {
     Pending,
     Accepted,
     Returned,
-    Declined
+    Declined,
+    Fulfilled
 }
