@@ -8,7 +8,7 @@ export class CouncilDTO {
     topic:String;
     deleted: boolean = false;
     doctors:DoctorDto[]=[];
-    specializations:Specialization[]=[];
+    specializations:number[]=[];
     start:Data;
     end:Data;
     duration:number;

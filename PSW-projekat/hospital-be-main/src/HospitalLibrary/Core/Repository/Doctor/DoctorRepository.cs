@@ -68,5 +68,11 @@ namespace HospitalLibrary.Core.Repository
             return this.GetById(doctorId).Councils;
 
         }
+
+        public IEnumerable<Doctor> GetAllDoctorsBySpecialization(Specialization specialization)
+        {
+            return _context.Doctors.Where(d => d.Specialization == specialization).ToList();
+
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.PrivateApp;
+using HospitalAPI.DTO;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service.CouncilOfDoctors;
@@ -36,11 +37,11 @@ namespace HospitalTests.Integration
             var controller = SetupSettingsController(scope);
 
 
-            DoctorsCouncil testCase = new DoctorsCouncil()
+            DoctorCouncilDTO testCase = new DoctorCouncilDTO()
             {
             };
 
-            var result = ((OkObjectResult)controller.Create(testCase))?.Value as DoctorsCouncil;
+            var result = ((OkObjectResult)controller.Create(testCase))?.Value as DoctorCouncilDTO;
             Assert.NotNull(result);
             result.ShouldBe(testCase);
         }

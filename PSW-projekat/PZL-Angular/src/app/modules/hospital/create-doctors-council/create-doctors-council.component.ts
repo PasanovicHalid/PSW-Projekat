@@ -19,7 +19,7 @@ export class CreateDoctorsCouncilComponent implements OnInit {
   public doctors: DoctorDto[]=[];
   public doctorsCouncil:  DoctorDto[]=[];
   public displayedColumns = ['number',  'delete'];
-  public specialization: Specialization[] = [];
+  public specialization: number[] = [];
   public chooseDoctors: Boolean = false;
   public chooseSpecializations: boolean = false;
   toppings = new FormControl('');
@@ -50,9 +50,26 @@ export class CreateDoctorsCouncilComponent implements OnInit {
     this.chooseSpecializations =true;
   }
 
+ 
+  public ConvertToNumber(obj: any): any{
+      switch(obj){
+        case '0': return 0;
+        case '1': return 1; 
+        case '2': return 2; 
+      }
+  }
+
   public submit(){
     this.councilDTO.specializations = this.specialization ;
     this.councilDTO.doctors = this.doctorsCouncil ;
+    console.log(this.councilDTO)
+
+    let pom12 = new Array();
+    this.specialization.forEach((element: any) => {
+      pom12.push(this.ConvertToNumber(element));
+    });
+    this.councilDTO.specializations  = pom12;
+    
     
     if (!this.isValidInput())
     {
