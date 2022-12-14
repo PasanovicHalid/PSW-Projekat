@@ -44,6 +44,11 @@ namespace HospitalLibrary.Core.Repository
              return _context.Doctors.Where(d => d.Id == id).FirstOrDefault();
         }
 
+        public Doctor GetDoctorByPersonId(int personId)
+        {
+            return _context.Doctors.Where(d => d.Person.Id == personId).FirstOrDefault();
+        }
+
         public Person getPersonByDoctorId(int id)
         {
             var doctor = _context.Doctors.FirstOrDefault(d => d.Id == id);

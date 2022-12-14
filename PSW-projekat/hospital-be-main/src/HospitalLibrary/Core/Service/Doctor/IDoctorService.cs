@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.Service
         AllergiesAndDoctorsForPatientRegistrationDto GetAllergiesAndDoctors();
         Doctor RegisterDoctor(Doctor doctor);
         public Person getPersonByDoctorId(int id);
+        public Doctor GetDoctorByPersonId(int personId);
         IEnumerable<DoctorsCouncilDto> GetAllCouncilByDoctor(int doctorId);
     }
 }

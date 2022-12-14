@@ -6,6 +6,7 @@
         public int Quantity { get; set; }
 
         public Medicine() { }
+
         public Medicine( int id, bool deleted, string name, int quantity)
         {
             Id = id;

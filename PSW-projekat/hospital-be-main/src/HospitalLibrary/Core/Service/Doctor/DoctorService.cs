@@ -43,6 +43,11 @@ namespace HospitalLibrary.Core.Service
             return _idoctorRepository.GetById(id);
         }
 
+        public Doctor GetDoctorByPersonId(int personId)
+        {
+            return _idoctorRepository.GetDoctorByPersonId(personId);
+        }
+
         public void Update(Doctor entity)
         {
             throw new NotImplementedException();

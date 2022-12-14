@@ -12,8 +12,10 @@ namespace HospitalLibrary.Core.Model
 
         public Symptom() { }
 
-        public Symptom(string name)
+        public Symptom(int id, bool deleted, String name)
         {
+            Id = id;
+            Deleted = deleted;
             Name = name;
         }
     }
