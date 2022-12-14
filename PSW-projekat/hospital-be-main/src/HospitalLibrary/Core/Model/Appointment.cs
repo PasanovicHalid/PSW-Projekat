@@ -11,6 +11,12 @@ namespace HospitalLibrary.Core.Model
 
         public Appointment() { }
 
+        public Appointment(int id) 
+        {
+            Id = id;
+        }
+
+
         public Appointment(int id, bool deleted, Patient patient, Doctor doctor, DateTime dateTime, DateTime cancelationDate)
         {
             Id = id;

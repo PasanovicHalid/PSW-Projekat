@@ -104,7 +104,6 @@ namespace HospitalAPI.Controllers.PrivateApp
             }
             catch(Exception)
             {
-                //return BadRequest();
                 return BadRequest();
 
             }
