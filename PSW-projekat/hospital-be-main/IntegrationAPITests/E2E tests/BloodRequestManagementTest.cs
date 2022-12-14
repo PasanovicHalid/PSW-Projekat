@@ -53,19 +53,28 @@ namespace IntegrationAPITests.E2E_tests
             driver.Quit();
             driver.Dispose();
         }
-        //[Fact]
-        //public void Decline_request()
-        //{
-        //    Thread.Sleep(1000);
-        //    bloodRequestPage.SelectReq2();
-        //    acceptBloodRequestPage.Decline();
-        //}
+        [Fact]
+        public void Decline_request()
+        {
+            Thread.Sleep(1000);
+            bloodRequestPage.SelectReq1();
+            acceptBloodRequestPage.Decline();
+        }
+
         [Fact]
         public void Return_back()
         {
             Thread.Sleep(1000);
-            bloodRequestPage.SelectReq3();
+            bloodRequestPage.SelectReq2();
             acceptBloodRequestPage.Return_back();
+        }
+
+        [Fact]
+        public void Accept_request()
+        {
+            Thread.Sleep(500);
+            bloodRequestPage.SelectReq3();
+            acceptBloodRequestPage.Accept();
         }
     }
 }
