@@ -7,6 +7,7 @@ import { StepperOrientation } from '@angular/material/stepper';
 import { Observable, map } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AppointmentsService } from '../services/appointments.service';
+import { DateAndDoctorForNewAppointmentDto } from '../model/DateAndDoctorForNewAppointmentDto.model';
 
 @Component({
   selector: 'app-schedule-appointment',
@@ -55,7 +56,10 @@ export class ScheduleAppointmentComponent implements OnInit {
   }
 
   getFreeAppointmentTimes(){
-    this.appointmentsService.getFreeAppointmentsForDoctor(this.doctorForm.value.doctor.id, this.dateForm.value.date).subscribe(res => {
+    let dto: DateAndDoctorForNewAppointmentDto = new DateAndDoctorForNewAppointmentDto();
+    dto.doctorId = this.doctorForm.value.doctor.id;
+    dto.scheduledDate = this.dateForm.value.date;
+    this.appointmentsService.getFreeAppointmentsForDoctor(dto).subscribe(res => {
       this.freeAppointments = res;
     });
   }

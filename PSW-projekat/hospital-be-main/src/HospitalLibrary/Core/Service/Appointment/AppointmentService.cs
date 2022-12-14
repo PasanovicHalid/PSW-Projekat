@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 
@@ -163,9 +164,29 @@ namespace HospitalLibrary.Core.Service
 
         public List<string> GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate)
         {
-            DoctorSchedule doctorSchedule = _doctorRepository.GetDoctorSchedule(doctorId, (int)scheduledDate.DayOfWeek);
-            List<Appointment> scheduledAppointments = (List<Appointment>)_appointmentRepository.GetAllForDoctorByDate(doctorId, scheduledDate);
+            ICollection<DoctorSchedule> doctorSchedules = _doctorRepository.GetById(doctorId).DoctorSchedules;
+            foreach (DoctorSchedule ds in doctorSchedules)
+            {
+                if ((int)ds.Day == (int)scheduledDate.DayOfWeek)
+                {
+                    List<string> allAppointmentTimes = new List<string>();
+                    Time currentTime = ds.Shift.StartTime;
+                    while (!(currentTime.ToString().Equals(ds.Shift.EndTime.ToString())))
+                    {
+                        allAppointmentTimes.Add(currentTime.ToString());
+                        currentTime = currentTime.AddMinutes(20);
+                    }
 
+                    List<Appointment> scheduledAppointments = (List<Appointment>)_appointmentRepository.GetAllForDoctorByDate(doctorId, scheduledDate);
+                    List<string> scheduledAppointmentTimes = new List<string>();
+                    foreach (Appointment appointment in scheduledAppointments)
+                    {
+                        scheduledAppointmentTimes.Add(appointment.DateTime.TimeOfDay.ToString().Substring(0,5));
+                    }
+
+                    return allAppointmentTimes.Except(scheduledAppointmentTimes).ToList();
+                }
+            }
             return null;
         }
     }

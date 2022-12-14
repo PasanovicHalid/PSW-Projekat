@@ -10,6 +10,5 @@ namespace HospitalLibrary.Core.Repository
         public Person getPersonByDoctorId(int id);
         Doctor RegisterDoctor(Doctor doctor);
         IEnumerable<Doctor> GetAllBySpecialization(Specialization specialization);
-        public DoctorSchedule GetDoctorSchedule(int doctorId, int day);
     }
 }

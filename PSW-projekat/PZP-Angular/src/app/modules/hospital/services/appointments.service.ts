@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { PatientAppointment } from '../model/patientAppointmentsDto.model';
 import { ScheduleAppointment, Specialization } from '../model/scheduleAppointment.model';
 import { DoctorForPatientRegistrationDto } from '../model/doctorForPatientRegistrationDto.model';
+import { DateAndDoctorForNewAppointmentDto } from '../model/DateAndDoctorForNewAppointmentDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class AppointmentsService {
     return this.http.get<DoctorForPatientRegistrationDto[]>('api/Doctor/GetAllBySpecialization/' + specialization, {headers: this.headers});
   }
   
-  getFreeAppointmentsForDoctor(doctorId: number, scheduledDate: Date): Observable<string[]> {
-    return this.http.get<string[]>('api/Appointment/GetFreeAppointmentsForDoctor/' + doctorId + "/" + scheduledDate, {headers: this.headers});
+  getFreeAppointmentsForDoctor(dto: DateAndDoctorForNewAppointmentDto): Observable<string[]> {
+    return this.http.put<string[]>('api/PublicAppointment/GetFreeAppointmentsForDoctorByDate', dto, {headers: this.headers});
   }
 }

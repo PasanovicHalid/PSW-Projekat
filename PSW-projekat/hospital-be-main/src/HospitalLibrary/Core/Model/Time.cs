@@ -19,12 +19,10 @@ namespace HospitalLibrary.Core.Model
                 Hour = hour;
                 Minute = minute;
             }
-            throw Exception("Invalid data.");
-        }
-
-        private Exception Exception(string message)
-        {
-            throw Exception(message);
+            else
+            {
+                throw new Exception("Invalid data.");
+            }
         }
 
         private bool Validate(int hour, int minute)
@@ -91,6 +89,33 @@ namespace HospitalLibrary.Core.Model
                 return true;
             }
             return false;
+        }
+
+        public Time AddMinutes(int minutes)
+        {
+            int newHour = this.Hour;
+            int newMinute = this.Minute + minutes;
+            while (newMinute > 59)
+            {
+                newHour += 1;
+                newMinute -= 60;
+            }
+
+            return new Time(newHour, newMinute);
+        }
+
+        public override string ToString()
+        {
+            string s = Hour.ToString() + ":" + Minute.ToString();
+            if (Minute == 0)
+            {
+                 s += "0";
+            }
+            if (Hour < 10)
+            {
+                s = "0" + s;
+            }
+            return s; 
         }
     }
 }

@@ -66,11 +66,5 @@ namespace HospitalLibrary.Core.Repository
         {
             throw new NotImplementedException();
         }
-
-        public DoctorSchedule GetDoctorSchedule(int doctorId, int day)
-        {
-            var dss = _context.DoctorSchedules.FirstOrDefault(ds => ((int)ds.Day) == day && ds.DoctorId == doctorId);
-            return dss;
-        }
     }
 }

@@ -16,7 +16,6 @@ namespace HospitalLibrary.Settings
         public DbSet<WorkingDay> WorkingDays { get; set; }
         public DbSet<Allergy> Allergies { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public DbSet<PatientAllergies> PatientAllergies { get; set; }
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<Bed> Beds { get; set; }

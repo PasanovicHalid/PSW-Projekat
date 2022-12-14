@@ -43,7 +43,7 @@ namespace HospitalAPI.Controllers.PublicApp
             Appointment appointment = new Appointment() { 
                 Doctor = doctor,
                 Patient = patient,
-                DateTime = appointmentDto.ScheduledDate,
+                DateTime = appointmentDto.ScheduledDate.AddHours(1),
                 CancelationDate = null
             };
 
@@ -51,10 +51,10 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
         
-        [HttpGet("GetFreeAppointmentsForDoctorByDate/{doctorId}/{scheduledDate}")]
-        public ActionResult GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate)
+        [HttpPut("GetFreeAppointmentsForDoctorByDate")]
+        public ActionResult GetFreeAppointmentsForDoctor(DateAndDoctorForNewAppointmentDto dto)
         {
-            List<string> appointmentTimes = _appointmentService.GetFreeAppointmentsForDoctor(doctorId, scheduledDate);
+            List<string> appointmentTimes = _appointmentService.GetFreeAppointmentsForDoctor(dto.DoctorId, dto.ScheduledDate.AddHours(1));
             return Ok(appointmentTimes);
         }
 

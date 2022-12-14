@@ -12,6 +12,6 @@ namespace HospitalLibrary.Core.Model
 
         public virtual ICollection<Patient> Patients { get; set; }
 
-        public ICollection<DoctorSchedule> DoctorSchedules { get; set; }
+        public virtual ICollection<DoctorSchedule> DoctorSchedules { get; set; }
     }
 }
