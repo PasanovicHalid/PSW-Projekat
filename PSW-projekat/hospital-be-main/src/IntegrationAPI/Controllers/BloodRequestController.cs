@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationAPI.Controllers
 {
-    [Authorize(Roles = "Manager, Doctor")]
+    //[Authorize(Roles = "Manager, Doctor")]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -67,18 +67,23 @@ namespace IntegrationAPI.Controllers
         }
 
 
-        [HttpGet("accept/{id}")]
-        public ActionResult AcceptRequest(int id)
+        [HttpPut("accept")]
+        public ActionResult AcceptRequest(BloodRequestDTO entity)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            BloodRequest bloodRequest = BloodRequestAdapter.FromDTO(entity);
             try
             {
-                _bloodRequestService.AcceptRequest(id);
+                _bloodRequestService.AcceptRequest(bloodRequest);
+                return Ok();
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
-            return Ok();
         }
 
         [HttpGet("decline/{id}")]

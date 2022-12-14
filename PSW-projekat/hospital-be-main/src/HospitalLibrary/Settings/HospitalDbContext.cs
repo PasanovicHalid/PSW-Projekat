@@ -38,22 +38,6 @@ namespace HospitalLibrary.Settings
 
             );
 
-            modelBuilder.Entity<Allergy>().HasData(
-                new Allergy() { Id = 1, Name = "Polen", Deleted = false },
-                new Allergy() { Id = 2, Name = "Prasina", Deleted = false },
-                new Allergy() { Id = 3, Name = "Pas", Deleted = false },
-                new Allergy() { Id = 4, Name = "Macka", Deleted = false },
-                new Allergy() { Id = 5, Name = "Pcela", Deleted = false },
-                new Allergy() { Id = 6, Name = "Ambrozija", Deleted = false },
-                new Allergy() { Id = 7, Name = "Kikiriki", Deleted = false },
-                new Allergy() { Id = 8, Name = "Gluten", Deleted = false },
-                new Allergy() { Id = 9, Name = "Laktoza", Deleted = false },
-                new Allergy() { Id = 10, Name = "Alergija10", Deleted = false },
-                new Allergy() { Id = 11, Name = "Alergija11", Deleted = false },
-                new Allergy() { Id = 12, Name = "Alergija12", Deleted = false },
-                new Allergy() { Id = 13, Name = "Alergija13", Deleted = false }
-            );
-
             base.OnModelCreating(modelBuilder);
         }
     }

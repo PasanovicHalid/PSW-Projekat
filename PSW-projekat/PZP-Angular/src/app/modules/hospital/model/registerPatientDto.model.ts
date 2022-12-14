@@ -16,7 +16,7 @@ export class RegisterPatientDto {
     password: string = '';
     bloodType: BloodType = BloodType.APlus;
     allergies: Array<Allergy> = [];
-    doctorName: DoctorForPatientRegistrationDto = {id : 0, fullName : ''};
+    doctorName: DoctorForPatientRegistrationDto = new DoctorForPatientRegistrationDto();
   
     public constructor(obj?: any) {
         if (obj) {

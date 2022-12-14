@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "IntegrationLibrary.Protos";
+package proto.emergencyBloodRequests;
+import "Protos/checkAvailable.proto";
+
+message EmergencyRequest {
+  CheckRequest request = 1;
+}
+
+message EmergencyResponse {
+  CheckRequest request = 1;
+  SendStatus status = 2;
+}
+
+enum SendStatus {
+	SENT = 0;
+    DENIED = 1;
+}

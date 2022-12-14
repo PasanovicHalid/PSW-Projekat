@@ -15,7 +15,7 @@ namespace HospitalAPI.Adapters
             {
                 Id = entity.Id,
                 Blood = entity.Blood,
-                Date = DateTime.Today,
+                Date = DateTime.Now,
                 Purpose = entity.Purpose,
                 Deleted = false,
                 Doctor = null

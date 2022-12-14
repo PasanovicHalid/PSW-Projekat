@@ -1,0 +1,95 @@
+<section class="vh-100" style="background-color: #2779e2;">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-xl-9">
+  
+          <h1 class="text-white mb-4">Create tender</h1>
+  
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body">
+
+              <div class="row align-items-center pt-4 pb-3">
+                <div class="col-md-3 ps-5">
+                  <h6 class="mb-0" style="font-size: 15px;">
+
+                    Due date (optional)</h6>
+                </div>
+                <div class="col-md-9 pe-5">
+                    <div id="date-picker-example" class="md-form md-outline input-with-post-icon datepicker" inline="true">
+                        <input placeholder="Select date" type="date" id="example" [(ngModel)]="this.tender.dueDate" class="form-control">
+                    </div>
+                </div>
+              </div>
+  
+              <hr class="mx-n3">
+
+              <div [hidden]="!isVisible">
+
+                <div class="row align-items-center pt-4 pb-3">
+                    <div class="col-md-3 ps-5">
+                      <h6 class="mb-0" style="font-size: 15px;">Blood type</h6>
+                    </div>
+                    <div class="col-md-9 pe-5">        
+                        <div id="blood-example" class="md-form md-outline input-with-post-icon mat-select" inline="true">
+                            <mat-form-field appearance="fill">
+                                <mat-select name="bloodTypes" id="bloodTypes" 
+                                [(ngModel)]="this.demand.bloodType" matInput>
+                                <mat-option *ngFor="let  bloodType of bloodTypes" [value]="bloodType">{{ConvertToString(bloodType)}}</mat-option>
+                                </mat-select>
+                            </mat-form-field >
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row align-items-center pt-4 pb-3">
+                    <div class="col-md-3 ps-5">
+                      <h6 class="mb-0" style="font-size: 15px;">Quantity (units - max 10)</h6>
+                    </div>
+                    <div class="col-md-9 pe-5">
+                        <div id="quanity-example" class="md-form md-outline input-with-post-icon number" inline="true">
+                            <input placeholder="Quantity" type="number" min="0" max="10" id="quantity" [(ngModel)]="this.demand.bloodQuantity" class="form-control">
+                        </div>
+                    </div>
+                  </div>
+                
+              </div>
+              
+              <div class="px-5 py-4" [hidden]="!isVisible">
+                <button type="button" (click)=addDemand() [disabled]="demand.bloodQuantity <= 0 || demand.bloodQuantity > 10 || demand.bloodQuantity == undefined || demand.bloodType == undefined" class="btn btn-secondary btn">Add</button>
+              </div>
+              <div class="px-5 py-4" [hidden]="isVisible">
+                <button type="button" (click)=displayDemandCreation()  class="btn btn-secondary btn">Add Demand</button>
+              </div>
+              <hr class="mx-n3" [hidden]="!isTableVisible">
+              
+              <div [hidden]="!isTableVisible">
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">BloodType</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let dem of tender.demands, let i = index">
+                        <td>{{getBloodByValue(dem.bloodType)}}</td>
+                        <td>{{dem.bloodQuantity}}</td>
+                        <td (click)="deleteDemand(dem, i)"><fa-icon icon="trash"></fa-icon></td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+
+              <hr class="mx-n3">
+              <div class="px-5 py-4">
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="tender.demands.length == 0" (click)="createTender()">Create tender</button>
+              </div>
+
+
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </section>

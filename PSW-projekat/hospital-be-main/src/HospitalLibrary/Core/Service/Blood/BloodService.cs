@@ -31,6 +31,7 @@ namespace HospitalLibrary.Core.Service
 
         public IEnumerable<Blood> GetAll()
         {
+            IEnumerable<Blood> bll = _bloodRepository.GetAll();
             return _bloodRepository.GetAll();
         }
 
@@ -44,6 +45,20 @@ namespace HospitalLibrary.Core.Service
             blood.Deleted = false;
             _bloodRepository.Update(blood);
         }
+
+        public void updateEmergency(int quantity, BloodType bloodType)
+        {
+            List<Blood> bloods = (List<Blood>)_bloodRepository.GetAll();
+            foreach (Blood blood in bloods) { 
+                if(blood.BloodType == bloodType)
+                {
+                    blood.Quantity += quantity;
+                    _bloodRepository.Update(blood);
+                    break;
+                }
+            }
+        }
+
         public void updateQuantityBlood(int bloodId, int quantity, Blood blood)
         {
             Blood blood1 = _bloodRepository.GetById(bloodId);
@@ -131,6 +146,30 @@ namespace HospitalLibrary.Core.Service
                     _notificationRepository.Create(notification);
                 }
             }
+        public bool StoreBlood(Blood blood)
+        {
+            List<Blood> bloodTypes = GetByRoom(4);
+            foreach(Blood b in bloodTypes)
+            {
+                if (b.BloodType.Equals(blood.BloodType))
+                {
+                    b.Quantity += blood.Quantity;
+                    _bloodRepository.Update(b);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<Blood> GetByRoom(int roomNumber)
+        {
+            List<Blood> bloodTypes = new List<Blood>();
+            foreach(Blood b in GetAll())
+            {
+                if(b.RoomId == roomNumber)
+                    bloodTypes.Add(b);
+            }
+            return bloodTypes;
         }
     }
 }

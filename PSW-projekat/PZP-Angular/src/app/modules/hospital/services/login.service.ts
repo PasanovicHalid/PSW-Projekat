@@ -9,12 +9,17 @@ import { LoginUserDto } from '../model/loginUserDto.model';
 export class LoginService {
 
   apiHost: string = 'http://localhost:16177/';
+  integrationHost: string = 'http://localhost:5000/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
 
   login(LoginDto: LoginUserDto): Observable<any> {
     return this.http.post<any>(this.apiHost + 'api/Account/Login', LoginDto, {headers: this.headers});
+  }
+
+  bankLogin(LoginDto: LoginUserDto): Observable<any> {
+    return this.http.post<any>(this.apiHost + 'api/Account/LoginBank', LoginDto, {headers: this.headers});
   }
 
   logout(){

@@ -38,14 +38,14 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
         public bool CheckIfEmailExists(string email)
         {
             return (from banks in _context.BloodBanks
-                    where banks.Email.Equals(email)
+                    where banks.Email.EmailAddress.Equals(email)
                     select banks).Any();
         }
 
         public bool CheckIfEmailIsUpdatable(BloodBank bank)
         {
             return (from banks in _context.BloodBanks
-                    where banks.Email.Equals(bank.Email) && banks.Id != bank.Id
+                    where banks.Email.EmailAddress.Equals(bank.Email.EmailAddress) && banks.Id != bank.Id
                     select banks).Any();
         }
 

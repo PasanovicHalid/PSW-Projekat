@@ -21,6 +21,13 @@ using IntegrationLibrary.Core.Service.Newses;
 using IntegrationLibrary.Core.Repository.Newses;
 using IntegrationLibrary.Core.Service.ScheduledOrders;
 using IntegrationLibrary.Core.Repository.ScheduledOrder;
+using IntegrationLibrary.Core.Service.Tenders;
+using IntegrationLibrary.Core.Repository.Tenders;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using IntegrationLibrary.Core.HospitalConnection;
+using IntegrationLibrary.Core.Service.EmergencyBloodRequests;
+using IntegrationAPI.Adapters;
+using IntegrationLibrary.Core.Service.HostedServices;
 
 namespace IntegrationAPI
 {
@@ -37,8 +44,9 @@ namespace IntegrationAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddDbContext<IntegrationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("IntegrationDb")));
+            services.AddAutoMapper(typeof(Startup));
+            services.AddDbContext<IntegrationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IntegrationDb"))
+                                                                            .UseLazyLoadingProxies());
 
             services.AddAuthentication(options =>
             {
@@ -61,7 +69,8 @@ namespace IntegrationAPI
             });
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson( options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
@@ -74,6 +83,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankConnection, BloodBankHTTPConnection>();
             services.AddScoped<IRabbitMQService, RabbitMQService>();
             services.AddHostedService<BloodReportHostedService>();
+            services.AddHostedService<BloodRequestHostedService>();
             services.AddScoped<IReportSettingsRepository, ReportSettingsRepository>();
             services.AddScoped<IReportSettingsService, ReportSettingsService>();
             services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
@@ -83,6 +93,10 @@ namespace IntegrationAPI
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<ISheduledOrderRepository, ScheduledOrderRepository>();
             services.AddScoped<IScheduledOrderService, ScheduledOrderService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IHospitalConnection, HospitalHTTPConnection>();
+            services.AddScoped<IEmergencyBloodRequestService, EmergencyBloodRequestService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

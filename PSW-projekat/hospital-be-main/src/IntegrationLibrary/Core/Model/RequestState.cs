@@ -11,6 +11,7 @@ namespace IntegrationLibrary.Core.Model
         Pending,
         Accepted,
         Returned,
-        Declined
+        Declined,
+        Fulfilled
     }
 }

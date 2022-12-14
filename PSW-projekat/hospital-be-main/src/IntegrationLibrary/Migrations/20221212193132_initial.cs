@@ -14,12 +14,13 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ServerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ApiKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ServerAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApiKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordResetKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AccountStatus = table.Column<int>(type: "int", nullable: false)
+                    AccountStatus = table.Column<int>(type: "int", nullable: false),
+                    GRPCServerAddress = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -81,6 +82,46 @@ namespace IntegrationLibrary.Migrations
                 {
                     table.PrimaryKey("PK_ReportSettings", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Tenders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Demands",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BloodType = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    TenderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Demands", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Demands_Tenders_TenderId",
+                        column: x => x.TenderId,
+                        principalTable: "Tenders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Demands_TenderId",
+                table: "Demands",
+                column: "TenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -92,10 +133,16 @@ namespace IntegrationLibrary.Migrations
                 name: "BloodRequests");
 
             migrationBuilder.DropTable(
+                name: "Demands");
+
+            migrationBuilder.DropTable(
                 name: "Newses");
 
             migrationBuilder.DropTable(
                 name: "ReportSettings");
+
+            migrationBuilder.DropTable(
+                name: "Tenders");
         }
     }
 }

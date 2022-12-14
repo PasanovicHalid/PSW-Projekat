@@ -5,18 +5,12 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
-//using HospitalLibrary.Core.Service.BloodConsumption;
 using HospitalTests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Shouldly;
-
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace HospitalTests.Integration
