@@ -3,6 +3,10 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Repository.CouncilOfDoctors;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.CouncilOfDoctors;
+
+using HospitalLibrary.Core.Repository.Notification;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Notification;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Core.IntegrationConnection;
@@ -113,6 +117,9 @@ namespace HospitalAPI
 
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
+
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
 
 
             services.AddScoped<IBedService, BedService>();

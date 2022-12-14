@@ -152,6 +152,54 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("ReportSettings");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.ScheduledOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ABMinus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ABPlus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AMinus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("APlus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BMinus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BPlus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BankApiKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DayOfMonth")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HospitalEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OMinus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OPlus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScheduledOrders");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Bid", b =>
                 {
                     b.Property<int>("Id")
