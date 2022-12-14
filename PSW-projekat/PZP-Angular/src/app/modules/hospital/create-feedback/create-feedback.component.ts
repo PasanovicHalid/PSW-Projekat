@@ -18,7 +18,12 @@ export class CreateFeedbackComponent{
   constructor(private feedbackService: FeedbackService, private router: Router) { }
 
   public createFeedback() {
-    if (!this.isValidInput()) return;
+    if (!this.isValidInput()){
+      alert("Description is missing")
+    }else{
+      alert("Feedback created")
+    }
+
     let id = localStorage.getItem("currentUserId");
     if(id!=null)
       this.feedback.userId = id;
