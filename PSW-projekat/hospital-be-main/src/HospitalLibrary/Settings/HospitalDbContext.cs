@@ -60,6 +60,8 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<Person>().OwnsOne(e => e.Address);
 
+            modelBuilder.Entity<Person>().OwnsOne(e => e.Jmbg);
+
             base.OnModelCreating(modelBuilder);
         }
     }

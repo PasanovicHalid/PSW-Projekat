@@ -12,7 +12,7 @@ namespace HospitalLibrary.Core.Model
     public class Jmbg : ValueObject
     {
 
-        public String Value { get; }
+        public String Value { get; private set; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
