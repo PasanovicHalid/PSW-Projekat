@@ -22,7 +22,13 @@ export class ExaminationService {
     return this.http.get<Examination[]>(this.apiHost + 'api/examination/' + id, {headers: this.headers});
   }
 
-  createExamination(examination: any): Observable<any> {
-    return this.http.post<any>(this.apiHost + 'api/examination', examination, {headers: this.headers});
+  createExamination(examination: any, symptoms: boolean, report: boolean, medication: boolean): Observable<any> {
+    const requestOptions : Object = {
+      headers: this.headers,
+      observe: 'response',
+      params: {symptoms, report, medication},
+      responseType: 'blob'
+    }
+    return this.http.post<any>(this.apiHost + 'api/examination', examination, requestOptions);
   }
 }

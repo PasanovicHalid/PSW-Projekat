@@ -11,6 +11,6 @@ namespace HospitalLibrary.Core.Service
     {
         List<Symptom> GetHelpSymptoms(Examination examination);
         List<Medicine> GetHelpMedicines(Prescription prescription);
-
+        byte[] GeneratePdf(Examination examination, Boolean symptoms, Boolean report, Boolean medications);
     }
 }
