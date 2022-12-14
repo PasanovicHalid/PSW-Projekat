@@ -30,7 +30,10 @@ namespace IntegrationLibrary.Core.Service.Reports
 
         public bool ReportShouldBeSent()
         {
+            
             ReportSettings setting = _reportSettingsService.GetFirst();
+            if (setting == null)
+                throw new InvalidOperationException("No reports found.");
             if (setting.DeliveryYears > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryYears * 365))
                 return true;
             else if (setting.DeliveryMonths > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryMonths * 30))
@@ -38,6 +41,7 @@ namespace IntegrationLibrary.Core.Service.Reports
             else if (setting.DeliveryDays > 0 && (GetDaysSpanTillToday(setting.StartDeliveryDate) >= setting.DeliveryDays))
                 return true;
             return false;
+                   
 
         }
         public int GetDaysSpanTillToday(DateTime deliveryDate)
@@ -70,7 +74,7 @@ namespace IntegrationLibrary.Core.Service.Reports
             List<BloodRequest> reportRequests = new List<BloodRequest>();
             DateTime today = DateTime.Now;
 
-            foreach(BloodRequest request in (List<BloodRequest>)_bloodRequestService.GetAcceptedRequests(id))
+            foreach(BloodRequest request in (List<BloodRequest>)_bloodRequestService.GetFulfilledRequests(id))
             {
                 if (setting.CalculationYears > 0 && (request.RequiredForDate >= DateTime.Today.AddYears(-setting.CalculationYears)))        // da li je prosla godina
                     reportRequests.Add(request);

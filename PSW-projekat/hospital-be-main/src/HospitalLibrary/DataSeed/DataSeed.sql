@@ -75,6 +75,7 @@ GO
 INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'58f7fb5f-09dc-4bee-813f-4e47940650c4', N'Manager', N'MANAGER', N'76feb459-393f-45d5-be10-46df582dd946')
 INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'93000374-46d9-44ef-ac96-6db416a28770', N'Doctor', N'DOCTOR', N'9a23c8cc-acc0-4b5a-a247-3f5298277b76')
 INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'd20bd231-b1fe-477b-be40-e4e38be41762', N'Patient', N'PATIENT', N'bb721e26-c59c-4ab5-be3e-63940807d492')
+INSERT [dbo].[AspNetRoles] ([Id], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (N'A8E3A800-3B37-4891-96E0-60664BF0167B', N'BloodBank', N'BLOODBANK', N'55AD6AD6-0AAD-4917-8F61-1B5599E50EAD')
 GO
 INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'16630510-68af-400b-918b-8d72e0a1fcab', N'milica', N'MILICA', N'milica@gmail.com', N'MILICA@GMAIL.COM', 1, N'AQAAAAEAACcQAAAAEOv41QzJaDJ5FjhdPJsX7H9tBw+6IuQyC6QOcfbOWzMQ4eq5sUKB1ycSBjWPMDj21A==', N'VCMAUXWI2NIUUED5XFA3BZSKI3PTEJFA', N'0deb28c5-88b3-4bcb-aa97-9d4be97c9f01', NULL, 0, 0, NULL, 1, 0)
 INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'28138a9e-fefc-49da-93d2-d71e02216e8c', N'dragana', N'DRAGANA', N'dragana@gmail.com', N'DRAGANA@GMAIL.COM', 1, N'AQAAAAEAACcQAAAAEPtgIoIqeWwde8LEfknpuKQ5wa5JGsEqkLIjHkuw1gMnTezpa4lELzXY/rfgViU7mA==', N'GWLENLN75TXBR2LHEXELFSM4G6LU6H3T', N'63493bcd-67c2-4f10-8369-84631fef0dc0', NULL, 0, 0, NULL, 1, 0)
@@ -86,6 +87,7 @@ INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [No
 INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'dff84bd5-c5dc-4205-99f7-0fb4e174e2ab', N'nevena', N'NEVENA', N'nevena@gmail.com', N'NEVENA@GMAIL.COM', 1, N'AQAAAAEAACcQAAAAEC9/DhP55BxYyGUWuAW5q4uf3nRrARqZIXmUNqZLi2NlVFAjcPfl5VxMvmK1exRqZQ==', N'B6CE6L7XTNT3U53JGTDJANTMRQTG6TM7', N'9ecfa6c4-38b6-481b-a9ff-4ca6064b3e1f', NULL, 0, 0, NULL, 1, 0)
 INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'e75222d6-a345-4d3f-a394-56fcab7a9eef', N'marko', N'MARKO', N'marko@gmail.com', N'MARKO@GMAIL.COM', 1, N'AQAAAAEAACcQAAAAEEapcOaqmCyvIxxTEU38/dg5aKlNTtwRDNdMrllGDoAKQrd3pCeQr4UXFvDDpd/cRw==', N'IC27RMZ2HRRGYNTBCYXFDIOGM34KQDJM', N'8abd6e3f-0de8-445f-9c39-b543a42e5702', NULL, 0, 0, NULL, 1, 0)
 INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'ff7017b3-2807-4004-bf9d-8342ecd0c774', N'ana', N'ANA', N'ana@gmail.com', N'ANA@GMAIL.COM', 1, N'AQAAAAEAACcQAAAAEOhRhhUyOLs1WuvXjzIyzQqn2pprBcoAI/d/+i/tKvs5/LvyAoaX9SuQWFf/3kjNNw==', N'BJX6MGB7DMKTK54GDK7RJXMSTUJTCPBU', N'fff8a30f-dbb7-43f8-aeb5-fbd32b0bebb2', NULL, 0, 0, NULL, 1, 0)
+INSERT [dbo].[AspNetUsers] ([Id], [UserName], [NormalizedUserName], [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) VALUES (N'565A6BAB-A5FA-49B3-AD4B-E2D2F7E8D2D8', N'bloodymary@gmail.com', N'BLOODYMARY@GMAIL.COM', N'bloodymary@gmail.com', N'BLOODYMARY@GMAIL.COM', 1, N'AQAAAAEAACcQAAAAEOHFDR+mJDlGtm+fN/X/FJwko1DbDbckE+GJqagCFH+zrIN3XoIRfLvX0V6aCaqQlA==', N'ADQQLK2P5TFSHBNM7QC5DKLFJKX2IWFS', N'535055b8-396d-42d2-a933-6c212b6a5745', NULL, 0, 0, NULL, 1, 0)
 GO
 INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'bcdd59c6-9ec3-42b3-a196-6ccdda4f06cc', N'58f7fb5f-09dc-4bee-813f-4e47940650c4')
 INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'16630510-68af-400b-918b-8d72e0a1fcab', N'93000374-46d9-44ef-ac96-6db416a28770')
@@ -97,6 +99,7 @@ INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'e75222d6-a345-4d3f
 INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'78309e36-da31-41ee-b9a4-bfa8351ceac6', N'd20bd231-b1fe-477b-be40-e4e38be41762')
 INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'dff84bd5-c5dc-4205-99f7-0fb4e174e2ab', N'd20bd231-b1fe-477b-be40-e4e38be41762')
 INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'ff7017b3-2807-4004-bf9d-8342ecd0c774', N'd20bd231-b1fe-477b-be40-e4e38be41762')
+INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'565A6BAB-A5FA-49B3-AD4B-E2D2F7E8D2D8', N'A8E3A800-3B37-4891-96E0-60664BF0167B')
 GO
 SET IDENTITY_INSERT [dbo].[AspNetUserClaims] ON 
 
@@ -110,6 +113,7 @@ INSERT [dbo].[AspNetUserClaims] ([Id], [UserId], [ClaimType], [ClaimValue]) VALU
 INSERT [dbo].[AspNetUserClaims] ([Id], [UserId], [ClaimType], [ClaimValue]) VALUES (8, N'ff7017b3-2807-4004-bf9d-8342ecd0c774', N'UserId', N'8')
 INSERT [dbo].[AspNetUserClaims] ([Id], [UserId], [ClaimType], [ClaimValue]) VALUES (9, N'dff84bd5-c5dc-4205-99f7-0fb4e174e2ab', N'UserId', N'9')
 INSERT [dbo].[AspNetUserClaims] ([Id], [UserId], [ClaimType], [ClaimValue]) VALUES (10, N'78309e36-da31-41ee-b9a4-bfa8351ceac6', N'UserId', N'10')
+INSERT [dbo].[AspNetUserClaims] ([Id], [UserId], [ClaimType], [ClaimValue]) VALUES (11, N'565A6BAB-A5FA-49B3-AD4B-E2D2F7E8D2D8', N'UserId', N'11')
 SET IDENTITY_INSERT [dbo].[AspNetUserClaims] OFF
 GO
 INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20221105154724_AddIdentity', N'5.0.17')

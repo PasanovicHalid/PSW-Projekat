@@ -128,6 +128,12 @@ namespace HospitalLibrary.Migrations.AuthenticationDb
                             Id = "58f7fb5f-09dc-4bee-813f-4e47940650c4",
                             ConcurrencyStamp = "76feb459-393f-45d5-be10-46df582dd946",
                             Name = "Manager"
+                        },
+                        new
+                        {
+                            Id = "A8E3A800-3B37-4891-96E0-60664BF0167B",
+                            ConcurrencyStamp = "55AD6AD6-0AAD-4917-8F61-1B5599E50EAD",
+                            Name = "BloodBank"
                         });
                 });
 

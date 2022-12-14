@@ -12,6 +12,7 @@ export class DoctorBloodRequest {
     requestState: RequestState = RequestState.Pending;
     bloodType: BloodType = BloodType.ABN;
     comment : string = '';
+    bloodBankId : number = -1;
 
     public combineWithBloodRequest(request : BloodRequest) {
         this.id = request.id;
@@ -20,5 +21,6 @@ export class DoctorBloodRequest {
         this.reason = request.reason;
         this.requestState = request.requestState;
         this.bloodType = request.bloodType;
+        this.bloodBankId= request.bloodBankId;
     }
 }

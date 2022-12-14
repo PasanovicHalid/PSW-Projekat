@@ -10,7 +10,7 @@ using IronPdf;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service.HostedServices
 {
     public class BloodReportHostedService : IHostedService
     {

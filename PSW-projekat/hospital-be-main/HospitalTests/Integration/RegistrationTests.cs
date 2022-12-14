@@ -4,6 +4,7 @@ using HospitalAPI.Controllers.PublicApp;
 using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.IntegrationConnection;
 using HospitalLibrary.Identity;
 using HospitalTests.Setup;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +25,8 @@ namespace HospitalTests.Integration
             return new AccountController(scope.ServiceProvider.GetRequiredService<UserManager<SecUser>>(), scope.ServiceProvider.GetRequiredService<SignInManager<SecUser>>(),
                                          scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<IEmailService>(),
                                          scope.ServiceProvider.GetRequiredService<IConfiguration>(), scope.ServiceProvider.GetRequiredService<IPersonService>(),
-                                         scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>()
+                                         scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>(),
+                                         scope.ServiceProvider.GetRequiredService<IIntegrationConnection>()
                                          );
         }
 

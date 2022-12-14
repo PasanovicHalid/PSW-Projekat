@@ -18,5 +18,8 @@ namespace IntegrationAPI.DTO
         [Url]
         [Required]
         public string ServerAddress { get; set; }
+
+        [Url]
+        public string GRPCServerAddress { get; set; }
     }
 }
