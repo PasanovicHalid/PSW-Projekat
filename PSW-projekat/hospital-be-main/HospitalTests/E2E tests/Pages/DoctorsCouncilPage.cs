@@ -38,7 +38,7 @@ namespace HospitalTests.E2E_tests.Pages
 
         public void InsertDoctorSelectButton(int number)
         {
-            DoctorSelectButton.getFirstSelectedOptions();
+           // DoctorSelectButton.getFirstSelectedOptions();
         }
 
 
