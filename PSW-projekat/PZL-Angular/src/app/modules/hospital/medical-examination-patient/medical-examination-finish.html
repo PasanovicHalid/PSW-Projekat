@@ -5,17 +5,17 @@
  
         <mat-form-field appearance="fill">
             <mat-label>Symptoms:</mat-label>
-            <input class="inputPolje" matInput *ngFor="let symptom of examinationProba.symptoms" [value]="symptom.name" disabled>
+            <input class="inputPolje" matInput *ngFor="let symptom of examination.symptoms" [value]="symptom.name" disabled>
         </mat-form-field><br>
 
         <mat-form-field appearance="fill">
             <mat-label>Report:</mat-label>
-            <input class="inputPolje" matInput [(ngModel)]="examinationProba.report" disabled>
+            <input class="inputPolje" wrap="soft" matInput [(ngModel)]="examination.report" disabled>
         </mat-form-field><br>
 
         <mat-form-field appearance="fill">
             <mat-label>Prescribed medicines:</mat-label>
-            <input class="inputPolje" matInput *ngFor="let prescription of examinationProba.prescriptions" [value]="prescription.description" disabled>
+            <input class="inputPolje" matInput *ngFor="let medicine of pom" [value]="medicine.name" disabled>
         </mat-form-field><br>
 
         <a>

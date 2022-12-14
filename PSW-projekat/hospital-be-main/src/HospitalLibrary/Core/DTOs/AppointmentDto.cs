@@ -4,7 +4,7 @@ namespace HospitalLibrary.Core.DTOs
 {
     public class AppointmentDto
     {
-        public int AppointmentId { get; set; }
+        public int Id { get; set; }
         public DateTime DateTime { get; set; }
         public DateTime CancelationDate { get; set; }
 
@@ -12,9 +12,9 @@ namespace HospitalLibrary.Core.DTOs
         public DoctorDto Doctor { get; set; }
 
         public AppointmentDto() { }
-        public AppointmentDto(int appointmentId, DateTime dateTime, DateTime cancelationDate, PatientDto patient, DoctorDto doctor)
+        public AppointmentDto(int id, DateTime dateTime, DateTime cancelationDate, PatientDto patient, DoctorDto doctor)
         {
-            AppointmentId = appointmentId;
+            Id = id;
             DateTime = dateTime;
             CancelationDate = cancelationDate;
             Patient = patient;

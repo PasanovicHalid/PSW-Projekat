@@ -72,6 +72,7 @@ namespace HospitalAPI.Controllers.PrivateApp
         {
             appointment.Doctor = _doctorService.GetById(appointment.Doctor.Id);
             appointment.Patient = _patientService.GetById(appointment.Patient.Id);
+            appointment.CancelationDate = new DateTime();
 
             if (!ModelState.IsValid)
             {
@@ -90,21 +91,21 @@ namespace HospitalAPI.Controllers.PrivateApp
                 return BadRequest(ModelState);
             }
 
-            if (id != appointmentDto.AppointmentId)
+            if (id != appointmentDto.Id)
             {
                 return BadRequest();
             }
-            Appointment appointment = _appointmentService.GetById(appointmentDto.AppointmentId);
+            Appointment appointment = _appointmentService.GetById(appointmentDto.Id);
             appointment.DateTime = appointmentDto.DateTime;
 
             try
             {
-                _appointmentService.Update(appointmentDto);
+                _appointmentService.Update(appointment);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 //return BadRequest();
-                return BadRequest(ex.Message);
+                return BadRequest();
 
             }
 

@@ -131,7 +131,7 @@ namespace HospitalLibrary.Core.Service
                 appointmentDto.Doctor = doctorDto;
                 appointmentDto.DateTime = appointment.DateTime;
 
-                appointmentDto.AppointmentId = appointment.Id;
+                appointmentDto.Id = appointment.Id;
 
                 appointmentsDtos.Add(appointmentDto);
             }

@@ -33,5 +33,21 @@ namespace HospitalAPI.Controllers.PublicApp
             }
             return Ok(doctorDtp);
         }
+
+        [HttpGet("doctorDto/{personId}")]
+        public ActionResult GetDoctorByPersonId(int personId)
+        {
+            var doctor = _doctorService.GetDoctorByPersonId(personId);
+
+            DoctorDto doctorDto = new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email,
+                doctor.Person.Role);
+
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctorDto);
+        }
     }
 }

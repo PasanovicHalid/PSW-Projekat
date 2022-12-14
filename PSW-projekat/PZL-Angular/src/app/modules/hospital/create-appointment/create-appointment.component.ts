@@ -7,6 +7,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../services/user.service';
 import { PatientDto } from '../model/patientDto';
 import { DoctorDto } from '../model/doctorDto';
+import { DoctorService } from '../services/doctor.service';
+import { Doctor } from '../model/doctor';
 
 
 @Component({
@@ -16,18 +18,22 @@ import { DoctorDto } from '../model/doctorDto';
 })
 export class CreateAppointmentComponent implements OnInit {
 
-  //ovo ne treba tako!
   public appointment: Appointment = new Appointment(0, false, '', '', Date(), Date());
   public dataSourceP = new MatTableDataSource<PatientDto>();
-  public dataSourceD = new MatTableDataSource<DoctorDto>();
   public patients: PatientDto[] = [];
-  public doctors: DoctorDto[] = [];
 
+  public doctor: DoctorDto = new DoctorDto(0, '','','', '', 0);
+  public doctorProba: DoctorDto = new DoctorDto(0, '','','', '', 0);
 
-  //constructor() { }
-  constructor(private appointmentService: AppointmentService, private userService: UserService, private router: Router) { }
+  constructor(private appointmentService: AppointmentService, private userService: UserService, private router: Router,
+    private doctorService: DoctorService) { }
 
   ngOnInit(): void {
+
+    this.doctorService.getDoctorByPersonId(Number(localStorage.getItem("currentUserId"))).subscribe(res => {
+      this.doctor = res;
+      this.doctorProba = new DoctorDto(this.doctor.id, this.doctor.name, this.doctor.surname, this.doctor.email, this.doctor.username, this.doctor.role);
+    }); 
    
     this.userService.GetAllPatients().subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
@@ -38,31 +44,23 @@ export class CreateAppointmentComponent implements OnInit {
       console.log(this.patients);
       this.dataSourceP.data = this.patients;
     })
-
-    
-    this.userService.GetAllDoctors().subscribe(res => {
-      let result = Object.values(JSON.parse(JSON.stringify(res)));
-      result.forEach((element: any) => {
-        var app = new DoctorDto(element.id, element.name, element.surname, element.email, element.username, element.role);
-        this.doctors.push(app);
-      });
-      console.log(this.doctors);
-      this.dataSourceD.data = this.doctors;
-    })
-
   }
+  
   
   public createAppointment() {
     console.log(this.appointment);
+    this.appointment.cancelationDate = this.appointment.dateTime;
+    this.appointment.doctor = this.doctorProba;
+
     if (!this.isValidInput()) return;
+
     this.appointmentService.createAppointment(this.appointment).subscribe(res => {
-      //console.log(res,this.appointment);
       this.router.navigate(['/appointments']);
     });
+
   }
 
   private isValidInput(): boolean {
-    return this.appointment?.dateTime.toString() != ''  && this.appointment?.doctor.toString() != '' && this.appointment?.patient.toString() != '';
+    return this.appointment?.dateTime.toString() != ''&& this.appointment?.patient.toString() != '';
   }
-
 }

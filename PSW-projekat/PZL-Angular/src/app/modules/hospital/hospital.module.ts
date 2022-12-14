@@ -26,7 +26,7 @@ import { AuthGuardDoctor } from '../hospital/services/authDoctor.guard';
 import { AuthGuardManager } from '../hospital/services/authManager.guard';
 import { CreateBloodRequestComponent } from './create-blood-request/create-blood-request.component';
 import { BloodConsumptionComponent } from "./blood-consumption/blood-consumption.component";
-import { MedicalExaminationFinish, MedicalExaminationPatientComponent, MedicalPrescriptionShowComponent, MedicalPrescriptionComponent, MedicalReportComponent } from './medical-examination-patient/medical-examination-patient.component';
+import { MedicalExaminationFinish, MedicalExaminationPatientComponent, MedicalPrescriptionShowComponent, MedicalReportComponent } from './medical-examination-patient/medical-examination-patient.component';
 import { ShowMedicinePipe } from './medical-examination-patient/show-medicine.pipe';
 
 
@@ -49,7 +49,6 @@ const routes: Routes = [
   { path: 'examinations/add/:id', component: MedicalExaminationPatientComponent},
   { path: 'examinations/report', component: MedicalReportComponent},
   { path: 'examinations/prescriptionShow', component: MedicalPrescriptionShowComponent},
-  { path: 'examinations/prescription', component: MedicalPrescriptionComponent},
   { path: 'examinations/finish', component: MedicalExaminationFinish}
 
 ];
@@ -73,7 +72,6 @@ const routes: Routes = [
     MedicalExaminationPatientComponent,
     MedicalReportComponent,
     MedicalPrescriptionShowComponent,
-    MedicalPrescriptionComponent,
     MedicalExaminationFinish,
     ShowMedicinePipe
   ],
