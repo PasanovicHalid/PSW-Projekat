@@ -101,6 +101,30 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ScheduledOrders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DayOfMonth = table.Column<int>(type: "int", nullable: false),
+                    APlus = table.Column<int>(type: "int", nullable: false),
+                    BPlus = table.Column<int>(type: "int", nullable: false),
+                    ABPlus = table.Column<int>(type: "int", nullable: false),
+                    OPlus = table.Column<int>(type: "int", nullable: false),
+                    AMinus = table.Column<int>(type: "int", nullable: false),
+                    BMinus = table.Column<int>(type: "int", nullable: false),
+                    ABMinus = table.Column<int>(type: "int", nullable: false),
+                    OMinus = table.Column<int>(type: "int", nullable: false),
+                    BankEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BankApiKey = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HospitalEmail = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ScheduledOrders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tenders",
                 columns: table => new
                 {
@@ -160,6 +184,9 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "ReportSettings");
+
+            migrationBuilder.DropTable(
+                name: "ScheduledOrders");
 
             migrationBuilder.DropTable(
                 name: "Tenders");
