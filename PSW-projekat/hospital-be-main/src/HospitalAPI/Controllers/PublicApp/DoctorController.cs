@@ -39,5 +39,17 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             return Ok(_doctorService.GetAllCouncilByDoctor(doctorId));
         }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var doctor = _doctorService.GetById(id);
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(doctor);
+        }
     }
 }
