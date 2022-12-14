@@ -35,7 +35,6 @@ namespace HospitalAPI.Controllers.PublicApp
         {
             Doctor doctor = _doctorService.GetById(appointmentDto.DoctorDto.Id);
             Patient patient = _patientService.getPatientByPersonId(appointmentDto.PersonId);
-            //get appointment by date and time for doctor for extra validation
 
             if (doctor == null || patient == null)
             {
@@ -48,6 +47,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 DateTime = appointmentDto.ScheduledDate.AddHours(1),
                 CancelationDate = null
             };
+
+            //if(_appointmentService.
 
             _appointmentService.ScheduleAppointment(appointment);
             return Ok();
