@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Tenders
+namespace IntegrationLibrary.Core.Service
 {
-    public interface ITenderService : ICRUDService<Tender>
+    public interface IBidService : ICRUDService<Bid>
     {
-        public IEnumerable<Tender> GetAllOpen();
+        IEnumerable<Bid> GetByTenderId(int id);
+
+        void SelectWinner(int id);
     }
 }

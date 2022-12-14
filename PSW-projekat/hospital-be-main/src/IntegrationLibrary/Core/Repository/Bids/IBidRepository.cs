@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository.Tenders
+namespace IntegrationLibrary.Core.Repository.Bids
 {
-    public interface ITenderRepository : ICRUDRepository<Tender>
+    public interface IBidRepository : ICRUDRepository<Bid>
     {
-        public IEnumerable<Tender> GetAllOpen();
+        IEnumerable<Bid> GetByTenderId(int id);
     }
 }

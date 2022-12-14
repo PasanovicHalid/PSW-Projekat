@@ -9,6 +9,7 @@ import { PagesModule } from "./modules/pages/pages.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtInterceptorService } from "./helpers/jwt.interceptor.service";
 
+
 @NgModule({
   declarations: [
     AppComponent

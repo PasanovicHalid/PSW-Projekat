@@ -23,6 +23,7 @@ export class ViewTendersComponent implements OnInit {
   ngOnInit(): void {
     if(localStorage.getItem("currentUserRole") == 'Manager'){
       this.getTenders();
+      
     }
     else{
       this.router.navigate(['/forbidden-access']);
@@ -31,14 +32,19 @@ export class ViewTendersComponent implements OnInit {
   public getTenders(){
     this.tenderService.getTenders().subscribe(res => {
         this.dataSource.data = res;
-        this.tenders = res;
-        console.log(res)
+        //console.log(res)
       }, (error) => {
         this.errorMessage = error;
       });
   }
-  public chooseTender(id:number){
-    this.router.navigate(['/view-tender', id]);
+  public chooseTender(selcetedTender:Tender){
+    if(selcetedTender.state == TenderState.OPEN){
+      this.tenderService.selectedTender = selcetedTender;
+      this.router.navigate(['/view-tender', selcetedTender.id]);
+    }else{
+      console.log("Tender nije otvoren!");
+      
+    }
   }
   getStateByValue(value: number) {
     return Object.values(TenderState)[value]
