@@ -1,10 +1,12 @@
 ﻿using MimeKit.Cryptography;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,6 +15,7 @@ namespace HospitalTests.e2e_T10
     public class CreateFeedbackTests : IDisposable
     {
         private readonly IWebDriver driver;
+        private Pages.LoginPage loginPage;
         private Pages.CreateFeedbackPage feedbackPage;
 
         public CreateFeedbackTests()
@@ -29,11 +32,19 @@ namespace HospitalTests.e2e_T10
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("nevena");
+            loginPage.InsertPassword("123");
+            loginPage.SubmitForm();
+            Thread.Sleep(3000);
+            loginPage.ErrorDivDisplayed().ShouldBe(false);
             feedbackPage = new Pages.CreateFeedbackPage(driver);
             feedbackPage.Navigate();
 
-            Assert.True(feedbackPage.DescriptionElementDisplayed());
-            Assert.True(feedbackPage.SubmitButtonElementDisplayed());
+            //Assert.True(feedbackPage.DescriptionElementDisplayed());
+            //Assert.True(feedbackPage.SubmitButtonElementDisplayed());
 
         }
         public void Dispose()
