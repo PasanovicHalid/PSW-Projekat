@@ -133,6 +133,12 @@ namespace HospitalAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
 
+            services.AddScoped<ISymptomService, SymptomService>();
+            services.AddScoped<ISymptomRepository, SymptomRepository>();
+            
+            services.AddScoped<IExaminationService, ExaminationService>();
+            services.AddScoped<IExaminationRepository, ExaminationRepository>();
+
             services.AddScoped<IIntegrationConnection, IntegrationHTTPConnection>();
 
         }

@@ -1,0 +1,34 @@
+<div class="container">
+    <div>
+
+        <h1>Summarum</h1>
+ 
+        <mat-form-field appearance="fill">
+            <mat-label>Symptoms:</mat-label>
+            <input class="inputPolje" matInput *ngFor="let symptom of examinationProba.symptoms" [value]="symptom.name" disabled>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Report:</mat-label>
+            <input class="inputPolje" matInput [(ngModel)]="examinationProba.report" disabled>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Prescribed medicines:</mat-label>
+            <input class="inputPolje" matInput *ngFor="let prescription of examinationProba.prescriptions" [value]="prescription.description" disabled>
+        </mat-form-field><br>
+
+        <a>
+            <button (click)="back()" class="backDugme" mat-stroked-button>
+                 Back 
+            </button>
+        </a>
+
+        <a >
+            <button (click)="createExamination()" class="nextDugme1" mat-stroked-button>
+                 Finish 
+            </button>
+        </a>
+       
+    </div>
+</div>

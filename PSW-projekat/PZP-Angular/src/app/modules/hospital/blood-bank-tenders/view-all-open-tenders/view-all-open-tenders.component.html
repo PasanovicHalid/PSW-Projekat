@@ -1,0 +1,24 @@
+<div class="container">
+    <h5>{{errorMessage}}</h5>
+    <div class="table-header" *ngIf="!errorMessage">
+        <p class="table-title">Tenders</p>
+    </div>
+    <table mat-table [dataSource]="dataSource" *ngIf="!errorMessage">
+        <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef class="cell-center">Date</th>
+            <td mat-cell *matCellDef="let tender" class="clickable cell-center">{{tender.dueDate}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Demands">
+            <th mat-header-cell *matHeaderCellDef class="cell-center">Number of demands</th>
+            <td mat-cell *matCellDef="let tender" class="clickable cell-center">{{tender.demands.length}}</td>
+        </ng-container>
+        <ng-container matColumnDef="choseButton">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"></th>
+            <td mat-cell *matCellDef="let tender" class="clickable cell-center">
+            <button (click)="selectTender(tender)">Details</button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

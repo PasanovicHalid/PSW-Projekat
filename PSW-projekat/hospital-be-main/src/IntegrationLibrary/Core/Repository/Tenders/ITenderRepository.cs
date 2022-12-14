@@ -10,5 +10,6 @@ namespace IntegrationLibrary.Core.Repository.Tenders
 {
     public interface ITenderRepository : ICRUDRepository<Tender>
     {
+        public IEnumerable<Tender> GetAllOpen();
     }
 }

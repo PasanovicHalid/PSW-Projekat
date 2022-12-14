@@ -13,7 +13,7 @@ import { AppointmentService } from '../services/appointment.service';
 })
 export class UpdateAppointmentComponent implements OnInit {
 
-  public appointment: Appointment = new Appointment(0, false, '', '', Date());
+  public appointment: Appointment = new Appointment(0, false, '', '', Date(), Date());
   public newPatient1: PatientDto = new PatientDto(0, '','','','', 0);
   public odgovor: Response;
 

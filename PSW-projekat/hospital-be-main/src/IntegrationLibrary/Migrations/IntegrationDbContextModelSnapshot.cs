@@ -152,6 +152,33 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("ReportSettings");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Bid", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TenderOfBidId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bids");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>
                 {
                     b.Property<int>("Id")

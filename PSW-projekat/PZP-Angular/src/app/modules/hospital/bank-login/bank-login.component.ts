@@ -34,6 +34,7 @@ export class BankLoginComponent implements OnInit {
       localStorage.setItem('currentUser', res.token);
       localStorage.setItem('currentUserRole', tokenInfo.Role);
       localStorage.setItem('currentUserId', tokenInfo.Id);
+      localStorage.setItem('currentUserEmail',tokenInfo.Email);
 
       if(localStorage.getItem('currentUserRole') == 'BloodBank')
         this.router.navigate(['/bank-home']);
