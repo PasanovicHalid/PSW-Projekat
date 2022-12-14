@@ -8,6 +8,7 @@ import { Observable, map } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { AppointmentsService } from '../services/appointments.service';
 import { DateAndDoctorForNewAppointmentDto } from '../model/DateAndDoctorForNewAppointmentDto.model';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-schedule-appointment',
@@ -21,6 +22,8 @@ export class ScheduleAppointmentComponent implements OnInit {
 
   public appointmentForm: FormGroup | any;
 
+  public today:Date = new Date();
+
   public dateForm!: FormGroup;
   public specializationForm!: FormGroup;
   public doctorForm!: FormGroup;
@@ -28,7 +31,7 @@ export class ScheduleAppointmentComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation> | undefined;
 
-  constructor(private router: Router, private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appointmentsService: AppointmentsService) { }
+  constructor(private router: Router, private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appointmentsService: AppointmentsService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.stepperOrientation = this.breakpointObserver
@@ -75,5 +78,11 @@ export class ScheduleAppointmentComponent implements OnInit {
     this.appointmentsService.scheduleAppointment(appointmentInfo).subscribe(res => {
       this.router.navigate(['/homePatient']);
     });
+  }
+
+  logout(){
+    this.loginService.logout().subscribe(res => {
+      
+    }) 
   }
 }
