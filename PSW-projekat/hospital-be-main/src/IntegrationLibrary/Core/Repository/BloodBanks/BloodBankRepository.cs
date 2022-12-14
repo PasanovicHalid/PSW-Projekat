@@ -88,6 +88,13 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
                     select banks).FirstOrDefault();
         }
 
+        public BloodBank getByEmail(string email)
+        {
+            return (from banks in _context.BloodBanks
+                    where banks.Email.EmailAddress == email
+                    select banks).ToList()[0];
+        }
+
         public BloodBank GetById(int id)
         {
             return _context.BloodBanks.Find(id);

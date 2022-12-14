@@ -16,6 +16,18 @@ namespace IntegrationLibrary.Core.Service.Tenders
             _tenderRepository = tenderRepository;
         }
 
+        public IEnumerable<Tender> GetAllOpen()
+        {
+            try
+            {
+                return _tenderRepository.GetAllOpen();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public void Create(Tender entity)
         {
             try

@@ -8,6 +8,8 @@ import { Tender } from '../model/tender.model';
 })
 export class TenderService {
 
+  selectedTender : Tender = new Tender();
+
   integrationApiHost: string = "http://localhost:5000/";
   headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 

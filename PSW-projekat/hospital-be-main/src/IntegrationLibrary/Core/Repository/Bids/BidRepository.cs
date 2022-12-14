@@ -7,45 +7,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository.Tenders
+namespace IntegrationLibrary.Core.Repository.Bids
 {
-    public class TenderRepository : ITenderRepository
+    public class BidRepository :IBidRepository
     {
         private readonly IntegrationDbContext _context;
-
-        public TenderRepository(IntegrationDbContext context)
+        public BidRepository(IntegrationDbContext context) 
         {
             _context = context;
         }
 
-        public void Create(Tender entity)
+        public void Create(Bid entity)
         {
-            _context.Tenders.Add(entity);
+            _context.Bids.Add(entity);
             _context.SaveChanges();
         }
 
-        public void Delete(Tender entity)
+        public void Delete(Bid entity)
         {
-            throw new NotImplementedException();
+            _context.Bids.Remove(entity);
+            _context.SaveChanges();
         }
 
-        public IEnumerable<Tender> GetAll()
+        public IEnumerable<Bid> GetAll()
         {
-            return _context.Tenders.ToList();
+            return _context.Bids.ToList();
         }
 
-        public Tender GetById(int id)
+        public Bid GetById(int id)
         {
-            return _context.Tenders.Find(id);
-        }
-        public IEnumerable<Tender> GetAllOpen()
-        {
-            return (from tenders in _context.Tenders
-                    where tenders.State == TenderState.OPEN
-                    select tenders).ToList();
+            return _context.Bids.Find(id);
         }
 
-        public void Update(Tender entity)
+        public IEnumerable<Bid> GetByTenderId(int id)
+        {
+            return (from bids in _context.Bids
+                    where bids.TenderOfBidId == id
+                    select bids).ToList();
+        }
+
+        public void Update(Bid entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             try
