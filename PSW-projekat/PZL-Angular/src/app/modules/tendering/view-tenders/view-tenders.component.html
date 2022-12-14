@@ -1,0 +1,26 @@
+<div class="container">
+    <h5>{{errorMessage}}</h5>
+    <div class="table-header" *ngIf="!errorMessage">
+        <p class="table-title">Tenders</p>
+    </div>
+    <button (click)="createTender()">Add new tender</button>
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Open Until</th>
+            <th scope="col">State</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ten of tenders, let i = index">
+            <td *ngIf="checkDate(ten.dueDate) == true" 
+            class="clickable cell-center" (click)="chooseTender(ten.id)">{{ten.dueDate | date:'medium'}}</td>
+            <td *ngIf="checkDate(ten.dueDate) == false"
+            class="clickable cell-center" (click)="chooseTender(ten.id)">Open until closed</td>
+            <td
+            class="clickable cell-center" (click)="chooseTender(ten.id)">{{getStateByValue(ten.state)}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

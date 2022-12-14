@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option csharp_namespace = "IntegrationLibrary.Protos";
+package proto.emergencyBloodRequests;
+import "Protos/emergencyRequest.proto";
+import "Protos/checkAvailable.proto";
+
+service EmergencyRequestGrpcService {
+	rpc requestBlood (EmergencyRequest) returns (EmergencyResponse);
+
+	rpc checkIfBloodIsAvailable (CheckRequest) returns (CheckResponse);
+}

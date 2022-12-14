@@ -1,12 +1,15 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers.PrivateApp
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -14,37 +17,61 @@ namespace HospitalAPI.Controllers.PrivateApp
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        private readonly IUserService _userService;
+        private readonly IDoctorService _doctorService;
+        private readonly IPatientService _patientService;
 
-        public AppointmentController(IAppointmentService appointmentService, IUserService userService)
+
+        public AppointmentController(IAppointmentService appointmentService, IDoctorService doctorService, IPatientService patientService)
         {
             _appointmentService = appointmentService;
-            _userService = userService;
+            _doctorService = doctorService;
+            _patientService = patientService;
         }
 
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_appointmentService.GetAll());
+            List<AppointmentDto> appointmentDto = new List<AppointmentDto>();
+            foreach (var appointment in _appointmentService.GetAll())
+            {
+                PatientDto patientDto = new PatientDto(appointment.Patient.Id, appointment.Patient.Person.Name,
+                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email, appointment.Patient.Person.Role);
+
+                DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
+                   appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
+
+                appointmentDto.Add(new AppointmentDto(appointment.Id, appointment.DateTime, patientDto, doctorDto));
+
+            }
+
+            return Ok(appointmentDto);
         }
 
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
             var appointment = _appointmentService.GetById(id);
+
+            PatientDto patientDto = new PatientDto(appointment.Patient.Id, appointment.Patient.Person.Name,
+                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email, appointment.Patient.Person.Role);
+
+            DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
+               appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
+
+            AppointmentDto appointmentDto = new AppointmentDto(appointment.Id, appointment.DateTime, patientDto, doctorDto);
             if (appointment == null)
             {
                 return NotFound();
             }
 
-            return Ok(appointment);
+            return Ok(appointmentDto);
         }
 
         [HttpPost]
         public ActionResult Create(Appointment appointment)
         {
-            appointment.Doctor = _userService.GetById(appointment.Doctor.Id);
-            appointment.Patient = _userService.GetById(appointment.Patient.Id);
+            appointment.Doctor = _doctorService.GetById(appointment.Doctor.Id);
+            appointment.Patient = _patientService.GetById(appointment.Patient.Id);
 
             if (!ModelState.IsValid)
             {
@@ -52,25 +79,27 @@ namespace HospitalAPI.Controllers.PrivateApp
             }
 
             _appointmentService.Create(appointment);
-            return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id, Appointment appointment)
+        public ActionResult Update(int id, AppointmentDto appointmentDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != appointment.Id)
+            if (id != appointmentDto.AppointmentId)
             {
                 return BadRequest();
             }
+            Appointment appointment = _appointmentService.GetById(appointmentDto.AppointmentId);
+            appointment.DateTime = appointmentDto.DateTime;
 
             try
             {
-                _appointmentService.Update(appointment);
+                _appointmentService.Update(appointmentDto);
             }
             catch(Exception ex)
             {
@@ -79,7 +108,7 @@ namespace HospitalAPI.Controllers.PrivateApp
 
             }
 
-            return Ok(appointment);
+            return Ok();
         }
 
         [HttpDelete("{id}")]

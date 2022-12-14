@@ -1,0 +1,31 @@
+<div class="container">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>*Select a blood bank</mat-label>
+            <mat-select name="bloodRequest.bloodBankID" id="SelectBankDropDown" [(ngModel)]="this.bloodRequest.bloodBankId" matInput>
+                <mat-option *ngFor="let item of bloodBanks" [value]="item.id" [id]="item.name">{{item.name}}</mat-option>
+            </mat-select>
+        </mat-form-field ><br>
+        <mat-form-field appearance="fill">
+            <mat-label>*Select blood type</mat-label>
+            <mat-select name="bloodTypes" id="SelectBloodTypeDropDown" [(ngModel)]="this.bloodRequest.bloodType" matInput>
+                <mat-option value="Aplus" id="Aplus">A+</mat-option>
+                <mat-option value="Aminus" id="Aminus">A-</mat-option>
+                <mat-option value="Bplus" id="Bplus">B+</mat-option>
+                <mat-option value="Bminus" id="Bminus">B-</mat-option>
+                <mat-option value="ABplus" id="ABplus">AB+</mat-option>
+                <mat-option value="ABminus" id="ABminus">AB-</mat-option>
+                <mat-option value="Oplus" id="Oplus">O+</mat-option>
+                <mat-option value="Ominus" id="Ominus">O-</mat-option>
+              </mat-select>
+            </mat-form-field ><br>         
+        <mat-form-field appearance="fill"  >
+            <mat-label>Quantity(units - max 10)</mat-label>
+            <input type="number" min="0" max="10" id="QuanityInput" [(ngModel)]="bloodRequest.bloodQuantity" matInput>
+        </mat-form-field><br>
+        <button mat-stroked-button id="Submit" (click)="sendBloodRequest()">
+            Submit
+        </button>
+    </div>
+  </div>
+  

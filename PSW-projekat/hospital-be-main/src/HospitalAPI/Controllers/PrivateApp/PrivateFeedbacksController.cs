@@ -2,11 +2,13 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.PrivateApp
 {
+    [Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -19,12 +21,14 @@ namespace HospitalAPI.Controllers.PrivateApp
             _feedbackService = feedbackService;
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpGet]
         public ActionResult GetAllFeedbackDtos()
         {
             return Ok(_feedbackService.GetAllFeedbackDtos());
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPut("approve")]
         public ActionResult Approve(FeedbackDto feedbackDto)
         {
@@ -36,6 +40,7 @@ namespace HospitalAPI.Controllers.PrivateApp
             return Ok(feedbackDto);
         }
 
+        [Authorize(Roles = "Manager")]
         [HttpPut("reject")]
         public ActionResult Reject(FeedbackDto feedbackDto)
         {

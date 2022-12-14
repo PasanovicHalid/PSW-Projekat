@@ -2,6 +2,7 @@ import { HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Appointment } from '../model/appointment.model';
+import { PatientDto } from '../model/patientDto';
 import { User } from '../model/user';
 import { AppointmentService } from '../services/appointment.service';
 
@@ -13,7 +14,7 @@ import { AppointmentService } from '../services/appointment.service';
 export class UpdateAppointmentComponent implements OnInit {
 
   public appointment: Appointment = new Appointment(0, false, '', '', Date());
-  public newPatient1: User = new User(0, '', '', 0);
+  public newPatient1: PatientDto = new PatientDto(0, '','','','', 0);
   public odgovor: Response;
 
   
@@ -24,6 +25,8 @@ export class UpdateAppointmentComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.appointmentService.getAppointment(params['id']).subscribe(res => {
+        console.log(params['id']);
+        console.log(res);
         this.newPatient1 = res.patient;
         this.appointment = res;
       })
@@ -33,6 +36,7 @@ export class UpdateAppointmentComponent implements OnInit {
   public updateAppointment(): void {
     if (!this.isValidInput()) return;
     this.appointmentService.updateAppointment(this.appointment).subscribe(res => {
+      console.log(this.appointment);
       this.router.navigate(['/appointments']);
     });
   }

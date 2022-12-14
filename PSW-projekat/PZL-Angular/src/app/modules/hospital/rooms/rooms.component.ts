@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Room } from 'src/app/modules/hospital/model/room.model';
 import { RoomService } from 'src/app/modules/hospital/services/room.service';
+import { RoomDto } from '../model/roomDto';
 
 @Component({
   selector: 'app-rooms',
@@ -11,9 +12,9 @@ import { RoomService } from 'src/app/modules/hospital/services/room.service';
 })
 export class RoomsComponent implements OnInit {
 
-  public dataSource = new MatTableDataSource<Room>();
+  public dataSource = new MatTableDataSource<RoomDto>();
   public displayedColumns = ['number', 'floor', 'update', 'delete'];
-  public rooms: Room[] = [];
+  public rooms: RoomDto[] = [];
 
   constructor(private roomService: RoomService, private router: Router) { }
 

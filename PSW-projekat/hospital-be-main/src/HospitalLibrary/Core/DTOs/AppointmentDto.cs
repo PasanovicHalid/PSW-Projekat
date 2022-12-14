@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.DTOs
 {
@@ -10,7 +6,16 @@ namespace HospitalLibrary.Core.DTOs
     {
         public int AppointmentId { get; set; }
         public DateTime DateTime { get; set; }
-        public UserDto Patinet { get; set; }
-        public UserDto Doctor { get; set; }
+        public PatientDto Patient { get; set; }
+        public DoctorDto Doctor { get; set; }
+
+        public AppointmentDto() { }
+        public AppointmentDto(int appointmentId, DateTime dateTime, PatientDto patient, DoctorDto doctor)
+        {
+            AppointmentId = appointmentId;
+            DateTime = dateTime;
+            Patient = patient;
+            Doctor = doctor;
+        }
     }
 }

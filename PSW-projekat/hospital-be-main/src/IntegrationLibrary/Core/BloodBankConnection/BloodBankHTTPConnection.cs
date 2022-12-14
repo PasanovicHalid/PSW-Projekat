@@ -14,8 +14,8 @@ namespace IntegrationLibrary.Core.BloodBankConnection
         private static string bloodType;
         private static int quantity;
         private static String bankEmail;
-        private static Boolean bankResponse;
-        private static String bankAPI; 
+        private static String bankAPI;
+        private static byte[] pdfFile;
 
         public bool SendBloodRequest(BloodBank bank, string bType, int quant)
         {
@@ -25,12 +25,10 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             };  
             bloodType = bType;
             quantity = quant;
-            bankEmail = bank.Email;
+            bankEmail = bank.Email.EmailAddress;
             bankAPI = bank.ApiKey;
 
-            GetAsync(client).Wait();
-
-            return bankResponse;
+            return GetAsync(client).Result;
         }
         static async Task<bool> GetAsync(HttpClient httpClient)
         {
@@ -41,9 +39,59 @@ namespace IntegrationLibrary.Core.BloodBankConnection
             response.EnsureSuccessStatusCode();
             
             string hasBlood = await response.Content.ReadAsStringAsync();
-            bankResponse = Boolean.Parse(hasBlood);
-            return bankResponse;            
-            
+            return Boolean.Parse(hasBlood);
+        }
+
+        public async Task<bool> SendBloodReports(BloodBank bank, byte[] pdf)
+        {
+            client = new()
+            {
+                BaseAddress = new Uri(bank.ServerAddress)
+            };
+            pdfFile = pdf;
+            bankEmail = bank.Email.EmailAddress;
+            bankAPI = bank.ApiKey;
+
+            return PostAsync(client).Result;
+        }
+
+        static async Task<bool> PostAsync(HttpClient httpClient)
+        {
+            string isSuccessful = "false";
+            client.Timeout = TimeSpan.FromSeconds(120);
+            ByteArrayContent byteContent = new ByteArrayContent(pdfFile);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bankAPI);
+            using HttpResponseMessage response = await httpClient.PostAsync("api/bloodbank/" + bankEmail, byteContent);
+
+            response.EnsureSuccessStatusCode();
+
+            isSuccessful = await response.Content.ReadAsStringAsync();
+            return Boolean.Parse(isSuccessful);
+
+        }
+
+        public async Task<int> GetBlood(BloodBank bank, string bType, int quant)
+        {
+            client = new()
+            {
+                BaseAddress = new Uri(bank.ServerAddress)
+            };
+
+            return GetAsync(client, bank, bType, quant).Result;
+        }
+
+        static async Task<int> GetAsync(HttpClient httpClient, BloodBank bank, string bType, int quant)
+        {
+            int blood = -1;
+            client.Timeout = TimeSpan.FromSeconds(15);
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + bank.ApiKey);
+            using HttpResponseMessage response = await httpClient.GetAsync("api/bloodbank/get/" + bank.Email.EmailAddress + "/" + bType + "/" + quant);
+
+            response.EnsureSuccessStatusCode();
+
+            string hasBlood = await response.Content.ReadAsStringAsync();
+            blood = Int32.Parse(hasBlood);
+            return blood;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace HospitalLibrary.Settings
 {
@@ -10,9 +9,20 @@ namespace HospitalLibrary.Settings
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+        public DbSet<Patient> Patients { get; set; }
         public DbSet<WorkingDay> WorkingDays { get; set; }
-
+        public DbSet<Allergy> Allergies { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<PatientAllergies> PatientAllergies { get; set; }
+        public DbSet<Treatment> Treatments { get; set; }
+        public DbSet<Bed> Beds { get; set; }
+        public DbSet<Blood> Bloods { get; set; }
+        public DbSet<HistoryTreatment> HistoryTreatments { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Therapy> Therapys { get; set; }
+        public DbSet<DoctorBloodConsumption> BloodConsumptions { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -20,21 +30,14 @@ namespace HospitalLibrary.Settings
         {
 
             modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, Number = "101A", Floor = 1 },
-                new Room() { Id = 2, Number = "204", Floor = 2 },
-                new Room() { Id = 3, Number = "305B", Floor = 3 }
-            );
+                new Room() { Id = 1, Number = "101A", RoomType = RoomType.rehabilitationRoom, Floor = 1, Deleted = false },
+                new Room() { Id = 2, Number = "204", RoomType = RoomType.rehabilitationRoom, Floor = 2, Deleted = false },
+                new Room() { Id = 3, Number = "305B", RoomType = RoomType.rehabilitationRoom, Floor = 3, Deleted = false },
+                new Room() { Id = 4, Number = "STORAGE", RoomType = RoomType.storage, Floor = 3, Deleted = false }
 
-            modelBuilder.Entity<User>().HasData(
-                new User() { Id = 1, Name = "Milan", Surname = "Milankovic", Role = Role.doctor, Email = "milan@gmail.com", Username = "milan", Password = "123", Deleted = false},
-                new User() { Id = 2, Name = "Pera", Surname = "Petrovic", Role = Role.manager, Email = "pera@gmail.com", Username = "pera", Password = "123", Deleted = false },
-                new User() { Id = 3, Name = "Nikola", Surname = "Nikolic", Role = Role.doctor, Email = "nikola@gmail.com", Username = "nikola", Password = "123", Deleted = false },
-                new User() { Id = 4, Name = "Marko", Surname = "Markovic", Role = Role.doctor, Email = "marko@gmail.com", Username = "marko", Password = "123", Deleted = false },
-                new User() { Id = 5, Name = "Stefan", Surname = "Stefanovic", Role = Role.doctor, Email = "stefan@gmail.com", Username = "stefan", Password = "123", Deleted = false }
             );
 
             base.OnModelCreating(modelBuilder);
-
         }
     }
 }

@@ -1,39 +1,16 @@
-﻿using IntegrationAPI.DTO;
+﻿using AutoMapper;
+using IntegrationAPI.DTO;
 using IntegrationLibrary.Core.Model;
 
 namespace IntegrationAPI.Adapters
 {
-    public class BloodBankAdapter
+    public class BloodBankAdapter : Profile
     {
-        public static BloodBank FromDTO(BloodBankDTO entity)
+        public BloodBankAdapter() 
         {
-            return new BloodBank()
-            {
-                Id = entity.Id,
-                Name = entity.Name,
-                Email = entity.Email,
-                Password = entity.Password,
-                ApiKey = entity.ApiKey,
-                ServerAddress = entity.ServerAddress,
-            };
-        }
-
-        public static BloodBank FromDTO(BloodBankCreationDTO entity)
-        {
-            return new BloodBank(entity.Name, entity.Email, entity.ServerAddress);
-        }
-
-        public static BloodBankDTO ToDTO(BloodBank entity)
-        {
-            return new BloodBankDTO()
-            {
-                Id = entity.Id,
-                Name = entity.Name, 
-                Email = entity.Email,
-                Password = entity.Password,
-                ApiKey = entity.ApiKey,
-                ServerAddress = entity.ServerAddress
-            };
+            CreateMap<BloodBank, BloodBankDTO>().ReverseMap();
+            CreateMap<BloodBank, BloodBankDTO>();
+            CreateMap<BloodBankCreationDTO, BloodBank>();
         }
     }
 }

@@ -1,0 +1,73 @@
+
+<div class="container">
+    <div>
+
+        <h1>Admission patient to hospital treatment</h1>
+ 
+        <mat-form-field appearance="fill">
+            <mat-label>Patient</mat-label>
+            <mat-select [(ngModel)]="treatment.patient" (ngModelChange)="handleOptionChangePatient()">
+                <mat-option *ngFor="let patient of patients" [value]="patient">{{patient.name}} {{patient.surname}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill">
+            <mat-label>Room</mat-label>
+            <mat-select [(ngModel)]="treatment.roomDto" (ngModelChange)="handleOptionChangeRoom()">
+                <mat-option *ngFor="let room of rooms" [value]="room">{{room.number}}, Floor: {{room.floor}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+            <mat-label>Bed of choosed room</mat-label>
+            <mat-select  [(ngModel)]="pomK" (ngModelChange)="handleOptionChangeBed()">
+                <mat-option *ngFor="let bed of kreveti" [value]="bed">{{bed.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <p>Therapy </p>
+
+        <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Blood</mat-label>
+            <mat-select [(ngModel)]="therapy.blood">
+                <mat-option *ngFor="let blood of bloods" [value]="blood">{{blood.bloodType}}
+                </mat-option>
+
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Blood Quantity</mat-label>
+            <input type="number" [(ngModel)]="therapy.quantityBlood" matInput  name="quantityBlood">
+        </mat-form-field>
+        </div>
+
+        <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Medicine</mat-label>
+            <mat-select [(ngModel)]="therapy.medicine">
+                <mat-option *ngFor="let medicine of medicines" [value]="medicine">{{medicine.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Medicine Quantity</mat-label>
+            <input type="number"  [(ngModel)]="therapy.quantitytMedicine" matInput name="quantityMedicine">
+        </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Date of patient admission</mat-label>
+            <input type="datetime-local" matInput [(ngModel)]="treatment.dateAdmission" name="dateAdmission">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Reason for patient admission</mat-label>
+            <input type="text" matInput [(ngModel)]="treatment.reasonForAdmission" name="reasonForAdmission">
+        </mat-form-field><br>
+        <button mat-stroked-button (click)="createTreatment()">
+            Submit
+        </button>
+    </div>
+</div>

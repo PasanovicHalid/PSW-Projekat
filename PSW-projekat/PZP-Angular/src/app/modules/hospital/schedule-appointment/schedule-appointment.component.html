@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center vw-100 vh-100 text-white">
+    <form class="bg-dark p-4 rounded-3 m-auto shadow-lg" [formGroup]="appointmentForm" style="min-width: 25rem; min-height: 27.5rem;">
+       
+        <div [style.display]="step[0]" class="d-flex flex-column p-2" style="min-width: 23.5rem; min-height: 26rem;">
+            <h2>Choose a date for your appointment</h2>
+            <div class="my-auto">
+                <label for="date" class="form-label">Date</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="calendarPng">        
+                        <img src="../../../../assets/images/calendar.png" width="24" height="24"/>
+                    </span>
+                    <input type="date" class="form-control" id="date" aria-describedby="calendarPng" formControlName="date">
+                </div>
+                <div *ngIf="appointmentForm.get('date').invalid && (appointmentForm.get('date').dirty || appointmentForm.get('date').touched)" class="text-danger mt-1">
+                    Please choose a date for your appointment.
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-auto">
+                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+            </div>
+        </div>
+
+        <div [style.display]="step[1]" class="d-flex flex-column p-2" style="min-width: 23.5rem; min-height: 26rem;">
+            <h2>Choose a date for your appointment</h2>
+            <div class="my-auto">
+                <label for="date" class="form-label">Date</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="calendarPng">        
+                        <img src="../../../../assets/images/calendar.png" width="24" height="24"/>
+                    </span>
+                    <input type="date" class="form-control" id="date" aria-describedby="calendarPng" formControlName="date">
+                </div>
+                <div *ngIf="appointmentForm.get('date').invalid && (appointmentForm.get('date').dirty || appointmentForm.get('date').touched)" class="text-danger mt-1">
+                    Please choose a date for your appointment.
+                </div>
+            </div>
+            <div class="d-flex justify-content-end mt-auto">
+                <button class="btn btn-primary" type="button" (click)="next()">Next</button>
+            </div>
+        </div>
+
+        <div [style.display]="step[2]">ee
+
+        </div>
+
+        <div [style.display]="step[3]">ee
+
+        </div>
+
+        <div [style.display]="step[4]">ee
+
+        </div>
+    
+    </form>
+</div>

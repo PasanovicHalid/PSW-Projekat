@@ -1,6 +1,9 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.Tender;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using MimeKit;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -14,6 +17,12 @@ namespace IntegrationLibrary.Settings
     public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
+        public DbSet<ReportSettings> ReportSettings { get; set; }
+        public DbSet<News> Newses { get; set; }
+        public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<Tender> Tenders { get; set; }
+        public DbSet<Demand> Demands { get; set; }
+
 
         public IntegrationDbContext([NotNull] DbContextOptions options) : base(options)
         {
@@ -21,9 +30,10 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1 , Name = "asdsadsda", Email = "asdasd@gmail.com", Password = "asdsadsdadas" , ApiKey = "sadfasdads" , ServerAddress = "https://www.messenger.com/t/100001603572170", AccountStatus = AccountStatus.ACTIVE } 
-            ) ;
+            modelBuilder.Entity<BloodBank>()
+                .Property(b => b.Email)
+                .HasConversion((save) => JsonConvert.SerializeObject(save), read => JsonConvert.DeserializeObject<Email>(read));
+
             base.OnModelCreating(modelBuilder);
         }
     }

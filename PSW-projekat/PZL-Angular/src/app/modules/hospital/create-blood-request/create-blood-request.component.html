@@ -1,0 +1,34 @@
+<div class="container">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Blood Type</mat-label>
+            <mat-select name="bloodTypes" id="bloodTypes" [(ngModel)]="bloodType" matInput>
+                <mat-option value="AP">A+</mat-option>
+                <mat-option value="AN">A-</mat-option>
+                <mat-option value="BP">B+</mat-option>
+                <mat-option value="BN">B-</mat-option>
+                <mat-option value="ABP">AB+</mat-option>
+                <mat-option value="ABN">AB-</mat-option>
+                <mat-option value="OP">O+</mat-option>
+                <mat-option value="ON">O-</mat-option>
+              </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Blood Quantity</mat-label>
+            <input type="number" min="1" matInput [(ngModel)]="bloodRequest.bloodQuantity" name="bloodQuantity">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Reason</mat-label>
+            <textarea matInput [(ngModel)]="bloodRequest.reason" placeholder="" name="reason"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Date when required</mat-label>
+            <input type="date" matInput [(ngModel)]="bloodRequest.requiredForDate" name="dateTime">
+        </mat-form-field><br>
+        <button mat-stroked-button (click)="createBloodRequest()">
+            Submit
+        </button>
+    </div>
+</div>
+
+
