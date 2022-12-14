@@ -62,7 +62,7 @@ namespace IntegrationAPITests.Tests
             Bid winner = bids[0];   
             List<Bid> losers = ((ObjectResult)bidController.GetByTenderId(winner.TenderOfBidId)).Value as List<Bid>;
 
-            bidController.SelectWinner(winner.Id);
+            bidController.SelectWinner(winner);
 
             Assert.True(Iterate_truogh_the_losers(winner));
         }
