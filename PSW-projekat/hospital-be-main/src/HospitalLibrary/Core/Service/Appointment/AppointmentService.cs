@@ -106,9 +106,9 @@ namespace HospitalLibrary.Core.Service
 
         }
 
-        public IEnumerable<AppointmentDto> GetAllByDoctor(int doctorId)
+        public IEnumerable<AppointmentDto> GetAllByDoctor(int personId)
         {
-            IEnumerable<Appointment> allAppointments = _appointmentRepository.GetAllByDoctor(doctorId);
+            IEnumerable<Appointment> allAppointments = _appointmentRepository.GetAllByDoctor(personId);
             List<AppointmentDto> appointmentsDtos = new();
 
             foreach (Appointment appointment in allAppointments)

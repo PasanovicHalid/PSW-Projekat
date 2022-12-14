@@ -30,7 +30,17 @@
             <th mat-header-cell *matHeaderCellDef class="cell-center"></th>
             <td mat-cell *matCellDef="let appointment" class="cell-center">
                 <button mat-icon-button (click)="deleteAppointment(appointment.id)">
-                    <mat-icon matTooltip="delete">delete</mat-icon>
+                    <mat-icon matTooltip="Delete appointment">delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="examination">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"></th>
+            <td mat-cell *matCellDef="let appointment" class="cell-center">
+                <button mat-icon-button (click)="examinationPatient(appointment.id)" matTooltip="Medical examination patient">
+                    <a> 
+                        <img class="stetoshope" src="https://uxwing.com/wp-content/themes/uxwing/download/medical-science-lab/stethoscope-icon.png" alt="buttonpng" border="0"/>
+                    </a>
                 </button>
             </td>
         </ng-container>

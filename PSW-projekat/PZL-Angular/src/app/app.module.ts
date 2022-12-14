@@ -20,6 +20,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.module';
 import { JwtInterceptorService } from './helpers/jwt.interceptor.service';
 import { TenderingModule } from './modules/tendering/tendering.module';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EmergencyBloodRequestsModule } from './modules/emergency-blood-requests/emergency-blood-requests.module';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -51,6 +52,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
     EmergencyBloodRequestsModule,
     ToastrModule.forRoot(),
     DatePipe,
+    MatDialogModule,
     FontAwesomeModule,
     MatProgressSpinnerModule
   ],
