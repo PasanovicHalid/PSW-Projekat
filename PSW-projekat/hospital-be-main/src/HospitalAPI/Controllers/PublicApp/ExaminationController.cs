@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 namespace HospitalAPI.Controllers.PublicApp
 {
+    //[Authorize]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -15,10 +16,19 @@ namespace HospitalAPI.Controllers.PublicApp
     {
 
         private readonly IExaminationService _examinationService;
+        private readonly IAppointmentService _appointmentService;
+        private readonly ISymptomService _symptomService;
+        private readonly IMedicineService _medicineService;
 
-        public ExaminationController(IExaminationService examinationService)
+
+        public ExaminationController(IExaminationService examinationService, IAppointmentService appointmentService, ISymptomService symptomService,
+            IMedicineService medicineService)
         {
             _examinationService = examinationService;
+            _appointmentService = appointmentService;
+            _symptomService = symptomService;
+            _medicineService = medicineService;
+
         }
 
         [HttpGet]
@@ -35,7 +45,7 @@ namespace HospitalAPI.Controllers.PublicApp
                    examination.Appointment.Doctor.Person.Surname, examination.Appointment.Doctor.Person.Email, examination.Appointment.Doctor.Person.Role);
 
                 AppointmentDto appointmentDto = new AppointmentDto(examination.Appointment.Id, examination.Appointment.DateTime, 
-                    patientDto, doctorDto);
+                    examination.Appointment.CancelationDate, patientDto, doctorDto);
 
                 examinationDto.Add(new ExaminationDto(examination.Id, appointmentDto, examination.Prescriptions,
                     examination.Symptoms, examination.Report));
@@ -57,7 +67,7 @@ namespace HospitalAPI.Controllers.PublicApp
                examination.Appointment.Doctor.Person.Surname, examination.Appointment.Doctor.Person.Email, examination.Appointment.Doctor.Person.Role);
 
             AppointmentDto appointmentDto = new AppointmentDto(examination.Appointment.Id, examination.Appointment.DateTime,
-                patientDto, doctorDto);
+                examination.Appointment.CancelationDate, patientDto, doctorDto);
 
             ExaminationDto examinationDto = new ExaminationDto(examination.Id, appointmentDto, examination.Prescriptions,
                     examination.Symptoms, examination.Report);
@@ -73,8 +83,17 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpPost]
         public ActionResult Create(Examination examination)
         {
-            //appointment.Doctor = _doctorService.GetById(appointment.Doctor.Id);
-            //appointment.Patient = _patientService.GetById(appointment.Patient.Id);
+          
+            examination.Appointment = _appointmentService.GetById(examination.Appointment.Id);
+            List<Patient> patients = new List<Patient>();
+            examination.Appointment.Doctor.Patients = patients;
+
+            examination.Symptoms = _examinationService.GetHelpSymptoms(examination);
+
+            foreach (Prescription prescription in examination.Prescriptions)
+            {
+                prescription.Medicines = _examinationService.GetHelpMedicines(prescription);
+            }
 
             if (!ModelState.IsValid)
             {
@@ -84,5 +103,6 @@ namespace HospitalAPI.Controllers.PublicApp
             _examinationService.Create(examination);
             return Ok();
         }
+
     }
 }

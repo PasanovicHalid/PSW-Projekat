@@ -21,8 +21,8 @@
             </mat-select>
         </mat-form-field><br>
 
-        <a href="/examinations/report">
-            <button class="nextDugme" mat-stroked-button>
+        <a>
+            <button class="nextDugme"  (click)="next(patient.id)" mat-stroked-button>
                  Next 
             </button>
         </a>

@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "src/app/material/material.module";
-import { MatInput, MatInputModule} from '@angular/material/input';
+import { MatInputModule} from '@angular/material/input';
 import { CreateRoomComponent } from "./create-room/create-room.component";
 import { RoomDetailComponent } from "./room-detail/room-detail.component";
 import { RoomsComponent } from "./rooms/rooms.component";
@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
 import { UpdateAppointmentComponent } from "./update-appointment/update-appointment.component";
@@ -26,7 +26,9 @@ import { AuthGuardDoctor } from '../hospital/services/authDoctor.guard';
 import { AuthGuardManager } from '../hospital/services/authManager.guard';
 import { CreateBloodRequestComponent } from './create-blood-request/create-blood-request.component';
 import { BloodConsumptionComponent } from "./blood-consumption/blood-consumption.component";
-import { MedicalExaminationFinish, MedicalExaminationPatientComponent, MedicalPrescriptionComponent, MedicalReportComponent } from './medical-examination-patient/medical-examination-patient.component';
+import { MedicalExaminationFinish, MedicalExaminationPatientComponent, MedicalPrescriptionShowComponent, MedicalPrescriptionComponent, MedicalReportComponent } from './medical-examination-patient/medical-examination-patient.component';
+import { ShowMedicinePipe } from './medical-examination-patient/show-medicine.pipe';
+
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent, canActivate: [ AuthGuardManager ] },
@@ -46,9 +48,9 @@ const routes: Routes = [
   { path: 'bloodConsumption/add', component: BloodConsumptionComponent},
   { path: 'examinations/add/:id', component: MedicalExaminationPatientComponent},
   { path: 'examinations/report', component: MedicalReportComponent},
+  { path: 'examinations/prescriptionShow', component: MedicalPrescriptionShowComponent},
   { path: 'examinations/prescription', component: MedicalPrescriptionComponent},
   { path: 'examinations/finish', component: MedicalExaminationFinish}
-
 
 ];
 
@@ -70,9 +72,10 @@ const routes: Routes = [
     BloodConsumptionComponent,
     MedicalExaminationPatientComponent,
     MedicalReportComponent,
+    MedicalPrescriptionShowComponent,
     MedicalPrescriptionComponent,
-    MedicalExaminationFinish
-
+    MedicalExaminationFinish,
+    ShowMedicinePipe
   ],
   imports: [
     CommonModule,

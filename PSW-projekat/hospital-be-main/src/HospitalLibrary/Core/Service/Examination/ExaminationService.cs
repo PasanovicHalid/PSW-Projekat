@@ -11,10 +11,15 @@ namespace HospitalLibrary.Core.Service
     public class ExaminationService : IExaminationService
     {
         private readonly IExaminationRepository _examinationRepository;
+        private readonly ISymptomRepository _symptomRepository;
+        private readonly IMedicineRepository _medicineRepository;
 
-        public ExaminationService(IExaminationRepository examinationRepository)
+
+        public ExaminationService(IExaminationRepository examinationRepository, ISymptomRepository symptomRepository, IMedicineRepository medicineRepository)
         {
             _examinationRepository = examinationRepository;
+            _symptomRepository = symptomRepository;
+            _medicineRepository = medicineRepository;
         }
 
         public void Create(Examination entity)
@@ -42,5 +47,30 @@ namespace HospitalLibrary.Core.Service
         {
             throw new NotImplementedException();
         }
+
+        public List<Symptom> GetHelpSymptoms(Examination examination)
+        {
+            List<Symptom> pomocniSimptomi = new List<Symptom>();
+            foreach (Symptom simptom in examination.Symptoms)
+            {
+                Symptom pomocniSimptom = new Symptom();
+                pomocniSimptom = _symptomRepository.GetById(simptom.Id);
+                pomocniSimptomi.Add(pomocniSimptom);
+            }
+            return pomocniSimptomi;
+        }
+
+        public List<Medicine> GetHelpMedicines(Prescription prescription)
+        {
+            List<Medicine> pomocniLekovi = new List<Medicine>();
+            foreach (Medicine medicine in prescription.Medicines)
+            {
+                Medicine pomocniLek = new Medicine();
+                pomocniLek = _medicineRepository.GetById(medicine.Id);
+                pomocniLekovi.Add(pomocniLek);
+            }
+            return pomocniLekovi;
+        }
+
     }
 }

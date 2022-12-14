@@ -17,7 +17,7 @@ import { DoctorDto } from '../model/doctorDto';
 export class CreateAppointmentComponent implements OnInit {
 
   //ovo ne treba tako!
-  public appointment: Appointment = new Appointment(0, false, '', '', Date());
+  public appointment: Appointment = new Appointment(0, false, '', '', Date(), Date());
   public dataSourceP = new MatTableDataSource<PatientDto>();
   public dataSourceD = new MatTableDataSource<DoctorDto>();
   public patients: PatientDto[] = [];

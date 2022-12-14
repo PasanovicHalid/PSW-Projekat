@@ -40,7 +40,7 @@ namespace HospitalAPI.Controllers.PrivateApp
                 DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
                    appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
 
-                appointmentDto.Add(new AppointmentDto(appointment.Id, appointment.DateTime, patientDto, doctorDto));
+                appointmentDto.Add(new AppointmentDto(appointment.Id, appointment.DateTime, appointment.CancelationDate, patientDto, doctorDto));
 
             }
 
@@ -58,7 +58,7 @@ namespace HospitalAPI.Controllers.PrivateApp
             DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
                appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
 
-            AppointmentDto appointmentDto = new AppointmentDto(appointment.Id, appointment.DateTime, patientDto, doctorDto);
+            AppointmentDto appointmentDto = new AppointmentDto(appointment.Id, appointment.DateTime, appointment.CancelationDate, patientDto, doctorDto);
             if (appointment == null)
             {
                 return NotFound();

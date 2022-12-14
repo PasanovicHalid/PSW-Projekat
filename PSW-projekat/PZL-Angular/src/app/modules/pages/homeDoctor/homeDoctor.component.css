@@ -3,7 +3,7 @@
     position: inherit;
 	width: 80%;
 }
-img{
+.slikaPregled{
     height: 220px;
     width: 220px;
 }
@@ -12,7 +12,7 @@ img{
     margin-left: 250px;
 }
 .dugmePregled{
-    border-radius: 80px;
+    border-radius: 20px;
     border-width: 7px;
     cursor: pointer;
     transition: all ease-in-out 0.2s;
@@ -24,5 +24,26 @@ img{
 }
 .imeDrugiPregled{
     font-size: 23px;
-    margin-left: 80px;
+    margin-left: 55px;
 }
+
+.slikaTermin{
+    width: 220px;
+    height: 220px;
+}
+
+.imeTermin{
+    margin-top: 20px;
+    font-size: 25px;
+    margin-left: 40px;
+   
+}
+.dugmeTermin{
+    border-radius: 20px;
+    border-width: 7px;
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+    margin-top: 30px;
+}
+
+

@@ -26,7 +26,10 @@ namespace HospitalTests.Integration
         private static ExaminationController SetupSettingsController(IServiceScope scope)
         {
 
-            return new ExaminationController(scope.ServiceProvider.GetRequiredService<IExaminationService>());
+            return new ExaminationController(scope.ServiceProvider.GetRequiredService<IExaminationService>(),
+                                            scope.ServiceProvider.GetRequiredService<IAppointmentService>(),
+                                            scope.ServiceProvider.GetRequiredService<ISymptomService>(),
+                                            scope.ServiceProvider.GetRequiredService<IMedicineService>());
         }
 
         [Fact]

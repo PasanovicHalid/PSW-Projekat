@@ -19,6 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DoctorRequestsModule } from './modules/doctor-requests/doctor-requests.module';
 import { JwtInterceptorService } from './helpers/jwt.interceptor.service';
 import { TenderingModule } from './modules/tendering/tendering.module';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -44,8 +45,9 @@ import { TenderingModule } from './modules/tendering/tendering.module';
     TenderingModule,
     CommonModule,
     ToastrModule.forRoot(),
-    DatePipe
-  ],
+    DatePipe,
+    MatDialogModule
+    ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
     [DatePipe],

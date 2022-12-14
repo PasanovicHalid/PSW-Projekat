@@ -9,5 +9,8 @@ namespace HospitalLibrary.Core.Service
 {
     public interface IExaminationService : IService<Examination>
     {
+        List<Symptom> GetHelpSymptoms(Examination examination);
+        List<Medicine> GetHelpMedicines(Prescription prescription);
+
     }
 }
