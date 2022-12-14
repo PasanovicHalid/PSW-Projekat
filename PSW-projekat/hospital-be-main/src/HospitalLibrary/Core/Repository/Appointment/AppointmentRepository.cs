@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -81,7 +82,7 @@ namespace HospitalLibrary.Core.Repository
         )
         {
             return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
-                .Where(x => x.Doctor.Id == doctorId && !x.Deleted && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
+                .Where(x => x.Doctor.Id == doctorId && !x.Deleted && x.CancelationDate == null && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
         }
 
         public IEnumerable<Appointment> GetAllByPatientInDateRange(
@@ -92,6 +93,13 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
                 .Where(x => x.Patient.Id == patientId && !x.Deleted && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
+        }
+
+        public bool CheckIfExists(Appointment appointment)
+        {
+            IEnumerable<Appointment> a = _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
+                .Where(x => x.Doctor.Id == appointment.Doctor.Id && !x.Deleted && x.CancelationDate == null && x.DateTime == appointment.DateTime).ToList();
+            return a.Count() == 0 ? false : true;
         }
     }
 }

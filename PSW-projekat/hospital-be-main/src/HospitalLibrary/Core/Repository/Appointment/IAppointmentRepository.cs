@@ -19,5 +19,6 @@ namespace HospitalLibrary.Core.Repository
             DateTime fromDate,
             DateTime toDate
         );
+        bool CheckIfExists(Appointment appointment);
     }
 }

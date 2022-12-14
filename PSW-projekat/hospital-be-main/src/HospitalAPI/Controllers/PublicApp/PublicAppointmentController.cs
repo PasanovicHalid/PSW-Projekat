@@ -122,19 +122,19 @@ namespace HospitalAPI.Controllers.PublicApp
             CheckAvailableAppontmentDto checkAvailableAppontment
         )
         {
-            if (_appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment) == null)
+            List<AppointmentsAvailableForCreatingAppointment> appointments = _appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment);
+            if (appointments == null)
                 return BadRequest();
-            return Ok(_appointmentService.GetAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment));
+            return Ok(appointments);
         }
 
         [Authorize(Roles = "Patient")]
-        [HttpPut("CreateCustomAppointment")]
+        [HttpPost("CreateCustomAppointment")]
         public ActionResult CreateCustomAppointment(
-            CustomAppointmentForCreatingDto customAppointment
+            CustomAppointmentForCreatingDto checkAppointment
         )
         {
-
-            return Ok();
+            return Ok(_appointmentService.CreateCustomAppointment(checkAppointment));
         }
     }
 }

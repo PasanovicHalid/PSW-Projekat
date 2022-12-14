@@ -23,7 +23,6 @@ namespace HospitalLibrary.Core.Service
             _allergyRepository = allergyRepository;
         }
 
-
         public void Create(Doctor entity)
         {
             throw new NotImplementedException();

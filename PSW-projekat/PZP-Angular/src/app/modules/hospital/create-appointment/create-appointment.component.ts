@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CheckAvailableAppontmentDto } from '../model/checkAvailableAppointmentsDto.mode';
 import { AppointmentAvailableForCreatingAppointment } from '../model/appointmentAvailableForCreatingAppointment.mode';
 import { DoctorForCreatingAppointmentDto } from '../model/doctorForCreatingAppointmentDto.model';
+import { CustomAppointmentForCreatingDto } from '../model/customAppointmentForCreatingDto.model';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-create-appointment',
@@ -20,9 +22,9 @@ export class CreateAppointment implements OnInit{
   public selectedDoctorID = 0;
   public availableAppointments: AppointmentAvailableForCreatingAppointment[] = [];
 
-  public validatederror = false;
+  public isValid = false;
 
-  constructor(private router: Router, private appointmentService: AppointmentService) { }
+  constructor(private router: Router, private appointmentService: AppointmentService, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.appointmentService.getAllDoctorsForCreatingAppointment().subscribe(res => {
@@ -30,16 +32,7 @@ export class CreateAppointment implements OnInit{
     })
   }
 
-  test(){
-    /*console.log(this.validatederror);
-
-    console.log(this.fromDate);
-    console.log(this.toDate);
-    console.log(this.fromTime);
-    console.log(this.toTime);
-    console.log(this.prefer);
-    console.log(this.selectedDoctorID);*/
-
+  check(){
     let checkAvailableAppontment = new CheckAvailableAppontmentDto(
       this.fromDate.toString(), 
       this.toDate.toString(), 
@@ -50,22 +43,44 @@ export class CreateAppointment implements OnInit{
       Number(localStorage.getItem('currentUserId'))
     );
 
-    this.appointmentService.getAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment).subscribe(res => {
+    this.appointmentService.postAllAvailableAppointmentsForCreatingAppointment(checkAvailableAppontment).subscribe(res => {
       this.availableAppointments = res;
     })
   }
 
   validate() {
-    this.validatederror =  false;
-    
+    this.isValid =  true;
+    //Moze li biti debilnije?
+    /*console.log(this.fromDate.getFullYear)
+    console.log(new Date().getFullYear())
+    let now = new Date()
+    let year = this.fromDate.getFullYear;
+    let from = new Date(this.fromDate.getFullYear(), this.fromDate.getMonth(), this.fromDate.getDay(), 0, 0, 0, 0)*/
     if(!(this.fromDate < this.toDate))
-      this.validatederror = false;
+      this.isValid = false;
     if(!(this.fromTime < this.toTime))
-      this.validatederror = false;
+      this.isValid = false;
     if(this.selectedDoctorID == 0 || this.selectedDoctorID > this.doctors.length)
-      this.validatederror = false;
+      this.isValid = false;
     if(!(this.prefer == 'doctor' || this.prefer == 'time'))
-      this.validatederror = false;
+      this.isValid = false;
+  }
+
+  createAppointment(date: string, time: string, doctorID: number){
+    let checkAvailableAppontment = new CustomAppointmentForCreatingDto(
+      doctorID.toString(), 
+      localStorage.getItem('currentUserId')?.toString(), 
+      date+" "+time,
+    );
+    this.appointmentService.postCreateCustomAppointment(checkAvailableAppontment).subscribe(res => {
+
+    })
+  }
+
+  logout(){
+    this.loginService.logout().subscribe(res => {
+      
+    }) 
   }
 }
 

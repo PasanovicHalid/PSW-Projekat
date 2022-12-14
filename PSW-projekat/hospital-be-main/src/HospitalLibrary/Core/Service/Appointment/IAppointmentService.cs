@@ -16,5 +16,6 @@ namespace HospitalLibrary.Core.Service
         List<AppointmentsAvailableForCreatingAppointment> GetAllAvailableAppointmentsForCreatingAppointment(
             CheckAvailableAppontmentDto checkAvailableAppontment
             );
+        bool CreateCustomAppointment(CustomAppointmentForCreatingDto checkAppointment);
     }
 }
