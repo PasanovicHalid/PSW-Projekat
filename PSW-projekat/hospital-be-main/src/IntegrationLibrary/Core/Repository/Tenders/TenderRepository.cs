@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model.Tender;
 using IntegrationLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,15 @@ namespace IntegrationLibrary.Core.Repository.Tenders
 
         public void Update(Tender entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }

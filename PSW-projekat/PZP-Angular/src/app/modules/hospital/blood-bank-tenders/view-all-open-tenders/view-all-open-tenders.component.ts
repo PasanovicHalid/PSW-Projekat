@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { TenderService } from '../services/tender.service';
 import { BidService } from '../services/bid.service';
 import { ToastrService } from 'ngx-toastr';
+import { TenderState } from '../model/tender-state.enum';
 
 @Component({
   selector: 'app-view-all-open-tenders',
@@ -30,7 +31,12 @@ export class ViewAllOpenTendersComponent implements OnInit {
   }
 
   public selectTender(selcetedTender: Tender){
-    this.tenderService.selectedTender = selcetedTender;
-    this.router.navigate(['tenders-details/' + selcetedTender.id]);
+    if(selcetedTender.state == TenderState.OPEN){
+      this.tenderService.selectedTender = selcetedTender;
+      this.router.navigate(['tenders-details/' + selcetedTender.id]);
+    }else{
+      console.log("Nije se moguce videti detalje o tenderu");
+      
+    }
 }
 }

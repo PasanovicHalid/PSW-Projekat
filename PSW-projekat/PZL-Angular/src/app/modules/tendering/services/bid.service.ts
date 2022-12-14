@@ -14,6 +14,10 @@ import { Bid } from '../model/bid.model';
   
     constructor(private http: HttpClient) { }
 
+    SelectWinner(bid:Bid): Observable<any>{
+        return this.http.post<any>(this.apiHost + 'api/Bid/CloseTender' , bid, {headers: this.headers}).pipe(catchError(this.handleError));
+    }
+
     getBidsForTender(id:number):Observable<any>{
         return this.http.get<any>(this.apiHost + 'api/Bid/Tender/' + id, {headers: this.headers}).pipe(catchError(this.handleError));
     }

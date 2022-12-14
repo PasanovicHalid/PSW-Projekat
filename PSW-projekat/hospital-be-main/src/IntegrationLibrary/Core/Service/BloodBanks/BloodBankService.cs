@@ -114,11 +114,12 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
         {
             foreach (BloodBank bank in GetAll())
             {
-                if (bank.Password.Equals(password) && bank.Email.Equals(email) && bank.AccountStatus.Equals(AccountStatus.ACTIVE))
+                string pass = bank.Password;
+                string em = bank.Email.EmailAddress;
+                if (bank.Password.Equals(password) && bank.Email.EmailAddress.Equals(email) && bank.AccountStatus.Equals(AccountStatus.ACTIVE))
                     return true;
             }
             return false;
-
         }
         private void SetupBloodBank(BloodBank entity)
         {
@@ -156,6 +157,5 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
                 throw new PasswordKeyExistsException();
             }
         }
-
     }
 }

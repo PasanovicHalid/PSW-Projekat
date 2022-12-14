@@ -50,6 +50,15 @@ namespace IntegrationAPITests.Setup
             context.Database.ExecuteSqlRaw("DELETE FROM \"Tenders\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Bids\"; ");
 
+            context.Bids.Add(new Bid
+            {
+                DeliveryDate = System.DateTime.Now.AddDays(-1),
+                Price = 2000,
+                TenderOfBidId = 1,
+                BloodBankId = 1,
+                Status = BidStatus.WAITING
+            });
+
             context.BloodBanks.Add(new BloodBank("asdsadsda", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
             context.BloodBanks.Add(new BloodBank("aa", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
             context.BloodBanks.Add(new BloodBank("bb", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));

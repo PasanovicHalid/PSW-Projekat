@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model.Tender;
 using IntegrationLibrary.Core.Repository.Bids;
+using IntegrationLibrary.Core.Repository.Tenders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,13 @@ namespace IntegrationLibrary.Core.Service.Bids
 {
     public class BidService : IBidService
     {
+        private readonly ITenderRepository _tenderRepository;
         private readonly IBidRepository _bidRepository;
 
-        public BidService(IBidRepository bidRepository) 
+        public BidService(IBidRepository bidRepository, ITenderRepository tenderRepository) 
         {
                 _bidRepository = bidRepository;
+            _tenderRepository = tenderRepository;
         }
         public void Create(Bid entity)
         {
@@ -67,8 +70,11 @@ namespace IntegrationLibrary.Core.Service.Bids
             try
             {
             Bid Winner = _bidRepository.GetById(id);
-            List<Bid> Losers = FindLosers(id);
-                UpdateBids(Winner, Losers);
+               Tender tender = _tenderRepository.GetById(Winner.TenderOfBidId);
+                List<Bid> all = (List<Bid>)GetByTenderId(_bidRepository.GetById(id).TenderOfBidId);
+                UpdateBids(Winner, all);
+                tender.State = TenderState.CLOSED;
+                _tenderRepository.Update(tender);
             }
             catch
             {
@@ -76,29 +82,17 @@ namespace IntegrationLibrary.Core.Service.Bids
             }
         }
 
-        private void UpdateBids(Bid winner,List<Bid> losers)
+        private void UpdateBids(Bid winner,List<Bid> all)
         {
-            winner.Status = BidStatus.WIN;
-            _bidRepository.Update(winner);
-            foreach (Bid loser in losers)
+            foreach (Bid loser in all)
             {
                 loser.Status = BidStatus.LOST;
                 _bidRepository.Update(loser);
             }
+            winner.Status = BidStatus.WIN;
+            _bidRepository.Update(winner);
         }
 
-        private List<Bid> FindLosers(int id) {
-            List<Bid> Losers = (List<Bid>)GetByTenderId(_bidRepository.GetById(id).TenderOfBidId);
-            foreach (Bid loser in Losers)
-            {
-                if(loser.Id == id)
-                {
-                    Losers.Remove(loser);
-                    break;
-                }
-            }
-            return Losers;
-        }
 
         public void Update(Bid entity)
         {

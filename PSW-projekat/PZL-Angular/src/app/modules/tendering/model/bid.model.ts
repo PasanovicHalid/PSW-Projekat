@@ -1,6 +1,7 @@
 import { BidStatus } from "./bid-status.enum";
 
 export class Bid{
+    Id: number = 0;
     deliveryDate: Date = new Date();
     price: number = 0;
     tenderOfBidId: number = 0;

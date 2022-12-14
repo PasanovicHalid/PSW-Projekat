@@ -31,6 +31,8 @@ export class ViewSingleTenderComponent implements OnInit {
     this.bidService.getBidsForTender(this.tenderService.selectedTender.id).subscribe(res => {
       this.dataSourceBids.data = res;
       this.bids = res;
+      console.log(res);
+      
     })
 
     this.bloodBankService.getBloodBanks().subscribe(res => {
@@ -61,6 +63,12 @@ export class ViewSingleTenderComponent implements OnInit {
 
   public SelectWiner(bid:Bid){
     //TODO:
+    this.bidService.SelectWinner(bid).subscribe(res => {
+      console.log(res);
+      this.router.navigate(['view-tenders']);
+    },(error) => {
+      this.errorMessage = error;
+    }
+    )
   }
-
 }

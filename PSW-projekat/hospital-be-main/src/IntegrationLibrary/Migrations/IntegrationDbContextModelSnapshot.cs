@@ -159,7 +159,7 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BloodBankId")
+                    b.Property<int>("BloodBankId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DeliveryDate")
@@ -171,14 +171,10 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TenderOfBidId")
+                    b.Property<int>("TenderOfBidId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BloodBankId");
-
-                    b.HasIndex("TenderOfBidId");
 
                     b.ToTable("Bids");
                 });
@@ -222,21 +218,6 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Bid", b =>
-                {
-                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
-                        .WithMany()
-                        .HasForeignKey("BloodBankId");
-
-                    b.HasOne("IntegrationLibrary.Core.Model.Tender.Tender", "TenderOfBid")
-                        .WithMany()
-                        .HasForeignKey("TenderOfBidId");
-
-                    b.Navigation("BloodBank");
-
-                    b.Navigation("TenderOfBid");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>

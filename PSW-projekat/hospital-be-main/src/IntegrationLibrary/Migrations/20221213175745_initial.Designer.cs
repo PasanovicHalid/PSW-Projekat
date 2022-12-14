@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221201071438_adding_bids")]
-    partial class adding_bids
+    [Migration("20221213175745_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,11 +32,12 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApiKey")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GRPCServerAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -49,7 +50,6 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServerAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -161,7 +161,7 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("BloodBankId")
+                    b.Property<int>("BloodBankId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DeliveryDate")
@@ -173,14 +173,10 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TenderOfBidId")
+                    b.Property<int>("TenderOfBidId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BloodBankId");
-
-                    b.HasIndex("TenderOfBidId");
 
                     b.ToTable("Bids");
                 });
@@ -224,21 +220,6 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Bid", b =>
-                {
-                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
-                        .WithMany()
-                        .HasForeignKey("BloodBankId");
-
-                    b.HasOne("IntegrationLibrary.Core.Model.Tender.Tender", "TenderOfBid")
-                        .WithMany()
-                        .HasForeignKey("TenderOfBidId");
-
-                    b.Navigation("BloodBank");
-
-                    b.Navigation("TenderOfBid");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>

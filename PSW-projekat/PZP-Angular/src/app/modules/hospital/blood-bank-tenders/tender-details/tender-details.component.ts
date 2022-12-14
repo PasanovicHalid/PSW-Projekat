@@ -8,6 +8,8 @@ import { BidStatus } from '../model/bid-status.enum';
 import { TenderService } from '../services/tender.service';
 import { BidService } from '../services/bid.service';
 import { ToastrService } from 'ngx-toastr';
+import { BloodBank } from '../model/blood-bank.model';
+import { Email } from '../model/email.model';
 
 
 @Component({
@@ -20,15 +22,29 @@ export class TenderDetailsComponent implements OnInit {
   constructor(private tenderService: TenderService,private router: Router, private bidService: BidService) {
    }
   
-  
+  public email: String = "";
   price: any;
   deliveryDate: any;
+  public banks: BloodBank[] = [] 
+  public bank : BloodBank = new BloodBank;
   public dataSource = this.tenderService.selectedTender.demands;
   selectedTender: Tender = this.tenderService.selectedTender;
   public displayedColumns = ['BloodType', 'Quantity'];
   public errorMessage: any;
 
   ngOnInit(): void {
+    this.bidService.getBloodBankIdByEmail().subscribe(res => {
+      this.banks = res;
+      for(let i = 0; i<this.banks.length; i++){
+        this.email = this.banks[i].email.localPart +"@" + this.banks[i].email.domainName;
+        if(this.email === (localStorage.getItem('currentUserEmail'))){
+            this.bank = this.banks[i];
+            
+        }
+      }
+      console.log(this.bank);
+    })
+    
   }
 
   public convertBloodType(blood: number): string{
@@ -55,9 +71,14 @@ export class TenderDetailsComponent implements OnInit {
       if(!this.isNumber(this.price)){
         console.log(this.price, " is not nuber.");
       }else{
-        //TODO: napraviti Bid
        let  bid = new Bid();
-        bid.bloodBankId = 1; 
+       for(let i = 0; i<this.banks.length; i++){
+        //console.log(this.banks[i].email.domainName);
+        if(this.banks[i].email.domainName +"@" + this.banks[i].email.localPart === localStorage.getItem('currentUserEmail')){
+            this.bank.id = this.banks[i].id;
+        }
+      }
+        bid.bloodBankId = this.bank.id;
         bid.tenderOfBidId = this.tenderService.selectedTender.id;
         bid.deliveryDate = this.deliveryDate;
         bid.price = this.price;

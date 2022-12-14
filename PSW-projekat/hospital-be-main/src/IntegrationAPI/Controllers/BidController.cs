@@ -83,8 +83,8 @@ namespace IntegrationAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public ActionResult SelectWinner(int id)
+        [HttpPost("CloseTender")]
+        public ActionResult SelectWinner(Bid bid)
         {
             if (!ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace IntegrationAPI.Controllers
             }
             try
             {
-                _bidService.SelectWinner(id);
+                _bidService.SelectWinner(bid.Id);
                 return Ok();
             }
             catch (Exception ex)
