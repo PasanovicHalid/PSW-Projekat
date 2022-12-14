@@ -97,7 +97,7 @@ namespace HospitalTests.Integration
                 Prescriptions = recepti
 
             };
-            var result = ((OkResult)controller.Create(examination));
+            var result = ((OkResult)controller.Create(examination, true, true, false));
 
             //Assert
             Assert.NotNull(result);
@@ -148,7 +148,7 @@ namespace HospitalTests.Integration
                 Prescriptions = recepti
 
             };
-            var result = ((OkResult)controller.Create(examination));
+            var result = ((OkResult)controller.Create(examination, true, true, false));
 
             //Assert
             Assert.NotNull(result);
