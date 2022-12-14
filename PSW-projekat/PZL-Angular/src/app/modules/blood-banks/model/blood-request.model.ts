@@ -1,13 +1,13 @@
 export class BloodRequest {
     bloodType: string = '';
-    quantity: number = 0;
-    bloodBankID: string = '';
+    bloodQuantity: number = 0;
+    bloodBankId: string = '';
 
     public constructor(obj?: any) {
         if (obj){
             this.bloodType = obj.bloodType;
-            this.quantity = obj.quantity;
-            this.bloodBankID = obj.bloodBankID;
+            this.bloodQuantity = obj.bloodQuantity;
+            this.bloodBankId = obj.bloodBankId;
         }
     }
 }

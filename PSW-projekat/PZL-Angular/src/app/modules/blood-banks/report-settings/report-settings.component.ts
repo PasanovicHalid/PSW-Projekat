@@ -12,8 +12,8 @@ import { ReportSettingsService } from '../services/report-settings.service';
 })
 export class ReportSettingsComponent implements OnInit {
 
-  public selectedOptionDelivery: number = 0;
-  public selectedOptionCalculation: number = 0;
+  public selectedOptionDelivery: any = 0;
+  public selectedOptionCalculation: any = 0;
   public settings: ReportSettings;
   public errorMessage: any;
 
@@ -76,17 +76,17 @@ export class ReportSettingsComponent implements OnInit {
     if(this.settings.calculationMonths == 1 
       && this.settings.calculationDays == 0 
       && this.settings.calculationYears == 0){
-        this.selectedOptionCalculation = 0;
+        this.selectedOptionCalculation = "0";
     } else if(this.settings.calculationMonths == 6 
       && this.settings.calculationDays == 0 
       && this.settings.calculationYears == 0){
-        this.selectedOptionCalculation = 1;
+        this.selectedOptionCalculation = "1";
     } else if(this.settings.calculationMonths == 0 
       && this.settings.calculationDays == 0 
       && this.settings.calculationYears == 1){
-        this.selectedOptionCalculation = 2;
+        this.selectedOptionCalculation = "2";
     } else {
-      this.selectedOptionCalculation = 3;
+      this.selectedOptionCalculation = "3";
     }
   }
 
@@ -94,25 +94,21 @@ export class ReportSettingsComponent implements OnInit {
     if(this.settings.deliveryMonths == 1 
       && this.settings.deliveryDays == 0 
       && this.settings.deliveryYears == 0){
-        this.selectedOptionDelivery = 0;
+        this.selectedOptionDelivery = "0";
     } else if(this.settings.deliveryMonths == 6 
       && this.settings.deliveryDays == 0 
       && this.settings.deliveryYears == 0){
-        this.selectedOptionDelivery = 1;
+        this.selectedOptionDelivery = "1";
     } else if(this.settings.deliveryMonths == 0 
       && this.settings.deliveryDays == 0 
       && this.settings.deliveryYears == 1){
-        this.selectedOptionDelivery = 2;
+        this.selectedOptionDelivery = "2";
     } else {
-      this.selectedOptionDelivery = 3;
+      this.selectedOptionDelivery = "3";
     }
   }
 
   private toastError() {
-    if (String(this.errorMessage).includes('FailedValidationException')){
-      this.toastr.error('Sent values can\'t be processed');
-    } else {
-      this.toastr.error('Error happened');
-    }
+    this.toastr.error(this.errorMessage);
   }
 }

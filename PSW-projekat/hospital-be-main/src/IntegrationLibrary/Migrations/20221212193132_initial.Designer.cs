@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221128112202_initial")]
+    [Migration("20221212193132_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,11 +32,12 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApiKey")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GRPCServerAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -49,7 +50,6 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServerAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

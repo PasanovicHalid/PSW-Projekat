@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.DTOs;
+using HospitalLibrary.Core.IntegrationConnection;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Model.MailRequests;
@@ -33,6 +34,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IConfiguration _configuration;
         private readonly IDoctorService _doctorService;
         private readonly IPatientService _patientService;
+        private readonly IIntegrationConnection _integrationConnection;
 
         public AccountController(
                 UserManager<SecUser> userManager,
@@ -42,7 +44,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 IConfiguration configuration,
                 IPersonService personService,
                 IDoctorService doctorService,
-                IPatientService patientService)
+                IPatientService patientService,
+                IIntegrationConnection integrationConnection)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -52,6 +55,7 @@ namespace HospitalAPI.Controllers.PublicApp
             _patientService = patientService;
             _emailService = emailService;
             _configuration = configuration;
+            _integrationConnection = integrationConnection;
         }
 
         [HttpPost("Login")]
@@ -139,7 +143,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
 
-        [Authorize(Roles = "Manager")]
+        //[Authorize(Roles = "Manager")]
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
         {
@@ -329,5 +333,70 @@ namespace HospitalAPI.Controllers.PublicApp
 
             return Ok();
         }
+
+        [HttpPost("LoginBank")]
+        public async Task<ActionResult> LoginBankAsync(LoginUserDto loginUserDto)
+        {
+            try
+            {
+                if (_integrationConnection.CheckIfExists(loginUserDto))
+                {
+                    var result = await _signInManager.PasswordSignInAsync(loginUserDto.Username, loginUserDto.Password, true, false);
+                    if (result.Succeeded)
+                    {
+                        var user = await _userManager.FindByNameAsync(loginUserDto.Username);
+                        if (user != null && await _userManager.CheckPasswordAsync(user, loginUserDto.Password))
+                        {
+                            //var id = user.Claims.GetUserId();
+                            var claims = await _userManager.GetClaimsAsync(user);
+                            var userRoles = await _userManager.GetRolesAsync(user);
+
+                            if (!((userRoles[0] == "Manager" && loginUserDto.Flag == "PZL") ||
+                                (userRoles[0] == "Doctor" && loginUserDto.Flag == "PZL") ||
+                                (userRoles[0] == "Patient" && loginUserDto.Flag == "PZP") ||
+                                (userRoles[0] == "BloodBank" && loginUserDto.Flag == "PZP")))
+                            {
+                                return BadRequest("Wrong application.");
+                            }
+
+                            var authClaims = new List<Claim>
+                                {
+                                    new Claim("Id", claims[0].Value),
+                                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+
+                                };
+
+                            foreach (var userRole in userRoles)
+                            {
+                                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+                                authClaims.Add(new Claim("Role", userRole));
+                            }
+
+                            var token = GetToken(authClaims);
+
+                            return Ok(new
+                            {
+                                token = new JwtSecurityTokenHandler().WriteToken(token),
+                                expiration = token.ValidTo
+                            });
+                        }
+                    }
+                    else
+                        return BadRequest("Username or password is incorrect.");
+                    return BadRequest("Username or password is incorrect.");
+                
+            }
+                else
+                    return NotFound("Bank with these creditentials doesn't exist.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+
+
+        }   
     }
 }

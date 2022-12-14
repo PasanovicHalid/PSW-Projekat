@@ -2,6 +2,8 @@
 using IntegrationLibrary.Core.Model.Tender;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using MimeKit;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -28,6 +30,10 @@ namespace IntegrationLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BloodBank>()
+                .Property(b => b.Email)
+                .HasConversion((save) => JsonConvert.SerializeObject(save), read => JsonConvert.DeserializeObject<Email>(read));
+
             base.OnModelCreating(modelBuilder);
         }
     }

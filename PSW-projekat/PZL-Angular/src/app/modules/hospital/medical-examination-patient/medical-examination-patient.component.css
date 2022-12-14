@@ -1,0 +1,50 @@
+.nextDugme {
+    color: black;
+    border-radius: 3px;
+    border-color: black;
+    margin-left: 137px;
+
+}
+
+.nextDugme1 {
+    color: black;
+    border-radius: 3px;
+    border-color: black;
+    margin-left: 72px;
+
+}
+
+.comboSimptomi{
+    height: 150px;
+}
+
+.comboSelect{
+    height: 100px;
+    text-align: left;
+
+}
+
+.backDugme {
+    color: black;
+    border-radius: 3px;
+    border-color: black;
+}
+
+.plusic{
+    border-color: transparent;
+    background-color: transparent;
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    left: 1080px;
+    top: 250px;    
+}
+
+.plusicSlika{
+    height: 26px;
+    width: 26px;
+}
+
+.inputPolje{
+    color: black;
+}
