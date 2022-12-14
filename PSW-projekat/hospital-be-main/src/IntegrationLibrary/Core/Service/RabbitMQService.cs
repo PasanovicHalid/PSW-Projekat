@@ -1,15 +1,10 @@
-﻿using IntegrationLibrary.Core.Exceptions;
-using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Repository.Newses;
-using IntegrationLibrary.Migrations;
+﻿using IntegrationLibrary.Core.Model;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -49,8 +44,9 @@ namespace IntegrationLibrary.Core.Service
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
-            var message = scheduledOrder;
-            //var message = new {Message = JsonConvert.SerializeObject(scheduledOrder)};
+            //var message = scheduledOrder;
+            //String message = $"day:{scheduledOrder.DayOfMonth};aplus:{scheduledOrder.APlus};bplus:{scheduledOrder.BPlus};bankEmail:{scheduledOrder.BankEmail};hospitalEmail:{scheduledOrder.HospitalEmail};api:{scheduledOrder.BankApiKey}";
+            var message = JsonConvert.SerializeObject(scheduledOrder);
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
             channel.BasicPublish("", "scheduledOrdersQueue", null, body);
@@ -108,8 +104,8 @@ namespace IntegrationLibrary.Core.Service
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            channel.QueueDeclare("SentOrders_To_hospital@gmail.com",
-                durable: true,
+            channel.QueueDeclare("sentOrdersQueue",
+                durable: false,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
@@ -121,15 +117,17 @@ namespace IntegrationLibrary.Core.Service
                 Console.WriteLine("message:");
                 Console.WriteLine(message);
                 dynamic stuff = JsonConvert.DeserializeObject(message);
+                Console.WriteLine("stuff: ");
+                Console.WriteLine(stuff);
                 try
                 {
                     FilledOrder filledOrder = new FilledOrder();
-                    filledOrder.APlus = stuff.aPlus;
-                    filledOrder.BPlus = stuff.bPlus;
-                    filledOrder.BankEmail = stuff.bloodBank.email;
-                    filledOrder.IsSent = stuff.isSent;
-                    if (checkBloodBankExists((string)stuff.bloodBank.email, bloodBanks) &&
-                    checkBloodBankApiKey((string)stuff.bloodBank.email, (string)stuff.bloodBank.apikey, bloodBanks))
+                    filledOrder.APlus = stuff.aplus;
+                    filledOrder.BPlus = stuff.bplus;
+                    filledOrder.BankEmail = stuff.bankEmail;
+                    filledOrder.IsSent = stuff.sent;
+                    if (checkBloodBankExists((string)stuff.bankEmail, bloodBanks) &&
+                    checkBloodBankApiKey((string)stuff.bankEmail, (string)stuff.bankApi, bloodBanks))
                     {
                         filledOrders.Add(filledOrder);
                     }
@@ -139,7 +137,8 @@ namespace IntegrationLibrary.Core.Service
                     throw;
                 }
             };
-            channel.BasicConsume("SentOrders_To_hospital@gmail.com", true, consumer);
+            channel.BasicConsume("sentOrdersQueue", true, consumer);
+
 
             return filledOrders;
 
