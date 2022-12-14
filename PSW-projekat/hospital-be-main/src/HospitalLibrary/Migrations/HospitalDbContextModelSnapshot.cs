@@ -228,6 +228,34 @@ namespace HospitalLibrary.Migrations
                 });
 
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorsCouncil", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<bool>("Deleted")
+                    .HasColumnType("bit");
+
+                b.Property<int>("Duration")
+                    .HasColumnType("int");
+
+                b.Property<DateTime>("End")
+                    .HasColumnType("datetime2");
+
+                b.Property<DateTime>("Start")
+                    .HasColumnType("datetime2");
+
+                b.Property<string>("Topic")
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("DoctorsCouncils");
+            });
+
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Examination", b =>
                 {
                     b.Property<int>("Id")
