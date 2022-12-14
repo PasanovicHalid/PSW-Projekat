@@ -37,7 +37,7 @@ namespace HospitalTests.Integration
                 Name = "Ivan",
                 Surname = "Galic",
                 Role = Role.patient,
-                Email = "ivan500galich@gmail.com",
+                Email = Email.Create("ivan500galich@gmail.com"),
                 Gender = Gender.male,
                 BirthDate = new DateTime(),
                 Address = new Address()

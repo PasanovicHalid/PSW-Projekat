@@ -1,35 +1,21 @@
 USE [HospitalDb]
 GO
-SET IDENTITY_INSERT [dbo].[Addresses] ON 
-
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (5, N'A', N'1a', N'A', N'A', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (6, N'A', N'1a', N'A', N'A', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (7, N'A', N'1a', N'A', N'A', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (8, N'A', N'1a', N'A', N'A', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (9, N'A', N'1a', N'A', N'A', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (10, N'A', N'1a', N'A', N'A', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (11, N'A', N'1a', N'A', N'A', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (12, N'A', N'2', N'Aa', N'Aa', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (13, N'A', N'2', N'Aa', N'Aa', N'21000', 0)
-INSERT [dbo].[Addresses] ([Id], [Street], [Number], [City], [Township], [PostCode], [Deleted]) VALUES (14, N'A', N'2', N'Aa', N'Aa', N'21000', 0)
-SET IDENTITY_INSERT [dbo].[Addresses] OFF
-GO
 SET IDENTITY_INSERT [dbo].[Persons] ON 
 
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (1, N'Pera', N'Peric', N'pera@gmail.com', 5, 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 2, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (2, N'Marko', N'Markovic', N'marko@gmail.com', 6, 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (3, N'Janko', N'Jankovic', N'janko@gmail.com', 7, 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (4, N'Milan', N'Milankovic', N'milan@gmail.com', 8, 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (5, N'Milica', N'Micic', N'milica@gmail.com', 9, 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (6, N'Dragana', N'Dragic', N'dragana@gmail.com', 10, 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (7, N'Jovana', N'Jovanovic', N'jovana@gmail.com', 11, 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (8, N'Ana', N'Anic', N'ana@gmail.com', 12, 1, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (9, N'Nevena', N'Nevic', N'nevena@gmail.com', 13, 1, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (10, N'Milos', N'Milic', N'milos@gmail.com', 14, 0, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (11, N'Nada', N'Nadic', N'nada@gmail.com', 10, 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 1, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (12, N'Mikica', N'Mikicovic', N'mikica@gmail.com', 11, 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 1, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (13, N'Tara', N'Taric', N'tara@gmail.com', 12, 1, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 0)
-INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email], [AddressId], [Gender], [BirthDate], [Role], [Deleted]) VALUES (14, N'Novica', N'Novicic', N'novica@gmail.com', 13, 0, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (1, N'Pera', N'Peric', N'pera@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 2, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (2, N'Marko', N'Markovic', N'marko@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (3, N'Janko', N'Jankovic', N'janko@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (4, N'Milan', N'Milankovic', N'milan@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (5, N'Milica', N'Micic', N'milica@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (6, N'Dragana', N'Dragic', N'dragana@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (7, N'Jovana', N'Jovanovic', N'jovana@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 0, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (8, N'Ana', N'Anic', N'ana@gmail.com', N'A', N'2', N'Aa', N'Aa', N'21000', 1, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (9, N'Nevena', N'Nevic', N'nevena@gmail.com', N'A', N'2', N'Aa', N'Aa', N'21000', 1, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (10, N'Milos', N'Milic', N'milos@gmail.com', N'A', N'2', N'Aa', N'Aa', N'21000', 0, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (11, N'Nada', N'Nadic', N'nada@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 1, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 1, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (12, N'Mikica', N'Mikicovic', N'mikica@gmail.com', N'A', N'1a', N'A', N'A', N'21000', 0, CAST(N'2000-01-01T00:00:00.0000000' AS DateTime2), 1, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (13, N'Tara', N'Taric', N'tara@gmail.com', N'A', N'2', N'Aa', N'Aa', N'21000', 1, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 1212000800012, 0)
+INSERT [dbo].[Persons] ([Id], [Name], [Surname], [Email_Adress], [Address_Street], [Address_Number], [Address_City], [Address_Township], [Address_PostCode], [Gender], [BirthDate], [Role], [Jmbg_Value], [Deleted]) VALUES (14, N'Novica', N'Novicic', N'novica@gmail.com', N'A', N'2', N'Aa', N'Aa', N'21000', 0, CAST(N'2022-08-09T00:00:00.0000000' AS DateTime2), 1, 1212000800012, 0)
 
 SET IDENTITY_INSERT [dbo].[Persons] OFF
 GO
@@ -134,11 +120,7 @@ INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (3,
 INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (4, N'STORAGE', 0, 3, 0)
 SET IDENTITY_INSERT [dbo].[Rooms] OFF
 GO
-SET IDENTITY_INSERT [dbo].[WorkingDays] ON 
 
-INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (1, 0, '2022-11-16 11:00:00', '2022-11-16 11:00:00', 1, 0)
-SET IDENTITY_INSERT [dbo].[WorkingDays] OFF
-GO
 SET IDENTITY_INSERT [dbo].[Appointments] ON 
 
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (1, 2, 1, '2022-11-16 11:30:00', '2022-11-16 11:30:00', 0)
@@ -146,7 +128,22 @@ INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [Cancela
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (3, 4, 1, '2022-11-13 11:30:00', '2022-11-16 11:30:00', 0)
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (4, 5, 1, '2022-11-14 11:30:00', '2022-11-16 11:30:00', 0)
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (5, 6, 2, '2022-11-15 11:30:00', '2022-11-16 11:30:00', 0)
+
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (1, 0, '2022-11-16 00:00:00', '2022-11-16 00:00:00', 1, 0)
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (2, 1, '2022-11-16 08:00:00', '2022-11-16 16:00:00', 1, 0)
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (3, 2, '2022-11-16 08:00:00', '2022-11-16 16:00:00', 1, 0)
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (4, 3, '2022-11-16 08:00:00', '2022-11-16 16:00:00', 1, 0)
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (5, 4, '2022-11-16 08:00:00', '2022-11-16 16:00:00', 1, 0)
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (6, 5, '2022-11-16 08:00:00', '2022-11-16 16:00:00', 1, 0)
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (7, 6, '2022-11-16 00:00:00', '2022-11-16 00:00:00', 1, 0)
 SET IDENTITY_INSERT [dbo].[Appointments] OFF
+GO
+
+SET IDENTITY_INSERT [dbo].[WorkingDays] ON
+INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (1, 0, '2022-11-16 11:00:00', '2022-11-16 11:00:00', 1, 0)
+SET IDENTITY_INSERT [dbo].[WorkingDays] OFF
+GO
+
 GO
 SET IDENTITY_INSERT [dbo].[Bloods] ON 
 

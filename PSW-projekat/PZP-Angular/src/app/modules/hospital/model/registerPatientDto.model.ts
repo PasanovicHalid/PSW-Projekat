@@ -17,6 +17,7 @@ export class RegisterPatientDto {
     bloodType: BloodType = BloodType.APlus;
     allergies: Array<Allergy> = [];
     doctorName: DoctorForPatientRegistrationDto = new DoctorForPatientRegistrationDto();
+    jmbg: string = '';
   
     public constructor(obj?: any) {
         if (obj) {
@@ -35,6 +36,7 @@ export class RegisterPatientDto {
             this.bloodType = obj.bloodType;
             this.allergies = obj.allergies;
             this.doctorName = obj.doctorName;
+            this.jmbg = obj.jmbg;
         }
     }
   }

@@ -7,6 +7,6 @@ namespace HospitalLibrary.Core.DTOs
     {
         public List<Allergy> Allergies { get; set; }
 
-        public List<DoctorForPatientRegistrationDto> Doctors { get; set; }
+        public List<SimpleDoctorDto> Doctors { get; set; }
     }
 }

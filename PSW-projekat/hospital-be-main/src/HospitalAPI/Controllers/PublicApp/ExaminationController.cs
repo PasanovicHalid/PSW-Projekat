@@ -38,14 +38,14 @@ namespace HospitalAPI.Controllers.PublicApp
             foreach (var examination in _examinationService.GetAll())
             {
                 PatientDto patientDto = new PatientDto(examination.Appointment.Patient.Id, examination.Appointment.Patient.Person.Name,
-                  examination.Appointment.Patient.Person.Surname, examination.Appointment.Patient.Person.Email, 
+                  examination.Appointment.Patient.Person.Surname, examination.Appointment.Patient.Person.Email.Adress, 
                   examination.Appointment.Patient.Person.Role);
 
                 DoctorDto doctorDto = new DoctorDto(examination.Appointment.Doctor.Id, examination.Appointment.Doctor.Person.Name,
-                   examination.Appointment.Doctor.Person.Surname, examination.Appointment.Doctor.Person.Email, examination.Appointment.Doctor.Person.Role);
+                   examination.Appointment.Doctor.Person.Surname, examination.Appointment.Doctor.Person.Email.Adress, examination.Appointment.Doctor.Person.Role);
 
-                AppointmentDto appointmentDto = new AppointmentDto(examination.Appointment.Id, examination.Appointment.DateTime, 
-                    examination.Appointment.CancelationDate, patientDto, doctorDto);
+                AppointmentDto appointmentDto = new AppointmentDto(examination.Appointment.Id, examination.Appointment.DateTime,
+                    (DateTime)examination.Appointment.CancelationDate, patientDto, doctorDto);
 
                 examinationDto.Add(new ExaminationDto(examination.Id, appointmentDto, examination.Prescriptions,
                     examination.Symptoms, examination.Report));
@@ -60,14 +60,14 @@ namespace HospitalAPI.Controllers.PublicApp
             var examination = _examinationService.GetById(id);
 
             PatientDto patientDto = new PatientDto(examination.Appointment.Patient.Id, examination.Appointment.Patient.Person.Name,
-                  examination.Appointment.Patient.Person.Surname, examination.Appointment.Patient.Person.Email,
+                  examination.Appointment.Patient.Person.Surname, examination.Appointment.Patient.Person.Email.Adress,
                   examination.Appointment.Patient.Person.Role);
 
             DoctorDto doctorDto = new DoctorDto(examination.Appointment.Doctor.Id, examination.Appointment.Doctor.Person.Name,
-               examination.Appointment.Doctor.Person.Surname, examination.Appointment.Doctor.Person.Email, examination.Appointment.Doctor.Person.Role);
+               examination.Appointment.Doctor.Person.Surname, examination.Appointment.Doctor.Person.Email.Adress, examination.Appointment.Doctor.Person.Role);
 
             AppointmentDto appointmentDto = new AppointmentDto(examination.Appointment.Id, examination.Appointment.DateTime,
-                examination.Appointment.CancelationDate, patientDto, doctorDto);
+                (DateTime)examination.Appointment.CancelationDate, patientDto, doctorDto);
 
             ExaminationDto examinationDto = new ExaminationDto(examination.Id, appointmentDto, examination.Prescriptions,
                     examination.Symptoms, examination.Report);

@@ -58,14 +58,15 @@ namespace HospitalAPI.Controllers.PublicApp
 
             Person user = _userService.GetById(int.Parse(feedbackDto.UserId));
 
-            Feedback feedback = new Feedback {
+            /*Feedback feedback = new Feedback {
                 Description = feedbackDto.Description,
                 IsAnonimous = feedbackDto.IsAnonimous,
                 IsPublic = feedbackDto.IsPublic,
                 DateCreated = DateTime.Now,
                 User = user,
                 Status = FeedbackStatus.Pending
-            };
+            };*/
+            Feedback feedback = Feedback.Create(feedbackDto.Description, feedbackDto.IsAnonimous, feedbackDto.IsPublic, user);
 
             _feedbackService.Create(feedback);
             return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);

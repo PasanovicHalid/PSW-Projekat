@@ -26,7 +26,8 @@ namespace HospitalTests.Integration
                                          scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>(), scope.ServiceProvider.GetRequiredService<IEmailService>(),
                                          scope.ServiceProvider.GetRequiredService<IConfiguration>(), scope.ServiceProvider.GetRequiredService<IPersonService>(),
                                          scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>(),
-                                         scope.ServiceProvider.GetRequiredService<IIntegrationConnection>()
+                                         scope.ServiceProvider.GetRequiredService<IIntegrationConnection>(),
+                                         scope.ServiceProvider.GetRequiredService<AuthenticationDbContext>()
                                          );
         }
 
@@ -44,7 +45,7 @@ namespace HospitalTests.Integration
                 Allergies = new List<Allergy>(),
                 BloodType = 0,
                 City = "Test City",
-                DoctorName = new DoctorForPatientRegistrationDto { FullName = "TestName TestSurname", Id = 2 },
+                DoctorName = new SimpleDoctorDto { FullName = "TestName TestSurname", Id = 2 },
                 Email = "test@gmail.com",
                 Gender = 0,
                 Number = "12",
@@ -76,7 +77,7 @@ namespace HospitalTests.Integration
                 Allergies = new List<Allergy>(),
                 BloodType = 0,
                 City = "Test City",
-                DoctorName = new DoctorForPatientRegistrationDto { FullName = "TestName TestSurname", Id = 2 },
+                DoctorName = new SimpleDoctorDto { FullName = "TestName TestSurname", Id = 2 },
                 Email = null,
                 Gender = 0,
                 Number = "12",
@@ -108,7 +109,7 @@ namespace HospitalTests.Integration
                 Allergies = new List<Allergy>(),
                 BloodType = 0,
                 City = "Test City",
-                DoctorName = new DoctorForPatientRegistrationDto { FullName = "TestName TestSurname", Id = 2 },
+                DoctorName = new SimpleDoctorDto { FullName = "TestName TestSurname", Id = 2 },
                 Email = null,
                 Gender = 0,
                 Number = "12",

@@ -18,5 +18,6 @@ namespace HospitalLibrary.Core.DTOs
         public String Username { get; set; }
         public String Password { get; set; }
         public Specialization Specialization { get; set; }
+        public String Jmbg { get; set; }
     }
 }

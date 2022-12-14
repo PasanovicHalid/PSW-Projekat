@@ -1,3 +1,4 @@
+import { CreateAppointment } from './create-appointment/create-appointment.component';
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -20,6 +21,8 @@ import { ScheduleAppointmentComponent } from './schedule-appointment/schedule-ap
 import { ViewAllOpenTendersComponent } from './blood-bank-tenders/view-all-open-tenders/view-all-open-tenders.component';
 import { TenderDetailsComponent } from './blood-bank-tenders/tender-details/tender-details.component';
 import { BankLoginComponent } from './bank-login/bank-login.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { PatientAppointmentsComponent } from './patient-appointments/patient-appointments.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent },
@@ -36,7 +39,9 @@ const routes: Routes = [
   { path: 'scheduleAppointment', component: ScheduleAppointmentComponent, canActivate: [ AuthGuard ] },
   { path: 'view-all-open-tenders', component:ViewAllOpenTendersComponent},
   { path: 'tenders-details/:id', component:TenderDetailsComponent},
-  { path: 'bank-login', component: BankLoginComponent}
+  { path: 'bank-login', component: BankLoginComponent},
+  { path: 'appointments', component: PatientAppointmentsComponent, canActivate: [ AuthGuard ] },
+  { path: 'createAppointment', component: CreateAppointment, canActivate: [ AuthGuard ] },
 
 ]
 
@@ -56,12 +61,15 @@ const routes: Routes = [
     ViewAllOpenTendersComponent,
     TenderDetailsComponent,
     BankLoginComponent,
+    PatientAppointmentsComponent,
+    CreateAppointment,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    MatNativeDateModule,
     RouterModule.forChild(routes)
   ],
   exports: [ RouterModule ],

@@ -36,7 +36,9 @@ namespace HospitalLibrary.Core.DTOs
         public BloodType BloodType { get; set; }
         public List<Allergy> Allergies { get; set; }
         [Required]
-        public DoctorForPatientRegistrationDto DoctorName { get; set; }
+        public SimpleDoctorDto DoctorName { get; set; }
+        [Required][StringLength(13)]
+        public String Jmbg { get; set; }
 
     }
 }
