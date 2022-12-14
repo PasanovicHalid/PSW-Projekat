@@ -38,7 +38,7 @@ namespace HospitalTests.Integration
             var controller = SetupSettingsController(scope);
             List<Specialization> specialization = new List<Specialization>();
             specialization.Add(Specialization.general);
-            specialization.Add(Specialization.neurologist);
+            specialization.Add(Specialization.neurology);
             ICollection<DoctorDto> doctors = new List<DoctorDto>();
 
             DoctorCouncilDTO testCase = new DoctorCouncilDTO()
