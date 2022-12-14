@@ -6,7 +6,8 @@ import { ScheduleAppointment, Specialization } from '../model/scheduleAppointmen
 import { StepperOrientation } from '@angular/material/stepper';
 import { Observable, map } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { AppointmentService } from '../services/appointment.service';
+import { AppointmentsService } from '../services/appointments.service';
+import { DateAndDoctorForNewAppointmentDto } from '../model/DateAndDoctorForNewAppointmentDto.model';
 
 @Component({
   selector: 'app-schedule-appointment',
@@ -27,7 +28,7 @@ export class ScheduleAppointmentComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation> | undefined;
 
-  constructor(private router: Router, private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appointmentService: AppointmentService) { }
+  constructor(private router: Router, private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appointmentsService: AppointmentsService) { }
 
   ngOnInit(): void {
     this.stepperOrientation = this.breakpointObserver
@@ -49,22 +50,29 @@ export class ScheduleAppointmentComponent implements OnInit {
   }
 
   getDoctors(){
-    this.doctors = [new DoctorForPatientRegistrationDto({id:1,fullName:'Marko Markovic'})]
+    this.appointmentsService.getAllDoctorsBySpecialization(this.specializationForm.value.specialization).subscribe(res => {
+      this.doctors = res;
+    });
   }
 
   getFreeAppointmentTimes(){
-    this.freeAppointments = ['12:00', '12:20', '12:40']
+    let dto: DateAndDoctorForNewAppointmentDto = new DateAndDoctorForNewAppointmentDto();
+    dto.doctorId = this.doctorForm.value.doctor.id;
+    dto.scheduledDate = this.dateForm.value.date;
+    this.appointmentsService.getFreeAppointmentsForDoctor(dto).subscribe(res => {
+      this.freeAppointments = res;
+    });
   }
 
   schedule(){
     let appointmentInfo: ScheduleAppointment = new ScheduleAppointment();
     appointmentInfo.doctorDto = this.doctorForm.value.doctor;
-    appointmentInfo.patientId = localStorage.getItem("currentUserId");
+    appointmentInfo.personId = localStorage.getItem("currentUserId");
     appointmentInfo.scheduledDate = this.dateForm.value.date;
     appointmentInfo.scheduledDate.setHours(this.timeForm.value.time.split(':')[0]);
     appointmentInfo.scheduledDate.setMinutes(this.timeForm.value.time.split(':')[1]);
 
-    this.appointmentService.scheduleAppointment(appointmentInfo).subscribe(res => {
+    this.appointmentsService.scheduleAppointment(appointmentInfo).subscribe(res => {
       this.router.navigate(['/homePatient']);
     });
   }

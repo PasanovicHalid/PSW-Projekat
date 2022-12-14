@@ -19,5 +19,6 @@ namespace HospitalLibrary.Core.Repository
             DateTime fromDate,
             DateTime toDate
         );
+        IEnumerable<Appointment> GetAllForDoctorByDate(int doctorId, DateTime scheduledDate);
     }
 }

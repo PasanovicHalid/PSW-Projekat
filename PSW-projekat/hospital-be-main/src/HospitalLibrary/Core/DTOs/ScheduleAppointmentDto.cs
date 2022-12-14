@@ -8,16 +8,16 @@ namespace HospitalLibrary.Core.DTOs
 {
     public class ScheduleAppointmentDto
     {
-        public DateTime DateTime { get; set; }
-        public int PatientId { get; set; }
-        public SimpleDoctorDto Doctor { get; set; }
+        public DateTime ScheduledDate { get; set; }
+        public int PersonId { get; set; }
+        public SimpleDoctorDto DoctorDto { get; set; }
 
         public ScheduleAppointmentDto() { }
         public ScheduleAppointmentDto(DateTime dateTime, int patientId, SimpleDoctorDto doctor)
         {
-            DateTime = dateTime;
-            PatientId = patientId;
-            Doctor = doctor;
+            ScheduledDate = dateTime;
+            PersonId = patientId;
+            DoctorDto = doctor;
         }
 
     }

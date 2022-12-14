@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.DTOs;
 using HospitalLibrary.Core.DTOs.CreatingAppointmentsDTOs;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Enums;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections;
@@ -83,11 +84,15 @@ namespace HospitalLibrary.Core.Service
         {
             List<DoctorForCreatingAppointmentDto> doctorsDtos = new List<DoctorForCreatingAppointmentDto>();
             List<Doctor> allDoctors = _idoctorRepository.GetAll().ToList();
-            foreach(var doctor in allDoctors)
+            foreach (var doctor in allDoctors)
             {
                 doctorsDtos.Add(new DoctorForCreatingAppointmentDto(doctor));
             }
             return doctorsDtos;
+        }
+        public IEnumerable<Doctor> GetAllBySpecialization(Specialization specialization)
+        {
+            return _idoctorRepository.GetAllBySpecialization(specialization);
         }
     }
 }

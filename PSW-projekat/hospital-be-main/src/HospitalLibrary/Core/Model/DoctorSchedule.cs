@@ -13,7 +13,7 @@ namespace HospitalLibrary.Core.Model
 
         public DoctorSchedule() { }
 
-        public DoctorSchedule(Day day, TimeRange shift)
+        public DoctorSchedule(int doctorId, Day day, TimeRange shift)
         {
             Day = day;
             Shift = shift;

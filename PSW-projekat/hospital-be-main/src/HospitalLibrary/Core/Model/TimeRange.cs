@@ -22,12 +22,7 @@ namespace HospitalLibrary.Core.Model
                 StartTime = startTime;
                 EndTime = endTime;
             }
-            throw Exception("Invalid data.");
-        }
-
-        private Exception Exception(string message)
-        {
-            throw Exception(message);
+            else throw new Exception("Invalid data.");
         }
 
         private bool Validation(Time startTime, Time endTime)

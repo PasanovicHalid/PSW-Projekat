@@ -35,9 +35,9 @@ namespace HospitalLibrary.Core.Repository
             return _context.Appointments.Find(id);
         }
 
-        public void Create(Appointment room)
+        public void Create(Appointment appointment)
         {
-            _context.Appointments.Add(room);
+            _context.Appointments.Add(appointment);
             _context.SaveChanges();
         }
 
@@ -92,6 +92,10 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
                 .Where(x => x.Patient.Id == patientId && !x.Deleted && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
+        }
+        public IEnumerable<Appointment> GetAllForDoctorByDate(int doctorId, DateTime scheduledDate)
+        {
+            return _context.Appointments.Where(a => a.Doctor.Id == doctorId && a.DateTime.Date == scheduledDate.Date).ToList();
         }
     }
 }

@@ -13,8 +13,11 @@ namespace HospitalLibrary.Core.Service
         void SentEmail(Appointment appointment);
         IEnumerable<Appointment> GetAllAppointmentsForPatient(int patientId);
         IEnumerable<Patient> GetAllMaliciousPatients();
-        List<AppointmentsAvailableForCreatingAppointment> GetAllAvailableAppointmentsForCreatingAppointment(
-            CheckAvailableAppontmentDto checkAvailableAppontment
+        List<AppointmentsAvailableForCreatingAppointment> GetAllAvailableAppointmentsForCreatingAppointment
+            (
+                CheckAvailableAppontmentDto checkAvailableAppontment
             );
+        void ScheduleAppointment(Appointment appointment);
+        List<string> GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate);
     }
 }

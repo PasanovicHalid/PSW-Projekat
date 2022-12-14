@@ -41,8 +41,10 @@
         <mat-form-field appearance="fill">
           <mat-label>Doctor</mat-label>
           <mat-select formControlName="doctor" required>
+            <mat-option>--</mat-option>
             <mat-option *ngFor="let doctor of doctors" [value]="doctor">{{doctor.fullName}}</mat-option>
           </mat-select>
+          <mat-label>Doctor</mat-label>
         </mat-form-field>
         <div>
           <button mat-button matStepperPrevious>Back</button>
@@ -55,6 +57,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Time</mat-label>
             <mat-select formControlName="time" required>
+              <mat-option>--</mat-option>
               <mat-option *ngFor="let appointment of freeAppointments" [value]="appointment">{{appointment}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -67,8 +70,18 @@
     <mat-step>
       <ng-template matStepLabel>Review</ng-template>
       <h2>Appointment information</h2>
-      <p>Date: {{dateForm.value.date}}</p>
-      <p>Specialization: {{specializationForm.value.specialization}}</p>
+      <p>Date: {{dateForm.value.date.toString().substr(0,15)}}</p>
+      <div [ngSwitch]="specializationForm.value.specialization">
+        <p *ngSwitchCase="0">Specialization: General</p>
+        <p *ngSwitchCase="1">Specialization: Dermatology</p>
+        <p *ngSwitchCase="2">Specialization: Neurology</p>
+        <p *ngSwitchCase="3">Specialization: Urology</p>
+        <p *ngSwitchCase="4">Specialization: Gynecology</p>
+        <p *ngSwitchCase="5">Specialization: Cardiology</p>
+        <p *ngSwitchCase="6">Specialization: Dentistry</p>
+        <p *ngSwitchCase="7">Specialization: Otorhinolaryngology</p>
+        <p *ngSwitchDefault>Specialization not selected.</p>
+      </div>
       <p>Doctor: {{doctorForm.value.doctor.fullName}}</p>
       <p>Time: {{timeForm.value.time}}</p>
       <div>

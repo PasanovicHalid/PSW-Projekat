@@ -3,13 +3,13 @@ import { DoctorForPatientRegistrationDto } from "./doctorForPatientRegistrationD
 export class ScheduleAppointment {
     scheduledDate: Date = new Date();
     doctorDto: DoctorForPatientRegistrationDto = new DoctorForPatientRegistrationDto();
-    patientId: string|null = '0';
+    personId: string|null = '0';
   
     public constructor(obj?: any) {
         if (obj) {
             this.scheduledDate = obj.scheduledDate;
             this.doctorDto = obj.doctorDto;
-            this.patientId = obj.patientId;
+            this.personId = obj.personId;
         }
     }
   }

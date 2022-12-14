@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 
@@ -16,12 +17,7 @@ namespace HospitalLibrary.Core.Service
         private readonly IWorkingDayRepository _workingDayRepository;
         private readonly IPatientRepository _patientRepository;
 
-        public AppointmentService(
-            IAppointmentRepository appointmentRepository, 
-            IWorkingDayRepository workingDayRepository,
-            IDoctorRepository doctorRepository,
-            IPatientRepository patientRepository
-        )
+        public AppointmentService(IAppointmentRepository appointmentRepository, IWorkingDayRepository workingDayRepository, IDoctorRepository doctorRepository, IPatientRepository patientRepository)
         {
             _appointmentRepository = appointmentRepository;
             _workingDayRepository = workingDayRepository;
@@ -58,7 +54,7 @@ namespace HospitalLibrary.Core.Service
                  _appointmentRepository.Create(entity);
              }
              */
-            entity.CancelationDate = DateTime.MinValue;
+            entity.CancelationDate = null;
             entity.Deleted = false;
             _appointmentRepository.Create(entity);
         }
@@ -225,17 +221,17 @@ namespace HospitalLibrary.Core.Service
                                 foreach (Appointment aPatient in allPatientAppointments)
                                 {
                                     //Patient has appointment in that time
-                                    if (aPatient.DateTime.Equals(currCheck)) 
+                                    if (aPatient.DateTime.Equals(currCheck))
                                     {
                                         patientIsFree = false;
                                         break;
-                                    }; 
+                                    };
                                     patientIsFree = true;
                                 }
 
                                 //Doctor free?
                                 foreach (Appointment aDoctor in allDoctorAppointments)
-                                {   
+                                {
                                     //Doctor has appointment in that time
                                     if (aDoctor.DateTime.Equals(currCheck))
                                     {
@@ -261,13 +257,13 @@ namespace HospitalLibrary.Core.Service
                 }
             }
 
-            if(availableAppointments.Count == 0)
+            if (availableAppointments.Count == 0)
                 if (prefer.Equals("time"))
                 {
                     //Time is priority
                     IEnumerable<Doctor> similarDoctors = _doctorRepository.GetAllBySpecialization(doctor.Specialization);
 
-                    foreach(Doctor currDoctor in similarDoctors)
+                    foreach (Doctor currDoctor in similarDoctors)
                     {
                         allDoctorAppointments = _appointmentRepository.GetAllByDoctorInDateRange(currDoctor.Id, fromDate, toDate);
 
@@ -329,7 +325,7 @@ namespace HospitalLibrary.Core.Service
                             }
                         }
                     }
-                        
+
                 }
                 else
                 {
@@ -397,6 +393,39 @@ namespace HospitalLibrary.Core.Service
                 }
 
             return availableAppointments;
+        }
+
+        public void ScheduleAppointment(Appointment appointment)
+        {
+            _appointmentRepository.Create(appointment);
+        }
+
+        public List<string> GetFreeAppointmentsForDoctor(int doctorId, DateTime scheduledDate)
+        {
+            ICollection<DoctorSchedule> doctorSchedules = _doctorRepository.GetById(doctorId).DoctorSchedules;
+            foreach (DoctorSchedule ds in doctorSchedules)
+            {
+                if ((int)ds.Day == (int)scheduledDate.DayOfWeek)
+                {
+                    List<string> allAppointmentTimes = new List<string>();
+                    Time currentTime = ds.Shift.StartTime;
+                    while (!(currentTime.ToString().Equals(ds.Shift.EndTime.ToString())))
+                    {
+                        allAppointmentTimes.Add(currentTime.ToString());
+                        currentTime = currentTime.AddMinutes(20);
+                    }
+
+                    List<Appointment> scheduledAppointments = (List<Appointment>)_appointmentRepository.GetAllForDoctorByDate(doctorId, scheduledDate);
+                    List<string> scheduledAppointmentTimes = new List<string>();
+                    foreach (Appointment appointment in scheduledAppointments)
+                    {
+                        scheduledAppointmentTimes.Add(appointment.DateTime.TimeOfDay.ToString().Substring(0,5));
+                    }
+
+                    return allAppointmentTimes.Except(scheduledAppointmentTimes).ToList();
+                }
+            }
+            return null;
         }
     }
 }
