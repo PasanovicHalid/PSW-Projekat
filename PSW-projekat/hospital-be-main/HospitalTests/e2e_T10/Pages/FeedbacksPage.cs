@@ -13,8 +13,8 @@ namespace HospitalTests.e2e_T10.Pages
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/feedbacks";
 
-        private IWebElement ApproveButton => driver.FindElement(By.Id("approveButton1"));
-        private IWebElement RejectButton => driver.FindElement(By.Id("rejectButton1"));
+        private IWebElement ApproveButton => driver.FindElement(By.Id("approveButton"));
+        private IWebElement RejectButton => driver.FindElement(By.Id("rejectButton"));
 
         public FeedbacksPage(IWebDriver driver)
         {
@@ -46,7 +46,7 @@ namespace HospitalTests.e2e_T10.Pages
         public void WaitForApproveButtonToDisapear()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 10));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("approveButton1")));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("approveButton")));
         }
     }
 }

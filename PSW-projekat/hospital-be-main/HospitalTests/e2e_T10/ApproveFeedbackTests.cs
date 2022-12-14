@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using Shouldly;
 using Xunit;
 
 namespace HospitalTests.e2e_T10
@@ -8,6 +10,7 @@ namespace HospitalTests.e2e_T10
     public class ApproveFeedbackTests : IDisposable
     {
         private readonly IWebDriver driver;
+        private Pages.LoginPage loginPage;
         private Pages.FeedbacksPage feedbacksPage;
 
         public ApproveFeedbackTests()
@@ -24,11 +27,17 @@ namespace HospitalTests.e2e_T10
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("pera");
+            loginPage.InsertPassword("123");
+            loginPage.SubmitForm();
+            Thread.Sleep(5000);
+            loginPage.ErrorDivDisplayed().ShouldBe(false);
             feedbacksPage = new Pages.FeedbacksPage(driver);
             feedbacksPage.Navigate();
-
-            Assert.True(feedbacksPage.ApproveButtonElementDisplayed());
-            Assert.True(feedbacksPage.RejectButtonElementDisplayed());
+            Thread.Sleep(5000);
 
         }
 
@@ -41,12 +50,13 @@ namespace HospitalTests.e2e_T10
         [Fact]
         public void Test_approve_feedback()
         {
-            feedbacksPage.ApproveFeedback();          // insert all values except name
+            feedbacksPage.ApproveFeedback();
 
-            feedbacksPage.WaitForApproveButtonToDisapear();         // wait for alert dialog
-            Assert.Equal(feedbacksPage.GetDialogMessage(), Pages.CreateFeedbackPage.FeedBackCreatedMessage);
-            feedbackPage.ResolveAlertDialog();         // accept dialog
-            Assert.Equal(driver.Url, Pages.CreateFeedbackPage.URI);      // check if same url - page not submitted
+            feedbacksPage.WaitForApproveButtonToDisapear();      
+
+            bool approveButton = feedbacksPage.ApproveButtonElementDisplayed();
+
+            Assert.True(approveButton);      
         }
     }
 }
