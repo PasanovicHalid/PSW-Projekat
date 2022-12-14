@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalTests.e2e_T10.Pages
 {
-    internal class CreateFeedbackPage
+    public class CreateFeedbackPage
     {
     }
 }
