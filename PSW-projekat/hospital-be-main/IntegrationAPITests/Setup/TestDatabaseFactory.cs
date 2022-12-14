@@ -1,5 +1,6 @@
 ﻿using IntegrationAPI;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.Tender;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -47,6 +48,16 @@ namespace IntegrationAPITests.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Demands\";");
             context.Database.ExecuteSqlRaw("DELETE FROM \"Tenders\";");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Bids\"; ");
+
+            context.Bids.Add(new Bid
+            {
+                DeliveryDate = System.DateTime.Now.AddDays(-1),
+                Price = 2000,
+                TenderOfBidId = 1,
+                BloodBankId = 1,
+                Status = BidStatus.WAITING
+            });
 
 
 

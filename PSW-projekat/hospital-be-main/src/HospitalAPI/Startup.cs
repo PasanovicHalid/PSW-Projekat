@@ -1,6 +1,12 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository.CouncilOfDoctors;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.CouncilOfDoctors;
+
+using HospitalLibrary.Core.Repository.Notification;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Notification;
 using HospitalLibrary.Identity;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Core.IntegrationConnection;
@@ -112,6 +118,9 @@ namespace HospitalAPI
             services.AddScoped<ITreatmentService, TreatmentService>();
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
 
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+
 
             services.AddScoped<IBedService, BedService>();
             services.AddScoped<IBedRepository, BedRepository>();
@@ -128,6 +137,10 @@ namespace HospitalAPI
             services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodRepository, BloodRepository>();
 
+
+            services.AddScoped<ICouncilOfDoctorsService, CouncilOfDoctorsService>();
+            services.AddScoped<ICouncilOfDoctorsRepository, CouncilOfDoctorsRepository>();
+
             services.AddScoped<ISymptomService, SymptomService>();
             services.AddScoped<ISymptomRepository, SymptomRepository>();
             
@@ -135,6 +148,7 @@ namespace HospitalAPI
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
             services.AddScoped<IIntegrationConnection, IntegrationHTTPConnection>();
+
 
         }
 

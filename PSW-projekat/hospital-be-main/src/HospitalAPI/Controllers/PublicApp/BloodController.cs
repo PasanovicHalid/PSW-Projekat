@@ -25,6 +25,18 @@ namespace HospitalAPI.Controllers.PublicApp
 
         }
 
+        [HttpGet]
+        public ActionResult GetAllBlood()
+        {
+            try
+            {
+                return Ok(_bloodService.GetAll());
+            } catch
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPut("bloods/{bloodId}/{quantity}")]
         public ActionResult updateQuantityMedicine(int bloodId, int quantity, Blood blood)
         {
@@ -49,6 +61,20 @@ namespace HospitalAPI.Controllers.PublicApp
             }
 
             return Ok();
+        }
+        
+        [HttpPost("takeOrder")]
+        public ActionResult TakeOrder(List<BloodOrderDto> entity)
+        {
+            try
+            {
+                _bloodService.handleBloodRequest(entity);
+                return Ok(entity);
+            }
+            catch
+            {
+                return BadRequest("bad");
+            }
         }
 
         [HttpGet("emergency/{bloodType}/{amount}")]

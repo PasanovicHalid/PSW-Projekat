@@ -19,6 +19,21 @@ namespace HospitalLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DoctorDoctorsCouncil", b =>
+                {
+                    b.Property<int>("CouncilsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DoctorsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CouncilsId", "DoctorsId");
+
+                    b.HasIndex("DoctorsId");
+
+                    b.ToTable("DoctorDoctorsCouncil");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -212,12 +227,42 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("BloodConsumptions");
                 });
 
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.DoctorsCouncil", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<bool>("Deleted")
+                    .HasColumnType("bit");
+
+                b.Property<int>("Duration")
+                    .HasColumnType("int");
+
+                b.Property<DateTime>("End")
+                    .HasColumnType("datetime2");
+
+                b.Property<DateTime>("Start")
+                    .HasColumnType("datetime2");
+
+                b.Property<string>("Topic")
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("DoctorsCouncils");
+            });
+
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Examination", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
 
                     b.Property<int?>("AppointmentId")
                         .HasColumnType("int");
@@ -226,13 +271,16 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Report")
+
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+
                     b.HasIndex("AppointmentId");
 
                     b.ToTable("Examinations");
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -315,6 +363,30 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Medicines");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NotificationFor")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
@@ -611,6 +683,21 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("WorkingDays");
+                });
+
+            modelBuilder.Entity("DoctorDoctorsCouncil", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.DoctorsCouncil", null)
+                        .WithMany()
+                        .HasForeignKey("CouncilsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>

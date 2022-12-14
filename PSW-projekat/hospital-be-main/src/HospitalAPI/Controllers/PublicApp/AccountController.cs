@@ -370,6 +370,7 @@ namespace HospitalAPI.Controllers.PublicApp
                             {
                                 authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                                 authClaims.Add(new Claim("Role", userRole));
+                                authClaims.Add(new Claim("Email",loginUserDto.Username));
                             }
 
                             var token = GetToken(authClaims);
@@ -382,8 +383,8 @@ namespace HospitalAPI.Controllers.PublicApp
                         }
                     }
                     else
-                        return BadRequest("Username or password is incorrect.");
-                    return BadRequest("Username or password is incorrect.");
+                        return BadRequest("Username or password is incorrect.1");
+                    return BadRequest("Username or password is incorrect.2");
                 
             }
                 else

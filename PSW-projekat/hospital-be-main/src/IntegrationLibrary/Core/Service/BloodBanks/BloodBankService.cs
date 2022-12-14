@@ -118,7 +118,6 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
                     return true;
             }
             return false;
-
         }
         public async Task<int> GetBlood(BloodBank bank, BloodType bloodType, int quantity)
         {

@@ -9,7 +9,7 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
@@ -56,6 +56,18 @@ namespace IntegrationAPI.Controllers
             catch
             {
                 return BadRequest();
+            }
+        }
+
+        [HttpGet("open")]
+        public ActionResult GetAllOpen()
+        {
+            try
+            {
+                return Ok(_tenderService.GetAllOpen());
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 

@@ -248,14 +248,38 @@ export class MedicalExaminationFinish implements OnInit {
     const modalDialog = this.dialog.open(MedicalPrescriptionShowComponent, dialogConfig);
   }
 
-  public createExamination() {        
-    this.examinationService.createExamination(this.examination).subscribe(res => {
+  public createExamination() {       
+    this.examinationService.createExamination(this.examination, sympts, report, medication).subscribe(res => {
       window.confirm("The medical examination of patient is succesful finished!");
       const modalDi = this.dialog.closeAll();
+      
+    let cb1 = document.getElementById("simptomi") as HTMLInputElement;
+    let cb2 = document.getElementById("izvestaj") as HTMLInputElement;
+    let cb3 = document.getElementById("lekovi") as HTMLInputElement;
+    let sympts = false
+    let report = false
+    let medication = false
+    if(cb1.checked) {
+      sympts = true
+    }
+    if(cb2.checked){
+      report = true
+    }
+    if(cb3.checked){
+      medication = true
+    }
+      
+    let fileName = 'report';
+    let blob: Blob = res.body as Blob;
+    let a = document.createElement('a');
+    //a.download=fileName;
+    //a.href = window.URL.createObjectURL(blob); 
+    const fileURL = URL.createObjectURL(blob);
+    window.open(fileURL, '_blank');
+    a.click();
     });
 
   }
-
 }
 
 
