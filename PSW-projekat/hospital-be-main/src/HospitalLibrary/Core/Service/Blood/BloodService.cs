@@ -114,8 +114,8 @@ namespace HospitalLibrary.Core.Service
         }
         public void handleBloodRequest(List<BloodOrderDto> orders)
         {
-            
-            foreach(BloodOrderDto order in orders)
+
+            foreach (BloodOrderDto order in orders)
             {
                 if (order.IsSent)
                 {
@@ -141,11 +141,13 @@ namespace HospitalLibrary.Core.Service
                     Model.Notification notification = new Model.Notification();
                     notification.NotificationFor = Role.manager;
                     notification.Title = "Order not sent";
-                    notification.Description = "Blood bank: " + order.BankEmail + "has failed to send: " + 
+                    notification.Description = "Blood bank: " + order.BankEmail + "has failed to send: " +
                         "APlus: " + order.APlus + ", BPlus: " + order.BPlus;
                     _notificationRepository.Create(notification);
                 }
             }
+        }
+
         public bool StoreBlood(Blood blood)
         {
             List<Blood> bloodTypes = GetByRoom(4);

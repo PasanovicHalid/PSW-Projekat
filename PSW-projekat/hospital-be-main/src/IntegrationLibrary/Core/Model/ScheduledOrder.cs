@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class ScheduledOrder : BaseModel
+    public class ScheduledOrder : EntityClass
     {
         private int _dayOfMonth;
         private int _aPlus;
