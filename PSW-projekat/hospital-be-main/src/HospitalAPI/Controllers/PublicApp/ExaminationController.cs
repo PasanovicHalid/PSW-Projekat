@@ -81,8 +81,9 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpPost]
-        public ActionResult Create(Examination examination)
+        public ActionResult Create(Examination examination, Boolean symptoms, Boolean report, Boolean medication)
         {
+            Console.WriteLine(symptoms);
           
             examination.Appointment = _appointmentService.GetById(examination.Appointment.Id);
             List<Patient> patients = new List<Patient>();
@@ -100,9 +101,16 @@ namespace HospitalAPI.Controllers.PublicApp
                 return BadRequest(ModelState);
             }
 
+            byte[] file = _examinationService.GeneratePdf(examination, symptoms, report, medication);
+            Guid uniqueSuffix = Guid.NewGuid();
+            System.IO.File.WriteAllBytes("report" + ".pdf", file);
+
             _examinationService.Create(examination);
-            return Ok();
+            //return Ok();
+            return File(file, "application/pdf", "report" + ".pdf");
         }
+
+
 
     }
 }
