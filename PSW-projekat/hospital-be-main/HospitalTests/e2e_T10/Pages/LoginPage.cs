@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationAPITests.E2E_tests.Pages
+namespace HospitalTests.e2e_T10.Pages
 {
     public class LoginPage
     {

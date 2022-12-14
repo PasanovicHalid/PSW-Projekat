@@ -2,7 +2,7 @@
   <div class="table-header">
       <h2 class="table-title">All appointments</h2>
   </div>
-  <table mat-table [dataSource]="dataSource">
+  <table mat-table [dataSource]="dataSource" id="appointmentsTable">
       <ng-container matColumnDef="AppointmentTime">
           <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Appointment Time </th>
           <td mat-cell *matCellDef="let appointment" class="cell-center">{{appointment.appointmentTime | date:'short'}}</td>
@@ -19,7 +19,7 @@
         <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Cancel </th>
         <td mat-cell *matCellDef="let appointment" class="cell-center">
             <div *ngIf="appointment.appointmentStatus=='Upcoming' && checkDate(appointment.appointmentTime)">
-                <button mat-button (click)="cancelAppointment(appointment.appointmentId)" class="button-updateStatus">Cancel</button>
+                <button id="{{appointment.appointmentId}}" mat-button (click)="cancelAppointment(appointment.appointmentId)" class="button-updateStatus">Cancel</button>
             </div> 
         </td>
     </ng-container>
