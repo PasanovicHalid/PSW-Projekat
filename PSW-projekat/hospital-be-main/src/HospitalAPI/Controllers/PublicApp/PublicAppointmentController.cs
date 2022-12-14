@@ -80,7 +80,7 @@ namespace HospitalAPI.Controllers.PublicApp
                         {
                             AppointmentId = app.Id,
                             DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
-                            AppointmentTime = app.DateTime.Date,
+                            AppointmentTime = app.DateTime,
                             AppointmentStatus = "Finished"
                         };
                     }
@@ -90,7 +90,7 @@ namespace HospitalAPI.Controllers.PublicApp
                         {
                             AppointmentId = app.Id,
                             DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
-                            AppointmentTime = app.DateTime.Date,
+                            AppointmentTime = app.DateTime,
                             AppointmentStatus = "Upcoming"
                         };
                     }
@@ -102,7 +102,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     {
                         AppointmentId = app.Id,
                         DoctorFullName = app.Doctor.Person.Name + " " + app.Doctor.Person.Surname,
-                        AppointmentTime = app.DateTime.Date,
+                        AppointmentTime = app.DateTime,
                         AppointmentStatus = "Cancelled"
                     };
                 }
