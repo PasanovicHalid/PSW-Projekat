@@ -27,8 +27,12 @@ import { AuthGuardManager } from '../hospital/services/authManager.guard';
 import { CreateBloodRequestComponent } from './create-blood-request/create-blood-request.component';
 import { ScheduledBloodOrderComponent } from './scheduled-blood-order/scheduled-blood-order.component';
 import { BloodConsumptionComponent } from "./blood-consumption/blood-consumption.component";
+import { CouncilsComponent } from './councils/councils.component';
+import { ShowDoctorsPipe } from './councils/show-doctors.pipe';
+import { CreateDoctorsCouncilComponent } from './create-doctors-council/create-doctors-council.component';
 import { MedicalExaminationFinish, MedicalExaminationPatientComponent, MedicalPrescriptionShowComponent, MedicalPrescriptionComponent, MedicalReportComponent } from './medical-examination-patient/medical-examination-patient.component';
 import { ShowMedicinePipe } from './medical-examination-patient/show-medicine.pipe';
+
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuardManager] },
@@ -79,6 +83,8 @@ const routes: Routes = [
   { path: 'bloodRequest/add', component: CreateBloodRequestComponent },
   { path: 'scheduleOrder', component: ScheduledBloodOrderComponent },
   { path: 'bloodConsumption/add', component: BloodConsumptionComponent},
+  { path: 'councilOfDoctors', component: CouncilsComponent},
+  { path: 'council/add', component: CreateDoctorsCouncilComponent},
   { path: 'examinations/add/:id', component: MedicalExaminationPatientComponent},
   { path: 'examinations/report', component: MedicalReportComponent},
   { path: 'examinations/prescriptionShow', component: MedicalPrescriptionShowComponent},
@@ -102,6 +108,10 @@ const routes: Routes = [
     LoginComponent,
     CreateBloodRequestComponent,
     BloodConsumptionComponent,
+
+    CouncilsComponent,
+    ShowDoctorsPipe,
+    CreateDoctorsCouncilComponent,
     ScheduledBloodOrderComponent,
     MedicalExaminationPatientComponent,
     MedicalReportComponent,

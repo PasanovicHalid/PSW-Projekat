@@ -28,6 +28,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Prescription> Prescriptions { get; set; }
         public DbSet<Examination> Examinations { get; set; }
 
+        public DbSet<DoctorsCouncil> DoctorsCouncils { get; set; }
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

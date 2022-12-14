@@ -70,6 +70,7 @@ namespace HospitalLibrary.Core.Service
         }
         private void addBlood(Blood inBlood)
         {
+            //Id of each blood type in storage
             //APlus => id = 5
             //BPlus => id = 6
             //ABPlus => id = 7
@@ -134,6 +135,48 @@ namespace HospitalLibrary.Core.Service
                         blood.Quantity = order.BPlus;
                         addBlood(blood);
                     }
+                    if (order.ABPlus > 0)
+                    {
+                        Blood blood = new Blood();
+                        blood.BloodType = BloodType.ABPlus;
+                        blood.Quantity = order.ABPlus;
+                        addBlood(blood);
+                    }
+                    if (order.OPlus > 0)
+                    {
+                        Blood blood = new Blood();
+                        blood.BloodType = BloodType.OPlus;
+                        blood.Quantity = order.OPlus;
+                        addBlood(blood);
+                    }
+                    if (order.AMinus> 0)
+                    {
+                        Blood blood = new Blood();
+                        blood.BloodType = BloodType.AMinus;
+                        blood.Quantity = order.AMinus;
+                        addBlood(blood);
+                    }
+                    if (order.BMinus> 0)
+                    {
+                        Blood blood = new Blood();
+                        blood.BloodType = BloodType.BMinus;
+                        blood.Quantity = order.BMinus;
+                        addBlood(blood);
+                    }
+                    if (order.ABMinus > 0)
+                    {
+                        Blood blood = new Blood();
+                        blood.BloodType = BloodType.ABMinus;
+                        blood.Quantity = order.ABMinus;
+                        addBlood(blood);
+                    }
+                    if (order.OMinus > 0)
+                    {
+                        Blood blood = new Blood();
+                        blood.BloodType = BloodType.OMinus;
+                        blood.Quantity = order.OMinus;
+                        addBlood(blood);
+                    }
                 }
                 else
                 {
@@ -141,13 +184,14 @@ namespace HospitalLibrary.Core.Service
                     Model.Notification notification = new Model.Notification();
                     notification.NotificationFor = Role.manager;
                     notification.Title = "Order not sent";
-                    notification.Description = "Blood bank: " + order.BankEmail + "has failed to send: " +
-                        "APlus: " + order.APlus + ", BPlus: " + order.BPlus;
+                    notification.Description = $"Blood bank: {order.BankEmail} has failed to send: " +
+                        $"APlus: {order.APlus}, BPlus: {order.BPlus}, ABPlus: " +
+                        $"{order.ABPlus}, OPlus: {order.OPlus}, AMinus: {order.AMinus}, BMinus: {order.BMinus}, " +
+                        $"ABMinus: {order.ABMinus}, OMinus: {order.OMinus}";
                     _notificationRepository.Create(notification);
                 }
             }
         }
-
         public bool StoreBlood(Blood blood)
         {
             List<Blood> bloodTypes = GetByRoom(4);
