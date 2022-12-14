@@ -39,7 +39,7 @@ namespace HospitalTests.Integration
             var controller = SetupSettingsController(scope);
 
             //Act
-            var result = ((OkObjectResult)controller.GetPatientAppointments(3))?.Value as List<PatientAppointmentsDto>;
+            var result = ((OkObjectResult)controller.GetPatientAppointments(4))?.Value as List<PatientAppointmentsDto>;
 
             //Assert 
             Assert.NotNull(result);
@@ -55,7 +55,7 @@ namespace HospitalTests.Integration
             var controller = SetupSettingsController(scope);
 
             //Act
-            var result = ((OkObjectResult)controller.GetPatientAppointments(4))?.Value as List<PatientAppointmentsDto>;
+            var result = ((OkObjectResult)controller.GetPatientAppointments(2))?.Value as List<PatientAppointmentsDto>;
 
             //Assert 
             Assert.NotNull(result);
