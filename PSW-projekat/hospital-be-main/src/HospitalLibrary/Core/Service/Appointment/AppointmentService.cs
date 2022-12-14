@@ -276,7 +276,7 @@ namespace HospitalLibrary.Core.Service
                     foreach (Doctor currDoctor in similarDoctors)
                     {
                         allDoctorAppointments = _appointmentRepository.GetAllByDoctorInDateRange(currDoctor.Id, fromDate, toDate);
-
+                        workingDays = _workingDayRepository.GetAllWorkingDaysByUser(currDoctor.Person.Id);
                         //currCheckDate
                         for (DateTime currCheckDate = fromDate; currCheckDate < toDate; currCheckDate = currCheckDate.AddDays(1))
                         {
@@ -339,6 +339,7 @@ namespace HospitalLibrary.Core.Service
                 }
                 else
                 {
+                    workingDays = _workingDayRepository.GetAllWorkingDaysByUser(doctor.Person.Id);
                     //New times
                     fromDate = fromDate.AddDays(-5);
                     toDate = toDate.AddDays(5);
