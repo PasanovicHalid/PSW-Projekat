@@ -51,18 +51,23 @@ namespace HospitalTests.E2E_tests
         }
 
         [Fact]
-        public void Select_custom_period_failiure()
+        public void Not_all_fields_are_selected_failiure()
         {
-            reportSettingsPage.ClickShowDoctorsButton();
-           // Thread.Sleep(1000);
+            
+       
             reportSettingsPage.InsertTopic("Tema konzilijuma");
-            reportSettingsPage.ClickShowDoctorsButton();
+            reportSettingsPage.ClickShowSpecializationsButton();
+          //  reportSettingsPage.InsertSpecializationSelectButton();
+            //reportSettingsPage.InsertDoctorSelectButton()
             reportSettingsPage.InsertStartDateField(new DateTime(2022, 12, 12));
             reportSettingsPage.InsertEndDateField(new DateTime(2022, 12, 15));
             reportSettingsPage.InsertDurationFild(20);
             
             reportSettingsPage.SubmitForm();
             reportSettingsPage.WaitForToastDialog();
+            Thread.Sleep(1000);
+            Assert.Equal(driver.Url, Pages.DoctorsCouncilPage.URI);      // check if same url - page not submitted
+
         }
 
     }

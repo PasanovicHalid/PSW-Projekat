@@ -39,7 +39,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Doctors] ON 
 
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (1, 0, 2, 0)
-INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (2, 0, 3, 0)
+INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (2, 1, 3, 0)
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (3, 0, 4, 0)
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (4, 0, 5, 0)
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (5, 0, 6, 0)
