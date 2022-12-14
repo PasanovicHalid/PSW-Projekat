@@ -12,7 +12,13 @@ namespace IntegrationLibrary.Core.Model
         private string _bankEmail { get;  set;}
         private int _aPlus { get; set; }
         private int _bPlus { get; set; }
-        //ostale krvne grupe
+        private int _abPlus { get; set; }
+        private int _oPlus { get; set; }
+
+        private int _aMinus{ get; set; }
+        private int _bMinus { get; set; }
+        private int _abMinus { get; set; }
+        private int _oMinus { get; set; }
 
         public FilledOrder()
         {
@@ -29,5 +35,12 @@ namespace IntegrationLibrary.Core.Model
         public string BankEmail { get => _bankEmail; set => _bankEmail = value; }
         public int APlus { get => _aPlus; set => _aPlus = value; }
         public int BPlus { get => _bPlus; set => _bPlus = value; }
+        public int ABPlus { get => _abPlus; set => _abPlus = value; }
+        public int OPlus { get => _oPlus; set => _oPlus = value; }
+
+        public int AMinus{ get => _aMinus; set => _aMinus = value; }
+        public int BMinus { get => _bMinus; set => _bMinus = value; }
+        public int ABMinus { get => _abMinus; set => _abMinus = value; }
+        public int OMinus { get => _oMinus; set => _oMinus = value; }
     }
 }

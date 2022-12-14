@@ -124,6 +124,13 @@ namespace IntegrationLibrary.Core.Service
                     FilledOrder filledOrder = new FilledOrder();
                     filledOrder.APlus = stuff.aplus;
                     filledOrder.BPlus = stuff.bplus;
+                    filledOrder.ABPlus = stuff.abplus;
+                    filledOrder.OPlus = stuff.oplus;
+
+                    filledOrder.AMinus= stuff.aminus;
+                    filledOrder.BMinus = stuff.bminus;
+                    filledOrder.ABMinus = stuff.abminus;
+                    filledOrder.OMinus = stuff.ominus;
                     filledOrder.BankEmail = stuff.bankEmail;
                     filledOrder.IsSent = stuff.sent;
                     if (checkBloodBankExists((string)stuff.bankEmail, bloodBanks) &&

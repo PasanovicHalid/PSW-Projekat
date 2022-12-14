@@ -20,10 +20,6 @@ namespace IntegrationLibrary.Core.Repository.ScheduledOrder
 
         public void Create(Model.ScheduledOrder entity)
         {
-            //check if this should be in service
-            //delete old order for given blood bank
-            //Delete(GetByBloodBankEmail(entity.BankEmail));
-            //save new order
             _context.ScheduledOrders.Add(entity);
             _context.SaveChanges();
         }
