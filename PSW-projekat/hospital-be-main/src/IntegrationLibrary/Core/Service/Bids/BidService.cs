@@ -90,9 +90,9 @@ namespace IntegrationLibrary.Core.Service.Bids
             }
         }
 
-        private void SendEmailsToParticipants(Bid Winner, Tender tender, List<Bid> all)
+        private async void SendEmailsToParticipants(Bid Winner, Tender tender, List<Bid> all)
         {
-            _emailService.SendEmailAsync(new TenderWinnermailRequest(_bloodBankRepository.GetById(Winner.BloodBankId), tender));
+            await _emailService.SendEmailAsync(new TenderWinnermailRequest(_bloodBankRepository.GetById(Winner.BloodBankId), tender));
             HashSet<int> bloodBanksWhoRecievedEmail = new HashSet<int>
             {
                 Winner.BloodBankId
@@ -101,7 +101,7 @@ namespace IntegrationLibrary.Core.Service.Bids
             {
                 if (!bloodBanksWhoRecievedEmail.Contains(loser.BloodBankId))
                 {
-                    _emailService.SendEmailAsync(new TenderLoserMailRequest(_bloodBankRepository.GetById(loser.BloodBankId), tender));
+                    await _emailService.SendEmailAsync(new TenderLoserMailRequest(_bloodBankRepository.GetById(loser.BloodBankId), tender));
                     bloodBanksWhoRecievedEmail.Add(loser.BloodBankId);
                 }    
             }

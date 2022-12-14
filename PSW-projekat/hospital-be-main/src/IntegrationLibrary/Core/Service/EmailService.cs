@@ -25,7 +25,7 @@ namespace IntegrationLibrary.Core.Service
             _mailSettings = mailSettings.Value;
         }
 
-        public async void SendEmailAsync(MailRequest mailRequest)
+        public async Task<string> SendEmailAsync(MailRequest mailRequest)
         {
             //Mail preparation
             var email = new MimeMessage();
@@ -41,8 +41,9 @@ namespace IntegrationLibrary.Core.Service
             smtp.Connect(_mailSettings.Host, _mailSettings.Port,
                 MailKit.Security.SecureSocketOptions.StartTls);
             smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-            await smtp.SendAsync(email);
+            var result = await smtp.SendAsync(email);
             smtp.Disconnect(true);
+            return result;
         }
     }
 }

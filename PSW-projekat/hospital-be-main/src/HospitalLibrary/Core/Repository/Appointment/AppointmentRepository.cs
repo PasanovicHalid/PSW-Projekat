@@ -1,12 +1,12 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Model;﻿
 using HospitalLibrary.Settings;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-
+using System.Security.Cryptography;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.Repository
         public IEnumerable<DateTime> GetAllFreeByDoctor(int doctorId,DateTime start,DateTime end)
         {
             var pom = _context.Appointments.Include(x => x.Patient).Include(x => x.Doctor)
-                .Where(a => a.Patient == null && a.DateTime.Date >=start.Date && a.CancelationDate.Date <= end.Date).Select(a => a.DateTime);
+                .Where(a => a.Patient == null && a.DateTime.Date >=start.Date && a.CancelationDate <= end.Date).Select(a => a.DateTime);
          
             var pom1= _context.Appointments.Include(x => x.Patient).Include(x => x.Doctor)
                 .Where(a => a.Patient != null && a.DateTime >= start.Date && a.CancelationDate <= end.Date &&  a.Doctor.Id == doctorId).Select(a => a.DateTime);
@@ -68,9 +68,9 @@ namespace HospitalLibrary.Core.Repository
             return _context.Appointments.Find(id);
         }
 
-        public void Create(Appointment room)
+        public void Create(Appointment appointment)
         {
-            _context.Appointments.Add(room);
+            _context.Appointments.Add(appointment);
             _context.SaveChanges();
         }
 
@@ -94,6 +94,49 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.Appointments.Remove(room);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Appointment> GetAllForPatient(int patientId)
+        {
+            return _context.Appointments.Where(p => p.Patient.Id == patientId).ToList();
+        }
+
+        public IEnumerable<Patient> GetAllMaliciousPatients()
+        {
+            return _context.Appointments.FromSqlRaw("SELECT TOP (1000) PatientId FROM[HospitalDb].[dbo].[Appointments] WHERE CancelationDate > DATEADD(day, -30, GETDATE()) GROUP BY PatientId HAVING COUNT(*) > 2").Select(a => a.Patient).ToList();
+            //return (_context.Appointments.Where(a => a.DateTime > System.DateTime.Now.AddDays(-30)).GroupBy(a => a.Patient.Id)).Where(g => g.Count() > 2).Select(g => g.First().Patient).ToArray();
+        }
+
+        public IEnumerable<Appointment> GetAllByDoctorInDateRange(
+            int doctorId,
+            DateTime fromDate,
+            DateTime toDate
+        )
+        {
+            return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
+                .Where(x => x.Doctor.Id == doctorId && !x.Deleted && x.CancelationDate == null && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
+        }
+
+        public IEnumerable<Appointment> GetAllByPatientInDateRange(
+            int patientId,
+            DateTime fromDate,
+            DateTime toDate
+        )
+        {
+            return _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
+                .Where(x => x.Patient.Id == patientId && !x.Deleted && fromDate <= x.DateTime && x.DateTime < toDate).ToList();
+        }
+
+        public IEnumerable<Appointment> GetAllForDoctorByDate(int doctorId, DateTime scheduledDate)
+        {
+            return _context.Appointments.Where(a => a.Doctor.Id == doctorId && a.DateTime.Date == scheduledDate.Date).ToList();
+        }
+
+        public bool CheckIfExists(Appointment appointment)
+        {
+            IEnumerable<Appointment> a = _context.Appointments.Include(x => x.Doctor).Include(x => x.Patient)
+                .Where(x => x.Doctor.Id == appointment.Doctor.Id && !x.Deleted && x.CancelationDate == null && x.DateTime == appointment.DateTime).ToList();
+            return a.Count() == 0 ? false : true;
         }
     }
 }

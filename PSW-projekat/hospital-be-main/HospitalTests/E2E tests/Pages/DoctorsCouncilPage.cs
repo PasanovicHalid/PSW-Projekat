@@ -38,6 +38,7 @@ namespace HospitalTests.E2E_tests.Pages
 
         public void InsertDoctorSelectButton()
         {
+
             DoctorSelectButton.Click();
         }
 
@@ -48,6 +49,7 @@ namespace HospitalTests.E2E_tests.Pages
             driver.FindElement(By.Id("neurologist")).Click();
             SpecializationSelectButton.Click();
 
+           // DoctorSelectButton.getFirstSelectedOptions();
         }
 
 

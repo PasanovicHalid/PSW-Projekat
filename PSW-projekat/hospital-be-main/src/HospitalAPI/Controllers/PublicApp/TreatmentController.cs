@@ -44,7 +44,7 @@ namespace HospitalAPI.Controllers.PublicApp
             foreach (var treatment in _treatmentService.GetAll())
             {
                 PatientDto patientDto = new PatientDto(treatment.Patient.Id, treatment.Patient.Person.Name,
-                    treatment.Patient.Person.Surname, treatment.Patient.Person.Email, treatment.Patient.Person.Role);
+                    treatment.Patient.Person.Surname, treatment.Patient.Person.Email.ToString(), treatment.Patient.Person.Role);
 
                 //int id, string number, int floor, RoomType roomType, ICollection<BedDto> bedDtos
 
@@ -57,7 +57,7 @@ namespace HospitalAPI.Controllers.PublicApp
                     if (bed.Patient != null)
                     {
                         patientDto2 = new PatientDto(bed.Patient.Id, bed.Patient.Person.Name,
-                        bed.Patient.Person.Surname, bed.Patient.Person.Email, bed.Patient.Person.Role);
+                        bed.Patient.Person.Surname, bed.Patient.Person.Email.ToString(), bed.Patient.Person.Role);
 
                         bedDtos.Add(new BedDto(bed.Id, bed.Name, bed.BedState, patientDto2, bed.Quantity));
                     }
@@ -132,7 +132,7 @@ namespace HospitalAPI.Controllers.PublicApp
             var treatment = _treatmentService.GetById(id);
 
             PatientDto patientDto = new PatientDto(treatment.Patient.Id, treatment.Patient.Person.Name,
-                    treatment.Patient.Person.Surname, treatment.Patient.Person.Email, treatment.Patient.Person.Role);
+                    treatment.Patient.Person.Surname, treatment.Patient.Person.Email.ToString(), treatment.Patient.Person.Role);
 
             ICollection<BedDto> bedDtos = new List<BedDto>();
 
@@ -143,7 +143,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 if (bed.Patient != null)
                 {
                     patientDto2 = new PatientDto(bed.Patient.Id, bed.Patient.Person.Name,
-                    bed.Patient.Person.Surname, bed.Patient.Person.Email, bed.Patient.Person.Role);
+                    bed.Patient.Person.Surname, bed.Patient.Person.Email.ToString(), bed.Patient.Person.Role);
 
                     bedDtos.Add(new BedDto(bed.Id, bed.Name, bed.BedState, patientDto2, bed.Quantity));
                 }
