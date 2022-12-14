@@ -13,7 +13,6 @@ using System;
 
 namespace IntegrationAPI.Controllers
 {
-
     [EnableCors]
     [Route("api/[controller]")]
     [ApiController]
