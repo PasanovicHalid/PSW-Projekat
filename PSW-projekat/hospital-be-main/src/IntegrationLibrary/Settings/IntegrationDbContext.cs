@@ -20,6 +20,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<ReportSettings> ReportSettings { get; set; }
         public DbSet<News> Newses { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<ScheduledOrder> ScheduledOrders { get; set; }
         public DbSet<Tender> Tenders { get; set; }
         public DbSet<Demand> Demands { get; set; }
 

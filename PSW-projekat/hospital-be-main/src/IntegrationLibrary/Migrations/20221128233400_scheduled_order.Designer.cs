@@ -4,14 +4,16 @@ using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128233400_scheduled_order")]
+    partial class scheduled_order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,12 +32,11 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApiKey")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GRPCServerAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -48,6 +49,7 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ServerAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -152,60 +154,31 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("ReportSettings");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-                    b.Property<int>("BloodType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TenderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenderId");
-
-                    b.ToTable("Demands");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Tender", b =>
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.ScheduledOrder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("State")
+                    b.Property<int>("APlus")
                         .HasColumnType("int");
+
+                    b.Property<int>("BPlus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BankEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DayOfMonth")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HospitalEmail")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tenders");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>
-                {
-                    b.HasOne("IntegrationLibrary.Core.Model.Tender.Tender", "Tender")
-                        .WithMany("Demands")
-                        .HasForeignKey("TenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tender");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Tender", b =>
-                {
-                    b.Navigation("Demands");
+                    b.ToTable("ScheduledOrders");
                 });
 #pragma warning restore 612, 618
         }

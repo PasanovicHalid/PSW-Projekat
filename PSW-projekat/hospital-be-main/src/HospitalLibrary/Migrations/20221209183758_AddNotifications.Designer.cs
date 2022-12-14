@@ -4,14 +4,16 @@ using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221209183758_AddNotifications")]
+    partial class AddNotifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,6 +67,86 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Allergies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Deleted = false,
+                            Name = "Polen"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Deleted = false,
+                            Name = "Prasina"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Deleted = false,
+                            Name = "Pas"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Deleted = false,
+                            Name = "Macka"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Deleted = false,
+                            Name = "Pcela"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Deleted = false,
+                            Name = "Ambrozija"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Deleted = false,
+                            Name = "Kikiriki"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Deleted = false,
+                            Name = "Gluten"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Deleted = false,
+                            Name = "Laktoza"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Deleted = false,
+                            Name = "Alergija10"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Deleted = false,
+                            Name = "Alergija11"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Deleted = false,
+                            Name = "Alergija12"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Deleted = false,
+                            Name = "Alergija13"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
@@ -73,9 +155,6 @@ namespace HospitalLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CancelationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
@@ -544,11 +623,11 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Day")
                         .HasColumnType("int");
 
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("DoctorId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
@@ -556,9 +635,12 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("WorkingDays");
                 });
@@ -700,11 +782,11 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.WorkingDay", b =>
                 {
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                    b.HasOne("HospitalLibrary.Core.Model.Person", "User")
                         .WithMany()
-                        .HasForeignKey("DoctorId");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Doctor");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>

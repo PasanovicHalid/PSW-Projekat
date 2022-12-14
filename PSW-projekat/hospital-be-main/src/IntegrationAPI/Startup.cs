@@ -19,6 +19,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using IntegrationLibrary.Core.Service.Newses;
 using IntegrationLibrary.Core.Repository.Newses;
+using IntegrationLibrary.Core.Service.ScheduledOrders;
+using IntegrationLibrary.Core.Repository.ScheduledOrder;
 using IntegrationLibrary.Core.Service.Tenders;
 using IntegrationLibrary.Core.Repository.Tenders;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
@@ -89,6 +91,8 @@ namespace IntegrationAPI
             services.AddScoped<IReportSendingService, ReportSendingService>();
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<ISheduledOrderRepository, ScheduledOrderRepository>();
+            services.AddScoped<IScheduledOrderService, ScheduledOrderService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IHospitalConnection, HospitalHTTPConnection>();
