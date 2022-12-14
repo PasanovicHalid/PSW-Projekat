@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { PatientAppointment } from '../model/patientAppointmentsDto.model';
 import { AppointmentsService } from '../services/appointments.service';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-patient-appointments',
@@ -15,7 +16,7 @@ export class PatientAppointmentsComponent implements OnInit {
   displayedColumns: string[] = ['AppointmentTime', 'Doctor', 'Status', 'Cancel'];
   public appointments: PatientAppointment[] = [];
 
-  constructor(private appointmentService: AppointmentsService, private router: Router) { }
+  constructor(private appointmentService: AppointmentsService, private router: Router, private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.appointmentService.getAppointmentsForPatient(9).subscribe(res => {
@@ -43,6 +44,12 @@ export class PatientAppointmentsComponent implements OnInit {
     if(date > comparisonDate)
       return true
     return false
+  }
+
+  logout(){
+    this.loginService.logout().subscribe(res => {
+      
+    }) 
   }
 }
 
