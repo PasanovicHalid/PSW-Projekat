@@ -1,5 +1,7 @@
-﻿using IntegrationLibrary.Core.Model.Tender;
+﻿using IntegrationLibrary.Core.Model.MailRequests;
+using IntegrationLibrary.Core.Model.Tender;
 using IntegrationLibrary.Core.Repository.Bids;
+using IntegrationLibrary.Core.Repository.BloodBanks;
 using IntegrationLibrary.Core.Repository.Tenders;
 using System;
 using System.Collections.Generic;
@@ -13,11 +15,16 @@ namespace IntegrationLibrary.Core.Service.Bids
     {
         private readonly ITenderRepository _tenderRepository;
         private readonly IBidRepository _bidRepository;
+        private readonly IEmailService _emailService;
+        private readonly IBloodBankRepository _bloodBankRepository;
 
-        public BidService(IBidRepository bidRepository, ITenderRepository tenderRepository) 
+        public BidService(IBidRepository bidRepository, ITenderRepository tenderRepository, IEmailService emailService, IBloodBankRepository bloodBankRepository) 
         {
                 _bidRepository = bidRepository;
             _tenderRepository = tenderRepository;
+            _emailService = emailService;
+            _bloodBankRepository = bloodBankRepository;
+
         }
         public void Create(Bid entity)
         {
@@ -69,16 +76,34 @@ namespace IntegrationLibrary.Core.Service.Bids
         {
             try
             {
-            Bid Winner = _bidRepository.GetById(id);
-               Tender tender = _tenderRepository.GetById(Winner.TenderOfBidId);
+                Bid Winner = _bidRepository.GetById(id);
+                Tender tender = _tenderRepository.GetById(Winner.TenderOfBidId);
                 List<Bid> all = (List<Bid>)GetByTenderId(_bidRepository.GetById(id).TenderOfBidId);
                 UpdateBids(Winner, all);
+                SendEmailsToParticipants(Winner, tender, all);
                 tender.State = TenderState.CLOSED;
                 _tenderRepository.Update(tender);
             }
             catch
             {
                 throw;
+            }
+        }
+
+        private void SendEmailsToParticipants(Bid Winner, Tender tender, List<Bid> all)
+        {
+            _emailService.SendEmailAsync(new TenderWinnermailRequest(_bloodBankRepository.GetById(Winner.BloodBankId), tender));
+            HashSet<int> bloodBanksWhoRecievedEmail = new HashSet<int>
+            {
+                Winner.BloodBankId
+            };
+            foreach (Bid loser in all)
+            {
+                if (!bloodBanksWhoRecievedEmail.Contains(loser.BloodBankId))
+                {
+                    _emailService.SendEmailAsync(new TenderLoserMailRequest(_bloodBankRepository.GetById(loser.BloodBankId), tender));
+                    bloodBanksWhoRecievedEmail.Add(loser.BloodBankId);
+                }    
             }
         }
 
