@@ -34,18 +34,13 @@ namespace HospitalTests.E2E_tests
             loginPage = new Pages.LoginPage(driver);
             loginPage.Navigate();
             loginPage.EnsurePageIsDisplayed();
-            Thread.Sleep(500);
             loginPage.InsertUsername("janko");
-            Thread.Sleep(500);
             loginPage.InsertPassword("123");
-            Thread.Sleep(500);
             loginPage.SubmitForm();
-            Thread.Sleep(500);
             loginPage.ErrorDivDisplayed().ShouldBe(false);
 
             reschedulingAppointmentPage = new Pages.ReschedulingAppointmentPage(driver);
             reschedulingAppointmentPage.Navigate();
-            Thread.Sleep(2000);
 
             Assert.True(reschedulingAppointmentPage.DateTimeFieldDisplayedOnScreen());
 
@@ -61,18 +56,14 @@ namespace HospitalTests.E2E_tests
         public void Test_succesfull_submit()
         {
             reschedulingAppointmentPage.DateTimeFieldDisplayed(new DateTime(2021, 10, 3));
-            Thread.Sleep(500);
             reschedulingAppointmentPage.SubmitForm();
-            Thread.Sleep(500);
         }
 
         [Fact]
         public void Test_selected_failed_patient()
         {
             reschedulingAppointmentPage.DateTimeFieldDisplayed(new DateTime(22222, 10, 2));
-            Thread.Sleep(1000);
             reschedulingAppointmentPage.SubmitForm();
-            Thread.Sleep(500);
 
         }
     }

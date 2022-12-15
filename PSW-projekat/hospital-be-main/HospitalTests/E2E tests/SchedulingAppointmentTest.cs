@@ -31,18 +31,13 @@ namespace HospitalTests.E2E_tests
             loginPage = new Pages.LoginPage(driver);
             loginPage.Navigate();
             loginPage.EnsurePageIsDisplayed();
-            Thread.Sleep(500);
             loginPage.InsertUsername("marko");
-            Thread.Sleep(500);
             loginPage.InsertPassword("123");
-            Thread.Sleep(500);
             loginPage.SubmitForm();
-            Thread.Sleep(500);
             loginPage.ErrorDivDisplayed().ShouldBe(false);
 
             schedulingAppointmentPage = new Pages.SchedulingAppointmentPage(driver);
             schedulingAppointmentPage.Navigate();
-            Thread.Sleep(2000);
 
             Assert.True(schedulingAppointmentPage.PatientSelectButtonDisplayedOnScreen());          
             Assert.True(schedulingAppointmentPage.DateTimeFieldDisplayedOnScreen());
@@ -74,11 +69,8 @@ namespace HospitalTests.E2E_tests
         public void Test_succesfull_submit()
         {
             schedulingAppointmentPage.PatientSelectButtonDisplayed();
-            Thread.Sleep(500);
             schedulingAppointmentPage.DateTimeFieldDisplayed(new DateTime(2022, 12, 12));
-            Thread.Sleep(500);
             schedulingAppointmentPage.SubmitForm();
-            Thread.Sleep(500);
         }
 
         [Fact]
@@ -86,11 +78,8 @@ namespace HospitalTests.E2E_tests
         {
             //test pada zbog dateTime
             schedulingAppointmentPage.PatientSelectButtonDisplayed();
-            Thread.Sleep(1000);
             schedulingAppointmentPage.DateTimeFieldDisplayed(new DateTime(0, 10, 2));
-            Thread.Sleep(1000);
             schedulingAppointmentPage.SubmitForm();
-            Thread.Sleep(500);
 
         }
 

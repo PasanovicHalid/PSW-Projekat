@@ -54,7 +54,6 @@ namespace HospitalTests.E2E_tests
         public void Select_custom_period_failiure()
         {
             reportSettingsPage.ClickShowDoctorsButton();
-           // Thread.Sleep(1000);
             reportSettingsPage.InsertTopic("Tema konzilijuma");
             reportSettingsPage.ClickShowDoctorsButton();
             reportSettingsPage.InsertStartDateField(new DateTime(2022, 12, 12));

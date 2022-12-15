@@ -53,7 +53,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Doctors] ON 
 
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (1, 0, 2, 0)
-INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (2, 0, 3, 0)
+INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (2, 1, 3, 0)
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (3, 0, 4, 0)
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (4, 0, 5, 0)
 INSERT [dbo].[Doctors] ([Id], [Specialization], [PersonId], [Deleted]) VALUES (5, 0, 6, 0)
@@ -134,11 +134,6 @@ INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (3,
 INSERT [dbo].[Rooms] ([Id], [Number], [RoomType], [Floor], [Deleted]) VALUES (4, N'STORAGE', 0, 3, 0)
 SET IDENTITY_INSERT [dbo].[Rooms] OFF
 GO
-SET IDENTITY_INSERT [dbo].[WorkingDays] ON 
-
-INSERT [dbo].[WorkingDays] ([Id], [Day], [StartTime], [EndTime], [DoctorId], [Deleted]) VALUES (1, 0, '2022-11-16 11:00:00', '2022-11-16 11:00:00', 1, 0)
-SET IDENTITY_INSERT [dbo].[WorkingDays] OFF
-GO
 SET IDENTITY_INSERT [dbo].[Appointments] ON 
 
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (1, 2, 1, '2022-11-16 11:30:00', '2022-11-16 11:30:00', 0)
@@ -146,10 +141,16 @@ INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [Cancela
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (3, 4, 1, '2022-11-13 11:30:00', '2022-11-16 11:30:00', 0)
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (4, 5, 1, '2022-11-14 11:30:00', '2022-11-16 11:30:00', 0)
 INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (5, 6, 2, '2022-11-15 11:30:00', '2022-11-16 11:30:00', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (6, 1, 1, '2022-12-19 00:00:00.0000000', '2022-12-19 00:20:00.0000000', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (7, 1, 1, '2022-12-19 12:00:00.0000000', '2022-12-19 12:20:00.0000000', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (8, 1, 1, '2022-12-19 13:00:00.0000000', '2022-12-19 13:20:00.0000000', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (9, null, null, '2022-12-19 13:00:00.0000000', '2022-12-19 13:20:00.0000000', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (10, null, null, '2022-12-19 10:00:00.0000000', '2022-12-19 10:20:00.0000000', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (11, null, null, '2022-12-21 15:00:00.0000000', '2022-12-21 15:20:00.0000000', 0)
+INSERT [dbo].[Appointments] ([Id], [PatientId], [DoctorId], [DateTime], [CancelationDate], [Deleted]) VALUES (12, null, 2, '2022-12-19 10:00:00.0000000', '2022-12-19 10:20:00.0000000', 0)
 SET IDENTITY_INSERT [dbo].[Appointments] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Bloods] ON 
-
 
 INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (1, 0, 11, 1, 0)
 INSERT [dbo].[Bloods] ([Id], [BloodType], [Quantity], [RoomId], [Deleted]) VALUES (2, 2, 3, 1, 0)
@@ -231,4 +232,14 @@ SET IDENTITY_INSERT [dbo].[Treatments] ON
 
 INSERT [dbo].[Treatments] ([Id], [PatientId], [DateAdmission], [DateDischarge], [ReasonForAdmission], [ReasonForDischarge], [TreatmentState], [TherapyId], [RoomId], [Deleted]) VALUES (1, 2, '2022-11-16 11:30:00', '2022-11-16 13:00:00', 'Bol u grlu', 'Pacijent se oseca bolje', 1, 1, 1, 0)
 SET IDENTITY_INSERT [dbo].[Treatments] OFF
+GO
+SET IDENTITY_INSERT [dbo].[WorkingDays] ON 
+
+INSERT INTO [dbo].[WorkingDays]([Id], [Day],[StartTime],[EndTime],[DoctorId],[Deleted]) VALUES(1, 0,'2022-12-12 08:00:00.0000000','2022-12-12 18:00:00.0000000',1,0)
+INSERT INTO [dbo].[WorkingDays]([Id], [Day],[StartTime],[EndTime],[DoctorId],[Deleted]) VALUES(2, 1,'2022-12-12 08:00:00.0000000','2022-12-12 18:00:00.0000000',1,0)
+INSERT INTO [dbo].[WorkingDays]([Id], [Day],[StartTime],[EndTime],[DoctorId],[Deleted]) VALUES(3, 2,'2022-12-12 08:00:00.0000000','2022-12-12 18:00:00.0000000',1,0)
+INSERT INTO [dbo].[WorkingDays]([Id], [Day],[StartTime],[EndTime],[DoctorId],[Deleted]) VALUES(4, 0,'2022-12-12 08:00:00.0000000','2022-12-12 18:00:00.0000000',2,0)
+INSERT INTO [dbo].[WorkingDays]([Id], [Day],[StartTime],[EndTime],[DoctorId],[Deleted]) VALUES(5, 1,'2022-12-12 08:00:00.0000000','2022-12-12 18:00:00.0000000',2,0)
+INSERT INTO [dbo].[WorkingDays]([Id], [Day],[StartTime],[EndTime],[DoctorId],[Deleted]) VALUES(6, 2,'2022-12-12 08:00:00.0000000','2022-12-12 18:00:00.0000000',2,0)
+SET IDENTITY_INSERT [dbo].[WorkingDays] OFF
 GO
