@@ -6,7 +6,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatTableModule } from '@angular/material/table';
 import { DoctorBloodRequestComponent } from './doctor-blood-request/doctor-blood-request.component';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,21 +20,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from 'src/app/material/material.module';
 import { ReturnedRequestsForDoctorComponent } from './returned-requests-for-doctor/returned-requests-for-doctor.component';
 import { UpdateRequestForDoctorComponent } from './update-request-for-doctor/update-request-for-doctor.component';
+import { ScheduledRequestComponent } from './scheduled-request/scheduled-request.component';
 
 const routes: Routes = [
-  {path: 'doctor-blood-requests', component: AllDoctorBloodRequestsComponent },
-  {path: 'doctor-blood-request/:id', component: DoctorBloodRequestComponent },
-  {path: 'returned-requests', component: ReturnedRequestsForDoctorComponent },
-  {path: 'update-request/:id', component: UpdateRequestForDoctorComponent }
+  { path: 'doctor-blood-requests', component: AllDoctorBloodRequestsComponent },
+  { path: 'doctor-blood-request/:id', component: DoctorBloodRequestComponent },
+  { path: 'returned-requests', component: ReturnedRequestsForDoctorComponent },
+  { path: 'update-request/:id', component: UpdateRequestForDoctorComponent },
+  { path: 'scheduled-create', component: ScheduledRequestComponent },
 ];
-
 
 @NgModule({
   declarations: [
     AllDoctorBloodRequestsComponent,
     DoctorBloodRequestComponent,
     ReturnedRequestsForDoctorComponent,
-    UpdateRequestForDoctorComponent
+    UpdateRequestForDoctorComponent,
+    ScheduledRequestComponent,
   ],
   imports: [
     CommonModule,
@@ -53,10 +55,10 @@ const routes: Routes = [
     MaterialModule,
     RouterModule.forChild(routes),
     ToastrModule.forRoot(),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
-  exports: [ RouterModule ]
+  exports: [RouterModule],
 })
-export class DoctorRequestsModule { }
+export class DoctorRequestsModule {}
