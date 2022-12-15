@@ -60,23 +60,27 @@ const routes: Routes = [
     path: 'appointments',
     component: AppointmentsComponent,
     canActivate: [AuthGuardDoctor],
-  },
+  }
+  ,
   {
     path: 'appointments/doctor/:id',
     component: AppointmentsComponent,
     canActivate: [AuthGuardDoctor],
   },
+  /*
   {
     path: 'appointments/add',
     component: CreateAppointmentComponent,
     canActivate: [AuthGuardDoctor],
-  },
+  }, 
   {
     path: 'appointments/:id/update',
     component: UpdateAppointmentComponent,
     canActivate: [AuthGuardDoctor],
-  },
+  }, */
   { path: 'statistics', component: StatisticsComponent },
+  { path: 'appointments/add', component: CreateAppointmentComponent },
+  { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent },
   { path: 'login', component: LoginComponent },
