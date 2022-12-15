@@ -37,6 +37,13 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
+                foreach(BloodBank bb in _bloodBankService.GetAll())
+                {
+                    if (entity.BankEmail.Equals(bb.Email.EmailAddress))
+                    {
+                        entity.BankApiKey = bb.ApiKey;
+                    }
+                }
                 _scheduledOrderService.Create(entity);
                 return Ok();
             }
