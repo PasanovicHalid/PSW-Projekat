@@ -35,6 +35,51 @@ import { ShowMedicinePipe } from './medical-examination-patient/show-medicine.pi
 import { MaliciousPatientsComponent } from './malicious-patients/malicious-patients.component';
 
 const routes: Routes = [
+  { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuardManager] },
+  {
+    path: 'rooms/add',
+    component: CreateRoomComponent,
+    canActivate: [AuthGuardManager],
+  },
+  {
+    path: 'rooms/:id',
+    component: RoomDetailComponent,
+    canActivate: [AuthGuardManager],
+  },
+  {
+    path: 'rooms/:id/update',
+    component: UpdateRoomComponent,
+    canActivate: [AuthGuardManager],
+  },
+  {
+    path: 'feedbacks',
+    component: FeedbacksComponent,
+    canActivate: [AuthGuardManager],
+  },
+  {
+    path: 'appointments',
+    component: AppointmentsComponent,
+    canActivate: [AuthGuardDoctor],
+  }
+  ,
+  {
+    path: 'appointments/doctor/:id',
+    component: AppointmentsComponent,
+    canActivate: [AuthGuardDoctor],
+  },
+  /*
+  {
+    path: 'appointments/add',
+    component: CreateAppointmentComponent,
+    canActivate: [AuthGuardDoctor],
+  }, 
+  {
+    path: 'appointments/:id/update',
+    component: UpdateAppointmentComponent,
+    canActivate: [AuthGuardDoctor],
+  }, */
+  { path: 'appointments/add', component: CreateAppointmentComponent },
+  { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
   { path: 'rooms', component: RoomsComponent, canActivate: [ AuthGuardManager ] },
   { path: 'rooms/add', component: CreateRoomComponent, canActivate: [ AuthGuardManager ] },
   { path: 'rooms/:id', component: RoomDetailComponent, canActivate: [ AuthGuardManager ] },
@@ -42,8 +87,8 @@ const routes: Routes = [
   { path: 'feedbacks', component: FeedbacksComponent, canActivate: [ AuthGuardManager ] },
   { path: 'appointments', component: AppointmentsComponent, canActivate: [ AuthGuardDoctor ] },
   { path: 'appointments/doctor/:id', component: AppointmentsComponent, canActivate: [ AuthGuardDoctor ] },
-  { path: 'appointments/add', component: CreateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
-  { path: 'appointments/:id/update', component: UpdateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
+  //{ path: 'appointments/add', component: CreateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
+  //{ path: 'appointments/:id/update', component: UpdateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
   { path: 'statistics', component: StatisticsComponent, canActivate: [ AuthGuardManager ] },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent },

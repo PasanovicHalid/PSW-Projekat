@@ -1,25 +1,25 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using Shouldly;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using Shouldly;
 using Xunit;
 
 namespace HospitalTests.E2E_tests
 {
-    public class DoctorsCouncilTest : IDisposable
+    public class ReschedulingAppointmentTest : IDisposable
     {
         private readonly IWebDriver driver;
         private Pages.LoginPage loginPage;
-        private Pages.DoctorsCouncilPage reportSettingsPage;
+        private Pages.ReschedulingAppointmentPage reschedulingAppointmentPage;
 
-
-        public DoctorsCouncilTest()
+        public ReschedulingAppointmentTest()
         {
+            // options for launching Google Chrome
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");            // open Browser in maximized mode
             options.AddArguments("disable-infobars");           // disabling infobars
@@ -34,42 +34,37 @@ namespace HospitalTests.E2E_tests
             loginPage = new Pages.LoginPage(driver);
             loginPage.Navigate();
             loginPage.EnsurePageIsDisplayed();
-            loginPage.InsertUsername("marko");
+            loginPage.InsertUsername("janko");
             loginPage.InsertPassword("123");
             loginPage.SubmitForm();
-            Thread.Sleep(3000);
             loginPage.ErrorDivDisplayed().ShouldBe(false);
-            reportSettingsPage = new Pages.DoctorsCouncilPage(driver);
-            reportSettingsPage.Navigate();
-            Thread.Sleep(3000);
-        }
 
+            reschedulingAppointmentPage = new Pages.ReschedulingAppointmentPage(driver);
+            reschedulingAppointmentPage.Navigate();
+
+            Assert.True(reschedulingAppointmentPage.DateTimeFieldDisplayedOnScreen());
+
+        }
         public void Dispose()
         {
             driver.Quit();
             driver.Dispose();
         }
 
-        [Fact]
-        public void Not_all_fields_are_selected_failiure()
-        {
-            //bilo u konfliktu
-            //reportSettingsPage.ClickShowDoctorsButton();            
-       
-            reportSettingsPage.InsertTopic("Tema konzilijuma");
-            reportSettingsPage.ClickShowSpecializationsButton();
-          //  reportSettingsPage.InsertSpecializationSelectButton();
-            //reportSettingsPage.InsertDoctorSelectButton()
-            reportSettingsPage.InsertStartDateField(new DateTime(2022, 12, 12));
-            reportSettingsPage.InsertEndDateField(new DateTime(2022, 12, 15));
-            reportSettingsPage.InsertDurationFild(20);
-            
-            reportSettingsPage.SubmitForm();
-            reportSettingsPage.WaitForToastDialog();
-            Thread.Sleep(1000);
-            Assert.Equal(driver.Url, Pages.DoctorsCouncilPage.URI);      // check if same url - page not submitted
 
+        [Fact]
+        public void Test_succesfull_submit()
+        {
+            reschedulingAppointmentPage.DateTimeFieldDisplayed(new DateTime(2021, 10, 3));
+            reschedulingAppointmentPage.SubmitForm();
         }
 
+        [Fact]
+        public void Test_selected_failed_patient()
+        {
+            reschedulingAppointmentPage.DateTimeFieldDisplayed(new DateTime(22222, 10, 2));
+            reschedulingAppointmentPage.SubmitForm();
+
+        }
     }
 }
