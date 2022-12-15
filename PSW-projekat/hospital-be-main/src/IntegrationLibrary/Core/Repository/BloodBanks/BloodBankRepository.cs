@@ -35,17 +35,17 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
                     select banks).Any();
         }
 
-        public bool CheckIfEmailExists(string email)
+        public bool CheckIfEmailExists(Email email)
         {
             return (from banks in _context.BloodBanks
-                    where banks.Email.EmailAddress.Equals(email)
+                    where banks.Email.Equals(email)
                     select banks).Any();
         }
 
         public bool CheckIfEmailIsUpdatable(BloodBank bank)
         {
             return (from banks in _context.BloodBanks
-                    where banks.Email.EmailAddress.Equals(bank.Email.EmailAddress) && banks.Id != bank.Id
+                    where banks.Email.Equals(bank.Email) && banks.Id != bank.Id
                     select banks).Any();
         }
 
