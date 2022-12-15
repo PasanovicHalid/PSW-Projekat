@@ -57,7 +57,7 @@ namespace HospitalAPI.Controllers.PrivateApp
                 foreach (var doctor in council.Doctors)
                 {
 
-                    doctorDtos.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email,
+                    doctorDtos.Add(new DoctorDto(doctor.Id, doctor.Person.Name, doctor.Person.Surname, doctor.Person.Email.Adress,
                                                  doctor.Person.Role));
                     
                 }

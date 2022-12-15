@@ -1,20 +1,25 @@
 import { DoctorForPatientRegistrationDto } from "./doctorForPatientRegistrationDto.model";
 
-export class RegisterPatientDto {
+export class ScheduleAppointment {
     scheduledDate: Date = new Date();
     doctorDto: DoctorForPatientRegistrationDto = new DoctorForPatientRegistrationDto();
-    patientId: number = 0;
+    personId: string|null = '0';
   
     public constructor(obj?: any) {
         if (obj) {
             this.scheduledDate = obj.scheduledDate;
             this.doctorDto = obj.doctorDto;
-            this.patientId = obj.patientId;
+            this.personId = obj.personId;
         }
     }
   }
   export enum Specialization {
     general,
-    neurologist,
-    cardiologist
+    dermatology,
+    neurology,
+    urology,
+    gynecology,
+    cardiology,
+    dentistry,
+    otorhinolaryngology
   }

@@ -54,6 +54,14 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="jmbg" class="form-label">Jmbg</label>
+                    <input type="text" class="form-control" id="jmbg" formControlName="jmbg">
+                    <div *ngIf="registerForm.get('jmbg').invalid && (registerForm.get('jmbg').dirty || registerForm.get('jmbg').touched)" class="text-danger mt-1">
+                        Please enter your jmbg (13 digits).
+                    </div>
+                </div>
+
+                <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <div class="input-group">
                         <span class="input-group-text fw-bold" id="emailPng" style="width: 50px;">

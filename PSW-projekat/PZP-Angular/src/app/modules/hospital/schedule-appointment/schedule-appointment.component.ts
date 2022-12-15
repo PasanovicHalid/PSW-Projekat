@@ -2,7 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DoctorForPatientRegistrationDto } from '../model/doctorForPatientRegistrationDto.model';
-import { Specialization } from '../model/scheduleAppointment.model';
+import { ScheduleAppointment, Specialization } from '../model/scheduleAppointment.model';
+import { StepperOrientation } from '@angular/material/stepper';
+import { Observable, map } from 'rxjs';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { AppointmentsService } from '../services/appointments.service';
+import { DateAndDoctorForNewAppointmentDto } from '../model/DateAndDoctorForNewAppointmentDto.model';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-schedule-appointment',
@@ -12,119 +18,71 @@ import { Specialization } from '../model/scheduleAppointment.model';
 export class ScheduleAppointmentComponent implements OnInit {
 
   public doctors: Array<DoctorForPatientRegistrationDto> = [];
-  public freeAppointments: Array<number> = [];
+  public freeAppointments: Array<string> = [];
 
   public appointmentForm: FormGroup | any;
 
-  public currentStep: number = 0;
-  public step: Array<string> = [];
+  public today:Date = new Date();
 
-  constructor(private router: Router, private fb: FormBuilder) { }
+  public dateForm!: FormGroup;
+  public specializationForm!: FormGroup;
+  public doctorForm!: FormGroup;
+  public timeForm!: FormGroup;
+
+  stepperOrientation: Observable<StepperOrientation> | undefined;
+
+  constructor(private router: Router, private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private appointmentsService: AppointmentsService, private loginService: LoginService) { }
 
   ngOnInit(): void {
-    this.step = ['initial', 'none', 'none', 'none', 'none'];
-    this.appointmentForm = this.fb.group({
-      date: [Date, [Validators.required]],
-      specialization: [Specialization, [Validators.required]],
-      doctor: [DoctorForPatientRegistrationDto, [Validators.required]],
+    this.stepperOrientation = this.breakpointObserver
+    .observe('(min-width: 800px)')
+    .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+
+    this.dateForm = this.fb.group({
+      date: [Date, [Validators.required]]
+    });
+    this.specializationForm = this.fb.group({
+      specialization: [Specialization, [Validators.required]]
+    });
+    this.doctorForm = this.fb.group({
+      doctor: [DoctorForPatientRegistrationDto, [Validators.required]]
+    });
+    this.timeForm  = this.fb.group({
       time: [Number, [Validators.required]]
     });
   }
 
-  next():void{
-    this.currentStep += 1;
-    switch (this.currentStep) {
-      case 0:
-          this.step[0] = 'initial';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'none';
-          break;
-      case 1:
-          this.step[0] = 'none';
-          this.step[1] = 'initial';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'none'; 
-          break;
-      case 2:
-          this.step[0] = 'none';
-          this.step[1] = 'none';
-          this.step[2] = 'initial';
-          this.step[3] = 'none';
-          this.step[4] = 'none'; 
-          break;
-      case 3:
-          this.step[0] = 'none';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'initial';
-          this.step[4] = 'none'; 
-          break;
-      case 4:
-          this.step[0] = 'none';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'initial';
-          break;
-      default:
-          this.step[0] = 'initial';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'none';
-          break;
-    }
+  getDoctors(){
+    this.appointmentsService.getAllDoctorsBySpecialization(this.specializationForm.value.specialization).subscribe(res => {
+      this.doctors = res;
+    });
   }
 
-  previous():void{
-    this.currentStep -= 1;
-    switch (this.currentStep) {
-      case 0:
-          this.step[0] = 'initial';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'none';
-          break;
-      case 1:
-          this.step[0] = 'none';
-          this.step[1] = 'initial';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'none'; 
-          break;
-      case 2:
-          this.step[0] = 'none';
-          this.step[1] = 'none';
-          this.step[2] = 'initial';
-          this.step[3] = 'none';
-          this.step[4] = 'none'; 
-          break;
-      case 3:
-          this.step[0] = 'none';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'initial';
-          this.step[4] = 'none'; 
-          break;
-      case 4:
-          this.step[0] = 'none';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'initial';
-          break;
-      default:
-          this.step[0] = 'initial';
-          this.step[1] = 'none';
-          this.step[2] = 'none';
-          this.step[3] = 'none';
-          this.step[4] = 'none';
-          break;
-    }
+  getFreeAppointmentTimes(){
+    let dto: DateAndDoctorForNewAppointmentDto = new DateAndDoctorForNewAppointmentDto();
+    dto.doctorId = this.doctorForm.value.doctor.id;
+    dto.scheduledDate = this.dateForm.value.date;
+    this.appointmentsService.getFreeAppointmentsForDoctor(dto).subscribe(res => {
+      this.freeAppointments = res;
+    });
   }
 
+  schedule(){
+    let appointmentInfo: ScheduleAppointment = new ScheduleAppointment();
+    appointmentInfo.doctorDto = this.doctorForm.value.doctor;
+    appointmentInfo.personId = localStorage.getItem("currentUserId");
+    appointmentInfo.scheduledDate = this.dateForm.value.date;
+    appointmentInfo.scheduledDate.setHours(this.timeForm.value.time.split(':')[0]);
+    appointmentInfo.scheduledDate.setMinutes(this.timeForm.value.time.split(':')[1]);
+
+    this.appointmentsService.scheduleAppointment(appointmentInfo).subscribe(res => {
+      this.router.navigate(['/homePatient']);
+    });
+  }
+
+  logout(){
+    this.loginService.logout().subscribe(res => {
+      
+    }) 
+  }
 }

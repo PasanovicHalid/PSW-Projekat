@@ -26,7 +26,7 @@ export class AppointmentsComponent implements OnInit {
     this.appointmentService.GetAllByDoctor(Number(localStorage.getItem("currentUserId"))).subscribe(res => {
       let result = Object.values(JSON.parse(JSON.stringify(res)));
       result.forEach((element: any) => {
-        var app = new Appointment(element.appointmentId, element.deleted, element.patient, element.doctor, element.dateTime, element.cancelationDate);
+        var app = new Appointment(element.id, element.deleted, element.patient, element.doctor, element.dateTime, element.cancelationDate);
         this.patient1 = element.patient;
         this.appointments.push(app);
       });
@@ -73,10 +73,6 @@ export class AppointmentsComponent implements OnInit {
           });
           this.dataSource.data = this.appointments;
         })
-        /*this.appointmentService.GetAllByDoctor(3).subscribe(res => {
-          this.appointments = res;
-          this.dataSource.data = this.appointments;
-        })*/
       })
      }
   }

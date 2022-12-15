@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.DTOs
 {
-    public class DoctorForPatientRegistrationDto
+    public class SimpleDoctorDto
     {
         [Required]
         public int Id { get; set; }

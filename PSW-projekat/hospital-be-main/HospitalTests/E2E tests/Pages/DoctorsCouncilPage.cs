@@ -36,9 +36,21 @@ namespace HospitalTests.E2E_tests.Pages
             this.driver = driver;
         }
 
-        public void InsertDoctorSelectButton(int number)
+        public void InsertDoctorSelectButton()
         {
-          //  DoctorSelectButton.getFirstSelectedOptions();
+
+
+            DoctorSelectButton.Click();
+        }
+
+        public void InsertSpecializationSelectButton()
+        {
+            SpecializationSelectButton.Click();
+            driver.FindElement(By.Id("general")).Click();
+            driver.FindElement(By.Id("neurologist")).Click();
+            SpecializationSelectButton.Click();
+
+           // DoctorSelectButton.getFirstSelectedOptions();
         }
 
 
