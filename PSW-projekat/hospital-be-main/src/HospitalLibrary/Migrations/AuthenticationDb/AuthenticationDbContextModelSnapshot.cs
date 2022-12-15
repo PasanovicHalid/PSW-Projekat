@@ -38,6 +38,9 @@ namespace HospitalLibrary.Migrations.AuthenticationDb
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -135,6 +138,7 @@ namespace HospitalLibrary.Migrations.AuthenticationDb
                             ConcurrencyStamp = "55AD6AD6-0AAD-4917-8F61-1B5599E50EAD",
                             Name = "BloodBank"
                         });
+
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

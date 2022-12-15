@@ -15,7 +15,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(LoginDto: LoginUserDto): Observable<any> {
-    return this.http.post<any>(this.apiHost + 'api/Account/Login', LoginDto, {headers: this.headers});
+    return this.http.post<any>('api/Account/Login', LoginDto, {headers: this.headers});
   }
 
   bankLogin(LoginDto: LoginUserDto): Observable<any> {
@@ -24,6 +24,6 @@ export class LoginService {
 
   logout(){
     localStorage.clear();
-    return this.http.get<any>(this.apiHost + 'api/Account/Logout', {headers: this.headers});
+    return this.http.get<any>('api/Account/Logout', {headers: this.headers});
   }
 }

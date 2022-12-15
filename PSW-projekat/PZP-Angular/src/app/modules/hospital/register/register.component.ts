@@ -39,7 +39,8 @@ export class RegisterComponent implements OnInit {
       password: ['', Validators.required],
       bloodType: [BloodType, Validators.required],
       allergies: [Array<Allergy>],
-      doctorName: [DoctorForPatientRegistrationDto, [Validators.required]]
+      doctorName: [DoctorForPatientRegistrationDto, [Validators.required]],
+      jmbg: ['', [Validators.required, Validators.pattern('[0-9]{13}')]]
     });
   }
 
@@ -60,6 +61,7 @@ export class RegisterComponent implements OnInit {
     registerPatientDto.bloodType = parseInt(this.registerForm.value.bloodType);
     registerPatientDto.allergies = this.registerForm.value.allergies;
     registerPatientDto.doctorName = this.registerForm.value.doctorName;
+    registerPatientDto.jmbg = this.registerForm.value.jmbg;
 
     this.registerService.registerPatient(registerPatientDto).subscribe(res => {
       this.router.navigate(['/account-activation-info']);

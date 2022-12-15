@@ -8,33 +8,31 @@ import { FeedbackDto } from '../model/feedbackDto.model';
   providedIn: 'root'
 })
 export class FeedbackService {
-
-  apiHost: string = 'http://localhost:16177/';
   headers: HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
 
   getFeedbacks(): Observable<Feedback[]> {
-    return this.http.get<Feedback[]>(this.apiHost + 'api/feedbacks', {headers: this.headers});
+    return this.http.get<Feedback[]>('api/feedbacks', {headers: this.headers});
   }
 
   getFeedback(id: number): Observable<Feedback> {
-    return this.http.get<Feedback>(this.apiHost + 'api/feedbacks/' + id, {headers: this.headers});
+    return this.http.get<Feedback>('api/feedbacks/' + id, {headers: this.headers});
   }
 
   deleteFeedback(id: any): Observable<any> {
-    return this.http.delete<any>(this.apiHost + 'api/feedbacks/' + id, {headers: this.headers});
+    return this.http.delete<any>('api/feedbacks/' + id, {headers: this.headers});
   }
 
   createFeedback(feedback: any): Observable<any> {
-    return this.http.post<any>(this.apiHost + 'api/feedbacks', feedback, {headers: this.headers});
+    return this.http.post<any>('api/feedbacks', feedback, {headers: this.headers});
   }
 
   updateFeedback(feedback: any): Observable<any> {
-    return this.http.put<any>(this.apiHost + 'api/feedbacks/' + feedback.id, feedback, {headers: this.headers});
+    return this.http.put<any>('api/feedbacks/' + feedback.id, feedback, {headers: this.headers});
   }
 
   getAllFeedbackPublicDtos(): Observable<FeedbackDto[]> {
-    return this.http.get<FeedbackDto[]>(this.apiHost + 'api/feedbacks/public', {headers: this.headers});
+    return this.http.get<FeedbackDto[]>('api/feedbacks/public', {headers: this.headers});
   }
 }

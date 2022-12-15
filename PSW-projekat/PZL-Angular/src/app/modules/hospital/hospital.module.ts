@@ -32,7 +32,7 @@ import { CouncilsComponent } from './councils/councils.component';
 import { ShowDoctorsPipe } from './councils/show-doctors.pipe';
 import { CreateDoctorsCouncilComponent } from './create-doctors-council/create-doctors-council.component';
 import { ShowMedicinePipe } from './medical-examination-patient/show-medicine.pipe';
-
+import { MaliciousPatientsComponent } from './malicious-patients/malicious-patients.component';
 
 const routes: Routes = [
   { path: 'rooms', component: RoomsComponent, canActivate: [AuthGuardManager] },
@@ -78,9 +78,18 @@ const routes: Routes = [
     component: UpdateAppointmentComponent,
     canActivate: [AuthGuardDoctor],
   }, */
-  { path: 'statistics', component: StatisticsComponent },
   { path: 'appointments/add', component: CreateAppointmentComponent },
   { path: 'appointments/:id/update', component: UpdateAppointmentComponent },
+  { path: 'rooms', component: RoomsComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'rooms/add', component: CreateRoomComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'rooms/:id', component: RoomDetailComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'rooms/:id/update', component: UpdateRoomComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'feedbacks', component: FeedbacksComponent, canActivate: [ AuthGuardManager ] },
+  { path: 'appointments', component: AppointmentsComponent, canActivate: [ AuthGuardDoctor ] },
+  { path: 'appointments/doctor/:id', component: AppointmentsComponent, canActivate: [ AuthGuardDoctor ] },
+  //{ path: 'appointments/add', component: CreateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
+  //{ path: 'appointments/:id/update', component: UpdateAppointmentComponent, canActivate: [ AuthGuardDoctor ] },
+  { path: 'statistics', component: StatisticsComponent, canActivate: [ AuthGuardManager ] },
   { path: 'treatments/add', component: AdmissionPatientTreatmentComponent },
   { path: 'treatments/:id/update', component: DischargePatientComponent },
   { path: 'login', component: LoginComponent },
@@ -92,7 +101,10 @@ const routes: Routes = [
   { path: 'examinations/add/:id', component: MedicalExaminationPatientComponent},
   { path: 'examinations/report', component: MedicalReportComponent},
   { path: 'examinations/prescriptionShow', component: MedicalPrescriptionShowComponent},
-  { path: 'examinations/finish', component: MedicalExaminationFinish}
+  { path: 'examinations/finish', component: MedicalExaminationFinish},
+  { path: 'bloodConsumption/add', component: BloodConsumptionComponent},
+  { path: 'malicious-patients', component: MaliciousPatientsComponent, canActivate: [ AuthGuardManager ]}
+
 ];
 
 @NgModule({
@@ -111,7 +123,7 @@ const routes: Routes = [
     LoginComponent,
     CreateBloodRequestComponent,
     BloodConsumptionComponent,
-
+    MaliciousPatientsComponent,
     CouncilsComponent,
     ShowDoctorsPipe,
     CreateDoctorsCouncilComponent,

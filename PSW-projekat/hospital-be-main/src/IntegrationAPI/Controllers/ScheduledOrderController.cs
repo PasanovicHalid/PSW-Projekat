@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service.BloodBanks;
 using IntegrationLibrary.Core.Service.ScheduledOrders;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,12 @@ namespace IntegrationAPI.Controllers
     public class ScheduledOrderController : ControllerBase
     {
         private readonly IScheduledOrderService _scheduledOrderService;
-        public ScheduledOrderController(IScheduledOrderService scheduledOrderService)
+        private readonly IBloodBankService _bloodBankService;
+        public ScheduledOrderController(IScheduledOrderService scheduledOrderService,
+            IBloodBankService bloodBankService)
         {
             _scheduledOrderService = scheduledOrderService;
+            _bloodBankService = bloodBankService;
         }
         [HttpGet]
         public ActionResult GetAll()
@@ -33,6 +37,13 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
+                foreach(BloodBank bb in _bloodBankService.GetAll())
+                {
+                    if (entity.BankEmail.Equals(bb.Email.EmailAddress))
+                    {
+                        entity.BankApiKey = bb.ApiKey;
+                    }
+                }
                 _scheduledOrderService.Create(entity);
                 return Ok();
             }

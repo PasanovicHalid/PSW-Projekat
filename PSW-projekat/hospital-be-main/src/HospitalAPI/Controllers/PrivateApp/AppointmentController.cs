@@ -35,12 +35,12 @@ namespace HospitalAPI.Controllers.PrivateApp
             foreach (var appointment in _appointmentService.GetAll())
             {
                 PatientDto patientDto = new PatientDto(appointment.Patient.Id, appointment.Patient.Person.Name,
-                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email, appointment.Patient.Person.Role);
+                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email.Adress.ToString(), appointment.Patient.Person.Role);
 
                 DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
-                   appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
+                   appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email.Adress.ToString(), appointment.Doctor.Person.Role);
 
-                appointmentDto.Add(new AppointmentDto(appointment.Id, appointment.DateTime, appointment.CancelationDate, patientDto, doctorDto));
+                appointmentDto.Add(new AppointmentDto(appointment.Id, appointment.DateTime, (DateTime)appointment.CancelationDate, patientDto, doctorDto));
 
             }
 
@@ -53,12 +53,12 @@ namespace HospitalAPI.Controllers.PrivateApp
             var appointment = _appointmentService.GetById(id);
 
             PatientDto patientDto = new PatientDto(appointment.Patient.Id, appointment.Patient.Person.Name,
-                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email, appointment.Patient.Person.Role);
+                    appointment.Patient.Person.Surname, appointment.Patient.Person.Email.ToString(), appointment.Patient.Person.Role);
 
             DoctorDto doctorDto = new DoctorDto(appointment.Doctor.Id, appointment.Doctor.Person.Name,
-               appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email, appointment.Doctor.Person.Role);
+               appointment.Doctor.Person.Surname, appointment.Doctor.Person.Email.ToString(), appointment.Doctor.Person.Role);
 
-            AppointmentDto appointmentDto = new AppointmentDto(appointment.Id, appointment.DateTime, appointment.CancelationDate, patientDto, doctorDto);
+            AppointmentDto appointmentDto = new AppointmentDto(appointment.Id, appointment.DateTime, (DateTime)appointment.CancelationDate, patientDto, doctorDto);
             if (appointment == null)
             {
                 return NotFound();

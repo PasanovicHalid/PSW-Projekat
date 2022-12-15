@@ -1,0 +1,64 @@
+.container {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: #DCD6CC 1.5px solid;
+    background-color: white;
+    padding-bottom: 0.5rem;
+}
+
+table {
+    width: 100%;
+}
+
+.table-title {
+    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.cell-center {
+    text-align: center;
+}
+
+.clickable:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-button {
+    margin: 10px 20px 10px 10px;
+    color: black;
+    background-color: #edece5;
+    float: right;
+}
+
+.table-header {
+    display: flex;
+}
+
+.header-row {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+p {
+    float: left;
+    margin-right: auto;
+}
+
+.button-updateStatus {
+    border: 2px solid gray;
+    margin-right: 1px;
+    min-width: 84px;
+}
+
+.mat-column-description {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    width: 38% !important;
+}
+
