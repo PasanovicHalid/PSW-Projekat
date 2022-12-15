@@ -14,7 +14,7 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
 
         bool CheckIfAPIKeyIsUpdatable(BloodBank bank);
 
-        bool CheckIfEmailExists(string email);
+        bool CheckIfEmailExists(Email email);
 
         bool CheckIfEmailIsUpdatable(BloodBank bank);
 

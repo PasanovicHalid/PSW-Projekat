@@ -39,6 +39,7 @@ namespace HospitalTests.E2E_tests.Pages
         public void InsertDoctorSelectButton()
         {
 
+
             DoctorSelectButton.Click();
         }
 

@@ -162,7 +162,8 @@ namespace IntegrationLibrary.Core.Service.BloodBanks
 
         private void CheckIfBankCanBeCreated(BloodBank entity)
         {
-            if (_bloodBankRepository.CheckIfEmailExists(entity.Email.EmailAddress))
+            bool check = _bloodBankRepository.CheckIfEmailExists(entity.Email);
+            if (check)
             {
                 throw new EmailAlreadyExistsException();
             }
