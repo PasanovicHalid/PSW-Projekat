@@ -9,6 +9,7 @@ namespace IntegrationLibrary.Core.Service.EmergencyBloodRequests
 {
     public interface IEmergencyBloodRequestService
     {
-        void RequestEmergencyBlood(EmergencyBloodRequest request);
+        void RequestEmergencyBlood(EmergencyBloodRequestGRPC request);
+        IEnumerable<EmergencyBloodRequest> GetAll();
     }
 }

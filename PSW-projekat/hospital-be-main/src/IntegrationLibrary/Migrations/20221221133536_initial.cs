@@ -65,6 +65,21 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "EmergencyBloodRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BloodQuantity = table.Column<int>(type: "int", nullable: false),
+                    BloodType = table.Column<int>(type: "int", nullable: false),
+                    BloodBankId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmergencyBloodRequests", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Newses",
                 columns: table => new
                 {
@@ -178,6 +193,9 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Demands");
+
+            migrationBuilder.DropTable(
+                name: "EmergencyBloodRequests");
 
             migrationBuilder.DropTable(
                 name: "Newses");

@@ -92,6 +92,27 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("BloodRequests");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.EmergencyBloodRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmergencyBloodRequests");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.News", b =>
                 {
                     b.Property<int>("Id")
