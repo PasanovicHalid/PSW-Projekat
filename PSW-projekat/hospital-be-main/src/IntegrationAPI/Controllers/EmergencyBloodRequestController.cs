@@ -34,7 +34,7 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            EmergencyBloodRequest request = _mapper.Map<EmergencyBloodRequest>(requestDTO);
+            EmergencyBloodRequestGRPC request = _mapper.Map<EmergencyBloodRequestGRPC>(requestDTO);
             if(request == null)
             {
                 return BadRequest("Error when mapping dto to entity");
@@ -45,6 +45,18 @@ namespace IntegrationAPI.Controllers
                 return Ok(requestDTO);
             } 
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            try
+            {
+                return Ok(_emergencyBloodRequestService.GetAll());
+            } catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
