@@ -18,10 +18,10 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class EmergencyBloodRequestController : ControllerBase
     {
-        private readonly IEmergencyBloodRequestServiceGRPC _emergencyBloodRequestService;
+        private readonly IEmergencyBloodRequestService _emergencyBloodRequestService;
         private readonly IMapper _mapper;
 
-        public EmergencyBloodRequestController(IEmergencyBloodRequestServiceGRPC emergencyBloodRequestService, IMapper mapper)
+        public EmergencyBloodRequestController(IEmergencyBloodRequestService emergencyBloodRequestService, IMapper mapper)
         {
             _emergencyBloodRequestService = emergencyBloodRequestService;
             _mapper = mapper;
@@ -34,7 +34,7 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            EmergencyBloodRequestGRPC request = _mapper.Map<EmergencyBloodRequestGRPC>(requestDTO);
+            EmergencyBloodRequest request = _mapper.Map<EmergencyBloodRequest>(requestDTO);
             if(request == null)
             {
                 return BadRequest("Error when mapping dto to entity");

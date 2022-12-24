@@ -12,16 +12,16 @@ using IntegrationLibrary.Protos;
 
 namespace IntegrationLibrary.Core.Service.EmergencyBloodRequests
 {
-    public class EmergencyBloodRequestServiceGRPC : IEmergencyBloodRequestServiceGRPC
+    public class EmergencyBloodRequestService : IEmergencyBloodRequestService
     {
         private readonly IBloodBankRepository _bloodBankRepository;
 
-        public EmergencyBloodRequestServiceGRPC(IBloodBankRepository bloodBankRepository)
+        public EmergencyBloodRequestService(IBloodBankRepository bloodBankRepository)
         {
             _bloodBankRepository = bloodBankRepository;
         }
 
-        public void RequestEmergencyBlood(EmergencyBloodRequestGRPC request)
+        public void RequestEmergencyBlood(EmergencyBloodRequest request)
         {
             BloodBank bloodBank = _bloodBankRepository.GetById(request.BloodBankID);
             if (bloodBank == null)

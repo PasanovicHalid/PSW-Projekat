@@ -8,8 +8,8 @@ namespace IntegrationAPI.Adapters
     {
         public EmergencyBloodRequestAdapter()
         {
-            CreateMap<EmergencyBloodRequestDTO, EmergencyBloodRequestGRPC>().ReverseMap();
-            CreateMap<EmergencyBloodRequestDTO, EmergencyBloodRequestGRPC>();
+            CreateMap<EmergencyBloodRequestDTO, EmergencyBloodRequest>().ReverseMap();
+            CreateMap<EmergencyBloodRequestDTO, EmergencyBloodRequest>();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class EmergencyBloodRequestGRPC
+    public class EmergencyBloodRequest
     {
         public int BloodQuantity { get; set; }
 
