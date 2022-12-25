@@ -46,7 +46,6 @@ namespace IntegrationLibrary.Core.Service
             email.Subject = mailRequest.Subject;
             var builder = new BodyBuilder();
             builder.HtmlBody = mailRequest.Body;
-            email.Body = builder.ToMessageBody();
             if (mailRequest.Attachments != null)
             {
                 byte[] fileBytes;
@@ -63,7 +62,7 @@ namespace IntegrationLibrary.Core.Service
                     }
                 }
             }
-
+            email.Body = builder.ToMessageBody();
             return email;
         }
     }
