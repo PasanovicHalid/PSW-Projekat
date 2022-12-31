@@ -32,18 +32,7 @@ SET IDENTITY_INSERT [dbo].[Newses] OFF
 
 
 GO
-SET IDENTITY_INSERT [dbo].[Bids] ON 
-INSERT [dbo].[Bids] ([Id], [DeliveryDate], [Price], [TenderOfBidId], [BloodBankId], [Status]) VALUES(1, '2023-12-12 12:00:00', 2000, 1, 3, 0)
-SET IDENTITY_INSERT [dbo].[Bids] OFF
-
-GO
 SET IDENTITY_INSERT [dbo].[Tenders] ON 
-INSERT [dbo].[Tenders] ([Id], [DueDate], [State]) VALUES (1, '2022-12-12 12:00:00', 0)
+INSERT [dbo].[Tenders] ([Id], [DueDate], [State], [Demands], [Bids]) VALUES (1, '2022-12-31 11:30:00', 0, '[{"BloodType":1,"Quantity":5},{"BloodType":5,"Quantity":9}]', '[{"DeliveryDate":"2022-12-30T17:26:21.8995755+01:00","Price":1000,"BloodBankId":1,"Status":0},{"DeliveryDate":"2022-12-30T17:26:21.8999264+01:00","Price":1000,"BloodBankId":2,"Status":0},{"DeliveryDate":"2022-12-30T17:26:22.3624763+01:00","Price":3000,"BloodBankId":1,"Status":0}]')
 SET IDENTITY_INSERT [dbo].[Tenders] OFF
 
-GO
-SET IDENTITY_INSERT [dbo].[Demands] ON 
-INSERT [dbo].[Demands] ([Id], [BloodType], [Quantity], [TenderId]) VALUES (1, 0, 5, 1)
-INSERT [dbo].[Demands] ([Id], [BloodType], [Quantity], [TenderId]) VALUES (2, 3, 3, 1)
-INSERT [dbo].[Demands] ([Id], [BloodType], [Quantity], [TenderId]) VALUES (3, 5, 7, 1)
-SET IDENTITY_INSERT [dbo].[Demands] OFF

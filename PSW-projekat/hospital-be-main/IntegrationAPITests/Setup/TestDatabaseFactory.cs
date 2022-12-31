@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace IntegrationAPITests.Setup
@@ -43,60 +44,19 @@ namespace IntegrationAPITests.Setup
         {
             context.Database.EnsureCreated();
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSettings\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodRequests\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Demands\";");
-            context.Database.ExecuteSqlRaw("DELETE FROM \"Tenders\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Bids\"; ");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE BloodBanks;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE ReportSettings;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE BloodRequests;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE Tenders;");
 
-            context.Bids.Add(new Bid
+            Tender tender1 = new Tender(DateTime.Now.AddDays(1), new List<Demand>()
             {
-                DeliveryDate = System.DateTime.Now.AddDays(-1),
-                Price = 2000,
-                TenderOfBidId = 1,
-                BloodBankId = 1,
-                Status = BidStatus.WAITING
+                new Demand(BloodType.AN, 5),
+                new Demand(BloodType.AP, 9)
             });
-
-
-
-            //context.BloodBanks.Add(new BloodBank {
-            //    Name = "prva",
-            //    Email = "prva@gmail.com",
-            //    Password = "prva",
-            //    ApiKey = "sadfasdads",
-            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
-            //    AccountStatus = AccountStatus.ACTIVE,
-            //    GRPCServerAddress = "aaa"
-            //});
-            //context.BloodBanks.Add(new BloodBank {
-            //    Name = "druga",
-            //    Email = "druga@gmail.com",
-            //    Password = "druga",
-            //    ApiKey = "sadfasdads",
-            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
-            //    AccountStatus = AccountStatus.ACTIVE,
-            //    GRPCServerAddress = "aaa"
-            //});
-            //context.BloodBanks.Add(new BloodBank {
-            //    Name = "treca",
-            //    Email = "treca@gmail.com",
-            //    Password = "treca",
-            //    ApiKey = "sadfasdads",
-            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
-            //    AccountStatus = AccountStatus.ACTIVE,
-            //    GRPCServerAddress = "aaa"
-            //});
-            //context.BloodBanks.Add(new BloodBank {
-            //    Name = "cetrvta",
-            //    Email = "cetrvta@gmail.com",
-            //    Password = "cetrvta",
-            //    ApiKey = "sadfasdads",
-            //    ServerAddress = "https://www.messenger.com/t/100001603572170",
-            //    AccountStatus = AccountStatus.ACTIVE,
-            //    GRPCServerAddress = "aaa"
-            //});
+            tender1.BidOnTender(new Bid(DateTime.MaxValue, 1000, 1));
+            tender1.BidOnTender(new Bid(DateTime.Now, 1000, 2));
+            context.Tenders.Add(tender1);
 
             context.BloodBanks.Add(new BloodBank("prva", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
             context.BloodBanks.Add(new BloodBank("aa", "asdasd@gmail.com", "asdsadsdadas", "https://www.messenger.com/t/100001603572170", "sadfasdads", "asddsadasdsa", null, AccountStatus.ACTIVE));
@@ -220,7 +180,7 @@ namespace IntegrationAPITests.Setup
                 Text = " Come and give me blood",
                 DateTime = new DateTime(2022, 01, 01, 9, 15, 0),
                 BloodBankId = 1,
-            }); 
+            });
 
             context.SaveChanges();
         }

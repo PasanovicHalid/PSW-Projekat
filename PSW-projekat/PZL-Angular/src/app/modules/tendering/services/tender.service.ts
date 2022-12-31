@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { Bid } from '../model/bid.model';
 import { Tender } from '../model/tender.model';
 
 @Injectable({
@@ -24,6 +25,14 @@ export class TenderService {
 
   createTender(tender : Tender): Observable<any>{
     return this.http.post<any>(this.integrationApiHost + 'api/Tender/',tender, {headers: this.headers}).pipe(catchError(this.handleError))
+  }
+
+  closeTender(tenderID: number, bid: Bid): Observable<any>{
+    return this.http.post<any>(this.integrationApiHost + 'api/Tender/CloseTender/' + tenderID, bid, {headers: this.headers}).pipe(catchError(this.handleError))
+  }
+
+  bidOnTender(tenderID: number, bid: Bid): Observable<any>{
+    return this.http.post<any>(this.integrationApiHost + 'api/Tender/Bid/' + tenderID, bid, {headers: this.headers}).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse) {
