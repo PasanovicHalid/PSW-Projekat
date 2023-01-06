@@ -1,0 +1,41 @@
+<mat-form-field appearance="fill">
+  <mat-label>Blood bank email:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.bankEmail" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>Day:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.dayOfMonth" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>aplus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.aPlus" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>bplus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.bPlus" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>abplus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.abPlus" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>oplus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.oPlus" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>aminus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.aMinus" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>bminus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.bMinus" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>abminus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.abMinus" /> </mat-form-field
+><br />
+<mat-form-field appearance="fill">
+  <mat-label>ominus:</mat-label>
+  <input matInput [(ngModel)]="scheduledRequest.oMinus" /> </mat-form-field
+><br />
+<button mat-stroked-button (click)="sendRequest()">Submit</button>

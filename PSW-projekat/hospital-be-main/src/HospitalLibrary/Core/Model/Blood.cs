@@ -17,6 +17,7 @@ namespace HospitalLibrary.Core.Model
             BloodType = bloodType;
             Quantity = quantity;
         }
+
         public Blood(int id, BloodType bloodType, int quantity)
         {
             Deleted = false;
@@ -24,5 +25,6 @@ namespace HospitalLibrary.Core.Model
             Quantity = quantity;
             Id = id;
         }
+
     }
 }

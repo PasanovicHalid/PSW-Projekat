@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model.Tender;
 using IntegrationLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,10 +38,24 @@ namespace IntegrationLibrary.Core.Repository.Tenders
         {
             return _context.Tenders.Find(id);
         }
+        public IEnumerable<Tender> GetAllOpen()
+        {
+            return (from tenders in _context.Tenders
+                    where tenders.State == TenderState.OPEN
+                    select tenders).ToList();
+        }
 
         public void Update(Tender entity)
         {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
         }
     }
 }

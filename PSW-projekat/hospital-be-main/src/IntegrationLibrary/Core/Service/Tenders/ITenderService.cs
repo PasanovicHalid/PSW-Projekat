@@ -10,5 +10,10 @@ namespace IntegrationLibrary.Core.Service.Tenders
 {
     public interface ITenderService : ICRUDService<Tender>
     {
+        public IEnumerable<Tender> GetAllOpen();
+
+        public void CloseTenderWithWinner(int tenderID, Bid winningBid);
+
+        public void BidOnTender(int tenderID, Bid bid);
     }
 }

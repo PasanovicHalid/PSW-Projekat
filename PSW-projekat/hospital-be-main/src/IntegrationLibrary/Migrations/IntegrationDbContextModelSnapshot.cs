@@ -92,6 +92,27 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("BloodRequests");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.EmergencyBloodRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BloodType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmergencyBloodRequests");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.News", b =>
                 {
                     b.Property<int>("Id")
@@ -152,26 +173,52 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("ReportSettings");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.ScheduledOrder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-                    b.Property<int>("BloodType")
+
+                    b.Property<int>("ABMinus")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("ABPlus")
                         .HasColumnType("int");
 
-                    b.Property<int>("TenderId")
+                    b.Property<int>("AMinus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("APlus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BMinus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BPlus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BankApiKey")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DayOfMonth")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HospitalEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OMinus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OPlus")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenderId");
-
-                    b.ToTable("Demands");
+                    b.ToTable("ScheduledOrders");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Tender", b =>
@@ -180,6 +227,12 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Bids")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Demands")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
@@ -190,22 +243,6 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Demand", b =>
-                {
-                    b.HasOne("IntegrationLibrary.Core.Model.Tender.Tender", "Tender")
-                        .WithMany("Demands")
-                        .HasForeignKey("TenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Tender");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender.Tender", b =>
-                {
-                    b.Navigation("Demands");
                 });
 #pragma warning restore 612, 618
         }

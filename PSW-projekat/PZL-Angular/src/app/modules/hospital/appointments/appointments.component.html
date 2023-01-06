@@ -1,11 +1,13 @@
 <div class="container">
     <div class="table-header">
         <p class="table-title">All appointments</p>
-        <button class="add-button" mat-mini-fab matTooltip="New appointment" matTooltipPosition="right" (click)="addAppointment()">
+        <button class="add-button" id="createAppoitment" mat-mini-fab matTooltip="New appointment" matTooltipPosition="right" (click)="addAppointment()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
-    <table mat-table [dataSource]="dataSource">
+    <body>
+    <table id="appoitmentsTable" mat-table [dataSource]="dataSource">
+        
         <ng-container matColumnDef="dateTime">
             <th mat-header-cell *matHeaderCellDef class="cell-center"> Date and Time </th>
             <td mat-cell *matCellDef="let appointment" class="cell-center">{{appointment.dateTime | date:'short'}}</td>
@@ -30,11 +32,23 @@
             <th mat-header-cell *matHeaderCellDef class="cell-center"></th>
             <td mat-cell *matCellDef="let appointment" class="cell-center">
                 <button mat-icon-button (click)="deleteAppointment(appointment.id)">
-                    <mat-icon matTooltip="delete">delete</mat-icon>
+                    <mat-icon matTooltip="Delete appointment">delete</mat-icon>
                 </button>
             </td>
         </ng-container>
+        <ng-container matColumnDef="examination">
+            <th mat-header-cell *matHeaderCellDef class="cell-center"></th>
+            <td mat-cell *matCellDef="let appointment" class="cell-center">
+                <button id="createExamination" mat-icon-button (click)="examinationPatient(appointment.id)" matTooltip="Medical examination patient">
+                    <a> 
+                        <img class="stetoshope" src="https://uxwing.com/wp-content/themes/uxwing/download/medical-science-lab/stethoscope-icon.png" alt="buttonpng" border="0"/>
+                    </a>
+                </button>
+            </td>
+        </ng-container>
+        
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    </body>
   </div> 

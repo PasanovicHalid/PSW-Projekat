@@ -17,7 +17,7 @@ export class BloodBankService {
     return this.http.get<BloodBank[]>(this.apiHost + 'api/BloodBanks', {headers: this.headers}).pipe(catchError(this.handleError));
   }
   
-  registerBloodBank(bloodBank: any): Observable<any>{
+  registerBloodBank(bloodBank: BloodBank): Observable<any>{
     return this.http.post<any>(this.apiHost + 'api/BloodBanks', bloodBank, {headers: this.headers}).pipe(catchError(this.handleError));
   }
   

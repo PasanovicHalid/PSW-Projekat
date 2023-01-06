@@ -22,6 +22,8 @@ export class BloodBanksComponent implements OnInit {
 
   ngOnInit(): void {
     this.bloodBankService.getBloodBanks().subscribe(res => {
+      console.log(res);
+      
       this.bloodBanks = res;
       this.dataSource.data = res;
     }, (error) => {

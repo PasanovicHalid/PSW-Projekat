@@ -28,6 +28,7 @@ using IntegrationLibrary.Core.HospitalConnection;
 using IntegrationLibrary.Core.Service.EmergencyBloodRequests;
 using IntegrationAPI.Adapters;
 using IntegrationLibrary.Core.Service.HostedServices;
+using IntegrationLibrary.Core.Repository.EmergencyBloodRequests;
 
 namespace IntegrationAPI
 {
@@ -97,6 +98,7 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IHospitalConnection, HospitalHTTPConnection>();
             services.AddScoped<IEmergencyBloodRequestService, EmergencyBloodRequestService>();
+            services.AddScoped<IEmergencyBloodRequestRepository, EmergencyBloodRequestRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

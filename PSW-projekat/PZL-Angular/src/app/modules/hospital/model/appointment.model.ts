@@ -7,13 +7,14 @@ export class Appointment {
     patient: PatientDto;
     doctor: DoctorDto;
     dateTime: Date;
+    cancelationDate: Date;
 
-    public constructor(id: any, deleted: any, patient: any, doctor: any, dateTime: any) {
+    public constructor(id: any, deleted: any, patient: any, doctor: any, dateTime: any, cancelationDate: any) {
         this.id = id;
         this.deleted = deleted;
         this.patient = patient;
         this.doctor = doctor;
         this.dateTime = dateTime;
-
+        this.cancelationDate = cancelationDate;
     }
 }

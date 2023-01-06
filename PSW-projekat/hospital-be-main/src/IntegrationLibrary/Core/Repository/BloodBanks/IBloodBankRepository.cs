@@ -14,7 +14,7 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
 
         bool CheckIfAPIKeyIsUpdatable(BloodBank bank);
 
-        bool CheckIfEmailExists(string email);
+        bool CheckIfEmailExists(Email email);
 
         bool CheckIfEmailIsUpdatable(BloodBank bank);
 
@@ -23,5 +23,6 @@ namespace IntegrationLibrary.Core.Repository.BloodBanks
         bool CheckIfPasswordResetKeyIsUpdatable(BloodBank bank);
 
         BloodBank GetBloodBankFromPasswordResetKey(string passwordResetKey);
+        BloodBank getByEmail(string email);
     }
 }

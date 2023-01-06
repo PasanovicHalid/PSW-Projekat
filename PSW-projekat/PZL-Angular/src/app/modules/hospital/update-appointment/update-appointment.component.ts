@@ -13,11 +13,13 @@ import { AppointmentService } from '../services/appointment.service';
 })
 export class UpdateAppointmentComponent implements OnInit {
 
-  public appointment: Appointment = new Appointment(0, false, '', '', Date());
+  public appointment: Appointment = new Appointment(0, false, '', '', Date(), Date());
+  public appointmentProba: Appointment = new Appointment(0, false, '', '', Date(), Date());
+  public appointmentP: Appointment = new Appointment(0, false, '', '', Date(), Date());
+
+
   public newPatient1: PatientDto = new PatientDto(0, '','','','', 0);
   public odgovor: Response;
-
-  
 
   constructor(private appointmentService: AppointmentService, private route: ActivatedRoute,
     private router: Router) { }
@@ -28,13 +30,23 @@ export class UpdateAppointmentComponent implements OnInit {
         console.log(params['id']);
         console.log(res);
         this.newPatient1 = res.patient;
-        this.appointment = res;
+        this.appointmentP = res;
+        this.appointmentProba = new Appointment(Number(params['id']), false, this.appointmentP.patient, this.appointmentP.doctor, this.appointmentP.dateTime,
+          this.appointmentP.cancelationDate);
+        this.appointment = this.appointmentProba;
       })
     });
+
+    //this.appointment = this.appointmentProba;
+    console.log(this.appointment);
+
   }
 
   public updateAppointment(): void {
     if (!this.isValidInput()) return;
+    this.appointment.cancelationDate = this.appointment.dateTime;
+
+    console.log(this.appointment);
     this.appointmentService.updateAppointment(this.appointment).subscribe(res => {
       console.log(this.appointment);
       this.router.navigate(['/appointments']);

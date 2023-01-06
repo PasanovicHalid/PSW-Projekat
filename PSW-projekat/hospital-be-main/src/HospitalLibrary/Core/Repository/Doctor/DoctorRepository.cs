@@ -30,23 +30,33 @@ namespace HospitalLibrary.Core.Repository
             return _context.Doctors.ToList();
         }
 
-        
+        public IEnumerable<Doctor> GetAllBySpecialization(Specialization specialization)
+        {
+            return _context.Doctors.Where(d => d.Specialization == specialization).ToList();
+        }
+
         public IEnumerable<Doctor> GetAllDoctorsForPatientRegistration()
         {
             int minPatients = _context.Doctors.ToList().Min(pNum => pNum.Patients.Count());
 
             return _context.Doctors.Where(d => d.Patients.Count() <= minPatients + 2 && d.Specialization == Specialization.general).ToList();
         }
-        
+
 
         public Doctor GetById(int id)
         {
-             return _context.Doctors.Where(d => d.Id == id).FirstOrDefault();
+            return _context.Doctors.Where(d => d.Id == id).FirstOrDefault();
+        }
+
+        public Doctor GetDoctorByPersonId(int personId)
+        {
+            return _context.Doctors.Where(d => d.Person.Id == personId).FirstOrDefault();
         }
 
         public Person getPersonByDoctorId(int id)
         {
             var doctor = _context.Doctors.FirstOrDefault(d => d.Id == id);
+            if (doctor == null) return null;
             var person = _context.Persons.FirstOrDefault(d => d.Id == doctor.Person.Id);
             return person;
         }
@@ -61,6 +71,18 @@ namespace HospitalLibrary.Core.Repository
         public void Update(Doctor entity)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<DoctorsCouncil> GetAllCouncilByDoctor(int doctorId)
+        {
+            return this.GetById(doctorId).Councils;
+
+        }
+
+        public IEnumerable<Doctor> GetAllDoctorsBySpecialization(Specialization specialization)
+        {
+            return _context.Doctors.Where(d => d.Specialization == specialization).ToList();
+
         }
     }
 }

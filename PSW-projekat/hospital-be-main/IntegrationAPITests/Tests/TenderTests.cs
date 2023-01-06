@@ -47,6 +47,25 @@ namespace IntegrationAPITests.Tests
             result.ShouldBe(testCase);
         }
 
+        [Fact]
+        public void Bid_on_tender()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            var result = (OkResult)controller.BidOnTender(1, new Bid(DateTime.Now, 3000, 1));
+        }
+
+
+        [Fact]
+        public void Close_tender()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupSettingsController(scope);
+
+            var result = (OkResult)controller.CloseTender(1, new Bid(DateTime.MaxValue, 1000, 1));
+        }
+
         private List<DemandDTO> CreateDemandList()
         {
             List<DemandDTO> demands = new List<DemandDTO>();

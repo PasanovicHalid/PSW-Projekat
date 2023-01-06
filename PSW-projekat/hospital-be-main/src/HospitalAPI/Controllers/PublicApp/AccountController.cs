@@ -35,6 +35,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IDoctorService _doctorService;
         private readonly IPatientService _patientService;
         private readonly IIntegrationConnection _integrationConnection;
+        private readonly AuthenticationDbContext _context;
 
         public AccountController(
                 UserManager<SecUser> userManager,
@@ -45,7 +46,8 @@ namespace HospitalAPI.Controllers.PublicApp
                 IPersonService personService,
                 IDoctorService doctorService,
                 IPatientService patientService,
-                IIntegrationConnection integrationConnection)
+                IIntegrationConnection integrationConnection,
+                AuthenticationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -56,6 +58,7 @@ namespace HospitalAPI.Controllers.PublicApp
             _emailService = emailService;
             _configuration = configuration;
             _integrationConnection = integrationConnection;
+            _context = context;
         }
 
         [HttpPost("Login")]
@@ -66,6 +69,10 @@ namespace HospitalAPI.Controllers.PublicApp
             if (secUser == null)
             {
                 return BadRequest("Username or password is incorrect.");
+            }
+            if (secUser.IsBlocked)
+            {
+                return BadRequest("This user is blocked");
             }
             var statement = await _userManager.IsEmailConfirmedAsync(secUser);
             if (statement == true)
@@ -143,7 +150,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_doctorService.GetAllergiesAndDoctors());
         }
 
-        //[Authorize(Roles = "Manager")]
+        [AllowAnonymous]
         [HttpPost("CreateManager")]
         public async Task<IActionResult> CreateManager(CreateManagerDto createManagerDto)
         {
@@ -160,7 +167,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = createManagerDto.Name,
                 Surname = createManagerDto.Surname,
                 Role = Role.manager,
-                Email = createManagerDto.Email,
+                Email = Email.Create(createManagerDto.Email),
                 Gender = createManagerDto.Gender,
                 BirthDate = Convert.ToDateTime(createManagerDto.BirthDate),
                 Address = new Address()
@@ -170,7 +177,8 @@ namespace HospitalAPI.Controllers.PublicApp
                     Number = createManagerDto.Number,
                     PostCode = createManagerDto.PostCode,
                     Township = createManagerDto.Township,
-                }
+                },
+                Jmbg = new Jmbg(createManagerDto.Jmbg)
             };
             user = _personService.RegisterPerson(user);
             SecUser secUser = new SecUser()
@@ -202,25 +210,16 @@ namespace HospitalAPI.Controllers.PublicApp
                 IdentityRole identityRole = new IdentityRole("Patient");
                 var roleResult = await _roleManager.CreateAsync(identityRole);
             }
-            
-            Person user = new Person()
-            {
-                Id = 0,
-                Name = regUser.Name,
-                Surname = regUser.Surname,
-                Role = Role.patient,
-                Email = regUser.Email,
-                Gender = regUser.Gender,
-                BirthDate = Convert.ToDateTime(regUser.BirthDate),
-                Address = new Address()
-                {
-                    Street = regUser.Street,
-                    City = regUser.City,
-                    Number = regUser.Number,
-                    PostCode = regUser.PostCode,
-                    Township = regUser.Township,
-                }
-            };
+
+            Person user = new Person(regUser.Name, regUser.Surname, Email.Create(regUser.Email),
+                            new Address(){
+                                Street = regUser.Street,
+                                City = regUser.City,
+                                Number = regUser.Number,
+                                PostCode = regUser.PostCode,
+                                Township = regUser.Township
+                            }, 
+                            regUser.Gender, Convert.ToDateTime(regUser.BirthDate), Role.patient, new Jmbg(regUser.Jmbg));
 
             user = _personService.RegisterPerson(user);
             Doctor doctor = _doctorService.GetById(regUser.DoctorName.Id);
@@ -236,13 +235,14 @@ namespace HospitalAPI.Controllers.PublicApp
 
         
             _patientService.AddAllergyToPatient(patient, regUser.Allergies);
-            
+
 
             SecUser secUser = new SecUser()
             {
                 Id = user.Id,
                 Email = regUser.Email,
                 UserName = regUser.Username,
+                IsBlocked = false,
             };
             var registerUser = await _userManager.CreateAsync(secUser, regUser.Password);
             if (registerUser != null)
@@ -275,7 +275,7 @@ namespace HospitalAPI.Controllers.PublicApp
                 Name = createDoctorDto.Name,
                 Surname = createDoctorDto.Surname,
                 Role = Role.doctor,
-                Email = createDoctorDto.Email,
+                Email = Email.Create(createDoctorDto.Email),
                 Gender = createDoctorDto.Gender,
                 BirthDate = Convert.ToDateTime(createDoctorDto.BirthDate),
                 Address = new Address()
@@ -285,7 +285,8 @@ namespace HospitalAPI.Controllers.PublicApp
                     Number = createDoctorDto.Number,
                     PostCode = createDoctorDto.PostCode,
                     Township = createDoctorDto.Township,
-                }
+                },
+                Jmbg = new Jmbg(createDoctorDto.Jmbg)
             };
             user = _personService.RegisterPerson(user);
 
@@ -334,6 +335,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+
         [HttpPost("LoginBank")]
         public async Task<ActionResult> LoginBankAsync(LoginUserDto loginUserDto)
         {
@@ -370,6 +372,7 @@ namespace HospitalAPI.Controllers.PublicApp
                             {
                                 authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                                 authClaims.Add(new Claim("Role", userRole));
+                                authClaims.Add(new Claim("Email",loginUserDto.Username));
                             }
 
                             var token = GetToken(authClaims);
@@ -382,8 +385,8 @@ namespace HospitalAPI.Controllers.PublicApp
                         }
                     }
                     else
-                        return BadRequest("Username or password is incorrect.");
-                    return BadRequest("Username or password is incorrect.");
+                        return BadRequest("Username or password is incorrect.1");
+                    return BadRequest("Username or password is incorrect.2");
                 
             }
                 else
@@ -398,5 +401,31 @@ namespace HospitalAPI.Controllers.PublicApp
 
 
         }   
+
+        [Authorize(Roles = "Manager")]
+        [HttpPut("BlockUser/{personId}")]
+        public async Task<ActionResult> BlockUserAsync(int personId)
+        {
+            var email = _personService.GetById(personId).Email;
+            var secUser = await _userManager.FindByEmailAsync(email.Adress);
+            if (secUser == null || secUser.IsBlocked)
+                return BadRequest("User doesn't exist or is already blocked");
+            secUser.BlockUser();
+            _context.SaveChanges();
+            return Ok();
+        }
+
+        [Authorize(Roles = "Manager")]
+        [HttpPut("UnblockUser/{personId}")]
+        public async Task<ActionResult> UnblockUserAsync(int personId)
+        {
+            var email = _personService.GetById(personId).Email;
+            var secUser = await _userManager.FindByEmailAsync(email.Adress);
+            if (secUser == null || !secUser.IsBlocked)
+                return BadRequest("User doesn't exist or is already unblocked");
+            secUser.UnblockUser();
+            _context.SaveChanges();
+            return Ok();
+        }
     }
 }

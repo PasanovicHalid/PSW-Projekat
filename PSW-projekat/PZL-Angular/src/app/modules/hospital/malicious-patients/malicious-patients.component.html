@@ -1,0 +1,69 @@
+<div class="w-100">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-80 mx-auto p-3 shadow-lg" style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;width:80vw">
+      <a class="navbar-brand m-0" href="/homeManager"><div class="h1 mx-4">Home</div></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/homeManager"><div class="h3 m-1">Profile</div></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/feedbacks"><div class="h3 m-1">Feedbacks</div></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/homeManager"><div class="h3 m-1">Equipment</div></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/statistics"><div class="h3 m-1">Statistics</div></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/doctor-blood-requests"><div class="h3 m-1">Blood requests</div></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/malicious-patients"><div class="h3 m-1">Malicious patients</div></a>
+          </li>
+        </ul>
+        <div class="mx-auto"></div>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="" (click)="logoutUser()"><div class="h3 mx-4 mt-2">Log out</div></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+<div class="container">
+    <div class="table-header">
+        <h2 class="table-title">All malicious patients</h2>
+    </div>
+    <table mat-table [dataSource]="dataSource" id="patientsTable">
+        <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Name</th>
+            <td mat-cell *matCellDef="let patient" class="cell-center">{{patient.fullName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Username">
+            <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Username </th>
+            <td mat-cell *matCellDef="let patient" class="cell-center">{{patient.username}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Status </th>
+            <td mat-cell *matCellDef="let patient" class="cell-center">{{patient.isBlocked}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Block">
+            <th mat-header-cell *matHeaderCellDef class="cell-center header-row"> Block </th>
+            <td mat-cell *matCellDef="let patient" class="cell-center">
+                <div *ngIf="patient.isBlocked=='Blocked'">
+                    <button mat-button (click)="unblockPatient(patient.id)" id="{{patient.id}}" class="button-updateStatus">Unblock</button>
+                </div> 
+                <div *ngIf="patient.isBlocked=='Not blocked'">
+                <button mat-button (click)="blockPatient(patient.id)" id="{{patient.id}}" class="button-updateStatus">Block</button>
+            </div> 
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    </div>

@@ -1,0 +1,43 @@
+<div class="container">
+    <div>
+
+        <h1>Summarum</h1>
+ 
+        <mat-form-field appearance="fill">
+            <mat-label>Symptoms:</mat-label>
+            <input class="inputPolje" matInput *ngFor="let symptom of examination.symptoms" [value]="symptom.name" disabled>
+            <label><br>
+            <input type="checkbox" id="simptomi" name="simptomi" value="simptomi">add to pdf
+            </label>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Report:</mat-label>
+            <input class="inputPolje" wrap="soft" matInput [(ngModel)]="examination.report" disabled>
+            <label><br>
+            <input type="checkbox" id="izvestaj" name="izvestaj" value="izvestaj" checked disabled>add to pdf 
+            </label>
+        </mat-form-field><br>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Prescribed medicines:</mat-label>
+            <input class="inputPolje" matInput *ngFor="let medicine of pom" [value]="medicine.name" disabled>
+            <label><br>
+            <input type="checkbox" id="lekovi" name="lekovi" value="lekovi" >add to pdf
+            </label>
+        </mat-form-field><br>
+
+        <a>
+            <button (click)="back()" class="backDugme" mat-stroked-button>
+                 Back 
+            </button>
+        </a>
+
+        <a >
+            <button (click)="createExamination()" class="nextDugme1" mat-stroked-button>
+                 Finish 
+            </button>
+        </a>
+       
+    </div>
+</div>
